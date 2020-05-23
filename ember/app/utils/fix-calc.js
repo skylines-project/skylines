@@ -43,7 +43,7 @@ export default EmberObject.extend({
   endTimes: mapBy('flights', 'endTime'),
   maxEndTime: max('endTimes'),
 
-  fixes: map('flights', function(flight) {
+  fixes: map('flights', function (flight) {
     return Fix.create({ flight, fixCalc: this });
   }),
 

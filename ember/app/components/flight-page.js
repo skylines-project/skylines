@@ -17,7 +17,7 @@ export default Component.extend({
   fixCalc: null,
   flightPhase: null,
 
-  timeInterval: computed('mapExtent', 'cesiumEnabled', function() {
+  timeInterval: computed('mapExtent', 'cesiumEnabled', function () {
     if (this.cesiumEnabled) {
       return null;
     }
@@ -46,7 +46,7 @@ export default Component.extend({
     this.set('flightPhase', flightPhase);
   },
 
-  setup: action(function(element) {
+  setup: action(function (element) {
     this.rootElement = element;
 
     let fixCalc = this.fixCalc;

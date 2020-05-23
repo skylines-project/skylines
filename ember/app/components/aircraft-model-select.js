@@ -7,11 +7,11 @@ export default Component.extend({
   models: null,
   modelId: null,
 
-  modelsWithNull: computed('models.[]', function() {
+  modelsWithNull: computed('models.[]', function () {
     return [{ id: null }].concat(this.models);
   }),
 
-  model: computed('modelsWithNull.@each.id', 'modelId', function() {
+  model: computed('modelsWithNull.@each.id', 'modelId', function () {
     return this.modelsWithNull.findBy('id', this.modelId || null);
   }),
 

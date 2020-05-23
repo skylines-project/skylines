@@ -11,7 +11,7 @@ export default Component.extend({
   date: null,
   onSelect() {},
 
-  setup: action(function(element) {
+  setup: action(function (element) {
     let picker = $(element).datepicker({
       weekStart: 1,
     });
@@ -24,7 +24,7 @@ export default Component.extend({
     });
   }),
 
-  teardown: action(function() {
+  teardown: action(function () {
     let picker = this.picker;
     if (picker) {
       picker.off('changeDate');

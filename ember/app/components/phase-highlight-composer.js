@@ -21,7 +21,7 @@ export default Component.extend({
   startPoint: computedPoint('coordinates.firstObject'),
   endPoint: computedPoint('coordinates.lastObject'),
 
-  coordinatesObserver: observer('coordinates.[]', function() {
+  coordinatesObserver: observer('coordinates.[]', function () {
     this.adjustMapView();
     once(this.map, 'render');
   }),

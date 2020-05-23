@@ -9,7 +9,7 @@ export default EmberObject.extend({
 
   flight: readOnly('fixCalc.flights.firstObject'),
 
-  coordinates: computed('flight', 'selection.{start,end}', function() {
+  coordinates: computed('flight', 'selection.{start,end}', function () {
     let selection = this.selection;
     if (!selection) {
       return;

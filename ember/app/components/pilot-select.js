@@ -10,7 +10,7 @@ export default Component.extend({
   clubMembers: null,
   pilotId: null,
 
-  pilots: computed('account.{user,club}', 'clubMembers.[]', function() {
+  pilots: computed('account.{user,club}', 'clubMembers.[]', function () {
     let user = this.get('account.user');
     let club = this.get('account.club');
     let clubMembers = this.clubMembers;
@@ -23,7 +23,7 @@ export default Component.extend({
     return pilots;
   }),
 
-  pilot: computed('pilotsWithNull.[]', 'pilotId', function() {
+  pilot: computed('pilotsWithNull.[]', 'pilotId', function () {
     return this.findPilot(this.pilotId || null);
   }),
 

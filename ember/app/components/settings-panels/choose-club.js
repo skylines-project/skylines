@@ -14,7 +14,7 @@ export default Component.extend({
   messageKey: null,
   error: null,
 
-  clubsWithNull: computed('clubs.[]', function() {
+  clubsWithNull: computed('clubs.[]', function () {
     return [{ id: null }].concat(this.clubs);
   }),
 
@@ -28,7 +28,7 @@ export default Component.extend({
     },
   }),
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let club = this.club;
     let json = { clubId: club ? club.id : null };
 

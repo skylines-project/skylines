@@ -15,7 +15,7 @@ export default Service.extend({
   // _overlayLayers: ['Airspace'],
 
   baseLayer: or('_query.baselayer', '_baseLayer'),
-  overlayLayers: computed('_query.overlays', '_overlayLayers', function() {
+  overlayLayers: computed('_query.overlays', '_overlayLayers', function () {
     let queryOverlays = this.get('_query.overlays');
     if (queryOverlays === undefined) {
       return this._overlayLayers;
@@ -26,7 +26,7 @@ export default Service.extend({
     }
   }),
 
-  _query: computed('router.currentURL', function() {
+  _query: computed('router.currentURL', function () {
     let currentURL = this.get('router.currentURL');
     let queryString = extractQueryString(currentURL);
     return parseQueryString(queryString);

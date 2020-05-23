@@ -9,7 +9,7 @@ export default Component.extend({
   source: null,
   flight: null,
 
-  feature: computed(function() {
+  feature: computed(function () {
     let flight = this.flight;
     return new ol.Feature({
       geometry: flight.get('geometry'),

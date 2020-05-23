@@ -7,7 +7,7 @@ export default Component.extend({
   onEnable() {},
   onDisable() {},
 
-  toggle: action(function() {
+  toggle: action(function () {
     if (this.enabled) {
       this.onDisable();
     } else {

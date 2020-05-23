@@ -11,7 +11,7 @@ export default Component.extend({
   selection: null,
   onSelect() {},
 
-  speed: computed('leg.{duration,distance}', function() {
+  speed: computed('leg.{duration,distance}', function () {
     let duration = this.get('leg.duration');
     if (duration > 0) {
       return this.get('leg.distance') / duration;
@@ -20,7 +20,7 @@ export default Component.extend({
     }
   }),
 
-  climbPercentage: computed('leg.{duration,climbDuration}', function() {
+  climbPercentage: computed('leg.{duration,climbDuration}', function () {
     let duration = this.get('leg.duration');
     if (duration > 0) {
       return this.get('leg.climbDuration') / duration;
@@ -29,14 +29,14 @@ export default Component.extend({
     }
   }),
 
-  climbRate: computed('leg.{climbDuration,climbHeight}', function() {
+  climbRate: computed('leg.{climbDuration,climbHeight}', function () {
     let duration = this.get('leg.climbDuration');
     if (duration > 0) {
       return this.get('leg.climbHeight') / duration;
     }
   }),
 
-  glideRate: computed('leg.{cruiseDistance,cruiseHeight}', function() {
+  glideRate: computed('leg.{cruiseDistance,cruiseHeight}', function () {
     let distance = this.get('leg.cruiseDistance');
     let height = this.get('leg.cruiseHeight');
 
@@ -47,12 +47,12 @@ export default Component.extend({
     }
   }),
 
-  selected: safeComputed('selection', function(selection) {
+  selected: safeComputed('selection', function (selection) {
     let leg = this.leg;
     return selection.start === leg.start && selection.end === leg.start + leg.duration;
   }),
 
-  handleClick: action(function() {
+  handleClick: action(function () {
     let onSelect = this.onSelect;
 
     if (this.selected) {

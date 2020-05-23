@@ -12,7 +12,7 @@ export default Component.extend({
   tracks: null,
   friends: null,
 
-  friendsTracks: computed('tracks.[]', 'friends.[]', 'account.user.id', function() {
+  friendsTracks: computed('tracks.[]', 'friends.[]', 'account.user.id', function () {
     let self = this.get('account.user.id');
     if (isNone(self)) {
       return [];

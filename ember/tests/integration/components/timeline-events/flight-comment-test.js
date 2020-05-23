@@ -6,10 +6,10 @@ import Service from '@ember/service';
 
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | timeline events/flight comment', function(hooks) {
+module('Integration | Component | timeline events/flight comment', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     this.owner.setupRouter();
 
     this.owner.register(
@@ -38,13 +38,13 @@ module('Integration | Component | timeline events/flight comment', function(hook
     await this.owner.lookup('service:intl').loadAndSetLocale('en');
   });
 
-  test('renders default text', async function(assert) {
+  test('renders default text', async function (assert) {
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
     assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/John Doe commented on a 123 km flight on [\d/]+./);
   });
 
-  test('renders alternate text if actor is current user', async function(assert) {
+  test('renders alternate text if actor is current user', async function (assert) {
     this.owner.lookup('service:account').set('user', { id: 1, name: 'John Doe' });
 
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
@@ -52,7 +52,7 @@ module('Integration | Component | timeline events/flight comment', function(hook
     assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/You commented on a 123 km flight on [\d/]+./);
   });
 
-  test('renders alternate text if pilot or copilot is current user', async function(assert) {
+  test('renders alternate text if pilot or copilot is current user', async function (assert) {
     this.owner.lookup('service:account').set('user', { id: 5, name: 'Jane Doe' });
 
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
@@ -60,7 +60,7 @@ module('Integration | Component | timeline events/flight comment', function(hook
     assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/John Doe commented on your 123 km flight on [\d/]+./);
   });
 
-  test('renders alternate text if pilot or copilot and actor is current user', async function(assert) {
+  test('renders alternate text if pilot or copilot and actor is current user', async function (assert) {
     this.owner.lookup('service:account').set('user', { id: 1, name: 'John Doe' });
     this.set('event.flight.pilot_id', 1);
 

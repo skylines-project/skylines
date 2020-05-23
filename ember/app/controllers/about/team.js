@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 export default Controller.extend({
   intl: service(),
 
-  text: computed('model.content', 'intl.locale', function() {
+  text: computed('model.content', 'intl.locale', function () {
     let intl = this.intl;
 
     return this.get('model.content')

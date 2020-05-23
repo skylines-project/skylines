@@ -36,7 +36,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  deleteTask: task(function*() {
+  deleteTask: task(function* () {
     let json = this.getProperties('password');
 
     try {

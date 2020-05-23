@@ -8,44 +8,44 @@ export default BarogramComponent.extend({
   time: null,
   defaultTime: null,
 
-  flightsObserver: observer('flights.[]', function() {
+  flightsObserver: observer('flights.[]', function () {
     this.draw();
   }),
 
   selection: null,
 
-  activeFlights: computed('flights.[]', 'selection', function() {
+  activeFlights: computed('flights.[]', 'selection', function () {
     let { flights, selection } = this;
     return flights.filter(flight => !selection || flight.get('id') === selection);
   }),
 
-  passiveFlights: computed('flights.[]', 'selection', function() {
+  passiveFlights: computed('flights.[]', 'selection', function () {
     let { flights, selection } = this;
     return flights.filter(flight => selection && flight.get('id') !== selection);
   }),
 
-  active: computed('activeFlights.@each.{flot_h,color}', function() {
+  active: computed('activeFlights.@each.{flot_h,color}', function () {
     return this.activeFlights.map(flight => ({
       data: flight.get('flot_h'),
       color: flight.get('color'),
     }));
   }),
 
-  passive: computed('passiveFlights.@each.{flot_h,color}', function() {
+  passive: computed('passiveFlights.@each.{flot_h,color}', function () {
     return this.passiveFlights.map(flight => ({
       data: flight.get('flot_h'),
       color: flight.get('color'),
     }));
   }),
 
-  enls: computed('activeFlights.@each.{flot_enl,color}', function() {
+  enls: computed('activeFlights.@each.{flot_enl,color}', function () {
     return this.activeFlights.map(flight => ({
       data: flight.get('flot_enl'),
       color: flight.get('color'),
     }));
   }),
 
-  selectedFlight: computed('flights.@each.id', 'selection', function() {
+  selectedFlight: computed('flights.@each.id', 'selection', function () {
     if (this.flights.length === 1) {
       return this.flights[0];
     }
@@ -60,7 +60,7 @@ export default BarogramComponent.extend({
 
   timeInterval: null,
 
-  initFlot: action(function(element) {
+  initFlot: action(function (element) {
     this._initFlot(element);
 
     this.onHoverModeUpdate();

@@ -13,7 +13,7 @@ export default Component.extend({
   copilotName: or('flight.{copilot.name,copilotName}'),
   times: alias('nearFlight.times'),
 
-  colorStripeStyle: computed('nearFlight.color', function() {
+  colorStripeStyle: computed('nearFlight.color', function () {
     return htmlSafe(`background-color: ${this.nearFlight.color}`);
   }),
 });

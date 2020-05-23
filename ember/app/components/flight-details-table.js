@@ -39,14 +39,14 @@ export default Component.extend({
   isPublic: equal('flight.privacyLevel', 0),
   isPrivate: not('isPublic'),
 
-  deleteTask: task(function*() {
+  deleteTask: task(function* () {
     let id = this.get('flight.id');
     yield this.ajax.request(`/api/flights/${id}/`, { method: 'DELETE' });
     this.set('showDeleteModal', false);
     this.transitionTo('flights');
   }).drop(),
 
-  publishTask: task(function*() {
+  publishTask: task(function* () {
     let id = this.get('flight.id');
     yield this.ajax.request(`/api/flights/${id}/`, { method: 'POST', json: { privacyLevel: 0 } });
     this.set('flight.privacyLevel', 0);

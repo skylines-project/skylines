@@ -56,7 +56,7 @@ export default Component.extend({
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let json = this.successfulResults.map(result => {
       let flight = get(result, 'flight');
       return getProperties(

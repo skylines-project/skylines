@@ -59,7 +59,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let id = this.flightId;
     let json = this.getProperties('pilotId', 'pilotName', 'copilotId', 'copilotName');
 

@@ -7,7 +7,7 @@ export default Component.extend({
 
   tagName: '',
 
-  pinned: computed('pinnedFlights.pinned.[]', 'flightId', function() {
+  pinned: computed('pinnedFlights.pinned.[]', 'flightId', function () {
     return this.pinnedFlights.pinned.includes(this.flightId);
   }),
 

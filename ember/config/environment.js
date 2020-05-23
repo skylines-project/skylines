@@ -2,7 +2,7 @@
 
 /* eslint-env node */
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'skylines',
     environment,

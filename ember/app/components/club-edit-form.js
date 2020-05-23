@@ -52,7 +52,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let id = this.get('club.id');
     let json = this.getProperties('name', 'website');
 

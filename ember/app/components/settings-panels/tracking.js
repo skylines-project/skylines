@@ -28,7 +28,7 @@ export default Component.extend(Validations, {
   delays: DELAYS,
 
   /* ember-power-select can't handle `0` */
-  _delay: computed('delay', function() {
+  _delay: computed('delay', function () {
     return this.delay === 0 ? '0' : this.delay;
   }),
 
@@ -41,7 +41,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let json = {
       trackingCallsign: this.callsign,
       trackingDelay: this.delay,

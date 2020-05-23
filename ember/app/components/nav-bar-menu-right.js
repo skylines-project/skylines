@@ -12,7 +12,7 @@ export default Component.extend({
   tagName: '',
 
   availableLocales,
-  currentLocale: computed('availableLocales.@each.code', 'intl.locale', function() {
+  currentLocale: computed('availableLocales.@each.code', 'intl.locale', function () {
     return this.availableLocales.findBy('code', this.intl.locale[0]);
   }),
 

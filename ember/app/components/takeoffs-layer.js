@@ -9,7 +9,7 @@ export default Component.extend({
   map: null,
   locations: null,
 
-  layer: computed(function() {
+  layer: computed(function () {
     return new ol.layer.Vector({
       source: new ol.source.Vector(),
       style: new ol.style.Style({
@@ -24,7 +24,7 @@ export default Component.extend({
     });
   }),
 
-  source: computed('layer', function() {
+  source: computed('layer', function () {
     return this.layer.getSource();
   }),
 

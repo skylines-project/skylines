@@ -7,7 +7,7 @@ import { authenticateSession, currentSession } from 'ember-simple-auth/test-supp
 
 import { setupPolly } from 'skylines/tests/helpers/setup-polly';
 
-module('Acceptance | Settings | Delete Account', function(hooks) {
+module('Acceptance | Settings | Delete Account', function (hooks) {
   setupApplicationTest(hooks);
   setupPolly(hooks, { recordIfMissing: false });
 
@@ -15,7 +15,7 @@ module('Acceptance | Settings | Delete Account', function(hooks) {
     return Boolean(currentSession().data.authenticated.settings);
   }
 
-  test('users can delete their accounts on the setting page', async function(assert) {
+  test('users can delete their accounts on the setting page', async function (assert) {
     let { server } = this.polly;
 
     let settings = {

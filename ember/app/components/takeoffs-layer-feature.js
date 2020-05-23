@@ -9,7 +9,7 @@ export default Component.extend({
   source: null,
   location: null,
 
-  feature: computed(function() {
+  feature: computed(function () {
     let location = this.location;
     let transformed = ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857');
 
