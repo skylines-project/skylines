@@ -3359,10 +3359,10 @@ broccoli-funnel@^1.0.0, broccoli-funnel@^1.0.1:
     symlink-or-copy "^1.0.0"
     walk-sync "^0.3.1"
 
-broccoli-funnel@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/broccoli-funnel/-/broccoli-funnel-3.0.1.tgz#21b00c2bc1c0b1b4c083e24139e2b321c4cf353f"
-  integrity sha512-G1LdSYpuVU7mxVq8KlOyLztsUv+posrHbe+6n/XymZpPd2bbLmQ4HL0v6YP1wWAnfCVTcTnUTpIkw9oYwy+tTw==
+broccoli-funnel@^3.0.2:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/broccoli-funnel/-/broccoli-funnel-3.0.3.tgz#26fd42632471f67a91f4770d1987118087219937"
+  integrity sha512-LPzZ91BwStoHZXdXHQAJeYORl189OrRKM5NdIi86SDU9wZ4s/3lV1PRFOiobDT/jKM10voM7CDzfvicHbCYxAQ==
   dependencies:
     array-equal "^1.0.0"
     blank-object "^1.0.1"
@@ -3421,12 +3421,12 @@ broccoli-merge-trees@^2.0.0:
     broccoli-plugin "^1.3.0"
     merge-trees "^2.0.0"
 
-broccoli-merge-trees@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-4.1.0.tgz#a30e2e4c5bb0f5eb8981e8af33a8077714c11f1a"
-  integrity sha512-1OXsksKPFiRdiZZOfh1z1mm7ZqKezlMS+DPBpHMDLSb6AhYHvoQfjf0KuMXbY8aoYskj7+Z+EJ5SsS/OC2v5yw==
+broccoli-merge-trees@^4.1.0, broccoli-merge-trees@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/broccoli-merge-trees/-/broccoli-merge-trees-4.2.0.tgz#692d3c163ecea08c5714a9434d664e628919f47c"
+  integrity sha512-nTrQe5AQtCrW4enLRvbD/vTLHqyW2tz+vsLXQe4IEaUhepuMGVKJJr+I8n34Vu6fPjmPLwTjzNC8izMIDMtHPw==
   dependencies:
-    broccoli-plugin "^3.1.0"
+    broccoli-plugin "^4.0.2"
     merge-trees "^2.0.0"
 
 broccoli-middleware@^1.0.0:
@@ -3492,6 +3492,15 @@ broccoli-output-wrapper@^3.1.1:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/broccoli-output-wrapper/-/broccoli-output-wrapper-3.2.0.tgz#6340e92f5ac81c6f85e6197af822c21628933f35"
   integrity sha512-cYXh5+h+UMCz68fJYOYDT2iNlTUUELfkTceDoxXio3YosxoOrxiBfqCLnxDd80twXCUkiq4W1v8AtTzLBO4Vjg==
+  dependencies:
+    fs-extra "^8.1.0"
+    heimdalljs-logger "^0.1.10"
+    symlink-or-copy "^1.2.0"
+
+broccoli-output-wrapper@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/broccoli-output-wrapper/-/broccoli-output-wrapper-3.2.1.tgz#8f9d1092afe0c1a4b7a1b6f0d2c62f1c403e82ad"
+  integrity sha512-mhOTy8AyzEsqgefR2ejbv5QTy3dbY2bvDfkARo55Xml52r2MU0CehQu4T/CH6oPcAXkdVYG/hGm9UpV1vU9Ohg==
   dependencies:
     fs-extra "^8.1.0"
     heimdalljs-logger "^0.1.10"
@@ -3577,6 +3586,19 @@ broccoli-plugin@^4.0.1:
     broccoli-node-api "^1.6.0"
     broccoli-output-wrapper "^3.1.1"
     fs-merger "^3.0.1"
+    promise-map-series "^0.2.1"
+    quick-temp "^0.1.3"
+    rimraf "^3.0.0"
+    symlink-or-copy "^1.3.0"
+
+broccoli-plugin@^4.0.2:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/broccoli-plugin/-/broccoli-plugin-4.0.3.tgz#9dcfbfb6a1b27a37cc22e65c071719ce9f92bc1e"
+  integrity sha512-CtAIEYq5K+4yQv8c/BHymOteuyjDAJfvy/asu4LudIWcMSS7dTn3yGI5gNBkwHG+qlRangYkHJNVAcDZMQbSVQ==
+  dependencies:
+    broccoli-node-api "^1.6.0"
+    broccoli-output-wrapper "^3.2.1"
+    fs-merger "^3.1.0"
     promise-map-series "^0.2.1"
     quick-temp "^0.1.3"
     rimraf "^3.0.0"
@@ -7890,6 +7912,18 @@ fs-merger@^3.0.1:
     rimraf "^2.6.3"
     walk-sync "^2.0.2"
 
+fs-merger@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/fs-merger/-/fs-merger-3.1.0.tgz#f30f74f6c70b2ff7333ec074f3d2f22298152f3b"
+  integrity sha512-RZ9JtqugaE8Rkt7idO5NSwcxEGSDZpLmVFjtVQUm3f+bWun7JAU6fKyU6ZJUeUnKdJwGx8uaro+K4QQfOR7vpA==
+  dependencies:
+    broccoli-node-api "^1.7.0"
+    broccoli-node-info "^2.1.0"
+    fs-extra "^8.0.1"
+    fs-tree-diff "^2.0.1"
+    rimraf "^2.6.3"
+    walk-sync "^2.0.2"
+
 fs-minipass@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/fs-minipass/-/fs-minipass-1.2.5.tgz#06c277218454ec288df77ada54a03b8702aacb9d"
@@ -11934,13 +11968,13 @@ quick-temp@^0.1.0, quick-temp@^0.1.2, quick-temp@^0.1.3, quick-temp@^0.1.5, quic
     rimraf "^2.5.4"
     underscore.string "~3.3.4"
 
-qunit-dom@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/qunit-dom/-/qunit-dom-1.0.0.tgz#0a2a42f7f0e44ee6ddb5b12bbf296dc2db7ee6dc"
-  integrity sha512-N4lpLP5zs59+01ZWHs73kgbglmUp6Z5TLZRB1GRlq+5H40NStjPU8ZQEVPlKsjYSbsR6xLkn2wlQURJnFArQag==
+qunit-dom@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/qunit-dom/-/qunit-dom-1.2.0.tgz#464cca19e9976c4cee4b14b06da6645c03026880"
+  integrity sha512-8UqSimcDIo19nokb3eh+Z5hov07xDeLnwsWAgCYPFGcpUF/eiZAIHbLDPCixH0SM1YqCm4YGCLVCojY6sJD5xQ==
   dependencies:
-    broccoli-funnel "^3.0.1"
-    broccoli-merge-trees "^4.1.0"
+    broccoli-funnel "^3.0.2"
+    broccoli-merge-trees "^4.2.0"
 
 qunit@^2.9.3:
   version "2.9.3"
