@@ -5,10 +5,10 @@ import Service from '@ember/service';
 
 import { BASE_LAYER_COOKIE_KEY, OVERLAY_LAYERS_COOKIE_KEY } from 'skylines/services/map-settings';
 
-module('Unit | Service | map-settings', function(hooks) {
+module('Unit | Service | map-settings', function (hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register(
       'service:router',
       Service.extend({
@@ -32,7 +32,7 @@ module('Unit | Service | map-settings', function(hooks) {
     this.subject = () => this.owner.lookup('service:map-settings');
   });
 
-  test('defaults to "OpenStreetMap" and "Airspace"', function(assert) {
+  test('defaults to "OpenStreetMap" and "Airspace"', function (assert) {
     this.owner.register(
       'service:cookies',
       Service.extend({
@@ -45,13 +45,13 @@ module('Unit | Service | map-settings', function(hooks) {
     assert.deepEqual(service.get('overlayLayers'), ['Airspace']);
   });
 
-  test('reads layers from cookies', function(assert) {
+  test('reads layers from cookies', function (assert) {
     let service = this.subject();
     assert.equal(service.get('baseLayer'), 'Foo');
     assert.deepEqual(service.get('overlayLayers'), ['Bar', 'Baz']);
   });
 
-  test('handles empty overlays cookie correctly', function(assert) {
+  test('handles empty overlays cookie correctly', function (assert) {
     this.owner.register(
       'service:cookies',
       Service.extend({
@@ -67,7 +67,7 @@ module('Unit | Service | map-settings', function(hooks) {
     assert.deepEqual(service.get('overlayLayers'), []);
   });
 
-  test('prioritizes layers from query params', function(assert) {
+  test('prioritizes layers from query params', function (assert) {
     let router = this.owner.lookup('service:router');
 
     router.set('currentURL', '/flights/17537?baselayer=alternate&overlays=foo;bar');
@@ -82,7 +82,7 @@ module('Unit | Service | map-settings', function(hooks) {
     assert.deepEqual(service.get('overlayLayers'), ['Bar', 'Baz']);
   });
 
-  test('handles empty overlays query param correctly', function(assert) {
+  test('handles empty overlays query param correctly', function (assert) {
     let router = this.owner.lookup('service:router');
     router.set('currentURL', '/flights/17537?baselayer=alternate&overlays=');
 
@@ -90,7 +90,7 @@ module('Unit | Service | map-settings', function(hooks) {
     assert.deepEqual(service.get('overlayLayers'), []);
   });
 
-  test('isLayerVisible() returns true/false if layer is base layer or enabled overlay layer', function(assert) {
+  test('isLayerVisible() returns true/false if layer is base layer or enabled overlay layer', function (assert) {
     let service = this.subject();
     assert.strictEqual(service.isLayerVisible('Foo'), true);
     assert.strictEqual(service.isLayerVisible('Bar'), true);
@@ -98,7 +98,7 @@ module('Unit | Service | map-settings', function(hooks) {
     assert.strictEqual(service.isLayerVisible('Qux'), false);
   });
 
-  test('setBaseLayer() changes the "baseLayer" and persists it to the cookie', function(assert) {
+  test('setBaseLayer() changes the "baseLayer" and persists it to the cookie', function (assert) {
     assert.expect(4);
 
     this.owner.register(
@@ -119,7 +119,7 @@ module('Unit | Service | map-settings', function(hooks) {
     assert.equal(service.get('baseLayer'), 'foo');
   });
 
-  test('toggleOverlayLayer() adds to the existing "overlayLayers" and persists it to the cookie', function(assert) {
+  test('toggleOverlayLayer() adds to the existing "overlayLayers" and persists it to the cookie', function (assert) {
     assert.expect(4);
 
     this.owner.register(
@@ -140,7 +140,7 @@ module('Unit | Service | map-settings', function(hooks) {
     assert.deepEqual(service.get('overlayLayers'), ['Airspace', 'foo']);
   });
 
-  test('toggleOverlayLayer() removes from the existing "overlayLayers" and persists it to the cookie', function(assert) {
+  test('toggleOverlayLayer() removes from the existing "overlayLayers" and persists it to the cookie', function (assert) {
     assert.expect(4);
 
     this.owner.register(

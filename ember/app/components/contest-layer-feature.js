@@ -9,7 +9,7 @@ export default Component.extend({
   source: null,
   contest: null,
 
-  feature: computed(function() {
+  feature: computed(function () {
     let contest = this.contest;
     return new ol.Feature({
       geometry: contest.get('geometry'),

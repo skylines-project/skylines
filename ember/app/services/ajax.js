@@ -6,7 +6,7 @@ import AjaxService from 'ember-ajax/services/ajax';
 export default AjaxService.extend({
   session: service(),
 
-  headers: computed('session.data.authenticated.access_token', function() {
+  headers: computed('session.data.authenticated.access_token', function () {
     let headers = {};
     let authToken = this.get('session.data.authenticated.access_token');
     if (authToken) {

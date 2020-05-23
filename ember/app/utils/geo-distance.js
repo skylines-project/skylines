@@ -1,7 +1,7 @@
 const RADIUS = 6367009;
 const DEG_TO_RAD = Math.PI / 180;
 
-export default function(loc1_deg, loc2_deg) {
+export default function (loc1_deg, loc2_deg) {
   let loc1 = [loc1_deg[0] * DEG_TO_RAD, loc1_deg[1] * DEG_TO_RAD];
   let loc2 = [loc2_deg[0] * DEG_TO_RAD, loc2_deg[1] * DEG_TO_RAD];
 

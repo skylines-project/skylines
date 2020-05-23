@@ -3,7 +3,7 @@ import { setupQunit } from '@pollyjs/core';
 export function setupPolly(hooks, options = {}) {
   setupQunit(hooks, options);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     let { server } = this.polly;
 
     server.get('/_percy/:anything').passthrough();

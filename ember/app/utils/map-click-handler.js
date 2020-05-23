@@ -173,7 +173,7 @@ const MapClickHandler = EmberObject.extend({
     circle.animation = null;
 
     let map = this.map;
-    map.on('postcompose', function(e) {
+    map.on('postcompose', function (e) {
       let vector_context = e.vectorContext;
 
       if (circle.geometry) {
@@ -225,7 +225,7 @@ const MapClickHandler = EmberObject.extend({
 
     let req = $.ajax(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
-    req.done(function(data) {
+    req.done(function (data) {
       for (let i = 0; i < data['flights'].length; ++i) {
         let flight = data['flights'][i];
 

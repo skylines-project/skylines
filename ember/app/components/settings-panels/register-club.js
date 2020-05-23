@@ -38,7 +38,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let json = this.getProperties('name');
 
     try {

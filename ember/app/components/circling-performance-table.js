@@ -10,7 +10,7 @@ export default Component.extend({
 });
 
 function findBy(array, key, value) {
-  return computed(`${array}.@each.${key}`, function() {
+  return computed(`${array}.@each.${key}`, function () {
     return this[array].findBy(key, value);
   });
 }

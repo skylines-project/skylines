@@ -51,7 +51,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let json = this.getProperties('email', 'firstName', 'lastName', 'password');
 
     try {

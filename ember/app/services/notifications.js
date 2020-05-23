@@ -11,7 +11,7 @@ export default Service.extend({
   counter: 0,
   hasUnread: gt('counter', 0),
 
-  counterText: computed('counter', function() {
+  counterText: computed('counter', function () {
     let counter = this.counter;
     return counter > 10 ? '10+' : counter;
   }),
@@ -21,7 +21,7 @@ export default Service.extend({
     this.updateTask.perform();
   },
 
-  updateTask: task(function*() {
+  updateTask: task(function* () {
     // eslint-disable-next-line no-constant-condition
     while (!Ember.testing) {
       let { events } = yield this.ajax.request('/api/notifications');

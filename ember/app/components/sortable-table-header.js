@@ -7,7 +7,7 @@ export default Component.extend({
   column: null,
   defaultOrder: 'asc',
 
-  cssClass: computed('class', function() {
+  cssClass: computed('class', function () {
     let _class = this['class'];
     if (_class) {
       return `${_class} sortable`;

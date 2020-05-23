@@ -2,7 +2,7 @@
 
 /* eslint-env node */
 
-module.exports = function(deployTarget) {
+module.exports = function (deployTarget) {
   let ENV = {
     build: {},
     // include other plugin configuration that applies to all deploy targets here
@@ -29,7 +29,7 @@ module.exports = function(deployTarget) {
     ENV.build.environment = 'production';
     // configure other plugins for production deploy target here
     ENV['rsync-assets'] = {
-      destination: 'skylines@skylines.aero:/home/skylines/src/skylines/frontend/static',
+      destination: 'skylines@skylines:/home/skylines/src/skylines/frontend/static',
       flags: ['z'],
       ssh: true,
       privateKeyPath: process.env['PRIVATE_KEY_PATH'],

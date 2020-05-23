@@ -13,7 +13,7 @@ export default Component.extend({
 
   mapSettings: service(),
 
-  mapSettingsObserver: observer('mapSettings.baseLayer', 'mapSettings.overlayLayers.[]', function() {
+  mapSettingsObserver: observer('mapSettings.baseLayer', 'mapSettings.overlayLayers.[]', function () {
     once(this, 'updateLayerVisibilities');
   }),
 
@@ -40,7 +40,7 @@ export default Component.extend({
     this.set('map', map);
 
     map.getViewport().setAttribute('tabindex', '0');
-    $(map.getViewport()).click(function() {
+    $(map.getViewport()).click(function () {
       $(this).focus();
     });
 

@@ -7,7 +7,7 @@ export default Component.extend({
   intl: service(),
   tagName: '',
 
-  title: computed('intl.locale', function() {
+  title: computed('intl.locale', function () {
     return this.intl.t('notifications');
   }),
 });

@@ -14,7 +14,7 @@ export default Component.extend({
   enabled: false,
   map: null,
 
-  enabledObserver: observer('enabled', function() {
+  enabledObserver: observer('enabled', function () {
     once(this, 'update');
   }),
 

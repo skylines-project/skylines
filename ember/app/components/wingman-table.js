@@ -6,7 +6,7 @@ export default Component.extend({
   nearFlights: null,
   visibleFlights: null,
 
-  nearFlightsWithColors: computed('nearFlights.[]', 'visibleFlights.[]', function() {
+  nearFlightsWithColors: computed('nearFlights.[]', 'visibleFlights.[]', function () {
     let { nearFlights, visibleFlights } = this;
     return nearFlights.map(it => {
       let id = it.flight.id;

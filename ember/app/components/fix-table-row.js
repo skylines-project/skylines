@@ -6,7 +6,7 @@ export default Component.extend({
   tagName: '',
   selectable: false,
 
-  badgeStyle: computed('row.color', function() {
+  badgeStyle: computed('row.color', function () {
     return htmlSafe(`background-color: ${this.row.color}`);
   }),
 
@@ -16,7 +16,7 @@ export default Component.extend({
     },
   },
 
-  handleClick: action(function() {
+  handleClick: action(function () {
     if (this.selectable) {
       this.onSelect(this.get('row.id'));
     }

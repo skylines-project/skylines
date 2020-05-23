@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 
 import { setupPolly } from 'skylines/tests/helpers/setup-polly';
 
-module('Acceptance | login', function(hooks) {
+module('Acceptance | login', function (hooks) {
   setupApplicationTest(hooks);
   setupPolly(hooks, { recordIfMissing: false });
 
@@ -12,7 +12,7 @@ module('Acceptance | login', function(hooks) {
   const LOGIN_DROPDOWN_TOGGLE = `${LOGIN_DROPDOWN} a`;
   const LOGIN_EMAIL = '[data-test-input="login-email"]';
 
-  test('login dropdown form stays visible when fields are focused', async function(assert) {
+  test('login dropdown form stays visible when fields are focused', async function (assert) {
     await visit('/');
 
     await click(LOGIN_DROPDOWN_TOGGLE);

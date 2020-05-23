@@ -8,6 +8,9 @@ export default Component.extend({
     this._super(...arguments);
 
     let year = new Date().getFullYear();
-    this.set('recentYears', [0, 1, 2, 3, 4].map(i => year - i));
+    this.set(
+      'recentYears',
+      [0, 1, 2, 3, 4].map(i => year - i),
+    );
   },
 });

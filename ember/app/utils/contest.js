@@ -20,7 +20,7 @@ const CONTEST_COLORS = {
  */
 const slContest = EmberObject.extend();
 
-slContest.fromData = function(_contest, flightId) {
+slContest.fromData = function (_contest, flightId) {
   let turnpoints = ol.format.Polyline.decodeDeltas(_contest.turnpoints, 2);
   let times = ol.format.Polyline.decodeDeltas(_contest.times, 1, 1);
   let name = _contest.name;

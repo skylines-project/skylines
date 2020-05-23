@@ -6,11 +6,11 @@ export default Component.extend({
   pinnedFlights: service(),
   tagName: '',
 
-  pinned: computed('pinnedFlights.pinned.[]', 'flightId', function() {
+  pinned: computed('pinnedFlights.pinned.[]', 'flightId', function () {
     return this.pinnedFlights.pinned.includes(this.flightId);
   }),
 
-  handleClick: action(function() {
+  handleClick: action(function () {
     this.pinnedFlights.toggle(this.flightId);
   }),
 });

@@ -45,7 +45,13 @@ export default Component.extend({
         return { id, name, visible, isBaseLayer };
       });
 
-    this.set('baseLayers', layers.filter(layer => layer.isBaseLayer));
-    this.set('overlayLayers', layers.filter(layer => !layer.isBaseLayer));
+    this.set(
+      'baseLayers',
+      layers.filter(layer => layer.isBaseLayer),
+    );
+    this.set(
+      'overlayLayers',
+      layers.filter(layer => !layer.isBaseLayer),
+    );
   },
 });

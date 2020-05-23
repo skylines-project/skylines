@@ -9,7 +9,7 @@ export default function safeComputed(func) {
     func = args.pop();
   }
 
-  args.push(function() {
+  args.push(function () {
     let values = [];
     for (let i = 0; i < args.length - 1; i++) {
       let value = this.get(args[i]);

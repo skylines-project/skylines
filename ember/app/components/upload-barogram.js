@@ -65,7 +65,7 @@ export default BarogramComponent.extend({
     this.set('elevations', flot_elev);
   },
 
-  initFlot: action(function(element) {
+  initFlot: action(function (element) {
     this._initFlot(element);
 
     this.placeholder.on('plotselecting', (event, range, marker) => {
@@ -102,7 +102,7 @@ export default BarogramComponent.extend({
 });
 
 function computedSecondsOfDay(dateKey, timeKey) {
-  return computed(dateKey, timeKey, function() {
+  return computed(dateKey, timeKey, function () {
     let date = new Date(this.get(dateKey));
     date.setUTCHours(0, 0, 0, 0);
 

@@ -10,7 +10,7 @@ export default Component.extend({
   map: null,
   fixes: null,
 
-  fixesObserver: observer('fixes.@each.pointXY', function() {
+  fixesObserver: observer('fixes.@each.pointXY', function () {
     once(this.map, 'render');
   }),
 

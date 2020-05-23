@@ -11,11 +11,11 @@ export default Component.extend({
   map: null,
   flights: null,
 
-  contests: computed('flights.@each.contests', function() {
+  contests: computed('flights.@each.contests', function () {
     return this.flights.map(flight => flight.get('contests')).reduce((a, b) => a.concat(b), []);
   }),
 
-  layer: computed(function() {
+  layer: computed(function () {
     return new ol.layer.Vector({
       source: new ol.source.Vector(),
       style: style_function,
@@ -24,7 +24,7 @@ export default Component.extend({
     });
   }),
 
-  source: computed('layer', function() {
+  source: computed('layer', function () {
     return this.layer.getSource();
   }),
 

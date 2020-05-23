@@ -12,7 +12,7 @@ export default Component.extend({
   maxDate: false,
   onChange: null,
 
-  setup: action(function(element) {
+  setup: action(function (element) {
     let $element = $(element);
 
     $element.datetimepicker({
@@ -43,7 +43,7 @@ export default Component.extend({
     once(this, 'updateDate');
   },
 
-  teardown: action(function(element) {
+  teardown: action(function (element) {
     $(element).off('dp.change');
     this.set('picker', null);
   }),

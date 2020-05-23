@@ -35,7 +35,7 @@ export default Controller.extend({
   hasUnreadOnPage: notEmpty('unreadEvents'),
   hasUnread: and('isFirstPage', 'hasUnreadOnPage'),
 
-  markAsReadTask: task(function*() {
+  markAsReadTask: task(function* () {
     yield this.ajax.request('/api/notifications/clear', { method: 'POST' });
     this.get('model.events').forEach(event => set(event, 'unread', false));
     this.set('notifications.counter', 0);

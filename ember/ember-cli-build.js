@@ -4,7 +4,7 @@
 
 let EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   let environment = process.env.EMBER_ENV;
 
   let pluginsToBlacklist = [];
@@ -119,7 +119,7 @@ module.exports = function(defaults) {
 
   // Monkey-patch the `findMissingKeys()` method
   let TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
-  TranslationReducer.prototype.findMissingKeys = function() {};
+  TranslationReducer.prototype.findMissingKeys = function () {};
 
   return app.toTree();
 };

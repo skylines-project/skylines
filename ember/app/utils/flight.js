@@ -27,23 +27,23 @@ export default EmberObject.extend({
 
   time: map('fixes', fix => fix.time),
 
-  coordinates: map('fixes', function(fix) {
+  coordinates: map('fixes', function (fix) {
     let coordinate = [fix.latitude, fix.longitude, fix.altitude, fix.time];
     return ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857');
   }),
 
-  flot_h: map('fixes', function(fix) {
+  flot_h: map('fixes', function (fix) {
     return [fix.time * 1000, this.units.convertAltitude(fix.altitude)];
   }),
 
-  flot_enl: map('fixes', function(fix) {
+  flot_enl: map('fixes', function (fix) {
     return [fix.time * 1000, fix.enl];
   }),
 
   elev_t: map('elevations', it => it.time),
   elev_h: map('elevations', it => it.elevation),
 
-  flot_elev: map('elevations', function(it) {
+  flot_elev: map('elevations', function (it) {
     return [it.time * 1000, it.elevation ? this.units.convertAltitude(it.elevation) : null];
   }),
 
@@ -53,7 +53,7 @@ export default EmberObject.extend({
   startTime: readOnly('time.firstObject'),
   endTime: readOnly('time.lastObject'),
 
-  coordinatesObserver: observer('coordinates', function() {
+  coordinatesObserver: observer('coordinates', function () {
     let coordinates = this.coordinates;
     this.geometry.setCoordinates(coordinates, 'XYZM');
   }),

@@ -95,7 +95,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let json = {
       email: this.email,
       firstName: this.firstName,

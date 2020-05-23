@@ -19,12 +19,12 @@ export default Component.extend({
 
   glideRate: safeComputed('phase.glideRate', gr => (Math.abs(gr) > 1000 ? Infinity : gr)),
 
-  selected: safeComputed('selection', function(selection) {
+  selected: safeComputed('selection', function (selection) {
     let phase = this.phase;
     return selection.start === phase.secondsOfDay && selection.end === phase.secondsOfDay + phase.duration;
   }),
 
-  handleClick: action(function() {
+  handleClick: action(function () {
     let onSelect = this.onSelect;
 
     if (this.selected) {

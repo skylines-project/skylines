@@ -16,7 +16,7 @@ export default Component.extend({
 
   fixCalc: null,
 
-  timeInterval: computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
+  timeInterval: computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function () {
     if (this.cesiumEnabled) {
       return null;
     }
@@ -41,7 +41,7 @@ export default Component.extend({
     this.set('fixCalc', fixCalc);
   },
 
-  setup: action(function(element) {
+  setup: action(function (element) {
     this.rootElement = element;
 
     let flights = this.flights;
@@ -92,7 +92,7 @@ export default Component.extend({
   }),
 
   // update flight track every 15 seconds
-  updateLoopTask: task(function*() {
+  updateLoopTask: task(function* () {
     while (true) {
       yield rawTimeout(15 * 1000);
       this._update();

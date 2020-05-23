@@ -9,7 +9,7 @@ export default Component.extend({
   ajax: service(),
   addCommentText: '',
 
-  addCommentTask: task(function*() {
+  addCommentTask: task(function* () {
     let id = this.flightId;
     let text = this.addCommentText;
     let user = this.get('account.user');

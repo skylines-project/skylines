@@ -10,7 +10,7 @@ export default Base.extend({
     (accountUser, flight) => accountUser.id === flight.pilot_id || accountUser.id === flight.copilot_id,
   ),
 
-  translationKey: computed('accountUserIsActor', 'accountUserIsPilot', function() {
+  translationKey: computed('accountUserIsActor', 'accountUserIsPilot', function () {
     let i = 1;
     if (this.accountUserIsActor) {
       i += 1;

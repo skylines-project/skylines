@@ -7,7 +7,7 @@ export default Component.extend({
   fixes: null,
   selection: null,
 
-  data: computed('fixes.@each.flight', function() {
+  data: computed('fixes.@each.flight', function () {
     return this.fixes.map((fix, i) => {
       let flight = fix.get('flight');
       let id = flight.get('id');
@@ -18,7 +18,7 @@ export default Component.extend({
     });
   }),
 
-  selectable: computed('data.[]', function() {
+  selectable: computed('data.[]', function () {
     return this.data.length > 1;
   }),
 

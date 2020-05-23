@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 export default Helper.extend({
   units: service(),
 
-  speedUnitObserver: observer('units.speedUnit', function() {
+  speedUnitObserver: observer('units.speedUnit', function () {
     this.recompute();
   }),
 

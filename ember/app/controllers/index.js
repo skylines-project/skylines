@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 export default Controller.extend({
   account: service(),
 
-  notificationsTarget: computed('account.user', function() {
+  notificationsTarget: computed('account.user', function () {
     return this.account.user ? 'notifications' : 'timeline';
   }),
 });

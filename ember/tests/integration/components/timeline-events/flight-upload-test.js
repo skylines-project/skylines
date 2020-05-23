@@ -6,10 +6,10 @@ import Service from '@ember/service';
 
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | timeline events/flight upload', function(hooks) {
+module('Integration | Component | timeline events/flight upload', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     this.owner.setupRouter();
 
     this.owner.register(
@@ -38,13 +38,13 @@ module('Integration | Component | timeline events/flight upload', function(hooks
     await this.owner.lookup('service:intl').loadAndSetLocale('en');
   });
 
-  test('renders default text', async function(assert) {
+  test('renders default text', async function (assert) {
     await render(hbs`{{timeline-events/flight-upload event=event}}`);
 
     assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/John Doe uploaded a 123 km flight on [\d/]+./);
   });
 
-  test('renders alternate text if actor is current user', async function(assert) {
+  test('renders alternate text if actor is current user', async function (assert) {
     this.owner.lookup('service:account').set('user', { id: 1, name: 'John Doe' });
 
     await render(hbs`{{timeline-events/flight-upload event=event}}`);

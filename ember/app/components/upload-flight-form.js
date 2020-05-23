@@ -53,7 +53,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  uploadTask: task(function*(form) {
+  uploadTask: task(function* (form) {
     let data = new FormData(form);
 
     try {
