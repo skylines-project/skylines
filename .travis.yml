@@ -30,10 +30,10 @@ jobs:
       python: 2.7
 
       addons:
-        postgresql: "9.5"
+        postgresql: "10"
         apt:
           packages:
-            - postgresql-9.5-postgis-2.3
+            - postgresql-10-postgis-2.4
             - python-dev
 
       services:
