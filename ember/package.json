@@ -79,7 +79,7 @@
     "loader.js": "^4.7.0",
     "node-sass": "^4.13.1",
     "prettier": "2.0.5",
-    "qunit-dom": "^1.0.0"
+    "qunit-dom": "^1.2.0"
   },
   "engines": {
     "node": ">= 4"
