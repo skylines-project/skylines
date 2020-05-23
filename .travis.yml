@@ -41,7 +41,7 @@ jobs:
         - redis
 
       before_install:
-        - pip install pipenv==2018.7.1
+        - pip install pipenv==v2020.4.1b2
 
       install:
         - pipenv install --dev
