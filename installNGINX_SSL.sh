@@ -1,3 +1,12 @@
+#to renew SSL certificate:
+sudo unlink /etc/nginx/sites-enabled/skylinescondor.com
+sudo ln -s /etc/nginx/sites-available/acme-challenge /etc/nginx/sites-enabled
+ngrestart
+sudo certbot renew --dry-run # remove --dry run part after testing
+sudo unlink /etc/nginx/sites-enabled/acme-challenge
+sudo ln -s /etc/nginx/sites-available/skylinescondor.com /etc/nginx/sites-enabled
+ngrestart
+
 #install on an Ubuntu 18+ machine
 
 sudo apt-get update
@@ -11,11 +20,11 @@ sudo apt-get install certbot
 cd /etc/nginx/
 sudo cp nginx.conf nginx.conf.orig
 
-sudo cp sites-available/default sites-available/skylinescondor.com
-sudo ln -s /etc/nginx/sites-available/skylinescondor.com /etc/nginx/sites-enabled/
+sudo cp sites-available/default sites-available/acme-challenge
+sudo ln -s /etc/nginx/sites-available/acme-challenge /etc/nginx/sites-enabled/
 sudo rm sites-enabled/default
 
-sudo vim sites-available/skylinescondor.com
+sudo vim /etc/nginx/ites-available/acme-challenge
 #replace;
    server_name _;
 #with 
@@ -70,7 +79,11 @@ sudo vim /etc/nginx/snippets/ssl-params.conf
 
 	ssl_dhparam /etc/ssl/certs/dhparam.pem;
 
-sudo vim sites-available/skylinescondor.com
+#Make the real server:
+sudo unlink /etc/nginx/sites-enabled/acme-challenge
+sudo cp /etc/nginx/sites-available/default sites-available/skylinescondor.com
+sudo ln -s /etc/nginx/sites-available/skylinescondor.com /etc/nginx/sites-enabled/
+sudo vim /etc/nginx/sites-available/skylinescondor.com
 #replace server with:
 	upstream ember {
 	    server 192.168.1.122:4200;
