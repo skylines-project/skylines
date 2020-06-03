@@ -7281,13 +7281,14 @@ eslint-config-simplabs@0.4.0:
     pify "^2.3.0"
     supports-color "^3.2.3"
 
-eslint-plugin-ember@^8.5.2:
-  version "8.5.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.5.2.tgz#9e0c0e43f74e8fe3d5e35903f33edd043f86dec3"
-  integrity sha512-dLA3W2GpPYRszKL9smw/S0aj0KxUiL1vlvQMDWsiuvcCCwgE/fGZ2FbdmicR/ssMnW5elRfNVPKQdS2B91AMxA==
+eslint-plugin-ember@^8.6.0:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.6.0.tgz#9099a222325aa57fd0c9782e0a7ea12b1b6552c9"
+  integrity sha512-qd/JmdRe180WR7Yc62+Wl9dSGA90vQsuZ92xIP8nL4a16752rUCpKxVeNi0p2tAieB06yFZBWd8C2JZsBC08/g==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
     ember-rfc176-data "^0.3.13"
+    lodash.kebabcase "^4.1.1"
     snake-case "^3.0.3"
 
 eslint-plugin-import-helpers@^1.0.2:
@@ -10423,6 +10424,11 @@ lodash.isobject@~2.3.0:
   integrity sha1-LhbT/Fg9qYMZaJU/LY5tc0NPZ5k=
   dependencies:
     lodash._objecttypes "~2.3.0"
+
+lodash.kebabcase@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
+  integrity sha1-hImxyw0p/4gZXM7KRI/21swpXDY=
 
 lodash.keys@^3.0.0:
   version "3.1.2"
