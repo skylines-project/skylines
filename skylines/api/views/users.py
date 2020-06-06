@@ -281,6 +281,8 @@ def read(user_id):
         user_json["distanceFlights"] = _distance_flights(user)
         user_json["stats"] = _quick_stats(user)
         user_json["takeoffLocations"] = _get_takeoff_locations(user)
+        if current_user.admin: #include email of user for admins
+            user_json["email_address"] = user.email_address
 
     mark_user_notifications_read(user)
 
