@@ -276,13 +276,13 @@ def read(user_id):
     if request.user_id:
         current_user = User.get(request.user_id)
         user_json["followed"] = current_user.follows(user)
+        if current_user.admin: #include email of user for admins
+            user_json["email_address"] = user.email_address
 
     if "extended" in request.args:
         user_json["distanceFlights"] = _distance_flights(user)
         user_json["stats"] = _quick_stats(user)
         user_json["takeoffLocations"] = _get_takeoff_locations(user)
-        if current_user.admin: #include email of user for admins
-            user_json["email_address"] = user.email_address
 
     mark_user_notifications_read(user)
 

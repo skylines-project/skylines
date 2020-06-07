@@ -1,16 +1,18 @@
 <div class="well">
   <table class="right">
-    {{#if user.email}}
-      <tr>
-        <th>{{t "email-address"}}</th>
-        <td>{{user.email}}</td>
-      </tr>
-    {{/if}}
 
+{{!--     <hr> --}}
     <tr>
       <th>{{t "name"}}</th>
       <td>{{user.name}}</td>
     </tr>
+
+    {{#if user.email_address}}
+      <tr>
+        <th>{{t "email-address"}}</th>
+        <td>{{user.email_address}}</td>
+      </tr>
+    {{/if}}
 
     <tr>
       <th>{{t "club"}}</th>

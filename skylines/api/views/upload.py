@@ -235,7 +235,6 @@ def index_post():
     if form.get("pilotId") == u"":
         form = form.copy()
         form.pop("pilotId")
-
     try:
         data = FlightSchema(only=("pilotId", "pilotName")).load(form).data
     except ValidationError as e:

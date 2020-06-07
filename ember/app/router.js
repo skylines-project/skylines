@@ -39,7 +39,7 @@ Router.map(function() {
   });
 
   this.route('flight-upload', { path: '/flights/upload' });
-//note: the route (template, other files are named 'flight, but the path of the routs is flights.  Why _ids?
+//note: the route (template, other files are named 'flight, but the path of the routs is flights.
   this.route('flight', { path: '/flights/:flight_ids' }, function() {
     this.route('change-aircraft', { path: '/change_aircraft' });
     this.route('change-pilot', { path: '/change_pilot' });
