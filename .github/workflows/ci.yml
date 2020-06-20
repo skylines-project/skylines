@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  schedule:
+    - cron: '0 3 * * *' # daily, at 3am
+
+jobs:
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    env:
+      JOBS: 1 # See https://git.io/vdao3 for details.
+
+      # Percy secrets are included here to enable Percy's GitHub integration
+      # on community-submitted PRs
+      PERCY_PROJECT: skylines/skylines
+      PERCY_TOKEN: 81bf0245987c87eb4924eae0b085cb60596f2f0f4d4ffe27e171828535aa6812
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - run: yarn install --frozen-lockfile
+        working-directory: ./ember
+
+      - run: npx bower install
+        working-directory: ./ember
+
+      - run: yarn lint:js
+        working-directory: ./ember
+
+      - run: yarn lint:hbs
+        working-directory: ./ember
+
+      - run: yarn test
+        working-directory: ./ember
+
+  backend:
+    name: Backend
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [2.7, 3.6]
+
+    services:
+      postgres:
+        image: postgis/postgis:10-2.5
+        env:
+          POSTGRES_DB: skylines_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Install Python dependencies
+      - run: pip install pipenv==v2020.4.1b2
+      - run: pipenv install --dev
+
+      # Run the test suite
+      - run: pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
+
+  backend-lint:
+    name: Backend (Lint)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+
+      - run: pip install black==18.9b0
+      - run: black config migrations skylines tests *.py --check
