@@ -21,7 +21,7 @@ flask-sqlalchemy = "*"
 shapely = "==1.6.4.post2"
 "crc16" = "==0.1.1"
 pytz = "*"
-celery = {extras = ["redis"],version = "<3.2,>=3.1"}
+celery = {extras = ["redis"],version = "<3.2,>=3.1.26.post2"}
 redis = "<3.0"
 xcsoar = "==0.7.0"
 aerofiles = "==1.0.0"
