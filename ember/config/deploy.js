@@ -28,12 +28,15 @@ module.exports = function (deployTarget) {
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
     // configure other plugins for production deploy target here
-    ENV['rsync-assets'] = {
-      destination: 'skylines@skylines:/home/skylines/src/skylines/frontend/static',
-      flags: ['z'],
-      ssh: true,
+    ENV['with-rsync'] = {
+      host: 'skylines.aero',
+      username: 'skylines',
       privateKeyPath: process.env['PRIVATE_KEY_PATH'],
-      excludeIndexHTML: false,
+      port: 2222,
+      root: '/home/skylines/frontend',
+      activationDestination() {
+        return '/home/skylines/src/skylines/frontend/static';
+      },
     };
   }
 

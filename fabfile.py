@@ -19,7 +19,7 @@ def deploy(branch="master", force=False):
 @task
 def deploy_ember():
     with lcd("ember"):
-        local("node_modules/.bin/ember deploy production -v")
+        local("node_modules/.bin/ember deploy production -v --activate")
 
 
 @task
