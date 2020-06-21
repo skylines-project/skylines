@@ -18,7 +18,7 @@
     "test": "ember test"
   },
   "dependencies": {
-    "remarkable": "^1.7.2"
+    "remarkable": "^1.7.4"
   },
   "devDependencies": {
     "@ember/jquery": "^1.1.0",
