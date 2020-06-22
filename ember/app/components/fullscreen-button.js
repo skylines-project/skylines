@@ -1,7 +1,6 @@
 /* global BigScreen */
 
 import { action } from '@ember/object';
-
 import Component from '@glimmer/component';
 
 export default class FullscreenButton extends Component {

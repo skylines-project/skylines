@@ -1,10 +1,9 @@
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
 
 import Service from '@ember/service';
-
-import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | timeline events/flight comment', function (hooks) {
   setupRenderingTest(hooks);

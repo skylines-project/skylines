@@ -4,10 +4,10 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 import * as Sentry from '@sentry/browser';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
-import RSVP from 'rsvp';
 
 import _availableLocales from '../utils/locales';
 
