@@ -27,7 +27,15 @@ module.exports = function (deployTarget) {
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
+
     // configure other plugins for production deploy target here
+
+    ENV['sentry-cli'] = {
+      appName: 'frontend',
+      orgName: 'skylines',
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+    };
+
     ENV['with-rsync'] = {
       host: 'skylines.aero',
       username: 'skylines',
