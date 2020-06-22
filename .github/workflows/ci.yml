@@ -87,8 +87,16 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      # Install Python dependencies
       - run: pip install pipenv==v2020.4.1b2
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/Pipfile') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # Install Python dependencies
       - run: pipenv install --dev
 
       # Run the test suite
