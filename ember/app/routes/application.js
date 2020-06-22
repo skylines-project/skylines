@@ -16,6 +16,7 @@ export default Route.extend(ApplicationRouteMixin, {
   ajax: service(),
   cookies: service(),
   intl: service(),
+  progress: service(),
   raven: service(),
   session: service(),
   units: service(),
@@ -83,5 +84,12 @@ export default Route.extend(ApplicationRouteMixin, {
     } else if (inLoginRoute) {
       this.transitionTo('index');
     }
+  },
+
+  actions: {
+    loading(transition) {
+      this.progress.handle(transition);
+      return true;
+    },
   },
 });
