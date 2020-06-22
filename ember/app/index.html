@@ -7,6 +7,63 @@
 
     {{content-for "head"}}
 
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 9999;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        background: white;
+        transition: opacity 1s ease-out;
+      }
+
+      .loading.fade {
+        opacity: 0;
+      }
+
+      @keyframes blue-dot {
+        0% {
+          transform: scale(1.0);
+          opacity: 0.6;
+        }
+        to {
+          transform: scale(1.7);
+          opacity: 0;
+        }
+      }
+
+      .blue-dot {
+        animation-name: blue-dot;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        transform-origin: 50% 50%;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .loading {
+          transition: none;
+        }
+
+        .blue-dot {
+          animation: none;
+        }
+      }
+    </style>
+
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/skylines.css">
 
@@ -21,6 +78,18 @@
   </head>
   <body>
     {{content-for "body"}}
+
+    <div id="initial-load-spinner" class="loading">
+      <svg xmlns="http://www.w3.org/2000/svg" width="130" height="130" viewBox="0 0 500 500" style="overflow: visible">
+        <path d="M490 227.811a210.78 197.09 0 11-421.56 0 210.78 197.09 0 11421.56 0z" fill="#008eda" class="blue-dot"></path>
+        <path d="M490 227.811a210.78 197.09 0 11-421.56 0 210.78 197.09 0 11421.56 0z" fill="#008eda"></path>
+        <path d="M356.119 87.27L220.295 203.419l-131.998-81.94L11.37 233.282c-.452.722-.984 1.633-1.189 2.656-3.349 16.718 39.808 40.12 103.303 58.666l-58.172 50.594c-1.568 1.427-3.297 4.33-3.682 7.434-3.082 24.832 82.536 55.69 191.301 69.187 108.766 13.497 217.006.783 220.088-24.05.385-3.103-.61-6.312-2.87-9.564z" fill="#fff"></path>
+        <path d="M345.735 126.337L222.664 231.553l-131.998-81.94-76.92 111.81c-.458.717-.99 1.628-1.195 2.651-3.348 16.718 39.809 40.12 103.303 58.666l-58.122 50.631c-1.617 1.39-3.347 4.293-3.732 7.397-3.082 24.832 82.536 55.69 191.301 69.187 108.766 13.498 199.698 4.427 202.78-20.405.385-3.104-.61-6.313-2.87-9.565z" fill="#000"></path>
+        <path d="M92.897 176.372l32.203 123.39c8.419-14.796 13.168-24.826 17.217-32.203l37.303 50.376 34.754-34.116-43.043-36.666c7.646-1.484 17.577-3.192 31.883-5.42L92.897 176.372zm190.345 166.432l-30.927 73.332 33.159 44.637c53.97 4.3 100.985 2.955 132.317-3.188L283.242 342.804z" fill="#fff"></path>
+        <path d="M338.401 165.235L222.664 257.06l40.173 3.826-149.534 168.026c24.784 8.146 54.93 15.457 88.637 21.362l90.549-177.591 30.29 36.028L338.4 165.235z" fill="#fff"></path>
+      </svg>
+      <div style="font-family:sans-serif;font-size:35px">Loading...</div>
+    </div>
 
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/skylines.js"></script>

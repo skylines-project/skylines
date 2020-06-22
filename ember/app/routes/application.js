@@ -30,6 +30,17 @@ export default Route.extend(ApplicationRouteMixin, {
     await this.intl.loadAndSetLocale(locale);
   },
 
+  afterModel() {
+    this._super(...arguments);
+
+    // remove loading spinner from the page (see `index.html`)
+    let spinnner = document.querySelector('#initial-load-spinner');
+    if (spinnner) {
+      spinnner.classList.add('fade');
+      setTimeout(() => spinnner.remove(), 1500);
+    }
+  },
+
   setupController() {
     this._super(...arguments);
 
