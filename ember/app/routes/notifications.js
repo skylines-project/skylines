@@ -52,6 +52,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       transition.promise.finally(() => {
         controller.set('loading', false);
       });
+      return true;
     },
   },
 });

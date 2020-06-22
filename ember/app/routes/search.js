@@ -27,6 +27,7 @@ export default Route.extend({
       transition.promise.finally(() => {
         controller.set('currentlyLoading', false);
       });
+      return true;
     },
   },
 
