@@ -1,7 +1,7 @@
+import { computed } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
 
-import { tracked } from '@glimmer/tracking';
 import { rawTimeout, task } from 'ember-concurrency';
 import { buildWaiter } from 'ember-test-waiters';
 
@@ -12,8 +12,9 @@ let waiter = buildWaiter('progress-bar');
 export default class ProgressService extends Service {
   @service router;
 
-  @tracked _style = '';
+  _style = '';
 
+  @computed('_style')
   get style() {
     return htmlSafe(this._style);
   }
@@ -32,7 +33,7 @@ export default class ProgressService extends Service {
     let token = waiter.beginAsync();
 
     let progress = 0;
-    this._style = `width: 0%`;
+    this.set('_style', `width: 0%`);
 
     while (this.counterTask.isRunning) {
       yield rawTimeout(SPEED);
@@ -55,12 +56,12 @@ export default class ProgressService extends Service {
         progress = 0.998;
       }
 
-      this._style = `transition: width ${SPEED}ms linear; width: ${progress * 100}%`;
+      this.set('_style', `transition: width ${SPEED}ms linear; width: ${progress * 100}%`);
     }
 
-    this._style = `transition: width ${SPEED}ms linear; width: 100%`;
+    this.set('_style', `transition: width ${SPEED}ms linear; width: 100%`);
     yield rawTimeout(SPEED);
-    this._style = `transition: opacity ${SPEED * 2}ms linear; width: 100%; opacity: 0`;
+    this.set('_style', `transition: opacity ${SPEED * 2}ms linear; width: 100%; opacity: 0`);
 
     waiter.endAsync(token);
   }).drop())
