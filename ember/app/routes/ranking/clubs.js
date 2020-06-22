@@ -36,6 +36,7 @@ export default Route.extend({
       transition.promise.finally(() => {
         controller.set('loading', false);
       });
+      return true;
     },
   },
 });

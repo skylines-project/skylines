@@ -10,8 +10,6 @@ module.exports = function (defaults) {
   let pluginsToBlacklist = [];
   if (environment === 'production') {
     pluginsToBlacklist.push('ember-freestyle', 'freestyle');
-  } else if (environment === 'test') {
-    pluginsToBlacklist.push('ember-cli-pace');
   }
 
   let app = new EmberApp(defaults, {
