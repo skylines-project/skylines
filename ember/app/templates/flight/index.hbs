@@ -1,16 +1,16 @@
 {{#if (and (or model.flight.pilot model.flight.pilotName) (or model.flight.copilot model.flight.copilotName))}}
-  {{title (t "DISTANCE-on-DATE-by-PILOT-and-COPILOT"
+  {{page-title (t "DISTANCE-on-DATE-by-PILOT-and-COPILOT"
     distance=(format-distance model.flight.distance)
     date=(format-date model.flight.scoreDate format="ddmmyyyy" timeZone="UTC")
     pilot=(or model.flight.pilot.name model.flight.pilotName)
     copilot=(or model.flight.copilot.name model.flight.copilotName))}}
 {{else if (or model.flight.pilot model.flight.pilotName)}}
-  {{title (t "DISTANCE-on-DATE-by-PILOT"
+  {{page-title (t "DISTANCE-on-DATE-by-PILOT"
     distance=(format-distance model.flight.distance)
     date=(format-date model.flight.scoreDate format="ddmmyyyy" timeZone="UTC")
     pilot=(or model.flight.pilot.name model.flight.pilotName))}}
 {{else}}
-  {{title (t "DISTANCE-on-DATE"
+  {{page-title (t "DISTANCE-on-DATE"
     distance=(format-distance model.flight.distance)
     date=(format-date model.flight.scoreDate format="ddmmyyyy" timeZone="UTC"))}}
 {{/if}}
