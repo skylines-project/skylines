@@ -2,7 +2,11 @@
 
 /* eslint-env node */
 
+const getRepoInfo = require('git-repo-info');
+
 module.exports = function (environment) {
+  let { sha } = getRepoInfo();
+
   let ENV = {
     modulePrefix: 'skylines',
     environment,
@@ -31,6 +35,7 @@ module.exports = function (environment) {
     sentry: {
       development: true,
       dsn: 'https://1081e00b0f0e4965bae7b8b7e468edd3@sentry.io/102210',
+      release: `frontend@${sha.slice(0, 7)}`,
     },
   };
 
