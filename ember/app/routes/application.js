@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import Ember from 'ember';
 
+import * as Sentry from '@sentry/browser';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import RSVP from 'rsvp';
 
@@ -17,7 +18,6 @@ export default Route.extend(ApplicationRouteMixin, {
   cookies: service(),
   intl: service(),
   progress: service(),
-  raven: service(),
   session: service(),
   units: service(),
 
@@ -60,7 +60,7 @@ export default Route.extend(ApplicationRouteMixin, {
 
     let userId = this.get('account.user.id');
     if (userId) {
-      this.raven.callRaven('setUserContext', { id: userId });
+      Sentry.configureScope(scope => scope.setUser({ id: userId }));
     }
   },
 
