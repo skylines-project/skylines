@@ -118,8 +118,8 @@ module.exports = function (defaults) {
   app.import('bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js');
 
   app.import({
-    development: 'bower_components/sidebar-v2/js/jquery-sidebar.js',
-    production: 'bower_components/sidebar-v2/js/jquery-sidebar.min.js',
+    development: 'node_modules/sidebar-v2/js/jquery-sidebar.js',
+    production: 'node_modules/sidebar-v2/js/jquery-sidebar.min.js',
   });
 
   // Monkey-patch the `findMissingKeys()` method
