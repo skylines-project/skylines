@@ -6005,10 +6005,10 @@ ember-href-to@^3.1.0:
   dependencies:
     ember-cli-babel "^7.1.2"
 
-ember-intl@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-4.4.0.tgz#c87260d0418e3318942fa39d925331b6306c0e57"
-  integrity sha512-1pLkXkiXPQCdjKZC30GYwaLz7k0vb58zMl3rcdcsRJX0CBOyXeISpa/o2I4y9VmuyyZutZGayuiBfZkqQN1dqg==
+ember-intl@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/ember-intl/-/ember-intl-4.4.1.tgz#717502a52e05246c0b0665c13635e7cdca68a180"
+  integrity sha512-rrWgInLdzuZJK5pPAMxr4TWrgeISR5766FVxb66JrONz07/Da1Bm0itZatvWqpm1BZm8pHQYkm+a3grKOsesYQ==
   dependencies:
     "@ember-intl/broccoli-cldr-data" "^3.1.0"
     "@ember-intl/intl-messageformat" "^2.5.0"
