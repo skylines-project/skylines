@@ -63,7 +63,7 @@
       <div class="sidebar-pane" id="tab-stats-legs">
         <h3>{{t "leg-statistics"}}</h3>
         <div class="sidebar-pane-content">
-          <FlightLegPanel @legs={{legs}} @selection={{flightPhase.selection}} @onSelect={{action (mut flightPhase.selection)}} />
+          <FlightLegPanel @legs={{legs}} @selection={{this.highlightedTimeInterval}} @onSelect={{action (mut this.highlightedTimeInterval)}} />
         </div>
       </div>
 
@@ -72,7 +72,7 @@
           <h3>{{t "phase-statistics"}}</h3>
           <div class="sidebar-pane-content">
             <div class="table-responsive">
-              <FlightPhaseTable @phases={{phases}} @selection={{flightPhase.selection}} @onSelect={{action (mut flightPhase.selection)}} />
+              <FlightPhaseTable @phases={{phases}} @selection={{this.highlightedTimeInterval}} @onSelect={{action (mut this.highlightedTimeInterval)}} />
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@
   <FlightMap
     @flights={{fixCalc.flights}}
     @fixes={{fixCalc.fixes}}
-    @phaseHighlightCoords={{flightPhase.coordinates}}
+    @phaseHighlightCoords={{this.highlightedCoordinates}}
     @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}}
     @defaultTime={{fixCalc.defaultTime}}
     @onTimeChange={{action (mut fixCalc.time)}}
@@ -120,7 +120,7 @@
       @selection={{selectedFlightId}}
       @hoverMode={{not fixCalc.isRunning}}
       @timeInterval={{timeInterval}}
-      @timeHighlight={{flightPhase.selection}}
+      @timeHighlight={{this.highlightedTimeInterval}}
       @time={{fixCalc.time}}
       @defaultTime={{fixCalc.defaultTime}} />
   </div>
