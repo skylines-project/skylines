@@ -188,8 +188,8 @@
     </modal.body>
 
     <modal.footer>
-      <BsButton @onClick={{action modal.submit}} @disabled={{deleteTask.isRunning}} @type="primary">{{t "yes"}}</BsButton>
-      <BsButton @onClick={{action modal.close}} @disabled={{deleteTask.isRunning}}>{{t "no"}}</BsButton>
+      <BsButton @onClick={{action modal.submit}} disabled={{deleteTask.isRunning}} @type="primary">{{t "yes"}}</BsButton>
+      <BsButton @onClick={{action modal.close}} disabled={{deleteTask.isRunning}}>{{t "no"}}</BsButton>
     </modal.footer>
   </BsModal>
 
@@ -203,8 +203,8 @@
     </modal.body>
 
     <modal.footer>
-      <BsButton @onClick={{action modal.submit}} @disabled={{publishTask.isRunning}} @type="primary">{{t "yes"}}</BsButton>
-      <BsButton @onClick={{action modal.close}} @disabled={{publishTask.isRunning}}>{{t "no"}}</BsButton>
+      <BsButton @onClick={{action modal.submit}} disabled={{publishTask.isRunning}} @type="primary">{{t "yes"}}</BsButton>
+      <BsButton @onClick={{action modal.close}} disabled={{publishTask.isRunning}}>{{t "no"}}</BsButton>
     </modal.footer>
   </BsModal>
 </div>
