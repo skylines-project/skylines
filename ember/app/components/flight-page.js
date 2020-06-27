@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 import $ from 'jquery';
 
 import FixCalc from '../utils/fix-calc';
-import FlighPhase from '../utils/flight-phase';
+import getNextSmallerIndex from '../utils/next-smaller-index';
 
 export default Component.extend({
   tagName: '',
@@ -16,7 +16,28 @@ export default Component.extend({
   units: service(),
 
   fixCalc: null,
-  flightPhase: null,
+  highlightedTimeInterval: null,
+
+  highlightedCoordinates: computed('highlightedTimeInterval', function () {
+    let selection = this.highlightedTimeInterval;
+    if (!selection) {
+      return;
+    }
+
+    let { start, end } = selection;
+
+    let flight = this.get('fixCalc.flights.firstObject');
+    let times = flight.get('time');
+
+    let start_index = getNextSmallerIndex(times, start);
+    let end_index = getNextSmallerIndex(times, end);
+    if (start_index >= end_index) {
+      return;
+    }
+
+    let coordinates = flight.get('geometry').getCoordinates();
+    return coordinates.slice(start_index, end_index + 1);
+  }),
 
   timeInterval: computed('mapExtent', 'cesiumEnabled', function () {
     if (this.cesiumEnabled) {
@@ -42,9 +63,6 @@ export default Component.extend({
     let fixCalc = FixCalc.create({ ajax, units });
     fixCalc.addFlight(this._primaryFlightPath);
     this.set('fixCalc', fixCalc);
-
-    let flightPhase = FlighPhase.create({ fixCalc });
-    this.set('flightPhase', flightPhase);
   },
 
   setup: action(function (element) {
