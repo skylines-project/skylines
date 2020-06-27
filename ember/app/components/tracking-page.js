@@ -8,15 +8,16 @@ import ol from 'openlayers';
 
 import FixCalc from '../utils/fix-calc';
 
-export default Component.extend({
-  tagName: '',
-  ajax: service(),
+export default class extends Component {
+  tagName = '';
 
-  units: service(),
+  @service ajax;
+  @service units;
 
-  fixCalc: null,
+  fixCalc = FixCalc.create({ ajax: this.ajax, units: this.units });
 
-  timeInterval: computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function () {
+  @computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]')
+  get timeInterval() {
     if (this.cesiumEnabled) {
       return null;
     }
@@ -29,19 +30,10 @@ export default Component.extend({
     let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
 
     return interval.max === -Infinity ? null : [interval.min, interval.max];
-  }),
+  }
 
-  init() {
-    this._super(...arguments);
-
-    let ajax = this.ajax;
-    let units = this.units;
-
-    let fixCalc = FixCalc.create({ ajax, units });
-    this.set('fixCalc', fixCalc);
-  },
-
-  setup: action(function (element) {
+  @action
+  setup(element) {
     this.rootElement = element;
 
     let flights = this.flights;
@@ -89,30 +81,32 @@ export default Component.extend({
     map.getView().fit(extent, { padding: this._calculatePadding() });
 
     this.updateLoopTask.perform();
-  }),
+  }
 
   // update flight track every 15 seconds
-  updateLoopTask: task(function* () {
+  @task(function* () {
     while (true) {
       yield rawTimeout(15 * 1000);
       this._update();
     }
-  }),
+  })
+  updateLoopTask;
 
-  actions: {
-    togglePlayback() {
-      this.fixCalc.togglePlayback();
-    },
+  @action
+  togglePlayback() {
+    this.fixCalc.togglePlayback();
+  }
 
-    removeFlight(id) {
-      let flights = this.get('fixCalc.flights');
-      flights.removeObjects(flights.filterBy('id', id));
-    },
+  @action
+  removeFlight(id) {
+    let flights = this.get('fixCalc.flights');
+    flights.removeObjects(flights.filterBy('id', id));
+  }
 
-    calculatePadding() {
-      return this._calculatePadding();
-    },
-  },
+  @action
+  calculatePadding() {
+    return this._calculatePadding();
+  }
 
   _update() {
     let flights = this.get('fixCalc.flights');
@@ -130,14 +124,14 @@ export default Component.extend({
           // ignore update errors
         });
     });
-  },
+  }
 
   _calculatePadding() {
     let sidebar = this.rootElement.querySelector('#sidebar');
     let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
-  },
-});
+  }
+}
 
 /**
  * Updates a tracking flight.
