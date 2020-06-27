@@ -70,7 +70,7 @@
     "ember-qunit": "^4.6.0",
     "ember-resolver": "^8.0.0",
     "ember-simple-auth": "^3.0.0",
-    "ember-source": "~3.12.4",
+    "ember-source": "~3.19.0",
     "ember-svg-jar": "^2.2.3",
     "ember-template-lint": "^2.8.0",
     "ember-test-selectors": "^4.1.0",
