@@ -46,12 +46,10 @@ export default Route.extend(ApplicationRouteMixin, {
 
     let settings = this.get('session.data.authenticated.settings');
     if (settings) {
-      this.units.setProperties({
-        altitudeUnitIndex: settings.altitudeUnit,
-        distanceUnitIndex: settings.distanceUnit,
-        liftUnitIndex: settings.liftUnit,
-        speedUnitIndex: settings.speedUnit,
-      });
+      this.units.altitudeUnitIndex = settings.altitudeUnit;
+      this.units.distanceUnitIndex = settings.distanceUnit;
+      this.units.liftUnitIndex = settings.liftUnit;
+      this.units.speedUnitIndex = settings.speedUnit;
     }
   },
 

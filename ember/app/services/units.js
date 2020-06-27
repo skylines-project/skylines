@@ -1,6 +1,8 @@
 import { computed } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 
+import { tracked } from '@glimmer/tracking';
+
 /**
  * A static dictionary of the supported units with its
  * conversion factors and default decimal places.
@@ -61,10 +63,10 @@ const ALTITUDE_UNITS = ['m', 'ft'];
 export default class UnitsService extends Service {
   @service intl;
 
-  distanceUnitIndex = 1;
-  speedUnitIndex = 1;
-  liftUnitIndex = 0;
-  altitudeUnitIndex = 0;
+  @tracked distanceUnitIndex = 1;
+  @tracked speedUnitIndex = 1;
+  @tracked liftUnitIndex = 0;
+  @tracked altitudeUnitIndex = 0;
 
   @computedUnit('distanceUnits', 'distanceUnitIndex') distanceUnit;
   @computedUnit('speedUnits', 'speedUnitIndex') speedUnit;
@@ -155,10 +157,10 @@ export default class UnitsService extends Service {
 function computedUnit(unitsKey, indexKey) {
   return computed(indexKey, {
     get() {
-      return this.get(unitsKey)[this.get(indexKey)];
+      return this[unitsKey][this[indexKey]];
     },
     set(key, value) {
-      this.set(indexKey, this.get(unitsKey).indexOf(value));
+      this[indexKey] = this[unitsKey].indexOf(value);
       return value;
     },
   });
