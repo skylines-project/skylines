@@ -1,13 +1,11 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 
-export default Component.extend({
-  tagName: '',
-  flights: null,
-  fixes: null,
-  selection: null,
+export default class extends Component {
+  tagName = '';
 
-  data: computed('fixes.@each.flight', function () {
+  @computed('fixes.@each.flight')
+  get data() {
     return this.fixes.map((fix, i) => {
       let flight = fix.get('flight');
       let id = flight.get('id');
@@ -16,15 +14,15 @@ export default Component.extend({
       let removable = i !== 0;
       return { id, color, competitionId, removable, fix };
     });
-  }),
+  }
 
-  selectable: computed('data.[]', function () {
+  @computed('data.[]')
+  get selectable() {
     return this.data.length > 1;
-  }),
+  }
 
-  actions: {
-    select(id) {
-      this.set('selection', this.selection === id ? null : id);
-    },
-  },
-});
+  @action
+  select(id) {
+    this.set('selection', this.selection === id ? null : id);
+  }
+}
