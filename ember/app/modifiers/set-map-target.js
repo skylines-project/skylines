@@ -1,6 +1,6 @@
-import makeFunctionalModifier from 'ember-functional-modifiers';
+import { modifier } from 'ember-modifier';
 
-export default makeFunctionalModifier((element, [map]) => {
+export default modifier((element, [map]) => {
   if (map) {
     map.setTarget(element);
     return () => map.setTarget(null);
