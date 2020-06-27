@@ -43,7 +43,7 @@
         <th>{{t "takeoff"}}</th>
         <td>
           {{#if flight.takeoffAirport}}
-            <XFlag @code={{flight.takeoffAirport.countryCode}} @style="float: right; margin: 3px" />
+            <XFlag @code={{flight.takeoffAirport.countryCode}} style="float: right; margin: 3px" />
             {{t "AIRPORT-at-TIME"
             htmlSafe=true
             airport=flight.takeoffAirport.name
@@ -61,7 +61,7 @@
         <th>{{t "landing"}}</th>
         <td>
           {{#if flight.landingAirport}}
-            <XFlag @code={{flight.landingAirport.countryCode}} @style="float: right; margin: 3px" />
+            <XFlag @code={{flight.landingAirport.countryCode}} style="float: right; margin: 3px" />
             {{t "AIRPORT-at-TIME"
             htmlSafe=true
             airport=flight.landingAirport.name
