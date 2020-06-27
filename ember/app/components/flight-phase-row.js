@@ -4,27 +4,25 @@ import { equal } from '@ember/object/computed';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Component.extend({
-  tagName: '',
+export default class extends Component {
+  tagName = '';
 
-  phase: null,
-  selection: null,
-  onSelect() {},
+  @equal('phase.type', 'circling') isCircling;
+  @equal('phase.type', 'powered') isPowered;
 
-  isCircling: equal('phase.type', 'circling'),
-  isPowered: equal('phase.type', 'powered'),
+  @equal('phase.circlingDirection', 'left') isCirclingLeft;
+  @equal('phase.circlingDirection', 'right') isCirclingRight;
 
-  isCirclingLeft: equal('phase.circlingDirection', 'left'),
-  isCirclingRight: equal('phase.circlingDirection', 'right'),
+  @safeComputed('phase.glideRate', gr => (Math.abs(gr) > 1000 ? Infinity : gr)) glideRate;
 
-  glideRate: safeComputed('phase.glideRate', gr => (Math.abs(gr) > 1000 ? Infinity : gr)),
-
-  selected: safeComputed('selection', function (selection) {
+  @safeComputed('selection', function (selection) {
     let phase = this.phase;
     return selection.start === phase.secondsOfDay && selection.end === phase.secondsOfDay + phase.duration;
-  }),
+  })
+  selected;
 
-  handleClick: action(function () {
+  @action
+  handleClick() {
     let onSelect = this.onSelect;
 
     if (this.selected) {
@@ -36,5 +34,5 @@ export default Component.extend({
         end: phase.secondsOfDay + phase.duration,
       });
     }
-  }),
-});
+  }
+}
