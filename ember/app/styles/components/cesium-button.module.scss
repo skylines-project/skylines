@@ -1,4 +1,4 @@
-.CesiumSwitcher {
+.cesium-button {
   z-index: 1005 !important;
 
   position: absolute;
@@ -13,8 +13,8 @@
   box-shadow: 0 0 8px rgba(50,50,50,0.3);
 
   cursor: pointer;
-}
 
-.CesiumSwitcher:hover {
-  background: white;
+  &:hover {
+    background: white;
+  }
 }
