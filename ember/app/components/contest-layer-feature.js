@@ -3,13 +3,11 @@ import { computed } from '@ember/object';
 
 import ol from 'openlayers';
 
-export default Component.extend({
-  tagName: '',
+export default class ContestLayerFeature extends Component {
+  tagName = '';
 
-  source: null,
-  contest: null,
-
-  feature: computed(function () {
+  @computed
+  get feature() {
     let contest = this.contest;
     return new ol.Feature({
       geometry: contest.get('geometry'),
@@ -17,15 +15,15 @@ export default Component.extend({
       color: contest.get('color'),
       type: 'contest',
     });
-  }),
+  }
 
-  didInsertElement() {
-    this._super(...arguments);
+  init() {
+    super.init(...arguments);
     this.source.addFeature(this.feature);
-  },
+  }
 
-  willDestroyElement() {
-    this._super(...arguments);
+  willDestroy() {
+    super.willDestroy(...arguments);
     this.source.removeFeature(this.feature);
-  },
-});
+  }
+}
