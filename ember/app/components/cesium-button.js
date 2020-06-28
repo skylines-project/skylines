@@ -1,17 +1,14 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
 
-export default Component.extend({
-  tagName: '',
-  enabled: false,
-  onEnable() {},
-  onDisable() {},
+export default class CesiumButton extends Component {
+  tagName = '';
 
-  toggle: action(function () {
+  @action toggle() {
     if (this.enabled) {
       this.onDisable();
     } else {
       this.onEnable();
     }
-  }),
-});
+  }
+}
