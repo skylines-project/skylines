@@ -1,14 +1,13 @@
-import Component from '@ember/component';
 import { action } from '@ember/object';
 
-export default class CesiumButton extends Component {
-  tagName = '';
+import Component from '@glimmer/component';
 
+export default class CesiumButton extends Component {
   @action toggle() {
-    if (this.enabled) {
-      this.onDisable();
+    if (this.args.enabled) {
+      this.args.onDisable();
     } else {
-      this.onEnable();
+      this.args.onEnable();
     }
   }
 }
