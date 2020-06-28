@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
+import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 
 export default class CommentsList extends Component {
@@ -9,7 +10,7 @@ export default class CommentsList extends Component {
   @service account;
   @service ajax;
 
-  addCommentText = '';
+  @tracked addCommentText = '';
 
   @(task(function* () {
     let id = this.flightId;
@@ -18,7 +19,7 @@ export default class CommentsList extends Component {
 
     yield this.ajax.request(`/api/flights/${id}/comments`, { method: 'POST', json: { text } });
 
-    this.set('addCommentText', '');
+    this.addCommentText = '';
     this.comments.pushObject({ text, user });
   }).drop())
   addCommentTask;
