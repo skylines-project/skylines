@@ -16,6 +16,6 @@ export default class extends Component {
 
   @computed('nearFlight.color')
   get colorStripeStyle() {
-    return htmlSafe(`background-color: ${this.nearFlight.color}`);
+    return htmlSafe(`border-left: 3px solid ${this.nearFlight.color ?? 'transparent'}`);
   }
 }
