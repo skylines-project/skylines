@@ -1,4 +1,4 @@
-.FullscreenButton {
+.fullscreen-button {
   z-index: 1006 !important;
 
   position: absolute;
@@ -19,8 +19,8 @@
   box-shadow: 0 0 8px rgba(50,50,50,0.3);
 
   cursor: pointer;
-}
 
-.FullscreenButton:hover {
-  background: white;
+  &:hover {
+    background: white;
+  }
 }
