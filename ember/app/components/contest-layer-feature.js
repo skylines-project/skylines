@@ -1,14 +1,12 @@
-import Component from '@ember/component';
 import { computed } from '@ember/object';
 
+import Component from '@glimmer/component';
 import ol from 'openlayers';
 
 export default class ContestLayerFeature extends Component {
-  tagName = '';
-
   @computed
   get feature() {
-    let contest = this.contest;
+    let contest = this.args.contest;
     return new ol.Feature({
       geometry: contest.get('geometry'),
       sfid: contest.get('flightId'),
@@ -17,13 +15,13 @@ export default class ContestLayerFeature extends Component {
     });
   }
 
-  init() {
-    super.init(...arguments);
-    this.source.addFeature(this.feature);
+  constructor() {
+    super(...arguments);
+    this.args.source.addFeature(this.feature);
   }
 
   willDestroy() {
     super.willDestroy(...arguments);
-    this.source.removeFeature(this.feature);
+    this.args.source.removeFeature(this.feature);
   }
 }
