@@ -8,10 +8,6 @@ export default IntlService.extend({
   ajax: service(),
   cookies: service(),
 
-  async loadIntlPolyfill() {
-    await loadJS(`/assets/intl/intl.min.js`);
-  },
-
   async loadAndSetLocale(locale) {
     await this.loadLocale(locale);
     this.setLocale(locale);
