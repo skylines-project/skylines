@@ -1,0 +1,14 @@
+/* make sure the columns have the same width in all tracking tables */
+
+.tracking-table {
+  composes: table table-striped from global;
+
+  th {
+    width: 22.222%;
+  }
+
+  th:nth-child(4),
+  th:nth-child(5) {
+    width: 11.111%;
+  }
+}
