@@ -3,13 +3,15 @@ import { inject as service } from '@ember/service';
 
 import { task } from 'ember-concurrency';
 
-export default Component.extend({
-  tagName: '',
-  account: service(),
-  ajax: service(),
-  addCommentText: '',
+export default class CommentsList extends Component {
+  tagName = '';
 
-  addCommentTask: task(function* () {
+  @service account;
+  @service ajax;
+
+  addCommentText = '';
+
+  @(task(function* () {
     let id = this.flightId;
     let text = this.addCommentText;
     let user = this.get('account.user');
@@ -18,5 +20,6 @@ export default Component.extend({
 
     this.set('addCommentText', '');
     this.comments.pushObject({ text, user });
-  }).drop(),
-});
+  }).drop())
+  addCommentTask;
+}
