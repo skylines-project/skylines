@@ -1,7 +1,7 @@
-{{#if (not-eq column sortColumn)}}
-  <LinkTo @query={{hash column=column order=defaultOrder}} @tagName="th" class={{cssClass}}>{{yield}}</LinkTo>
-{{else if (eq sortOrder "asc")}}
-  <LinkTo @query={{hash column=column order="desc"}} @tagName="th" class={{cssClass}}>{{fa-icon "chevron-up"}} {{yield}}</LinkTo>
+{{#if (not-eq @column @sortColumn)}}
+  <LinkTo @query={{hash column=@column order=(or @defaultOrder "asc")}} @tagName="th" class="sortable" ...attributes>{{yield}}</LinkTo>
+{{else if (eq @sortOrder "asc")}}
+  <LinkTo @query={{hash column=@column order="desc"}} @tagName="th" class="sortable" ...attributes>{{fa-icon "chevron-up"}} {{yield}}</LinkTo>
 {{else}}
-  <LinkTo @query={{hash column=column order="asc"}} @tagName="th" class={{cssClass}}>{{fa-icon "chevron-down"}} {{yield}}</LinkTo>
+  <LinkTo @query={{hash column=@column order="asc"}} @tagName="th" class="sortable" ...attributes>{{fa-icon "chevron-down"}} {{yield}}</LinkTo>
 {{/if}}
