@@ -1,8 +1,6 @@
 import { debug } from '@ember/debug';
 import Service from '@ember/service';
 
-import RSVP from 'rsvp';
-
 const CESIUM_BASE_URL = '/cesium/';
 
 export default Service.extend({
@@ -11,18 +9,20 @@ export default Service.extend({
   load() {
     let promise = this.loaderPromise;
     if (!promise) {
-      promise = new RSVP.Promise(resolve => {
-        debug('Loading Cesium...');
-
-        let cesium = document.createElement('script');
-        cesium.src = `${CESIUM_BASE_URL}Cesium.js`;
-        cesium.onload = resolve;
-        document.body.appendChild(cesium);
-      });
-
+      debug('Loading Cesium...');
+      promise = loadJS(`${CESIUM_BASE_URL}Cesium.js`);
       this.set('loaderPromise', promise);
     }
 
     return promise;
   },
 });
+
+function loadJS(url) {
+  return new Promise(resolve => {
+    let script = document.createElement('script');
+    script.src = url;
+    script.onload = resolve;
+    document.body.appendChild(script);
+  });
+}
