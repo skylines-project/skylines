@@ -92,9 +92,6 @@
   "engines": {
     "node": "^12.18.0"
   },
-  "resolutions": {
-    "ember-concurrency": "^1.2.1"
-  },
   "ember-addon": {
     "paths": [
       "lib/freestyle"
