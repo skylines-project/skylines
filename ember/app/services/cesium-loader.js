@@ -1,24 +1,21 @@
 import { debug } from '@ember/debug';
+import { bool } from '@ember/object/computed';
 import Service from '@ember/service';
 
 import { task } from 'ember-concurrency';
 
 export default class CesiumLoaderService extends Service {
-  loaderPromise = null;
+  @bool('loadTask.lastSuccessful') loaded;
 
   load() {
-    let promise = this.loaderPromise;
-    if (!promise) {
-      promise = this.loadTask.perform();
-      this.set('loaderPromise', promise);
-    }
-
-    return promise;
+    return this.loadTask.perform();
   }
 
   @(task(function* () {
-    debug('Loading Cesium...');
-    yield loadJS('/cesium/Cesium.js');
+    if (!this.loaded) {
+      debug('Loading Cesium...');
+      yield loadJS('/cesium/Cesium.js');
+    }
   }).drop())
   loadTask;
 }
