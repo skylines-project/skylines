@@ -1,4 +1,4 @@
-<tr class="{{if this.selected "selected"}} {{if this.selectable "selectable"}}" ...attributes {{on "click" this.handleClick}}>
+<tr local-class="fix-table-row" class="{{if this.selected "selected"}} {{if this.selectable "selectable"}}" ...attributes {{on "click" this.handleClick}}>
   <td>
     <span class="badge" style={{badgeStyle}}>
       {{#if row.competitionId}}

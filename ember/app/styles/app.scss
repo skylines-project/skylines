@@ -2,19 +2,9 @@
 
 @import 'bootstrap';
 
-@import 'components/cesium-button';
-@import 'components/fix-table';
-@import 'components/follower-panel';
-@import 'components/fullscreen-button';
 @import 'components/layer-switcher';
-@import 'components/loading-page';
 @import 'components/login-form';
 @import 'components/map-click-handler';
-@import 'components/playback-button';
-@import 'components/progress-bar';
-@import 'components/search-results-table';
-@import 'components/tracking-table';
-@import 'components/wingman-table';
 
 @import 'routes/index';
 
@@ -22,5 +12,7 @@
 @import 'events';
 @import 'ol3-sidebar';
 @import 'flags';
-@import 'footer';
 @import 'map';
+
+// ember-css-modules
+@import 'css-modules';

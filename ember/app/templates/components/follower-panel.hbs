@@ -1,10 +1,10 @@
 <div ...attributes>
   <div class="panel panel-default">
-    <div class="panel-body follower-panel">
+    <div class="panel-body" local-class="follower-panel">
       <h4 class="media-heading">
         <LinkTo @route="user" @model={{follower.id}}>{{follower.name}}</LinkTo>
       </h4>
-  
+
       <p>
         {{#if follower.club}}
           <LinkTo @route="club" @model={{follower.club.id}}>{{follower.club.name}}</LinkTo>
@@ -12,7 +12,7 @@
           &nbsp;
         {{/if}}
       </p>
-  
+
       {{#if account.user}}
         {{#if (eq follower.id account.user.id)}}
           <button class="btn btn-default form-control" disabled>

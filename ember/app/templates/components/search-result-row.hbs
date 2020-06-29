@@ -1,5 +1,5 @@
 <tr ...attributes>
-  <td class="column-icon">
+  <td local-class="column-icon">
     {{#if (eq result.type "user")}}
       {{fa-icon "user" title=(t "pilot")}}
     {{else if (eq result.type "club")}}
@@ -8,8 +8,8 @@
       {{fa-icon "map-marker" title=(t "airport")}}
     {{/if}}
   </td>
-  
-  <td class="column-type">
+
+  <td local-class="column-type">
     <small>
       {{#if (eq result.type "user")}}
         {{t "pilot"}}
@@ -20,45 +20,45 @@
       {{/if}}
     </small>
   </td>
-  
+
   <td class="column-buttons">
     {{#if (eq result.type "user")}}
       <LinkTo @route="user" @model={{result.id}}>{{result.name}}</LinkTo>
-  
+
     {{else if (eq result.type "club")}}
       <LinkTo @route="club" @model={{result.id}}>{{result.name}}</LinkTo>
-  
+
       {{#if result.website}}
         <small>- <a href={{result.website}} target="_blank" rel="noopener">{{result.website}}</a></small>
       {{/if}}
-  
+
     {{else if (eq result.type "airport")}}
       <LinkTo @route="flights.airport" @model={{result.id}}>{{result.name}}</LinkTo>
-  
+
       {{#if result.icao}}
         <small>- {{result.icao}}</small>
       {{/if}}
-  
+
       {{#if result.frequency}}
         <small>- {{result.frequency}} MHz</small>
       {{/if}}
     {{/if}}
-  
+
     <div class="pull-right">
       {{#if (eq result.type "user")}}
         <LinkTo @route="flights.pilot" @model={{result.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
         <LinkTo @route="statistics.pilot" @model={{result.id}} class="btn btn-default btn-sm">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
-  
+
       {{else if (eq result.type "club")}}
         <LinkTo @route="club.pilots" @model={{result.id}} class="btn btn-default btn-sm">{{fa-icon "group"}} {{t "members"}}</LinkTo>
         <LinkTo @route="flights.club" @model={{result.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
         <LinkTo @route="statistics.club" @model={{result.id}} class="btn btn-default btn-sm">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
-  
+
       {{else if (eq result.type "airport")}}
         <LinkTo @route="flights.airport" @model={{result.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
         <LinkTo @route="statistics.airport" @model={{result.id}} class="btn btn-default btn-sm">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
       {{/if}}
     </div>
   </td>
-  
+
 </tr>
