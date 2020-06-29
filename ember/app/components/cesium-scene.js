@@ -1,20 +1,19 @@
 /* globals Cesium */
 
-import Component from '@ember/component';
-
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import olcs from 'ol-cesium';
 
 import config from 'skylines/config/environment';
 
-export default Component.extend({
-  tagName: '',
+export default class CesiumScene extends Component {
+  @tracked ol3d;
+  @tracked scene;
 
-  map: null,
+  constructor() {
+    super(...arguments);
 
-  init() {
-    this._super(...arguments);
-
-    let ol3d = new olcs.OLCesium({ map: this.map });
+    let ol3d = new olcs.OLCesium({ map: this.args.map });
 
     Cesium.Ion.defaultAccessToken = config.CESIUM_TOKEN;
 
@@ -24,14 +23,14 @@ export default Component.extend({
     });
     scene.globe.depthTestAgainstTerrain = true;
 
-    this.set('ol3d', ol3d);
-    this.set('scene', scene);
+    this.ol3d = ol3d;
+    this.scene = scene;
 
     this.ol3d.setEnabled(true);
-  },
+  }
 
   willDestroy() {
-    this.map.getView().setRotation(0);
+    this.args.map.getView().setRotation(0);
     this.ol3d.setEnabled(false);
-  },
-});
+  }
+}
