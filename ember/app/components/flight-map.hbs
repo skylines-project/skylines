@@ -13,12 +13,10 @@
     {{/if}}
   {{/if}}
 
-  {{#if cesiumEnabled}}
-    <CesiumLoader>
-      <CesiumScene @map={{map}} as |cesium|>
-        <CesiumPlaneModels @scene={{cesium.scene}} @fixes={{fixes}} />
-      </CesiumScene>
-    </CesiumLoader>
+  {{#if (and cesiumEnabled this.cesiumLoader.loaded)}}
+    <CesiumScene @map={{map}} as |cesium|>
+      <CesiumPlaneModels @scene={{cesium.scene}} @fixes={{fixes}} />
+    </CesiumScene>
   {{/if}}
 
   {{yield}}

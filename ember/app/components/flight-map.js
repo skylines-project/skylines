@@ -1,7 +1,11 @@
+import { inject as service } from '@ember/service';
+
 import slMapClickHandler from '../utils/map-click-handler';
 import BaseMapComponent from './base-map';
 
 export default BaseMapComponent.extend({
+  cesiumLoader: service(),
+
   flights: null,
   fixes: null,
   phaseHighlightCoords: null,
@@ -65,6 +69,7 @@ export default BaseMapComponent.extend({
     cesiumEnabled() {
       this.set('cesiumEnabled', true);
       this.onCesiumEnabledChange(true);
+      this.cesiumLoader.load();
     },
     cesiumDisabled() {
       this.set('cesiumEnabled', false);
