@@ -1,7 +1,7 @@
-import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
-export default Component.extend({
-  tagName: '',
-  searchTextService: service('searchText'),
-});
+import Component from '@glimmer/component';
+
+export default class NavBarSearchForm extends Component {
+  @service('searchText') searchTextService;
+}
