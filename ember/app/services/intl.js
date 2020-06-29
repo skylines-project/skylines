@@ -2,7 +2,6 @@ import { assert, debug } from '@ember/debug';
 import { inject as service } from '@ember/service';
 
 import IntlService from 'ember-intl/services/intl';
-import { Promise } from 'rsvp';
 
 export default IntlService.extend({
   ajax: service(),
@@ -20,13 +19,7 @@ export default IntlService.extend({
       return;
     }
 
-    let promises = [this._loadTranslation(locale)];
-
-    if (window.Intl === window.IntlPolyfill) {
-      promises.push(this._loadPolyfillData(locale));
-    }
-
-    await Promise.all(promises);
+    await this._loadTranslation(locale);
   },
 
   async _loadTranslation(locale) {
@@ -37,12 +30,6 @@ export default IntlService.extend({
     await this.addTranslations(locale, translations);
   },
 
-  async _loadPolyfillData(locale) {
-    assert('locale is set', locale);
-    debug(`Loading polyfill data for locale: ${locale}`);
-    await loadJS(`/assets/intl/locales/${locale}.js`);
-  },
-
   setLocale(locale) {
     debug(`Setting locale to "${locale}"`);
     this._super(...arguments);
@@ -51,14 +38,3 @@ export default IntlService.extend({
     document.documentElement.lang = locale;
   },
 });
-
-function loadJS(url) {
-  return new Promise(resolve => {
-    debug('Loading Cesium...');
-
-    let el = document.createElement('script');
-    el.src = url;
-    el.onload = resolve;
-    document.body.appendChild(el);
-  });
-}
