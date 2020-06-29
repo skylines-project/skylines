@@ -1,8 +1,6 @@
 import { debug } from '@ember/debug';
 import Service from '@ember/service';
 
-const CESIUM_BASE_URL = '/cesium/';
-
 export default Service.extend({
   loaderPromise: null,
 
@@ -10,7 +8,7 @@ export default Service.extend({
     let promise = this.loaderPromise;
     if (!promise) {
       debug('Loading Cesium...');
-      promise = loadJS(`${CESIUM_BASE_URL}Cesium.js`);
+      promise = loadJS('/cesium/Cesium.js');
       this.set('loaderPromise', promise);
     }
 
