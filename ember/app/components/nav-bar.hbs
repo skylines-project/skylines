@@ -1,8 +1,18 @@
-<BsNavbar @type="inverse" @fluid={{false}} @position="fixed-top" @collapsed={{collapsed}} @onCollapse={{action (mut collapsed) true}} @onExpand={{action (mut collapsed) false}} data-test-nav-bar as |navbar|>
+<BsNavbar
+  @type="inverse"
+  @fluid={{false}}
+  @position="fixed-top"
+  @collapsed={{this.collapsed}}
+  @onCollapse={{action (mut this.collapsed) true}}
+  @onExpand={{action (mut this.collapsed) false}}
+  data-test-nav-bar
+  ...attributes
+  as |navbar|
+>
   <div class="navbar-header">
     {{navbar.toggle}}
 
-    <LinkTo @route="index" class="navbar-brand" @click={{action (mut collapsed) true}}>
+    <LinkTo @route="index" class="navbar-brand" @click={{action (mut this.collapsed) true}}>
       {{svg-jar "logo" class="logo"}} <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
     </LinkTo>
   </div>
@@ -16,7 +26,7 @@
       <NavBarLink @nav={{nav}} @target="search" @title={{t "search.search"}} @icon="search" @listClass="hidden-lg" />
     </navbar.nav>
 
-    <NavBarSearchForm @onSearch={{onSearch}} />
+    <NavBarSearchForm @onSearch={{@onSearch}} />
     <NavBarMenuRight @navbar={{navbar}} />
   </navbar.content>
 </BsNavbar>
