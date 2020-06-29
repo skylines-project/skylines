@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { observer } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
@@ -7,11 +6,8 @@ export default Component.extend({
 
   tagName: '',
 
-  enabled: false,
-
-  enabledObserver: observer('enabled', function () {
-    if (this.enabled) {
-      this.cesiumLoader.load();
-    }
-  }),
+  init() {
+    this._super(...arguments);
+    this.cesiumLoader.load();
+  },
 });

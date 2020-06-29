@@ -1,8 +1,6 @@
 /* globals Cesium */
 
 import Component from '@ember/component';
-import { observer } from '@ember/object';
-import { once } from '@ember/runloop';
 
 import olcs from 'ol-cesium';
 
@@ -11,12 +9,7 @@ import config from 'skylines/config/environment';
 export default Component.extend({
   tagName: '',
 
-  enabled: false,
   map: null,
-
-  enabledObserver: observer('enabled', function () {
-    once(this, 'update');
-  }),
 
   init() {
     this._super(...arguments);
@@ -34,16 +27,11 @@ export default Component.extend({
     this.set('ol3d', ol3d);
     this.set('scene', scene);
 
-    this.update();
+    this.ol3d.setEnabled(true);
   },
 
-  update() {
-    let enabled = this.enabled;
-
-    this.ol3d.setEnabled(enabled);
-
-    if (!enabled) {
-      this.map.getView().setRotation(0);
-    }
+  willDestroy() {
+    this.map.getView().setRotation(0);
+    this.ol3d.setEnabled(false);
   },
 });
