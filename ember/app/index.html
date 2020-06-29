@@ -13,7 +13,7 @@
         padding: 0;
       }
 
-      .loading {
+      #initial-load-spinner {
         position: fixed;
         top: 0;
         left: 0;
@@ -30,7 +30,7 @@
         transition: opacity 1s ease-out;
       }
 
-      .loading.fade {
+      #initial-load-spinner.fade {
         opacity: 0;
       }
 
@@ -54,7 +54,7 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .loading {
+        #initial-load-spinner {
           transition: none;
         }
 
@@ -79,7 +79,7 @@
   <body>
     {{content-for "body"}}
 
-    <div id="initial-load-spinner" class="loading">
+    <div id="initial-load-spinner">
       <svg xmlns="http://www.w3.org/2000/svg" width="130" height="130" viewBox="0 0 500 500" style="overflow: visible">
         <path d="M490 227.811a210.78 197.09 0 11-421.56 0 210.78 197.09 0 11421.56 0z" fill="#008eda" class="blue-dot"></path>
         <path d="M490 227.811a210.78 197.09 0 11-421.56 0 210.78 197.09 0 11421.56 0z" fill="#008eda"></path>
