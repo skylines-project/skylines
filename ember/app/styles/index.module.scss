@@ -1,16 +1,17 @@
-#about {
-  .social-buttons .btn-group {
-    float: right;
-  }
+.social-buttons {
+  composes: btn-group visible-md visible-lg from global;
+  float: right;
 
-  .social-buttons .btn {
+  :global(.btn) {
     width: 40px;
   }
+}
 
+.about {
   h2 {
     font-size: 22px;
 
-    .fa {
+    :global(.fa) {
       width: 1.2em;
       text-align: center;
     }
