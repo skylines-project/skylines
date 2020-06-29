@@ -1,8 +1,8 @@
 import { debug } from '@ember/debug';
 import Service from '@ember/service';
 
-export default Service.extend({
-  loaderPromise: null,
+export default class CesiumLoaderService extends Service {
+  loaderPromise = null;
 
   load() {
     let promise = this.loaderPromise;
@@ -13,8 +13,8 @@ export default Service.extend({
     }
 
     return promise;
-  },
-});
+  }
+}
 
 function loadJS(url) {
   return new Promise(resolve => {
