@@ -4,6 +4,6 @@
   <td class="duration hidden-md">{{format-seconds leg.duration}}</td>
   <td class="numeric">{{format-speed speed}}</td>
   <td class="numeric">{{format-number climbPercentage style="percent" maximumFractionDigits=1}}</td>
-  <td class="numeric">{{#if (is-undefined climbRate)}}-{{else}}{{format-lift climbRate}}{{/if}}</td>
+  <td class="numeric">{{#if (eq climbRate undefined)}}-{{else}}{{format-lift climbRate}}{{/if}}</td>
   <td class="numeric">{{format-number glideRate maximumFractionDigits=1}}</td>
 </tr>
