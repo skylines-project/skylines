@@ -2,10 +2,10 @@ import { inject as service } from '@ember/service';
 
 import BaseHelper from 'ember-intl/helpers/-format-base';
 
-export default BaseHelper.extend({
-  units: service(),
+export default class extends BaseHelper {
+  @service units;
 
   format(value, options) {
     return this.units.formatDistance(value, options);
-  },
-});
+  }
+}
