@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 
 import { percySnapshot } from 'ember-percy';
 
-import { setupPolly } from 'skylines/tests/helpers/setup-polly';
+import { setupPolly } from 'skylines/tests/test-helpers/setup-polly';
 
 module('Acceptance | Flight Page', function (hooks) {
   setupApplicationTest(hooks);
