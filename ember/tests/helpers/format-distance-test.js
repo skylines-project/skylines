@@ -1,6 +1,6 @@
 import { render, settled } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 
 import hbs from 'htmlbars-inline-precompile';
 
@@ -43,7 +43,7 @@ module('Helper | format-distance', function (hooks) {
     assert.dom().hasText('23 NM');
   });
 
-  skip('changing the locale invalidates the value', async function (assert) {
+  test('changing the locale invalidates the value', async function (assert) {
     this.set('distance', 42024);
 
     await render(hbs`{{format-distance distance decimals=1}}`);
