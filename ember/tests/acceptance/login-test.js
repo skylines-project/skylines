@@ -2,7 +2,7 @@ import { visit, click } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import { setupPolly } from 'skylines/tests/helpers/setup-polly';
+import { setupPolly } from 'skylines/tests/test-helpers/setup-polly';
 
 module('Acceptance | login', function (hooks) {
   setupApplicationTest(hooks);

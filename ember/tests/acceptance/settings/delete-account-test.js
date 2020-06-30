@@ -5,7 +5,7 @@ import { module, test } from 'qunit';
 import { percySnapshot } from 'ember-percy';
 import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
 
-import { setupPolly } from 'skylines/tests/helpers/setup-polly';
+import { setupPolly } from 'skylines/tests/test-helpers/setup-polly';
 
 module('Acceptance | Settings | Delete Account', function (hooks) {
   setupApplicationTest(hooks);
