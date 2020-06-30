@@ -3,17 +3,18 @@ import { inject as service } from '@ember/service';
 
 import AjaxService from 'ember-ajax/services/ajax';
 
-export default AjaxService.extend({
-  session: service(),
+export default class extends AjaxService {
+  @service session;
 
-  headers: computed('session.data.authenticated.access_token', function () {
+  @computed('session.data.authenticated.access_token')
+  get headers() {
     let headers = {};
     let authToken = this.get('session.data.authenticated.access_token');
     if (authToken) {
       headers['Authorization'] = `Bearer ${authToken}`;
     }
     return headers;
-  }),
+  }
 
   options(url, options = {}) {
     if (options.json) {
@@ -22,6 +23,6 @@ export default AjaxService.extend({
       delete options.json;
     }
 
-    return this._super(url, options);
-  },
-});
+    return super.options(url, options);
+  }
+}
