@@ -34,7 +34,5 @@ export default class extends IntlService {
     debug(`Setting locale to "${locale}"`);
     super.setLocale(...arguments);
     this.cookies.write('locale', locale, { path: '/', expires: new Date('2099-12-31') });
-
-    document.documentElement.lang = locale;
   }
 }
