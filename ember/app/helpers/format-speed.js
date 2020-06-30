@@ -1,10 +1,11 @@
-import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
 
-export default Helper.extend({
+import BaseHelper from 'ember-intl/helpers/-format-base';
+
+export default BaseHelper.extend({
   units: service(),
 
-  compute([value], options) {
+  format(value, options) {
     return this.units.formatSpeed(value, options);
   },
 });
