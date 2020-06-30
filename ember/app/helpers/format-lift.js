@@ -1,15 +1,11 @@
-import Helper from '@ember/component/helper';
-import { observer } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default Helper.extend({
-  units: service(),
+import BaseHelper from 'ember-intl/helpers/-format-base';
 
-  liftUnitObserver: observer('units.liftUnit', function () {
-    this.recompute();
-  }),
+export default class extends BaseHelper {
+  @service units;
 
-  compute([value], options) {
+  format(value, options) {
     return this.units.formatLift(value, options);
-  },
-});
+  }
+}
