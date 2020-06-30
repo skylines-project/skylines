@@ -1,28 +1,30 @@
 import { debug } from '@ember/debug';
+import { bool } from '@ember/object/computed';
 import Service from '@ember/service';
 
-import RSVP from 'rsvp';
+import { task } from 'ember-concurrency';
 
-const CESIUM_BASE_URL = '/cesium/';
-
-export default Service.extend({
-  loaderPromise: null,
+export default class CesiumLoaderService extends Service {
+  @bool('loadTask.lastSuccessful') loaded;
 
   load() {
-    let promise = this.loaderPromise;
-    if (!promise) {
-      promise = new RSVP.Promise(resolve => {
-        debug('Loading Cesium...');
+    return this.loadTask.perform();
+  }
 
-        let cesium = document.createElement('script');
-        cesium.src = `${CESIUM_BASE_URL}Cesium.js`;
-        cesium.onload = resolve;
-        document.body.appendChild(cesium);
-      });
-
-      this.set('loaderPromise', promise);
+  @(task(function* () {
+    if (!this.loaded) {
+      debug('Loading Cesium...');
+      yield loadJS('/cesium/Cesium.js');
     }
+  }).drop())
+  loadTask;
+}
 
-    return promise;
-  },
-});
+function loadJS(url) {
+  return new Promise(resolve => {
+    let script = document.createElement('script');
+    script.src = url;
+    script.onload = resolve;
+    document.body.appendChild(script);
+  });
+}
