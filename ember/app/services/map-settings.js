@@ -7,15 +7,16 @@ import parseQueryString from 'skylines/utils/parse-query-string';
 export const BASE_LAYER_COOKIE_KEY = 'base_layer';
 export const OVERLAY_LAYERS_COOKIE_KEY = 'overlay_layers';
 
-export default Service.extend({
-  cookies: service(),
-  router: service(),
+export default class MapSettingsService extends Service {
+  @service cookies;
+  @service router;
 
-  _baseLayer: 'OpenStreetMap',
+  _baseLayer = 'OpenStreetMap';
   // _overlayLayers: ['Airspace'],
 
-  baseLayer: or('_query.baselayer', '_baseLayer'),
-  overlayLayers: computed('_query.overlays', '_overlayLayers', function () {
+  @or('_query.baselayer', '_baseLayer') baseLayer;
+  @computed('_query.overlays', '_overlayLayers')
+  get overlayLayers() {
     let queryOverlays = this.get('_query.overlays');
     if (queryOverlays === undefined) {
       return this._overlayLayers;
@@ -24,16 +25,17 @@ export default Service.extend({
     } else {
       return queryOverlays.split(';');
     }
-  }),
+  }
 
-  _query: computed('router.currentURL', function () {
+  @computed('router.currentURL')
+  get _query() {
     let currentURL = this.get('router.currentURL');
     let queryString = extractQueryString(currentURL);
     return parseQueryString(queryString);
-  }),
+  }
 
-  init() {
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
     this.set('_overlayLayers', ['Airspace']);
 
     let cookies = this.cookies;
@@ -46,16 +48,16 @@ export default Service.extend({
     if (cookieOverlayLayers !== undefined) {
       this.set('_overlayLayers', cookieOverlayLayers === '' ? [] : cookieOverlayLayers.split(';'));
     }
-  },
+  }
 
   isLayerVisible(layer) {
     return this.baseLayer === layer || this.overlayLayers.includes(layer);
-  },
+  }
 
   setBaseLayer(baseLayer) {
     this.set('_baseLayer', baseLayer);
     this.cookies.write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
-  },
+  }
 
   toggleOverlayLayer(overlayLayer) {
     let overlayLayers = this.overlayLayers;
@@ -69,8 +71,8 @@ export default Service.extend({
       path: '/',
       expires: new Date('2099-12-31'),
     });
-  },
-});
+  }
+}
 
 function extractQueryString(url) {
   let qIndex = url.indexOf('?');
