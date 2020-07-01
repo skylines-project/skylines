@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
+import { map } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 
@@ -9,7 +10,6 @@ export default Component.extend({
   units: service(),
 
   tagName: '',
-  layoutName: 'components/base-barogram',
 
   height: 133,
 
@@ -88,90 +88,81 @@ export default Component.extend({
   },
 
   update() {
-    let data = [];
-    this.addElevations(data);
-    data = data.concat(this.activeTraces());
-    data = data.concat(this.passiveTraces());
-    data = data.concat(this.enlData());
-    this.addContests(data);
-
-    this.flot.setData(data);
+    this.flot.setData(this.data);
   },
 
-  activeTraces() {
-    return this.active.map(trace => ({
-      data: trace.data,
-      color: trace.color,
-    }));
-  },
-
-  passiveTraces() {
-    return (this.passive || []).map(trace => ({
-      data: trace.data,
-      color: $.color.parse(trace.color).add('a', -0.6).toString(),
-      shadowSize: 0,
-      lines: {
-        lineWidth: 1,
-      },
-    }));
-  },
-
-  enlData() {
-    return this.enls.map(enl => ({
-      data: enl.data,
-      color: enl.color,
-      lines: {
-        lineWidth: 0,
-        fill: 0.2,
-      },
-      yaxis: 2,
-    }));
-  },
-
-  addContests(data) {
-    // Skip the function if there are no contest markers
-    let contests = this.contests;
-    if (!contests) {
-      return;
-    }
-
-    // Iterate through the contests
-    contests.forEach(contest => {
-      let times = contest.get('times');
-      if (times.length < 1) {
-        return;
-      }
-
-      let color = contest.get('color');
-
-      // Add the turnpoint markers to the markings array
-      let markings = times.map(time => ({
-        position: time * 1000,
-      }));
-
-      // Add the chart series for this contest to the data array
-      data.push({
-        marks: {
-          show: true,
-          lineWidth: 1,
-          toothSize: 6,
-          color,
-          fillColor: color,
-        },
-        data: [],
-        markdata: markings,
-      });
-    });
-  },
-
-  addElevations(data) {
-    data.push({
+  data: computed('elevations.[]', 'activeTraces.[]', 'passiveTraces.[]', 'enlData.[]', 'contestData.[]', function () {
+    let elevations = {
       data: this.elevations,
       color: 'rgb(235, 155, 98)',
       lines: {
         lineWidth: 0,
         fill: 0.8,
       },
-    });
+    };
+
+    let data = [elevations];
+    data = data.concat(this.activeTraces);
+    data = data.concat(this.passiveTraces);
+    data = data.concat(this.enlData);
+    data = data.concat(this.contestData.filter(Boolean));
+    return data;
+  }),
+
+  activeTraces: map('active.@each.{data,color}', trace => ({
+    data: trace.data,
+    color: trace.color,
+  })),
+
+  passiveTraces: map('passive.@each.{data,color}', trace => ({
+    data: trace.data,
+    color: $.color.parse(trace.color).add('a', -0.6).toString(),
+    shadowSize: 0,
+    lines: {
+      lineWidth: 1,
+    },
+  })),
+
+  enlData: map('enls.@each.{data,color}', enl => ({
+    data: enl.data,
+    color: enl.color,
+    lines: {
+      lineWidth: 0,
+      fill: 0.2,
+    },
+    yaxis: 2,
+  })),
+
+  contestData: map('contests.@each.{times,color}', contest => {
+    let times = contest.get('times');
+    if (times.length < 1) {
+      return;
+    }
+
+    let color = contest.get('color');
+
+    // Add the turnpoint markers to the markings array
+    let markings = times.map(time => ({
+      position: time * 1000,
+    }));
+
+    // Add the chart series for this contest to the data array
+    return {
+      marks: {
+        show: true,
+        lineWidth: 1,
+        toothSize: 6,
+        color,
+        fillColor: color,
+      },
+      data: [],
+      markdata: markings,
+    };
+  }),
+
+  actions: {
+    redraw() {
+      this.draw();
+    },
   },
 });

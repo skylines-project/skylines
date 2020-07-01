@@ -1,4 +1,4 @@
-import { action, observer, computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 
 import safeComputed from '../computed/safe-computed';
 import BarogramComponent from './base-barogram';
@@ -7,10 +7,6 @@ export default BarogramComponent.extend({
   flights: null,
   time: null,
   defaultTime: null,
-
-  flightsObserver: observer('flights.[]', function () {
-    this.draw();
-  }),
 
   selection: null,
 
