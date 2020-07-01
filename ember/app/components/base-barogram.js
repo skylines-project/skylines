@@ -101,7 +101,7 @@ export default Component.extend({
     data = data.concat(this.activeTraces);
     data = data.concat(this.passiveTraces);
     data = data.concat(this.enlData);
-    this.addContests(data);
+    data = data.concat(this.getContests());
 
     this.flot.setData(data);
   },
@@ -130,39 +130,41 @@ export default Component.extend({
     yaxis: 2,
   })),
 
-  addContests(data) {
+  getContests() {
     // Skip the function if there are no contest markers
     let contests = this.contests;
     if (!contests) {
-      return;
+      return [];
     }
 
     // Iterate through the contests
-    contests.forEach(contest => {
-      let times = contest.get('times');
-      if (times.length < 1) {
-        return;
-      }
+    return contests
+      .map(contest => {
+        let times = contest.get('times');
+        if (times.length < 1) {
+          return;
+        }
 
-      let color = contest.get('color');
+        let color = contest.get('color');
 
-      // Add the turnpoint markers to the markings array
-      let markings = times.map(time => ({
-        position: time * 1000,
-      }));
+        // Add the turnpoint markers to the markings array
+        let markings = times.map(time => ({
+          position: time * 1000,
+        }));
 
-      // Add the chart series for this contest to the data array
-      data.push({
-        marks: {
-          show: true,
-          lineWidth: 1,
-          toothSize: 6,
-          color,
-          fillColor: color,
-        },
-        data: [],
-        markdata: markings,
-      });
-    });
+        // Add the chart series for this contest to the data array
+        return {
+          marks: {
+            show: true,
+            lineWidth: 1,
+            toothSize: 6,
+            color,
+            fillColor: color,
+          },
+          data: [],
+          markdata: markings,
+        };
+      })
+      .filter(Boolean);
   },
 });
