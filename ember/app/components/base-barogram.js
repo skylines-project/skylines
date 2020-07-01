@@ -88,8 +88,16 @@ export default Component.extend({
   },
 
   update() {
-    let data = [];
-    this.addElevations(data);
+    let elevations = {
+      data: this.elevations,
+      color: 'rgb(235, 155, 98)',
+      lines: {
+        lineWidth: 0,
+        fill: 0.8,
+      },
+    };
+
+    let data = [elevations];
     data = data.concat(this.activeTraces);
     data = data.concat(this.passiveTraces);
     data = data.concat(this.enlData);
@@ -155,17 +163,6 @@ export default Component.extend({
         data: [],
         markdata: markings,
       });
-    });
-  },
-
-  addElevations(data) {
-    data.push({
-      data: this.elevations,
-      color: 'rgb(235, 155, 98)',
-      lines: {
-        lineWidth: 0,
-        fill: 0.8,
-      },
     });
   },
 });
