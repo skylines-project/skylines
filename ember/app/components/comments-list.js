@@ -13,7 +13,7 @@ export default class CommentsList extends Component {
   @(task(function* () {
     let id = this.flightId;
     let text = this.addCommentText;
-    let user = this.get('account.user');
+    let { user } = this.account;
 
     yield this.ajax.request(`/api/flights/${id}/comments`, { method: 'POST', json: { text } });
 
