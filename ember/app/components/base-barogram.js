@@ -88,6 +88,10 @@ export default Component.extend({
   },
 
   update() {
+    this.flot.setData(this.data);
+  },
+
+  data: computed('elevations.[]', 'activeTraces.[]', 'passiveTraces.[]', 'enlData.[]', 'contestData.[]', function () {
     let elevations = {
       data: this.elevations,
       color: 'rgb(235, 155, 98)',
@@ -102,9 +106,8 @@ export default Component.extend({
     data = data.concat(this.passiveTraces);
     data = data.concat(this.enlData);
     data = data.concat(this.contestData.filter(Boolean));
-
-    this.flot.setData(data);
-  },
+    return data;
+  }),
 
   activeTraces: map('active.@each.{data,color}', trace => ({
     data: trace.data,
