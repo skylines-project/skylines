@@ -9,7 +9,6 @@ export default Component.extend({
   units: service(),
 
   tagName: '',
-  layoutName: 'components/base-barogram',
 
   height: 133,
 
