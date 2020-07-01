@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
+import { map } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 
@@ -89,43 +90,37 @@ export default Component.extend({
   update() {
     let data = [];
     this.addElevations(data);
-    data = data.concat(this.activeTraces());
-    data = data.concat(this.passiveTraces());
-    data = data.concat(this.enlData());
+    data = data.concat(this.activeTraces);
+    data = data.concat(this.passiveTraces);
+    data = data.concat(this.enlData);
     this.addContests(data);
 
     this.flot.setData(data);
   },
 
-  activeTraces() {
-    return this.active.map(trace => ({
-      data: trace.data,
-      color: trace.color,
-    }));
-  },
+  activeTraces: map('active.@each.{data,color}', trace => ({
+    data: trace.data,
+    color: trace.color,
+  })),
 
-  passiveTraces() {
-    return (this.passive || []).map(trace => ({
-      data: trace.data,
-      color: $.color.parse(trace.color).add('a', -0.6).toString(),
-      shadowSize: 0,
-      lines: {
-        lineWidth: 1,
-      },
-    }));
-  },
+  passiveTraces: map('passive.@each.{data,color}', trace => ({
+    data: trace.data,
+    color: $.color.parse(trace.color).add('a', -0.6).toString(),
+    shadowSize: 0,
+    lines: {
+      lineWidth: 1,
+    },
+  })),
 
-  enlData() {
-    return this.enls.map(enl => ({
-      data: enl.data,
-      color: enl.color,
-      lines: {
-        lineWidth: 0,
-        fill: 0.2,
-      },
-      yaxis: 2,
-    }));
-  },
+  enlData: map('enls.@each.{data,color}', enl => ({
+    data: enl.data,
+    color: enl.color,
+    lines: {
+      lineWidth: 0,
+      fill: 0.2,
+    },
+    yaxis: 2,
+  })),
 
   addContests(data) {
     // Skip the function if there are no contest markers
