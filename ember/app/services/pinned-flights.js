@@ -1,22 +1,22 @@
 import Service, { inject as service } from '@ember/service';
 
-export default Service.extend({
-  cookies: service(),
+export default class PinnedFlights extends Service {
+  @service cookies;
 
-  init() {
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
     this.load();
-  },
+  }
 
   pin(id) {
     this.set('pinned', this.pinned.concat([id]));
     this.save();
-  },
+  }
 
   unpin(id) {
     this.set('pinned', this.pinned.without(id));
     this.save();
-  },
+  }
 
   load() {
     let pinned = [];
@@ -27,11 +27,11 @@ export default Service.extend({
     }
 
     this.set('pinned', pinned);
-  },
+  }
 
   save() {
     this.cookies.write('SkyLines_pinnedFlights', this.pinned.join(','), { path: '/' });
-  },
+  }
 
   toggle(id) {
     if (this.pinned.includes(id)) {
@@ -39,5 +39,5 @@ export default Service.extend({
     } else {
       this.pin(id);
     }
-  },
-});
+  }
+}

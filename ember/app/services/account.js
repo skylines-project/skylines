@@ -2,16 +2,17 @@ import { computed, getProperties } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
 
-export default Service.extend({
-  session: service(),
-  sessionData: alias('session.data.authenticated.settings'),
+export default class AccountService extends Service {
+  @service session;
+  @alias('session.data.authenticated.settings') sessionData;
 
-  user: computed('sessionData.{id,name}', function () {
+  @computed('sessionData.{id,name}')
+  get user() {
     let sessionData = this.sessionData;
     if (sessionData) {
       return getProperties(sessionData, 'id', 'name');
     }
-  }),
+  }
 
-  club: alias('sessionData.club'),
-});
+  @alias('sessionData.club') club;
+}

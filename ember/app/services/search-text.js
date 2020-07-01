@@ -1,5 +1,5 @@
 import Service from '@ember/service';
 
-export default Service.extend({
-  text: null,
-});
+export default class SearchTextService extends Service {
+  text = null;
+}
