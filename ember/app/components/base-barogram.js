@@ -159,4 +159,10 @@ export default Component.extend({
       markdata: markings,
     };
   }),
+
+  actions: {
+    redraw() {
+      this.draw();
+    },
+  },
 });
