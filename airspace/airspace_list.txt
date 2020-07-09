@@ -6,7 +6,8 @@
 # cz 2014 file can't be read by ogr...
 #cz openair http://soaringweb.org/Airspace/CZ/CZ_2013.txt
 
-de openair https://www.daec.de/fileadmin/user_upload/files/2018/Fachbereiche/Luftraum_und_Flugbetrieb/Airspace_Germany_week13_2018_V2_ohneFIS.txt
+# de openair https://www.daec.de/fileadmin/user_upload/files/2018/Fachbereiche/Luftraum_und_Flugbetrieb/Airspace_Germany_week13_2018_V2_ohneFIS.txt
+de openair https://www.daec.de/fileadmin/user_upload/files/2020/Fachbereiche/Luftraum_und_Flugbetrieb/20200428_Airspace_Germany_DAeC.txt
 at openair https://www.austrocontrol.at/jart/prj3/austro_control/data/dokumente/aV5XF_AustriaAirspaceMainFileeffdate01052015-27052015V.1.00.txt
 
 # "Winpilot COLOR-Table" is breaking "be" airspace
