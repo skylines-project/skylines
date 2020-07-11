@@ -43,7 +43,7 @@ export default BarogramComponent.extend({
 
   selectedFlight: computed('flights.@each.id', 'selection', function () {
     if (this.flights.length === 1) {
-      return this.flights[0];
+      return this.flights.firstObject;
     }
 
     if (this.selection) {
