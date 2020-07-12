@@ -12048,6 +12048,11 @@ shellwords@^0.1.0:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.0.tgz#66afd47b6a12932d9071cbfd98a52e785cd0ba14"
   integrity sha1-Zq/Ue2oSky2Qccv9mKUueFzQuhQ=
 
+sidebar-v2@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/sidebar-v2/-/sidebar-v2-0.4.0.tgz#c01bad3d264acb482972d86f90a99f95091b5ff7"
+  integrity sha512-YM+655PjRbF45n3r+lkpKkZlZz3pdjyaIqG2IQ4XXVfuSTB9WJTY2WCV1LunOteVCFy/iyYURVuJOkoyodtkgQ==
+
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
