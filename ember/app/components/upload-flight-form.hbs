@@ -9,9 +9,9 @@
         type="file"
         name="files"
         multiple="multiple"
-        onchange={{action "setFilesFromEvent"}}
         class="form-control"
         disabled={{uploadTask.isRunning}}
+        {{on "change" (action "setFilesFromEvent")}}
       >
     </ValidatedBlock>
 
