@@ -8,13 +8,8 @@ module('Acceptance | flight upload', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  module('visiting /flights/upload (unauthenticated)', function (hooks) {
-    hooks.beforeEach(async function () {
-      await visit('/flights/upload');
-    });
-
-    test('redirects to the login page', function (assert) {
-      assert.equal(currentURL(), '/login');
-    });
+  test('unauthenticated visit redirects to the login page', async function (assert) {
+    await visit('/flights/upload');
+    assert.equal(currentURL(), '/login');
   });
 });
