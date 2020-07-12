@@ -4,15 +4,15 @@ import { once } from '@ember/runloop';
 
 import $ from 'jquery';
 
-export default Component.extend({
-  tagName: '',
+export default class DatetimePicker extends Component {
+  tagName = '';
 
-  date: null,
-  minDate: false,
-  maxDate: false,
-  onChange: null,
+  date = null;
+  minDate = false;
+  maxDate = false;
+  onChange = null;
 
-  setup: action(function (element) {
+  @action setup(element) {
     let $element = $(element);
 
     $element.datetimepicker({
@@ -36,22 +36,22 @@ export default Component.extend({
     this.set('picker', $element.data('DateTimePicker'));
 
     once(this, 'updateDate');
-  }),
+  }
 
   didUpdateAttrs() {
-    this._super(...arguments);
+    super.didUpdateAttrs(...arguments);
     once(this, 'updateDate');
-  },
+  }
 
-  teardown: action(function (element) {
+  @action teardown(element) {
     $(element).off('dp.change');
     this.set('picker', null);
-  }),
+  }
 
   updateDate() {
     let picker = this.picker;
     if (picker) {
       picker.setValue(this.date);
     }
-  },
-});
+  }
+}
