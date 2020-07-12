@@ -42,6 +42,10 @@ module.exports = function (defaults) {
       extensions: ['css', 'js'],
     },
 
+    vendorFiles: {
+      'jquery.js': 'bower_components/jquery/jquery.js',
+    },
+
     sassOptions: { implementation: require('node-sass') },
 
     svgJar: {
