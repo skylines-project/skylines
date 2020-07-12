@@ -88,6 +88,7 @@
     "loader.js": "^4.7.0",
     "node-sass": "^4.14.1",
     "prettier": "2.0.5",
+    "qunit-console-grouper": "^0.2.0",
     "qunit-dom": "^1.2.0"
   },
   "engines": {
