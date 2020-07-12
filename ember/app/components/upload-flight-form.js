@@ -40,7 +40,7 @@ export default Component.extend(Validations, {
 
   actions: {
     setFilesFromEvent(event) {
-      this.set('files', event.target.value);
+      this.set('files', event.target.files);
     },
 
     async submit(event) {
