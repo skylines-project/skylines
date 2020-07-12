@@ -3,15 +3,22 @@
     {{#if error}}
       <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
     {{/if}}
-  
+
     <ValidatedBlock @label={{t "igc-or-zip-files"}} @validation={{validations.attrs.files}} @hasContent={{files}} @didValidate={{didValidate}}>
-      <input type="file" name="files" multiple="multiple" onchange={{action "setFilesFromEvent"}} class="form-control" disabled={{uploadTask.isRunning}}>
+      <input
+        type="file"
+        name="files"
+        multiple="multiple"
+        onchange={{action "setFilesFromEvent"}}
+        class="form-control"
+        disabled={{uploadTask.isRunning}}
+      >
     </ValidatedBlock>
-  
+
     <ValidatedBlock @label={{t "pilot"}} @validation={{validations.attrs.pilotId}} @didValidate={{didValidate}}>
       <PilotSelect @clubMembers={{clubMembers}} @pilotId={{pilotId}} @onChange={{action (mut pilotId)}} />
     </ValidatedBlock>
-  
+
     {{#if showPilotNameInput}}
       <ValidatedInput
         @value={{pilotName}}
@@ -20,10 +27,10 @@
         @disabled={{uploadTask.isRunning}}
         @didValidate={{didValidate}} />
     {{/if}}
-  
+
     <input type="hidden" name="pilotId" value={{pilotId}}>
     <input type="hidden" name="pilotName" value={{pilotName}}>
-  
+
     <button class="btn btn-primary btn-block" type="submit" disabled={{or uploadTask.isRunning (not validations.isValid)}}>
       {{t (if uploadTask.isRunning "uploading" "upload")}}
     </button>
