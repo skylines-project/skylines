@@ -26,4 +26,8 @@ class Elevation(db.Model):
             .filter(elevation != None)
         )
 
-        return query.scalar()
+        result = query.first()
+        if not result:
+            return None
+
+        return result[0]
