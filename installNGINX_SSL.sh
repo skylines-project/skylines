@@ -123,3 +123,9 @@ Success!
 
 See https://www.nginx.com/blog/monitoring-nginx/ 
 Go to https://amplify.nginx.com/dashboard 
+
+
+### Nginx Amplify agent (run on both U14 and U18 machines)
+curl -sS -L -O https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh && API_KEY='59c5a93cf3596a889d01a0efa4754897' sh ./install.sh
+# Check status with 
+ps ax | grep -i 'amplify\-'
