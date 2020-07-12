@@ -2,11 +2,11 @@ import { visit, currentURL } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import { setupPolly } from 'skylines/tests/test-helpers/setup-polly';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Acceptance | index', function (hooks) {
   setupApplicationTest(hooks);
-  setupPolly(hooks, { recordIfMissing: false });
+  setupMirage(hooks);
 
   hooks.beforeEach(async function (assert) {
     await visit('/');
