@@ -1,39 +1,30 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-
+import Component from '@glimmer/component';
 import ol from 'openlayers';
 
 const DEFAULT_COLOR = '#004bbd';
 
-export default Component.extend({
-  tagName: '',
+export default class FlightPathLayer extends Component {
+  layer = new ol.layer.Vector({
+    source: new ol.source.Vector(),
+    style: style_function,
+    name: 'Flight',
+    zIndex: 50,
+  });
 
-  map: null,
-  flights: null,
-
-  layer: computed(function () {
-    return new ol.layer.Vector({
-      source: new ol.source.Vector(),
-      style: style_function,
-      name: 'Flight',
-      zIndex: 50,
-    });
-  }),
-
-  source: computed('layer', function () {
+  get source() {
     return this.layer.getSource();
-  }),
+  }
 
-  didInsertElement() {
-    this._super(...arguments);
-    this.map.addLayer(this.layer);
-  },
+  constructor() {
+    super(...arguments);
+    this.args.map.addLayer(this.layer);
+  }
 
-  willDestroyElement() {
-    this._super(...arguments);
-    this.map.removeLayer(this.layer);
-  },
-});
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.map.removeLayer(this.layer);
+  }
+}
 
 /**
  * Determin the drawing style for the feature
