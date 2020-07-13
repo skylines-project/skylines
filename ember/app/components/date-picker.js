@@ -5,13 +5,13 @@ import $ from 'jquery';
 
 import isoDate from '../utils/iso-date';
 
-export default Component.extend({
-  tagName: '',
+export default class DatePicker extends Component {
+  tagName = '';
 
-  date: null,
-  onSelect() {},
+  date = null;
+  onSelect() {}
 
-  setup: action(function (element) {
+  @action setup(element) {
     let picker = $(element).datepicker({
       weekStart: 1,
     });
@@ -22,14 +22,14 @@ export default Component.extend({
       picker.data('datepicker').hide();
       this.onSelect(isoDate(e.date));
     });
-  }),
+  }
 
-  teardown: action(function () {
+  @action teardown() {
     let picker = this.picker;
     if (picker) {
       picker.off('changeDate');
     }
 
     this.set('picker', null);
-  }),
-});
+  }
+}
