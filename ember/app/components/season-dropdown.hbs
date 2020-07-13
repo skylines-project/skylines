@@ -1,10 +1,10 @@
 <BsNav @type="pills" ...attributes as |nav|>
   <nav.dropdown @tagName="li" as |dd|>
     <dd.toggle>
-      {{#if (eq year "all")}}
+      {{#if (eq @year "all")}}
         {{t "all-time"}}
       {{else}}
-        {{t "season-YEAR" year=year}}
+        {{t "season-YEAR" year=@year}}
       {{/if}}
       <span class="caret"></span>
     </dd.toggle>
@@ -14,7 +14,7 @@
 
       {{menu.divider}}
 
-      {{#each recentYears as |year|}}
+      {{#each this.recentYears as |year|}}
         <nav.item>{{#nav.link-to (query-params year=year)}}{{year}}{{/nav.link-to}}</nav.item>
       {{/each}}
     </dd.menu>
