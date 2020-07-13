@@ -1,31 +1,21 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-
+import Component from '@glimmer/component';
 import ol from 'openlayers';
 
-export default Component.extend({
-  tagName: '',
+export default class FlightPathLayerFeature extends Component {
+  feature = new ol.Feature({
+    geometry: this.args.flight.get('geometry'),
+    sfid: this.args.flight.get('id'),
+    color: this.args.flight.get('color'),
+    type: 'flight',
+  });
 
-  source: null,
-  flight: null,
+  constructor() {
+    super(...arguments);
+    this.args.source.addFeature(this.feature);
+  }
 
-  feature: computed(function () {
-    let flight = this.flight;
-    return new ol.Feature({
-      geometry: flight.get('geometry'),
-      sfid: flight.get('id'),
-      color: flight.get('color'),
-      type: 'flight',
-    });
-  }),
-
-  didInsertElement() {
-    this._super(...arguments);
-    this.source.addFeature(this.feature);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    this.source.removeFeature(this.feature);
-  },
-});
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.source.removeFeature(this.feature);
+  }
+}
