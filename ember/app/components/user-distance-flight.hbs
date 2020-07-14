@@ -1,12 +1,11 @@
 <tr ...attributes>
-  <td>{{label}}</td>
+  <td>{{@label}}</td>
   <td class="column-buttons">
-    {{#if flight}}
-      <abbr title={{format-date flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}>{{format-relative flight.scoreDate}}</abbr>
+    {{#if @flight}}
+      <abbr title={{format-date @flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}>{{format-relative @flight.scoreDate}}</abbr>
       <div class="pull-right">
-        <LinkTo @route="flight" @model={{flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
+        <LinkTo @route="flight" @model={{@flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
       </div>
     {{/if}}
   </td>
-  
 </tr>
