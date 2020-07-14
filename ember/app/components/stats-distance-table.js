@@ -1,11 +1,9 @@
-import Component from '@ember/component';
 import { mapBy, max, sum } from '@ember/object/computed';
 
-export default Component.extend({
-  tagName: '',
-  years: null,
+import Component from '@glimmer/component';
 
-  distances: mapBy('years', 'distance'),
-  max: max('distances'),
-  sum: sum('distances'),
-});
+export default class StatsDistanceTable extends Component {
+  @mapBy('args.years', 'distance') distances;
+  @max('distances') max;
+  @sum('distances') sum;
+}
