@@ -1,15 +1,12 @@
 /* global BigScreen */
 
-import Component from '@ember/component';
 import { action } from '@ember/object';
 
-import $ from 'jquery';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: '',
-
-  toggle: action(function () {
-    let element = this.fullscreenElement;
-    BigScreen.toggle($(element)[0]);
-  }),
-});
+export default class FullscreenButton extends Component {
+  @action toggle() {
+    let element = this.args.fullscreenElement;
+    BigScreen.toggle(document.querySelector(element));
+  }
+}

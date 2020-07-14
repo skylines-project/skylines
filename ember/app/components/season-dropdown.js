@@ -1,16 +1,7 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: '',
-  year: null,
+const YEAR = new Date().getFullYear();
 
-  init() {
-    this._super(...arguments);
-
-    let year = new Date().getFullYear();
-    this.set(
-      'recentYears',
-      [0, 1, 2, 3, 4].map(i => year - i),
-    );
-  },
-});
+export default class SeasonDropdown extends Component {
+  recentYears = [0, 1, 2, 3, 4].map(i => YEAR - i);
+}

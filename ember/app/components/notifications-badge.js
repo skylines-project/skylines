@@ -1,13 +1,8 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default Component.extend({
-  notifications: service(),
-  intl: service(),
-  tagName: '',
+import Component from '@glimmer/component';
 
-  title: computed('intl.locale', function () {
-    return this.intl.t('notifications');
-  }),
-});
+export default class NotificationsBadge extends Component {
+  @service notifications;
+  @service intl;
+}

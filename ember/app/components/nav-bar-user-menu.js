@@ -1,15 +1,14 @@
-import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
+import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
 
-export default Component.extend({
-  account: service(),
-  session: service(),
+export default class NavBarUserMenu extends Component {
+  @service account;
+  @service session;
 
-  tagName: '',
-
-  logoutTask: task(function* () {
+  @(task(function* () {
     yield this.session.invalidate();
-  }).drop(),
-});
+  }).drop())
+  logoutTask;
+}

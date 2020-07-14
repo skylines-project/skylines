@@ -2,15 +2,17 @@ import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default Component.extend({
-  pinnedFlights: service(),
-  tagName: '',
+export default class PinStar extends Component {
+  @service pinnedFlights;
 
-  pinned: computed('pinnedFlights.pinned.[]', 'flightId', function () {
+  tagName = '';
+
+  @computed('pinnedFlights.pinned.[]', 'flightId')
+  get pinned() {
     return this.pinnedFlights.pinned.includes(this.flightId);
-  }),
+  }
 
-  handleClick: action(function () {
+  @action handleClick() {
     this.pinnedFlights.toggle(this.flightId);
-  }),
-});
+  }
+}
