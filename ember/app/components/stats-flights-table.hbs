@@ -6,22 +6,22 @@
   </tr>
   </thead>
   <tbody>
-  {{#each years as |year|}}
+  {{#each @years as |year|}}
     <tr>
       <td class="col-xs-2">{{year.year}}</td>
       <td class="col-xs-2">{{format-number year.flights}}</td>
       <td class="col-xs-8">
         <BsProgress as |p|>
-          <p.bar @value={{percent year.flights max}} />
+          <p.bar @value={{percent year.flights this.max}} />
         </BsProgress>
       </td>
     </tr>
   {{/each}}
-  
+
   <tr>
     <td><strong>{{t "total"}}</strong></td>
-    <td colspan="2"><strong>{{format-number sum}}</strong></td>
+    <td colspan="2"><strong>{{format-number this.sum}}</strong></td>
   </tr>
   </tbody>
-  
+
 </table>
