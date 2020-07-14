@@ -1,48 +1,45 @@
-<div ...attributes>
-  {{#if (gt pages 1)}}
-    <ul class="pagination pagination-condensed">
-      <li class="prev {{if prevDisabled "disabled"}}">
-        <LinkTo @query={{hash page=prevPage}}>&laquo;</LinkTo>
-      </li>
-  
-      {{#if showMinusFour}}
-        <li><LinkTo @query={{hash page=(sum page -4)}}>{{sum page -4}}</LinkTo></li>
-      {{/if}}
-  
-      {{#if showMinusThree}}
-        <li><LinkTo @query={{hash page=(sum page -3)}}>{{sum page -3}}</LinkTo></li>
-      {{/if}}
-  
-      {{#if showMinusTwo}}
-        <li><LinkTo @query={{hash page=(sum page -2)}}>{{sum page -2}}</LinkTo></li>
-      {{/if}}
-  
-      {{#if showMinusOne}}
-        <li><LinkTo @query={{hash page=(sum page -1)}}>{{sum page -1}}</LinkTo></li>
-      {{/if}}
-  
-      <li class="active"><LinkTo @query={{hash page=page}}>{{page}}</LinkTo></li>
-  
-      {{#if showPlusOne}}
-        <li><LinkTo @query={{hash page=(sum page 1)}}>{{sum page 1}}</LinkTo></li>
-      {{/if}}
-  
-      {{#if showPlusTwo}}
-        <li><LinkTo @query={{hash page=(sum page 2)}}>{{sum page 2}}</LinkTo></li>
-      {{/if}}
-  
-      {{#if showPlusThree}}
-        <li><LinkTo @query={{hash page=(sum page 3)}}>{{sum page 3}}</LinkTo></li>
-      {{/if}}
-  
-      {{#if showPlusFour}}
-        <li><LinkTo @query={{hash page=(sum page 4)}}>{{sum page 4}}</LinkTo></li>
-      {{/if}}
-  
-      <li class="next {{if nextDisabled "disabled"}}">
-        <LinkTo @query={{hash page=nextPage}}>&raquo;</LinkTo>
-      </li>
-    </ul>
-  {{/if}}
-  
-</div>
+{{#if (gt pages 1)}}
+  <ul class="pagination pagination-condensed" ...attributes>
+    <li class="prev {{if prevDisabled "disabled"}}">
+      <LinkTo @query={{hash page=prevPage}}>&laquo;</LinkTo>
+    </li>
+
+    {{#if showMinusFour}}
+      <li><LinkTo @query={{hash page=(sum page -4)}}>{{sum page -4}}</LinkTo></li>
+    {{/if}}
+
+    {{#if showMinusThree}}
+      <li><LinkTo @query={{hash page=(sum page -3)}}>{{sum page -3}}</LinkTo></li>
+    {{/if}}
+
+    {{#if showMinusTwo}}
+      <li><LinkTo @query={{hash page=(sum page -2)}}>{{sum page -2}}</LinkTo></li>
+    {{/if}}
+
+    {{#if showMinusOne}}
+      <li><LinkTo @query={{hash page=(sum page -1)}}>{{sum page -1}}</LinkTo></li>
+    {{/if}}
+
+    <li class="active"><LinkTo @query={{hash page=page}}>{{page}}</LinkTo></li>
+
+    {{#if showPlusOne}}
+      <li><LinkTo @query={{hash page=(sum page 1)}}>{{sum page 1}}</LinkTo></li>
+    {{/if}}
+
+    {{#if showPlusTwo}}
+      <li><LinkTo @query={{hash page=(sum page 2)}}>{{sum page 2}}</LinkTo></li>
+    {{/if}}
+
+    {{#if showPlusThree}}
+      <li><LinkTo @query={{hash page=(sum page 3)}}>{{sum page 3}}</LinkTo></li>
+    {{/if}}
+
+    {{#if showPlusFour}}
+      <li><LinkTo @query={{hash page=(sum page 4)}}>{{sum page 4}}</LinkTo></li>
+    {{/if}}
+
+    <li class="next {{if nextDisabled "disabled"}}">
+      <LinkTo @query={{hash page=nextPage}}>&raquo;</LinkTo>
+    </li>
+  </ul>
+{{/if}}
