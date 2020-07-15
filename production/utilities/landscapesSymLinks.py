@@ -1,4 +1,9 @@
-"""Create symbolic links for each landscape folder stored outside the main Landscapes folder"""
+"""Creates symbolic links for each landscape folder stored outside the main Landscapes folder
+
+Note python can't detect symlinks in Windows, so no easy way to check for duplicates.
+
+
+"""
 import os, sys
 mainDir = 'Z:\\Condor\\Landscapes'
 otherDir = 'E:\\landscapes_for_symlinks'
@@ -11,9 +16,7 @@ for item in otherList:
         mainPath = '{}\\{}'.format(mainDir,item)
         otherPath = '{}\\{}'.format(otherDir,item)
         os.system('mklink /D "{}" "{}"'.format(mainDir,otherDir))
-#         print ('Created symlink for {}'.format(item))
-    elif  os.path.islink(mainPath):
-#         os.system("deltree {}\\{}".format(otherDir,item))
-        print('Please duplicate {} from {}'.format(otherDir))
+
+
         
         
