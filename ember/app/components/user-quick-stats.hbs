@@ -6,40 +6,40 @@
       <th colspan="2">&nbsp;</th>
     </tr>
     </thead>
-  
+
     <tbody>
     <tr>
       <td><strong>{{t "flights"}}</strong></td>
-      <td>{{format-number stats.flights}}</td>
+      <td>{{format-number @stats.flights}}</td>
     </tr>
-  
-    {{#if (gt stats.flights 0)}}
+
+    {{#if (gt @stats.flights 0)}}
       <tr>
         <td><strong>{{t "distance"}}</strong></td>
         <td>
           <span>
-            {{format-distance stats.distance}}
-            <BsTooltip @title={{t "n-avg-distance-per-flight" distance=(format-distance avgDistance)}} />
+            {{format-distance @stats.distance}}
+            <BsTooltip @title={{t "n-avg-distance-per-flight" distance=(format-distance this.avgDistance)}} />
           </span>
         </td>
       </tr>
-  
+
       <tr>
         <td><strong>{{t "flight-time"}}</strong></td>
         <td>
           <span>
-            {{t "n-hours" num=(format-hours stats.duration)}}
-            <BsTooltip @title={{t "n-avg-hours-per-flight" num=(format-hours avgDuration)}} />
+            {{t "n-hours" num=(format-hours @stats.duration)}}
+            <BsTooltip @title={{t "n-avg-hours-per-flight" num=(format-hours this.avgDuration)}} />
           </span>
         </td>
       </tr>
-  
+
       <tr>
         <td><strong>{{t "avg-speed"}}</strong></td>
-        <td>{{format-speed speed}}</td>
+        <td>{{format-speed this.speed}}</td>
       </tr>
     {{/if}}
     </tbody>
   </table>
-  
+
 </div>

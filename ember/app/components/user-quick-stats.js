@@ -1,10 +1,9 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Component.extend({
-  tagName: '',
-  speed: safeComputed('stats.distance', 'stats.duration', (distance, duration) => distance / duration),
-  avgDistance: safeComputed('stats.distance', 'stats.flights', (distance, flights) => distance / flights),
-  avgDuration: safeComputed('stats.duration', 'stats.flights', (duration, flights) => duration / flights),
-});
+export default class UserQuickStats extends Component {
+  @safeComputed('args.stats.distance', 'args.stats.duration', (distance, duration) => distance / duration) speed;
+  @safeComputed('args.stats.distance', 'args.stats.flights', (distance, flights) => distance / flights) avgDistance;
+  @safeComputed('args.stats.duration', 'args.stats.flights', (duration, flights) => duration / flights) avgDuration;
+}

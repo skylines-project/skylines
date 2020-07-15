@@ -1,28 +1,25 @@
-<div ...attributes>
-  <BasePage>
-    <div class="page-header">
-      <h1>{{title}}</h1>
+<BasePage ...attributes>
+  <div class="page-header">
+    <h1>{{@title}}</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-8 col-sm-push-4 col-md-9 col-md-push-3">
+      {{yield}}
     </div>
-  
-    <div class="row">
-      <div class="col-sm-8 col-sm-push-4 col-md-9 col-md-push-3">
-        {{yield}}
-      </div>
-  
-      <div class="col-sm-4 col-sm-pull-8 col-md-3 col-md-pull-9">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{account.user.name}}</h3>
-          </div>
-          <div class="list-group">
-            <LinkTo @route="settings.profile" class="list-group-item">{{t "profile"}}</LinkTo>
-            <LinkTo @route="settings.password" class="list-group-item">{{t "password"}}</LinkTo>
-            <LinkTo @route="settings.club" class="list-group-item">{{t "club"}}</LinkTo>
-            <LinkTo @route="settings.tracking" class="list-group-item">{{t "live-tracking"}}</LinkTo>
-          </div>
+
+    <div class="col-sm-4 col-sm-pull-8 col-md-3 col-md-pull-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{this.account.user.name}}</h3>
+        </div>
+        <div class="list-group">
+          <LinkTo @route="settings.profile" class="list-group-item">{{t "profile"}}</LinkTo>
+          <LinkTo @route="settings.password" class="list-group-item">{{t "password"}}</LinkTo>
+          <LinkTo @route="settings.club" class="list-group-item">{{t "club"}}</LinkTo>
+          <LinkTo @route="settings.tracking" class="list-group-item">{{t "live-tracking"}}</LinkTo>
         </div>
       </div>
     </div>
-  </BasePage>
-  
-</div>
+  </div>
+</BasePage>

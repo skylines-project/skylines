@@ -6,7 +6,7 @@
   </tr>
   </thead>
   <tbody>
-  {{#each years as |year|}}
+  {{#each @years as |year|}}
     <tr>
       <td class="col-xs-2">{{year.year}}</td>
       <td class="col-xs-2">
@@ -17,16 +17,16 @@
       </td>
       <td class="col-xs-8">
         <BsProgress as |p|>
-          <p.bar @value={{percent year.distance max}} @type="success" />
+          <p.bar @value={{percent year.distance this.max}} @type="success" />
         </BsProgress>
       </td>
     </tr>
   {{/each}}
-  
+
   <tr>
     <td><strong>{{t "total"}}</strong></td>
-    <td colspan="2"><strong>{{format-distance sum}}</strong></td>
+    <td colspan="2"><strong>{{format-distance this.sum}}</strong></td>
   </tr>
   </tbody>
-  
+
 </table>

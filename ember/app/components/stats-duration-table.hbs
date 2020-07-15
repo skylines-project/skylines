@@ -6,7 +6,7 @@
   </tr>
   </thead>
   <tbody>
-  {{#each years as |year|}}
+  {{#each @years as |year|}}
     <tr>
       <td class="col-xs-2">{{year.year}}</td>
       <td class="col-xs-2">
@@ -17,16 +17,16 @@
       </td>
       <td class="col-xs-8">
         <BsProgress as |p|>
-          <p.bar @value={{percent year.duration max}} @type="warning" />
+          <p.bar @value={{percent year.duration this.max}} @type="warning" />
         </BsProgress>
       </td>
     </tr>
   {{/each}}
-  
+
   <tr>
     <td><strong>{{t "total"}}</strong></td>
-    <td colspan="2"><strong>{{t "n-hours" num=(format-hours sum)}}</strong></td>
+    <td colspan="2"><strong>{{t "n-hours" num=(format-hours this.sum)}}</strong></td>
   </tr>
   </tbody>
-  
+
 </table>
