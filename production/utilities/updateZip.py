@@ -1,4 +1,5 @@
 import os,sys
+import py7zr
 
 def readfile(filepath):
     with open(filepath) as f:
@@ -7,17 +8,33 @@ def readfile(filepath):
 
 
 mainDir = 'Z:\\Condor\\Landscapes'
-# otherDir = 'E:\\landscapes_for_symlinks'  #already present in symlinks to mainDir
+otherDir = 'E:\\landscapes_for_symlinks'  #py7zr does not follow symlinks
 zipDir = 'S:\\Skylines-C\landscapes-zip'
 
 allLands = []
 allLandPaths = []
 allZips = []
 
+#update symbolic links 
+mainList = os.listdir(mainDir)
+otherList = os.listdir(otherDir)
+for item in otherList:
+    if item not in mainList:
+        print ('Updated symlink for {}.'.format(item))
+        mainPath = '{}\\{}'.format(mainDir,item)
+        otherPath = '{}\\{}'.format(otherDir,item)
+        os.system('mklink /D "{}" "{}"'.format(mainPath,otherPath))
+
+
 #landscapes
 for item in os.listdir(mainDir):
     allLands.append(item)
     allLandPaths.append('{}\\{}'.format(mainDir,item))
+    
+for item in os.listdir(otherDir):
+    if item not in allLands:
+        allLands.append(item)
+        allLandPaths.append(otherPath)
     
 #zips
 for item in os.listdir(zipDir):
@@ -39,13 +56,12 @@ for i, path, in enumerate(allLandPaths):
         zipPath = '{}\\{}.v{}.7z'.format(zipDir,land,version)
         if zipPath not in allZips and land != 'WestGermany3':
             print(zipPath)
-            os.system('py7zr c {}  {}/'.format(zipPath,path))
-        sys.exit('test1')
-            
-            
-        
+#             os.system('py7zr c {}  {}/'.format(zipPath,path))
+#             with py7zr.SevenZipFile(zipPath, 'w') as archive:
+#                 archive.writeall(path, 'base')
+              
     else:
-        sys.exit('Stop: {} does not exist'.format(iniPath))
+        print('Skipping: {} does not exist'.format(iniPath))
         
 
 

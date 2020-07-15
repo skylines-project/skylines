@@ -12,11 +12,11 @@ mainList = os.listdir(mainDir)
 otherList = os.listdir(otherDir)
 
 for item in otherList:
+    print (item)
+    
     if item not in mainList:
         mainPath = '{}\\{}'.format(mainDir,item)
         otherPath = '{}\\{}'.format(otherDir,item)
-        os.system('mklink /D "{}" "{}"'.format(mainDir,otherDir))
-
-
+        os.system('mklink /D "{}" "{}"'.format(mainPath,otherPath))
         
         
