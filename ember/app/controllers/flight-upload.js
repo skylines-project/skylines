@@ -1,9 +1,9 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  actions: {
-    transitionTo(...args) {
-      this.transitionToRoute(...args);
-    },
-  },
-});
+export default class FlightUploadController extends Controller {
+  @action
+  transitionTo(...args) {
+    this.transitionToRoute(...args);
+  }
+}

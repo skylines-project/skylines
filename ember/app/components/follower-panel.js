@@ -3,20 +3,23 @@ import { inject as service } from '@ember/service';
 
 import { task } from 'ember-concurrency';
 
-export default Component.extend({
-  tagName: '',
-  account: service(),
-  ajax: service(),
+export default class FollowerPanel extends Component {
+  tagName = '';
 
-  followTask: task(function* () {
+  @service account;
+  @service ajax;
+
+  @(task(function* () {
     let userId = this.get('follower.id');
     yield this.ajax.request(`/api/users/${userId}/follow`);
     this.set('follower.currentUserFollows', true);
-  }).drop(),
+  }).drop())
+  followTask;
 
-  unfollowTask: task(function* () {
+  @(task(function* () {
     let userId = this.get('follower.id');
     yield this.ajax.request(`/api/users/${userId}/unfollow`);
     this.set('follower.currentUserFollows', false);
-  }).drop(),
-});
+  }).drop())
+  unfollowTask;
+}

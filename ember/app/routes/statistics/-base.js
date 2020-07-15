@@ -2,15 +2,15 @@ import { get } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  ajax: service(),
+export default class BaseRoute extends Route {
+  @service ajax;
 
   model(params) {
     return this.ajax.request(this.getURL(params));
-  },
+  }
 
   setupController(controller, model) {
-    this._super(...arguments);
+    super.setupController(...arguments);
 
     let routeName = this.routeName;
     let params = this.paramsFor(routeName);
@@ -21,9 +21,9 @@ export default Route.extend({
       club: routeName === 'statistics.club' ? parseInt(params.club_id, 10) : null,
       name: get(model, 'name'),
     });
-  },
+  }
 
-  getURL(/* params */) {
+  getURL /* params */() {
     throw new Error('Not implemented: `getURL`');
-  },
-});
+  }
+}

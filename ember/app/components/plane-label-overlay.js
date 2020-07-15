@@ -3,17 +3,16 @@ import Component from '@ember/component';
 import $ from 'jquery';
 import ol from 'openlayers';
 
-export default Component.extend({
-  tagName: '',
+export default class PlaneLabelOverlay extends Component {
+  tagName = '';
 
-  map: null,
-  flight: null,
-  position: null,
-
-  overlay: null,
+  map = null;
+  flight = null;
+  position = null;
+  overlay = null;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     let badgeStyle = `display: inline-block; text-align: center; background: ${this.get('flight.color')}`;
 
@@ -28,25 +27,25 @@ export default Component.extend({
         element: badge.get(0),
       }),
     );
-  },
+  }
 
   didReceiveAttrs() {
-    this._super(...arguments);
+    super.didReceiveAttrs(...arguments);
     this.overlay.setPosition(this.position);
-  },
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     let overlay = this.overlay;
     this.map.addOverlay(overlay);
 
     let width = $(overlay.getElement()).width();
     overlay.setOffset([-width / 2, -40]);
-  },
+  }
 
   willDestroyElement() {
-    this._super(...arguments);
+    super.willDestroyElement(...arguments);
     let overlay = this.overlay;
     this.map.removeOverlay(overlay);
-  },
-});
+  }
+}

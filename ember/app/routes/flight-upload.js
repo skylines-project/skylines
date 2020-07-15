@@ -3,9 +3,9 @@ import { inject as service } from '@ember/service';
 
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  ajax: service(),
-  account: service(),
+export default class FlightUploadRoute extends Route.extend(AuthenticatedRouteMixin) {
+  @service ajax;
+  @service account;
 
   async model() {
     let ajax = this.ajax;
@@ -19,11 +19,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
     }
 
     return { clubMembers };
-  },
+  }
 
   setupController(controller) {
-    this._super(...arguments);
-
+    super.setupController(...arguments);
     controller.set('result', null);
-  },
-});
+  }
+}

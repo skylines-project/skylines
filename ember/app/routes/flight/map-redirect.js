@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
+export default class MapRedirectRoute extends Route {
   redirect() {
     this.replaceWith('flight.index');
-  },
-});
+  }
+}

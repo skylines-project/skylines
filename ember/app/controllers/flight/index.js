@@ -1,13 +1,13 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  queryParams: ['baselayer', 'overlays'],
-  baselayer: null,
-  overlays: null,
+export default class IndexController extends Controller {
+  queryParams = ['baselayer', 'overlays'];
+  baselayer = null;
+  overlays = null;
 
-  actions: {
-    transitionTo(...args) {
-      this.transitionToRoute(...args);
-    },
-  },
-});
+  @action
+  transitionTo(...args) {
+    this.transitionToRoute(...args);
+  }
+}

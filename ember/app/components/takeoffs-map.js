@@ -1,12 +1,12 @@
 import slMapClickHandler from '../utils/map-click-handler';
 import BaseMapComponent from './base-map';
 
-export default BaseMapComponent.extend({
+export default class TakeoffsMap extends BaseMapComponent {
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     this.fit();
     slMapClickHandler(this.map);
-  },
+  }
 
   fit() {
     let map = this.map;
@@ -27,5 +27,5 @@ export default BaseMapComponent.extend({
         view.setZoom(10);
       }
     }
-  },
-});
+  }
+}

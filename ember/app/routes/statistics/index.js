@@ -1,7 +1,7 @@
 import BaseRoute from './-base';
 
-export default BaseRoute.extend({
+export default class IndexRoute extends BaseRoute {
   getURL() {
     return '/api/statistics/';
-  },
-});
+  }
+}

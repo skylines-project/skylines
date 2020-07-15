@@ -1,7 +1,7 @@
 import BaseRoute from './-base';
 
-export default BaseRoute.extend({
+export default class ListRoute extends BaseRoute {
   getURL({ list }) {
     return `/api/flights/list/${list}`;
-  },
-});
+  }
+}

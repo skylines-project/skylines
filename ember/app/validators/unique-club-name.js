@@ -3,9 +3,9 @@ import { inject as service } from '@ember/service';
 
 import BaseValidator from 'ember-cp-validations/validators/base';
 
-export default BaseValidator.extend({
-  ajax: service(),
-  intl: service(),
+export default class UniqueClubName extends BaseValidator {
+  @service ajax;
+  @service intl;
 
   async validate(value, options, model) {
     if (!value) {
@@ -31,5 +31,5 @@ export default BaseValidator.extend({
     }
 
     return this.intl.t(options.messageKey);
-  },
-});
+  }
+}

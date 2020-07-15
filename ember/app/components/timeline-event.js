@@ -2,10 +2,10 @@ import Component from '@ember/component';
 
 import computedComponent from '../computed/computed-component';
 
-export default Component.extend({
-  tagName: '',
+export default class TimelineEvent extends Component {
+  tagName = '';
 
-  event: null,
+  event = null;
 
-  eventComponent: computedComponent('event.type', 'timeline-events/'),
-});
+  @computedComponent('event.type', 'timeline-events/') eventComponent;
+}

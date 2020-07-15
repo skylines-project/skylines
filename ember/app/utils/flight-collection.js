@@ -2,13 +2,13 @@ import ArrayProxy from '@ember/array/proxy';
 
 import ol from 'openlayers';
 
-export default ArrayProxy.extend({
+export default class FlightCollection extends ArrayProxy {
   init() {
     this.set('content', []);
     this.set('source', new ol.source.Vector());
 
-    this._super(...arguments);
-  },
+    super.init(...arguments);
+  }
 
   /**
    * Calculates the bounds of all flights in the collection.
@@ -16,7 +16,7 @@ export default ArrayProxy.extend({
    */
   getBounds() {
     return this.source.getExtent();
-  },
+  }
 
   /**
    * Returns the minimum and maximum fix time within the extent.
@@ -82,10 +82,10 @@ export default ArrayProxy.extend({
     }
 
     return { min, max };
-  },
+  }
 
   arrayContentWillChange(offset, removeCount) {
-    this._super(...arguments);
+    super.arrayContentWillChange(...arguments);
 
     let flights = this.content;
     let removedFlights = flights.slice(offset, offset + removeCount);
@@ -99,7 +99,7 @@ export default ArrayProxy.extend({
         .filter(feature => feature.get('sfid') === id)
         .forEach(feature => source.removeFeature(feature));
     });
-  },
+  }
 
   arrayContentDidChange(offset, removeCount, addCount) {
     let flights = this.content;
@@ -117,6 +117,6 @@ export default ArrayProxy.extend({
       source.addFeature(feature);
     });
 
-    this._super(...arguments);
-  },
-});
+    super.arrayContentDidChange(...arguments);
+  }
+}

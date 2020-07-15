@@ -1,19 +1,20 @@
 import Component from '@ember/component';
-import { readOnly, or, and, not } from '@ember/object/computed';
+import { not, and, or, readOnly } from '@ember/object/computed';
 
-export default Component.extend({
-  tagName: '',
-  validation: null,
-  label: null,
-  hasContent: true,
-  forceErrorClass: false,
-  didValidate: false,
+export default class ValidatedBlock extends Component {
+  tagName = '';
 
-  notValidating: not('validation.isValidating'),
-  isValid: and('hasContent', 'validation.isValid', 'notValidating'),
-  isInvalid: readOnly('validation.isInvalid'),
-  showErrorClass: and('notValidating', 'showMessage', 'hasContent', 'validation'),
-  _showMessage: or('validation.isDirty', 'didValidate'),
-  showMessage: and('_showMessage', 'isInvalid'),
-  _showErrorClass: or('showErrorClass', 'forceErrorClass'),
-});
+  validation = null;
+  label = null;
+  hasContent = true;
+  forceErrorClass = false;
+  didValidate = false;
+
+  @not('validation.isValidating') notValidating;
+  @and('hasContent', 'validation.isValid', 'notValidating') isValid;
+  @readOnly('validation.isInvalid') isInvalid;
+  @and('notValidating', 'showMessage', 'hasContent', 'validation') showErrorClass;
+  @or('validation.isDirty', 'didValidate') _showMessage;
+  @and('_showMessage', 'isInvalid') showMessage;
+  @or('showErrorClass', 'forceErrorClass') _showErrorClass;
+}

@@ -1,8 +1,8 @@
 import Component from '@ember/component';
 
-export default Component.extend({
-  tagName: '',
+export default class ValidatedInput extends Component {
+  tagName = '';
 
-  type: 'text',
-  value: null,
-});
+  type = 'text';
+  value = null;
+}

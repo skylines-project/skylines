@@ -3,13 +3,14 @@ import { computed } from '@ember/object';
 
 import ol from 'openlayers';
 
-export default Component.extend({
-  tagName: '',
+export default class TakeoffsLayer extends Component {
+  tagName = '';
 
-  map: null,
-  locations: null,
+  map = null;
+  locations = null;
 
-  layer: computed(function () {
+  @computed
+  get layer() {
     return new ol.layer.Vector({
       source: new ol.source.Vector(),
       style: new ol.style.Style({
@@ -22,19 +23,20 @@ export default Component.extend({
       id: 'TakeoffLocations',
       zIndex: 51,
     });
-  }),
+  }
 
-  source: computed('layer', function () {
+  @computed('layer')
+  get source() {
     return this.layer.getSource();
-  }),
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     this.map.addLayer(this.layer);
-  },
+  }
 
   willDestroyElement() {
-    this._super(...arguments);
+    super.willDestroyElement(...arguments);
     this.map.removeLayer(this.layer);
-  },
-});
+  }
+}

@@ -1,15 +1,16 @@
+import { action } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  ajax: service(),
-  searchTextService: service('searchText'),
+export default class SearchRoute extends Route {
+  @service ajax;
+  @service('searchText') searchTextService;
 
-  queryParams: {
+  queryParams = {
     text: {
       refreshModel: true,
     },
-  },
+  };
 
   model(params) {
     let searchText = params.text;
@@ -18,21 +19,19 @@ export default Route.extend({
     if (searchText) {
       return this.ajax.request(`/api/search?text=${searchText}`);
     }
-  },
+  }
 
-  actions: {
-    loading(transition) {
-      let controller = this.controllerFor('search');
-      controller.set('currentlyLoading', true);
-      transition.promise.finally(() => {
-        controller.set('currentlyLoading', false);
-      });
-      return true;
-    },
-  },
+  @action
+  loading(transition) {
+    let controller = this.controllerFor('search');
+    controller.set('currentlyLoading', true);
+    transition.promise.finally(() => {
+      controller.set('currentlyLoading', false);
+    });
+    return true;
+  }
 
-  deactive() {
-    this._super(...arguments);
+  deactivate() {
     this.set('searchTextService.text', null);
-  },
-});
+  }
+}

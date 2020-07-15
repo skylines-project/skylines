@@ -3,28 +3,29 @@ import { computed } from '@ember/object';
 
 import ol from 'openlayers';
 
-export default Component.extend({
-  tagName: '',
+export default class TakeoffsLayerFeature extends Component {
+  tagName = '';
 
-  source: null,
-  location: null,
+  source = null;
+  location = null;
 
-  feature: computed(function () {
+  @computed
+  get feature() {
     let location = this.location;
     let transformed = ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857');
 
     return new ol.Feature({
       geometry: new ol.geom.Point(transformed),
     });
-  }),
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     this.source.addFeature(this.feature);
-  },
+  }
 
   willDestroyElement() {
-    this._super(...arguments);
+    super.willDestroyElement(...arguments);
     this.source.removeFeature(this.feature);
-  },
-});
+  }
+}
