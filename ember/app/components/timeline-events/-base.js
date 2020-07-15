@@ -3,12 +3,13 @@ import { inject as service } from '@ember/service';
 
 import safeComputed from '../../computed/safe-computed';
 
-export default Component.extend({
-  account: service(),
+export default class Base extends Component {
+  tagName = '';
 
-  tagName: '',
+  @service account;
 
-  event: null,
+  event = null;
 
-  accountUserIsActor: safeComputed('account.user', 'event.actor', (accountUser, actor) => accountUser.id === actor.id),
-});
+  @safeComputed('account.user', 'event.actor', (accountUser, actor) => accountUser.id === actor.id)
+  accountUserIsActor;
+}

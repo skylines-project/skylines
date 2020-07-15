@@ -1,24 +1,25 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 import availableLocales from '../utils/locales';
 
-export default Component.extend({
-  account: service(),
-  intl: service(),
-  session: service(),
+export default class NavBarMenuRight extends Component {
+  tagName = '';
 
-  tagName: '',
+  @service account;
+  @service intl;
+  @service session;
 
-  availableLocales,
-  currentLocale: computed('availableLocales.@each.code', 'intl.locale', function () {
+  availableLocales = availableLocales;
+
+  @computed('availableLocales.@each.code', 'intl.locale')
+  get currentLocale() {
     return this.availableLocales.findBy('code', this.intl.locale[0]);
-  }),
+  }
 
-  actions: {
-    setLocale(locale) {
-      this.intl.loadAndSetLocale(locale);
-    },
-  },
-});
+  @action
+  setLocale(locale) {
+    this.intl.loadAndSetLocale(locale);
+  }
+}

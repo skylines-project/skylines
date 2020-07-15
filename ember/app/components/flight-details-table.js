@@ -1,55 +1,72 @@
 import Component from '@ember/component';
-import { alias, or, equal, not } from '@ember/object/computed';
+import { not, equal, or, alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 import { task } from 'ember-concurrency';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Component.extend({
-  tagName: '',
-  account: service(),
-  ajax: service(),
+export default class FlightDetailsTable extends Component {
+  tagName = '';
 
-  flight: null,
-  transitionTo() {},
+  @service account;
+  @service ajax;
 
-  pilotName: or('flight.pilot.name', 'flight.pilotName'),
-  copilotName: or('flight.copilot.name', 'flight.copilotName'),
+  flight = null;
+  transitionTo() {}
 
-  duration: safeComputed(
+  @or('flight.pilot.name', 'flight.pilotName')
+  pilotName;
+
+  @or('flight.copilot.name', 'flight.copilotName')
+  copilotName;
+
+  @safeComputed(
     'flight.takeoffTime',
     'flight.landingTime',
     (takeoff, landing) => (new Date(landing).getTime() - new Date(takeoff).getTime()) / 1000,
-  ),
+  )
+  duration;
 
-  registration: alias('flight.registration'),
-  competitionId: alias('flight.competitionId'),
+  @alias('flight.registration')
+  registration;
 
-  isPilot: safeComputed(
+  @alias('flight.competitionId')
+  competitionId;
+
+  @safeComputed(
     'flight.pilot.id',
     'flight.copilot.id',
     'account.user.id',
     (pilotId, copilotId, accountId) => pilotId === accountId || copilotId === accountId,
-  ),
-  isOwner: safeComputed('flight.igcFile.owner.id', 'account.user.id', (ownerId, accountId) => ownerId === accountId),
+  )
+  isPilot;
 
-  isWritable: or('isPilot', 'isOwner'),
+  @safeComputed('flight.igcFile.owner.id', 'account.user.id', (ownerId, accountId) => ownerId === accountId)
+  isOwner;
 
-  isPublic: equal('flight.privacyLevel', 0),
-  isPrivate: not('isPublic'),
+  @or('isPilot', 'isOwner')
+  isWritable;
 
-  deleteTask: task(function* () {
+  @equal('flight.privacyLevel', 0)
+  isPublic;
+
+  @not('isPublic')
+  isPrivate;
+
+  @(task(function* () {
     let id = this.get('flight.id');
     yield this.ajax.request(`/api/flights/${id}/`, { method: 'DELETE' });
     this.set('showDeleteModal', false);
     this.transitionTo('flights');
-  }).drop(),
+  }).drop())
+  deleteTask;
 
-  publishTask: task(function* () {
+  @(task(function* () {
     let id = this.get('flight.id');
     yield this.ajax.request(`/api/flights/${id}/`, { method: 'POST', json: { privacyLevel: 0 } });
     this.set('flight.privacyLevel', 0);
     this.set('showPublishModal', false);
-  }).drop(),
-});
+  }).drop())
+  publishTask;
+}

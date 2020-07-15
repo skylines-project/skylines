@@ -1,9 +1,9 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
-  queryParams: {
+export default class RankingRoute extends Route {
+  queryParams = {
     year: { refreshModel: true },
-  },
+  };
 
-  model() {},
-});
+  model() {}
+}

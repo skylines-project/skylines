@@ -1,17 +1,16 @@
 import Controller from '@ember/controller';
-import { readOnly, oneWay } from '@ember/object/computed';
+import { action } from '@ember/object';
+import { oneWay, readOnly } from '@ember/object/computed';
 
-export default Controller.extend({
-  queryParams: ['text'],
+export default class SearchController extends Controller {
+  queryParams = ['text'];
 
-  searchText: readOnly('text'),
-  searchTextInput: oneWay('searchText'),
+  @readOnly('text') searchText;
+  @oneWay('searchText') searchTextInput;
+  @readOnly('model.results') results;
 
-  results: readOnly('model.results'),
-
-  actions: {
-    search(text) {
-      this.transitionToRoute({ queryParams: { text } });
-    },
-  },
-});
+  @action
+  search(text) {
+    this.transitionToRoute({ queryParams: { text } });
+  }
+}

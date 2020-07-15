@@ -3,10 +3,12 @@ import { computed } from '@ember/object';
 import safeComputed from '../../computed/safe-computed';
 import Base from './-base';
 
-export default Base.extend({
-  accountUserIsFollowed: safeComputed('account.user', 'event.user', (accountUser, user) => accountUser.id === user.id),
+export default class Follower extends Base {
+  @safeComputed('account.user', 'event.user', (accountUser, user) => accountUser.id === user.id)
+  accountUserIsFollowed;
 
-  translationKey: computed('accountUserIsActor', 'accountUserIsFollowed', function () {
+  @computed('accountUserIsActor', 'accountUserIsFollowed')
+  get translationKey() {
     let i = 1;
     if (this.accountUserIsActor) {
       i += 1;
@@ -15,5 +17,5 @@ export default Base.extend({
       i += 2;
     }
     return `timeline-events.follower.message${i}`;
-  }),
-});
+  }
+}

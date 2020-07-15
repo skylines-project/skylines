@@ -3,14 +3,16 @@ import { computed } from '@ember/object';
 import safeComputed from '../../computed/safe-computed';
 import Base from './-base';
 
-export default Base.extend({
-  accountUserIsPilot: safeComputed(
+export default class FlightComment extends Base {
+  @safeComputed(
     'account.user',
     'event.flight',
     (accountUser, flight) => accountUser.id === flight.pilot_id || accountUser.id === flight.copilot_id,
-  ),
+  )
+  accountUserIsPilot;
 
-  translationKey: computed('accountUserIsActor', 'accountUserIsPilot', function () {
+  @computed('accountUserIsActor', 'accountUserIsPilot')
+  get translationKey() {
     let i = 1;
     if (this.accountUserIsActor) {
       i += 1;
@@ -19,5 +21,5 @@ export default Base.extend({
       i += 2;
     }
     return `timeline-events.flight-comment.message${i}`;
-  }),
-});
+  }
+}

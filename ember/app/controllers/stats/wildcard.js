@@ -2,10 +2,10 @@ import Controller from '@ember/controller';
 import { readOnly } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
-export default Controller.extend({
-  account: service(),
+export default class WildcardController extends Controller {
+  @service account;
 
-  name: readOnly('model.name'),
-  years: readOnly('model.years'),
-  sumPilots: readOnly('model.sumPilots'),
-});
+  @readOnly('model.name') name;
+  @readOnly('model.years') years;
+  @readOnly('model.sumPilots') sumPilots;
+}

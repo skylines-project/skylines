@@ -4,31 +4,33 @@ import { inject as service } from '@ember/service';
 
 import { task } from 'ember-concurrency';
 
-export default Component.extend({
-  tagName: '',
-  ajax: service(),
-  account: service(),
+export default class ChooseClub extends Component {
+  tagName = '';
 
-  clubs: null,
-  clubId: null,
-  messageKey: null,
-  error: null,
+  @service ajax;
+  @service account;
 
-  clubsWithNull: computed('clubs.[]', function () {
+  clubs = null;
+  clubId = null;
+  messageKey = null;
+  error = null;
+
+  @computed('clubs.[]')
+  get clubsWithNull() {
     return [{ id: null }].concat(this.clubs);
-  }),
+  }
 
-  club: computed('clubId', {
-    get() {
-      return this.clubsWithNull.findBy('id', this.clubId || null);
-    },
-    set(key, value) {
-      this.set('clubId', value.id);
-      return value;
-    },
-  }),
+  @computed('clubId')
+  get club() {
+    return this.clubsWithNull.findBy('id', this.clubId || null);
+  }
 
-  saveTask: task(function* () {
+  set club(value) {
+    this.set('clubId', value.id);
+    return value;
+  }
+
+  @(task(function* () {
     let club = this.club;
     let json = { clubId: club ? club.id : null };
 
@@ -43,5 +45,6 @@ export default Component.extend({
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }
-  }).drop(),
-});
+  }).drop())
+  saveTask;
+}

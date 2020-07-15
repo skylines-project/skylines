@@ -1,8 +1,8 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
+export default class IndexRoute extends Route {
   setupController(controller) {
-    this._super(...arguments);
+    super.setupController(...arguments);
     controller.set('club', this.controllerFor('club').get('model'));
-  },
-});
+  }
+}

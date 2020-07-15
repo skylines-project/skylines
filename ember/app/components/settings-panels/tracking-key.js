@@ -3,20 +3,21 @@ import { inject as service } from '@ember/service';
 
 import { task } from 'ember-concurrency';
 
-export default Component.extend({
-  tagName: '',
+export default class TrackingKey extends Component {
+  tagName = '';
 
-  ajax: service(),
+  @service ajax;
 
-  key: null,
-  error: null,
+  key = null;
+  error = null;
 
-  saveTask: task(function* () {
+  @(task(function* () {
     try {
       let { key } = yield this.ajax.request('/api/settings/tracking/key', { method: 'POST' });
       this.setProperties({ key, error: null });
     } catch (error) {
       this.setProperties({ error });
     }
-  }).drop(),
-});
+  }).drop())
+  saveTask;
+}

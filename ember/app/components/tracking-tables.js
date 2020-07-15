@@ -4,15 +4,16 @@ import { setDiff } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
 
-export default Component.extend({
-  account: service(),
+export default class TrackingTables extends Component {
+  tagName = '';
 
-  tagName: '',
+  @service account;
 
-  tracks: null,
-  friends: null,
+  tracks = null;
+  friends = null;
 
-  friendsTracks: computed('tracks.[]', 'friends.[]', 'account.user.id', function () {
+  @computed('tracks.[]', 'friends.[]', 'account.user.id')
+  get friendsTracks() {
     let self = this.get('account.user.id');
     if (isNone(self)) {
       return [];
@@ -21,7 +22,7 @@ export default Component.extend({
     let friends = this.friends;
 
     return this.tracks.filter(track => track.pilot.id === self || friends.includes(track.pilot.id));
-  }),
+  }
 
-  othersTracks: setDiff('tracks', 'friendsTracks'),
-});
+  @setDiff('tracks', 'friendsTracks') othersTracks;
+}

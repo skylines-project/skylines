@@ -1,30 +1,30 @@
 import { getOwner } from '@ember/application';
 import Component from '@ember/component';
+import { action } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 import safeComputed from '../computed/safe-computed';
 import addDays from '../utils/add-days';
 
-export default Component.extend({
-  account: service(),
-  pinnedFlights: service(),
+export default class FlightListNav extends Component {
+  tagName = '';
 
-  tagName: '',
+  @service account;
+  @service pinnedFlights;
 
-  hasPinned: notEmpty('pinnedFlights.pinned'),
+  @notEmpty('pinnedFlights.pinned') hasPinned;
 
-  prevDate: safeComputed('date', date => addDays(date, -1)),
-  nextDate: safeComputed('date', date => addDays(date, 1)),
+  @safeComputed('date', date => addDays(date, -1)) prevDate;
+  @safeComputed('date', date => addDays(date, 1)) nextDate;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     this.set('router', getOwner(this).lookup('router:main'));
-  },
+  }
 
-  actions: {
-    dateSelected(date) {
-      this.router.transitionTo('flights.date', date);
-    },
-  },
-});
+  @action
+  dateSelected(date) {
+    this.router.transitionTo('flights.date', date);
+  }
+}

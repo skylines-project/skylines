@@ -3,15 +3,15 @@ import { inject as service } from '@ember/service';
 
 import { task } from 'ember-concurrency';
 
-export default Component.extend({
-  tagName: '',
+export default class LoginForm extends Component {
+  tagName = '';
 
-  session: service(),
+  @service session;
 
-  inline: false,
-  error: null,
+  inline = false;
+  error = null;
 
-  loginTask: task(function* () {
+  @(task(function* () {
     let { email, password } = this;
 
     try {
@@ -19,5 +19,6 @@ export default Component.extend({
     } catch (error) {
       this.set('error', error);
     }
-  }).drop(),
-});
+  }).drop())
+  loginTask;
+}
