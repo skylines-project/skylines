@@ -18,10 +18,10 @@ def sevenzip(tempPath,landPath):
 #     with py7zr.SevenZipFile(tempPath, 'w') as archive:
 #                     archive.writeall(landPath, 'base')  #This seems slow, but uses threads well
 
-mainDir = 'Z:\\temp'
-otherDir = 'Z:\\temp2'
-# mainDir = 'Z:\\Condor\\Landscapes'
-# otherDir = 'E:\\landscapes_for_symlinks'  #py7zr does not follow symlinks
+# mainDir = 'Z:\\temp'
+# otherDir = 'Z:\\temp2'
+mainDir = 'Z:\\Condor\\Landscapes'
+otherDir = 'E:\\landscapes_for_symlinks'  #py7zr does not follow symlinks
 zipDir = 'S:\\Skylines-C\landscapes-zip'
 
 allLands = []
@@ -73,6 +73,8 @@ for i, landPath, in enumerate(allLandPaths):
 #             sys.exit('Stop: version line does not exist')
         zipPath = '{}\\{}.v{}.7z'.format(zipDir,land,version)
         if zipPath not in allZips and land != 'WestGermany3':
+            print()
+            print('----------------------------------------------------------')
             print(zipPath,)
             try:
                 tempPath = mainDir+'\\temp_{}.7z'.format(land)
