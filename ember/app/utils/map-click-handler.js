@@ -21,8 +21,6 @@ const MapClickHandler = EmberObject.extend({
 
   init() {
     this.circle = { geometry: null, animation: null };
-
-    this.map.on('click', event => this.trigger(event));
   },
 
   // Public attributes and functions
@@ -313,7 +311,9 @@ const MapClickHandler = EmberObject.extend({
 });
 
 export default function slMapClickHandler(map, flights, addFlight) {
-  return MapClickHandler.create({ map, flights, addFlight });
+  let handler = MapClickHandler.create({ map, flights, addFlight });
+  map.on('click', event => handler.trigger(event));
+  return handler;
 }
 
 /**
