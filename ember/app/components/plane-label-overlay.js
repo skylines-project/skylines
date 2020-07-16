@@ -39,7 +39,7 @@ export default class PlaneLabelOverlay extends Component {
     let overlay = this.overlay;
     this.map.addOverlay(overlay);
 
-    let width = $(overlay.getElement()).width();
+    let width = overlay.getElement().offsetWidth;
     overlay.setOffset([-width / 2, -40]);
   }
 
