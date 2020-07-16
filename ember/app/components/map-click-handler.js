@@ -1,9 +1,13 @@
 /* globals $ */
 
+import { inject as service } from '@ember/service';
+
 import Component from '@glimmer/component';
 import ol from 'openlayers';
 
 export default class MapClickHandler extends Component {
+  @service ajax;
+
   /**
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}
@@ -208,16 +212,16 @@ export default class MapClickHandler extends Component {
    * @param {Number} time Time.
    * @param {slFlight} flight Flight.
    */
-  getNearFlights(lon, lat, time, flight) {
+  async getNearFlights(lon, lat, time, flight) {
     let flights = this.args.flights;
     let addFlight = this.args.addFlight;
     if (!flights || !addFlight) {
       return;
     }
 
-    let req = $.ajax(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
+    try {
+      let data = await this.ajax.request(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
-    req.done(function (data) {
       for (let i = 0; i < data['flights'].length; ++i) {
         let flight = data['flights'][i];
 
@@ -228,9 +232,9 @@ export default class MapClickHandler extends Component {
 
         addFlight(flight);
       }
-    });
-
-    req.always(() => this.hideCircle(1000));
+    } finally {
+      this.hideCircle(1000);
+    }
   }
 
   /**
@@ -239,10 +243,13 @@ export default class MapClickHandler extends Component {
    * @param {Number} lon Longitude.
    * @param {Number} lat Latitude.
    */
-  getLocationInfo(lon, lat) {
-    let req = $.ajax(`/api/mapitems?lon=${lon}&lat=${lat}`);
-    req.done(data => this.showLocationData(data));
-    req.fail(() => this.showLocationData(null));
+  async getLocationInfo(lon, lat) {
+    try {
+      let data = await this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
+      this.showLocationData(data);
+    } catch (error) {
+      this.showLocationData(null);
+    }
   }
 
   /**
