@@ -1,39 +1,31 @@
-import Component from '@ember/component';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 
+import Component from '@glimmer/component';
 import ol from 'openlayers';
 
 export default class PlaneLabelOverlay extends Component {
-  tagName = '';
-
-  map = null;
-  flight = null;
-  position = null;
-  overlay = null;
-
   get style() {
-    return htmlSafe(`background: ${this.flight.color}`);
+    return htmlSafe(`background: ${this.args.flight.color}`);
   }
 
   @action
   addToMap(element) {
-    let { position } = this;
+    let { position } = this.args;
 
     let { offsetWidth } = element;
     let offset = [-offsetWidth / 2, -40];
 
     this.overlay = new ol.Overlay({ element, offset, position });
-    this.map.addOverlay(this.overlay);
+    this.args.map.addOverlay(this.overlay);
   }
 
   @action
   updatePosition() {
-    this.overlay.setPosition(this.position);
+    this.overlay.setPosition(this.args.position);
   }
 
   willDestroy() {
-    super.willDestroy(...arguments);
-    this.map.removeOverlay(this.overlay);
+    this.args.map.removeOverlay(this.overlay);
   }
 }
