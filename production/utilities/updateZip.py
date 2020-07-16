@@ -56,9 +56,9 @@ for item in os.listdir(zipDir):
 #remove old temp zip files
 for item in os.listdir(mainDir):
     if 'temp' in item:
-        tempPath = mainDir+'\\{}'.format(item.replace(' ','_'))
+        tempPath = mainDir+'\\{}'.format(item)
         os.remove(tempPath)
-        
+count = 0        
 #create zips                
 for i, landPath, in enumerate(allLandPaths):
     land = allLands[i]
@@ -66,22 +66,22 @@ for i, landPath, in enumerate(allLandPaths):
     iniPath = os.path.join(landPath,'{}.ini'.format(land))
     if os.path.exists(iniPath):
         lines = readfile(iniPath)
-        if len(lines) > 1:
-            version = lines[1].split('=')[1].replace('00','0').replace('.10.','.1.')
-        else:
-            print ('lines', lines)
-            sys.exit('Stop: version line does not exist')
+#         if len(lines) > 1:
+        version = lines[1].split('=')[1].replace('00','0').replace('.10.','.1.')
+#         else:
+#             print ('lines', lines)
+#             sys.exit('Stop: version line does not exist')
         zipPath = '{}\\{}.v{}.7z'.format(zipDir,land,version)
         if zipPath not in allZips and land != 'WestGermany3':
             print(zipPath,)
-#             try:
-            tempPath = mainDir+'\\temp_{}.7z'.format(land)
-            sevenzip(tempPath,landPath)
-            shutil.move(tempPath,zipPath)
-            print ('completed')
-#             except:
-#                 print (' error')
+            try:
+                tempPath = mainDir+'\\temp_{}.7z'.format(land)
+                sevenzip(tempPath,landPath)
+                shutil.move(tempPath,zipPath)
+                count += 1
+            except:
+                print ('Error creating {}'.format(zipPath))
               
     else:
         print('Skipping: {} does not exist'.format(iniPath))
-print ('Done')
+print ('Done: moved {} zip files to {}'.format(count, zipDir))
