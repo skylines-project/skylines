@@ -1,5 +1,6 @@
 <div class="relative-fullscreen" ...attributes {{set-map-target this.map}}>
   <LayerSwitcher @map={{map}} />
+  <MapClickHandler @map={{map}} @flights={{flights}} @addFlight={{addFlight}} />
 
   {{#if flights}}
     <CesiumButton @enabled={{cesiumEnabled}} @onEnable={{action "cesiumEnabled"}} @onDisable={{action "cesiumDisabled"}} />

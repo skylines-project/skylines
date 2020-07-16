@@ -1,6 +1,5 @@
 import { inject as service } from '@ember/service';
 
-import slMapClickHandler from '../utils/map-click-handler';
 import BaseMapComponent from './base-map';
 
 export default BaseMapComponent.extend({
@@ -21,8 +20,6 @@ export default BaseMapComponent.extend({
     let map = this.map;
     map.on('moveend', this._handleMoveEnd, this);
     map.on('pointermove', this._handlePointerMove, this);
-
-    slMapClickHandler(this.map, this.flights, this.addFlight);
   },
 
   willDestroyElement() {
