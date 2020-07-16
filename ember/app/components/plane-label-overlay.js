@@ -1,6 +1,7 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
 
-import $ from 'jquery';
 import ol from 'openlayers';
 
 export default class PlaneLabelOverlay extends Component {
@@ -11,41 +12,28 @@ export default class PlaneLabelOverlay extends Component {
   position = null;
   overlay = null;
 
-  init() {
-    super.init(...arguments);
-
-    let badgeStyle = `display: inline-block; text-align: center; background: ${this.get('flight.color')}`;
-
-    let id = this.getWithDefault('flight.competition_id', '') || this.getWithDefault('flight.registration', '');
-    let badge = $(`<span class="badge plane_marker" style="${badgeStyle}">
-      ${id}
-    </span>`);
-
-    this.set(
-      'overlay',
-      new ol.Overlay({
-        element: badge.get(0),
-      }),
-    );
+  get style() {
+    return htmlSafe(`background: ${this.flight.color}`);
   }
 
-  didReceiveAttrs() {
-    super.didReceiveAttrs(...arguments);
+  @action
+  addToMap(element) {
+    let { position } = this;
+
+    let { offsetWidth } = element;
+    let offset = [-offsetWidth / 2, -40];
+
+    this.overlay = new ol.Overlay({ element, offset, position });
+    this.map.addOverlay(this.overlay);
+  }
+
+  @action
+  updatePosition() {
     this.overlay.setPosition(this.position);
   }
 
-  didInsertElement() {
-    super.didInsertElement(...arguments);
-    let overlay = this.overlay;
-    this.map.addOverlay(overlay);
-
-    let width = overlay.getElement().offsetWidth;
-    overlay.setOffset([-width / 2, -40]);
-  }
-
-  willDestroyElement() {
-    super.willDestroyElement(...arguments);
-    let overlay = this.overlay;
-    this.map.removeOverlay(overlay);
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.map.removeOverlay(this.overlay);
   }
 }

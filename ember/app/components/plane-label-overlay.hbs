@@ -1,0 +1,8 @@
+<span
+  class="badge plane_marker"
+  style={{this.style}}
+  {{did-insert this.addToMap}}
+  {{did-update this.updatePosition @position}}
+>
+  {{or @flight.competition_id @flight.registration}}
+</span>

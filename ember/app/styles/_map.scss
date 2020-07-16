@@ -4,6 +4,8 @@
 
 .ol-viewport .plane_marker {
   position: absolute;
+  display: inline-block;
+  text-align: center;
   min-height: 1em;
 }
 
