@@ -1,7 +1,5 @@
 /* globals $ */
 
-import { set, setProperties } from '@ember/object';
-
 import Component from '@glimmer/component';
 import ol from 'openlayers';
 
@@ -40,21 +38,15 @@ export default class MapClickHandler extends Component {
     if (this.visible) {
       event.map.removeOverlay(this.infobox);
       this.hideCircle(0);
-      setProperties(this, {
-        visible: false,
-        infobox: null,
-      });
+      this.visible = false;
+      this.infobox = null;
       return;
     }
 
     if (!this.infobox) {
-      set(
-        this,
-        'infobox',
-        new ol.Overlay({
-          element: $('<div id="MapInfoBox" class="InfoBox"></div>').get(0),
-        }),
-      );
+      this.infobox = new ol.Overlay({
+        element: $('<div id="MapInfoBox" class="InfoBox"></div>').get(0),
+      });
     }
 
     let infobox = this.infobox;
@@ -104,7 +96,7 @@ export default class MapClickHandler extends Component {
     infobox.setPosition(coordinate);
     this.showCircle(coordinate);
 
-    set(this, 'visible', true);
+    this.visible = true;
 
     // stop bubbeling
     return false;
@@ -129,10 +121,8 @@ export default class MapClickHandler extends Component {
     get_near_flights.on('click touchend', e => {
       this.args.map.removeOverlay(this.infobox);
       this.getNearFlights(lon, lat, time, flight);
-      setProperties(this, {
-        visible: false,
-        infobox: null,
-      });
+      this.visible = false;
+      this.infobox = null;
       e.preventDefault();
     });
 
@@ -304,7 +294,7 @@ export default class MapClickHandler extends Component {
 
       element.delay(1500).fadeOut(1000, () => {
         map.removeOverlay(infobox);
-        set(this, 'visible', false);
+        this.visible = false;
       });
 
       this.hideCircle(1000);
