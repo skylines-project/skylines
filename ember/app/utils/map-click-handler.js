@@ -4,24 +4,24 @@ import EmberObject from '@ember/object';
 
 import ol from 'openlayers';
 
-const MapClickHandler = EmberObject.extend({
+class MapClickHandler extends EmberObject {
   /**
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}
    */
-  circle: null,
+  circle = null;
 
   /**
    * Stores the state if the infobox.
    * @type {Boolean}
    */
-  visible: false,
+  visible = false;
 
-  infobox: null,
+  infobox = null;
 
   init() {
     this.circle = { geometry: null, animation: null };
-  },
+  }
 
   // Public attributes and functions
 
@@ -104,7 +104,7 @@ const MapClickHandler = EmberObject.extend({
 
     // stop bubbeling
     return false;
-  },
+  }
 
   /**
    * Returns the flight badge element
@@ -115,7 +115,7 @@ const MapClickHandler = EmberObject.extend({
     return $(`<span class="info-item badge" style="background:${flight.get('color')}">
       ${flight.getWithDefault('registration', '')}
     </span>`);
-  },
+  }
 
   nearFlights(lon, lat, time, flight) {
     let get_near_flights = $(`<div class="info-item">
@@ -133,7 +133,7 @@ const MapClickHandler = EmberObject.extend({
     });
 
     return get_near_flights;
-  },
+  }
 
   locationInfo(lon, lat) {
     let get_location_info = $(`<div class="info-item">
@@ -146,7 +146,7 @@ const MapClickHandler = EmberObject.extend({
     });
 
     return get_location_info;
-  },
+  }
 
   /**
    * Show a circle at the clicked position
@@ -195,7 +195,7 @@ const MapClickHandler = EmberObject.extend({
         map.render();
       }
     });
-  },
+  }
 
   /**
    * Hides the search circle
@@ -204,7 +204,7 @@ const MapClickHandler = EmberObject.extend({
    */
   hideCircle(duration) {
     this.circle.animation = { duration, start: null };
-  },
+  }
 
   /**
    * Request near flights via ajax
@@ -237,7 +237,7 @@ const MapClickHandler = EmberObject.extend({
     });
 
     req.always(() => this.hideCircle(1000));
-  },
+  }
 
   /**
    * Request location informations via ajax
@@ -249,7 +249,7 @@ const MapClickHandler = EmberObject.extend({
     let req = $.ajax(`/api/mapitems?lon=${lon}&lat=${lat}`);
     req.done(data => this.showLocationData(data));
     req.fail(() => this.showLocationData(null));
-  },
+  }
 
   /**
    * Show location data in infobox
@@ -307,8 +307,8 @@ const MapClickHandler = EmberObject.extend({
     }
 
     element.append(item);
-  },
-});
+  }
+}
 
 export default function slMapClickHandler(map, flights, addFlight) {
   let handler = MapClickHandler.create({ map, flights, addFlight });
