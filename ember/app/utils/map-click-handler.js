@@ -4,7 +4,7 @@ import EmberObject from '@ember/object';
 
 import ol from 'openlayers';
 
-class MapClickHandler extends EmberObject {
+export default class MapClickHandler extends EmberObject {
   /**
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}
@@ -308,12 +308,6 @@ class MapClickHandler extends EmberObject {
 
     element.append(item);
   }
-}
-
-export default function slMapClickHandler(map, flights, addFlight) {
-  let handler = MapClickHandler.create({ map, flights, addFlight });
-  map.on('click', event => handler.trigger(event));
-  return handler;
 }
 
 /**
