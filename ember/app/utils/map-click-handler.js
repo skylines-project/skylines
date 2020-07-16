@@ -9,7 +9,7 @@ export default class MapClickHandler extends EmberObject {
    * The OpenLayers.Geometry object of the circle.
    * @type {Object}
    */
-  circle = null;
+  circle = { geometry: null, animation: null };
 
   /**
    * Stores the state if the infobox.
@@ -18,10 +18,6 @@ export default class MapClickHandler extends EmberObject {
   visible = false;
 
   infobox = null;
-
-  init() {
-    this.circle = { geometry: null, animation: null };
-  }
 
   // Public attributes and functions
 
