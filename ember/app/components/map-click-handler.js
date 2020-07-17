@@ -1,6 +1,7 @@
 /* globals $ */
 
 import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -308,14 +309,14 @@ export default class MapClickHandler extends Component {
         .getArray()
         .filter(layer => layer.get('name') === 'Mountain Wave Project')[0];
 
-      if (!$.isEmptyObject(data['airspaces']) && airspace_layer.getVisible()) {
+      if (!isEmpty(data['airspaces']) && airspace_layer.getVisible()) {
         let p = $('<p></p>');
         p.append(formatAirspaceData(data['airspaces']));
         item.append(p);
         no_data = false;
       }
 
-      if (!$.isEmptyObject(data['waves']) && mwp_layer.getVisible()) {
+      if (!isEmpty(data['waves']) && mwp_layer.getVisible()) {
         let p = $('<p></p>');
         p.append(formatMountainWaveData(data['waves']));
         item.append(p);
