@@ -44,7 +44,7 @@ for item in os.listdir(mainDir):
 for item in os.listdir(otherDir):
     if item not in allLands:
         allLands.append(item)
-        allLandPaths.append(otherPath)
+        allLandPaths.append('{}\\{}'.format(otherDir, item))
 
 #zips
 for item in os.listdir(zipDir):
