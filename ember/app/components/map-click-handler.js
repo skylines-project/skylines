@@ -62,11 +62,9 @@ export default class MapClickHandler extends Component {
 
     let closest = this.findClosestFlightPoint(this.coordinate);
     if (closest) {
-      let { feature, closestPoint } = closest;
+      let { flight, closestPoint } = closest;
 
       let time = closestPoint[3];
-      let sfid = feature.get('sfid');
-      let flight = this.args.flights.findBy('id', sfid);
 
       // flight info
       let flight_info = this.flightInfo(flight);
@@ -116,7 +114,10 @@ export default class MapClickHandler extends Component {
     let dy = inputPixel[1] - featurePixel[1];
     let squaredDistance = dx * dx + dy * dy;
     if (squaredDistance < 100) {
-      return { feature, closestPoint };
+      let flightId = feature.get('sfid');
+      let flight = flights.findBy('id', flightId);
+
+      return { flight, closestPoint };
     }
   }
 
