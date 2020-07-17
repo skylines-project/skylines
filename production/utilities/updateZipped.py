@@ -4,7 +4,7 @@
 #
 #         '''
 
-import os,sys
+import os,sys,time
 import py7zr
 import shutil
 
@@ -40,8 +40,9 @@ while keepRunning: #loops infinitely
     
     #landscapes
     for item in os.listdir(mainDir):
-        allLands.append(item)
-        allLandPaths.append('{}\\{}'.format(mainDir,item))
+        if 'WestGermany3' not in item:
+            allLands.append(item)
+            allLandPaths.append('{}\\{}'.format(mainDir,item))
     
     for item in os.listdir(otherDir):
         if item not in allLands:
@@ -73,7 +74,7 @@ while keepRunning: #loops infinitely
                 print ('lines', lines)
                 sys.exit('Stop: version line does not exist')
             zipPath = '{}\\{}.v{}.7z'.format(zipDir,land.replace(' ','_'),version) #no zips will have spaces, but landscapes folders might
-            if zipPath not in allZips and land != 'WestGermany3':
+            if zipPath not in allZips:
                 print()
                 print('----------------------------------------------------------')
                 print(zipPath,)
@@ -92,8 +93,7 @@ while keepRunning: #loops infinitely
             print('Skipping: {} does not exist'.format(iniPath))
     if count>0:
         print ('Moved {} zip files to {}'.format(count, zipDir))
-    time.sleep(10
-               )
+    time.sleep(10)
 #loops infinitely
 
 
