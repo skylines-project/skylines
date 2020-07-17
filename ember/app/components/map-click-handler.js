@@ -11,6 +11,7 @@ export default class MapClickHandler extends Component {
 
   @tracked coordinate;
   @tracked closestFlight;
+  @tracked locationData;
 
   /**
    * The OpenLayers.Geometry object of the circle.
@@ -269,11 +270,11 @@ export default class MapClickHandler extends Component {
    */
   async getLocationInfo(lon, lat) {
     try {
-      let data = await this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
-      this.showLocationData(data);
+      this.locationData = await this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
     } catch (error) {
-      this.showLocationData(null);
+      this.locationData = null;
     }
+    this.showLocationData();
   }
 
   /**
@@ -281,11 +282,13 @@ export default class MapClickHandler extends Component {
    *
    * @param {Object} data Location data.
    */
-  showLocationData(data) {
+  showLocationData() {
     // do nothing if infobox is closed already
     if (!this.visible) {
       return;
     }
+
+    let data = this.locationData;
 
     let infobox = this.infobox;
     let map = this.args.map;
