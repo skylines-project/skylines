@@ -50,7 +50,7 @@ for item in os.listdir(otherDir):
 
 #zips
 for item in os.listdir(zipDir):
-    if item[-1]=='z':
+    if item.split('.')[-1] =='7z':
         allZips.append('{}\{}'.format(zipDir,item))
 
 #remove old temp zip files
@@ -78,14 +78,11 @@ for i, landPath, in enumerate(allLandPaths):
             print('----------------------------------------------------------')
             print(zipPath,)
             try:
-                #remove old zip and torrent files for same landscape
-                land = zipPath.split('.')[0]
-                os.system('del {}*'.format)
-
                 #create new zip
-                tempPath = mainDir+'\\temp_{}.7z'.format(land)
-                sevenzip(tempPath,landPath)
-                shutil.move(tempPath,zipPath)
+                landZip = zipPath.split('.')[0].split('\\')[-1]
+                tempPathZip = mainDir+'\\temp_{}.7z'.format(landZip)
+                sevenzip(tempPathZip,landPath)
+                shutil.move(tempPathZip,zipPath)
                 count += 1
             except:
                 print ('Error creating {}'.format(zipPath))
@@ -93,3 +90,5 @@ for i, landPath, in enumerate(allLandPaths):
     else:
         print('Skipping: {} does not exist'.format(iniPath))
 print ('Done: moved {} zip files to {}'.format(count, zipDir))
+
+
