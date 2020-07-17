@@ -11,7 +11,6 @@ for item in dirlist:
         names.append(name)
         sizes.append (os.stat('{}/{}'.format(dir,name)).st_size)
 print names
-print sizes
 
 lines = []
 lines.append('<BasePage> \n')
@@ -40,13 +39,9 @@ lines.append('  <tbody> \n')
 
 for i, name in enumerate(names):
     lines.append('\t<tr> \n')
-    # lines.append('\t\t<td> {{"' + name + '"}} </td> \n')
     lines.append('\t\t<td> <a href="http://199.192.98.227:8080/landscapes-zip/{}.torrent" download>'.format(name) + ' {{fa-icon "download" size="sm"}}' + ' {} </a> </td> \n'.format(name.replace('.7z','')))
     sizeStr = '{:.1f} GB"'.format(sizes[i] /float(10 ** 9))
-    print i, sizes[i]
     lines.append('\t\t<td align = "right"> {{"' + sizeStr  + '}} </td> \n')
-    # lines.append('\t\t<td> <a href="http://199.192.98.227:8080/landscapes-zip/{}" download>'.format(name) + ' {{fa-icon "download" size="sm"}} HTTP </a> </td> \n')
-    # lines.append('\t\t<td> <a href="http://199.192.98.227:8080/landscapes-zip/{}.torrent" download>'.format(name) + ' {{fa-icon "download" size="sm"}} Torrent </a> </td> \n')
     lines.append('\t</tr> \n\n')
 
 lines.append('  </tbody> \n')

@@ -14,12 +14,10 @@ def readfile(filepath):
     return lines
 
 def sevenzip(tempPath,landPath):
-    os.system('7z a -t7z "{}" "{}"'.format(tempPath,landPath)) #quotes to handle spaces in windows file names
+    os.system('7z a -t7z "{}" "{}"'.format(tempPath,landPath)) #quotes to handle spaces in windows file names.  This uses all CPUS well
 #     with py7zr.SevenZipFile(tempPath, 'w') as archive:
 #                     archive.writeall(landPath, 'base')  #This seems slow, but uses threads well
 
-# mainDir = 'Z:\\temp'
-# otherDir = 'Z:\\temp2'
 mainDir = 'Z:\\Condor\\Landscapes'
 otherDir = 'E:\\landscapes_for_symlinks'  #py7zr does not follow symlinks
 zipDir = 'S:\\Skylines-C\landscapes-zip'
@@ -67,11 +65,11 @@ for i, landPath, in enumerate(allLandPaths):
     iniPath = os.path.join(landPath,'{}.ini'.format(land))
     if os.path.exists(iniPath):
         lines = readfile(iniPath)
-#         if len(lines) > 1:
-        version = lines[1].split('=')[1].replace('00','0').replace('.10.','.1.')
-#         else:
-#             print ('lines', lines)
-#             sys.exit('Stop: version line does not exist')
+        if len(lines) > 1:
+            version = lines[1].split('=')[1].replace('00','0').replace('.10.','.1.')
+        else:
+            print ('lines', lines)
+            sys.exit('Stop: version line does not exist')
         zipPath = '{}\\{}.v{}.7z'.format(zipDir,land.replace(' ','_'),version) #no zips will have spaces, but landscapes folders might
         if zipPath not in allZips and land != 'WestGermany3':
             print()
