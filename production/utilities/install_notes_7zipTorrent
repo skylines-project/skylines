@@ -1,2 +1,3 @@
-pip install py7zr
+pip install py7zr #not used because it's slow
 
+sudo apt-get install mktorrent
