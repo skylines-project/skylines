@@ -82,6 +82,7 @@ for i, landPath, in enumerate(allLandPaths):
                 landZip = zipPath.split('.')[0].split('\\')[-1]
                 tempPathZip = mainDir+'\\temp_{}.7z'.format(landZip)
                 sevenzip(tempPathZip,landPath)
+                print('Moving to zip directory')
                 shutil.move(tempPathZip,zipPath)
                 count += 1
             except:
