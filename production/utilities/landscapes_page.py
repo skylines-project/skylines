@@ -11,6 +11,7 @@ for item in dirlist:
         names.append(name)
         sizes.append (os.stat('{}/{}'.format(dir,item)).st_size)
 print names
+print sizes
 
 lines = []
 lines.append('<BasePage> \n')
@@ -26,7 +27,7 @@ lines.append('  <hr> \n')
 lines.append('  <div class ="col-md-4" > \n')
 lines.append('  <p> {{fa-icon "envelope"}} <a href = "mailto:{{' + "'skylinescondor@gmail.com'}}" + '"> {{t "contact-admin"}} </a> {{" "}} {{t "contact-torrents"}} </p>   \n')
 lines.append('  </div> \n')
-lines.append('  <hr> \n')
+lines.append('  <p> <hr> </p> \n')
 
 lines.append('<table class="table table-striped"> \n')
 lines.append('  <thead> \n')
