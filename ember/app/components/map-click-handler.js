@@ -1,7 +1,5 @@
-/* globals $ */
-
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
 
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -20,14 +18,6 @@ export default class MapClickHandler extends Component {
    */
   circle = { geometry: null, animation: null };
 
-  /**
-   * Stores the state if the infobox.
-   * @type {Boolean}
-   */
-  visible = false;
-
-  infobox = null;
-
   constructor() {
     super(...arguments);
 
@@ -38,7 +28,15 @@ export default class MapClickHandler extends Component {
     return this.closestFlight ? this.closestFlight.closestPoint : this.coordinate;
   }
 
-  // Public attributes and functions
+  @action addOverlay(element) {
+    this.overlay = new ol.Overlay({ element, position: this.overlayPosition });
+    this.args.map.addOverlay(this.overlay);
+  }
+
+  @action removeOverlay() {
+    this.args.map.removeOverlay(this.overlay);
+    this.overlay = null;
+  }
 
   /**
    * Click handler which shows a info box at the click location.
@@ -49,44 +47,19 @@ export default class MapClickHandler extends Component {
    */
   trigger(event) {
     // Hide infobox if it's currently visible
-    if (this.visible) {
-      event.map.removeOverlay(this.infobox);
+    if (this.coordinate) {
       this.hideCircle(0);
-      this.visible = false;
-      this.infobox = null;
+      this.coordinate = null;
+      this.closestFlight = null;
+      this.locationData = null;
       return;
     }
 
-    if (!this.infobox) {
-      this.infobox = new ol.Overlay({
-        element: $('<div id="MapInfoBox" class="InfoBox"></div>').get(0),
-      });
-    }
-
-    let infobox = this.infobox;
-    let infobox_element = $(infobox.getElement());
-
     this.coordinate = event.coordinate;
     this.closestFlight = this.findClosestFlightPoint(this.coordinate);
-    if (this.closestFlight) {
-      // flight info
-      let flight_info = this.flightInfo();
-      infobox_element.append(flight_info);
+    this.locationData = null;
 
-      // near flights link
-      let get_near_flights = this.nearFlights();
-      infobox_element.append(get_near_flights);
-    }
-
-    // location info
-    let get_location_info = this.locationInfo();
-    infobox_element.append(get_location_info);
-
-    event.map.addOverlay(infobox);
-    infobox.setPosition(this.overlayPosition);
     this.showCircle(this.overlayPosition);
-
-    this.visible = true;
 
     // stop bubbeling
     return false;
@@ -124,52 +97,6 @@ export default class MapClickHandler extends Component {
     }
 
     return { flight, closestPoint };
-  }
-
-  /**
-   * Returns the flight badge element
-   * @param {slFlight} flight Flight object
-   * @return {jQuery}
-   */
-  flightInfo() {
-    let { flight } = this.closestFlight;
-    return $(`<span class="info-item badge" style="background:${flight.get('color')}">
-      ${flight.getWithDefault('registration', '')}
-    </span>`);
-  }
-
-  nearFlights() {
-    let get_near_flights = $(`<div class="info-item">
-      <a class="near" href="#NearFlights">Load nearby flights</a>
-    </div>`);
-
-    get_near_flights.on('click touchend', e => {
-      let { flight, closestPoint } = this.closestFlight;
-      let [lon, lat] = ol.proj.transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
-      let time = closestPoint[3];
-
-      this.args.map.removeOverlay(this.infobox);
-      this.getNearFlights(lon, lat, time, flight);
-      this.visible = false;
-      this.infobox = null;
-      e.preventDefault();
-    });
-
-    return get_near_flights;
-  }
-
-  locationInfo() {
-    let get_location_info = $(`<div class="info-item">
-      <a class="near" href="#LocationInfo">Get location info</a>
-    </div>`);
-
-    get_location_info.on('click touchend', event => {
-      let loc = ol.proj.transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
-      this.getLocationInfo(loc[0], loc[1]);
-      event.preventDefault();
-    });
-
-    return get_location_info;
   }
 
   /**
@@ -230,6 +157,16 @@ export default class MapClickHandler extends Component {
     this.circle.animation = { duration, start: null };
   }
 
+  @action loadNearbyFlights(event) {
+    event.preventDefault();
+
+    let { flight, closestPoint } = this.closestFlight;
+    let [lon, lat] = ol.proj.transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
+    let time = closestPoint[3];
+
+    this.getNearFlights(lon, lat, time, flight);
+  }
+
   /**
    * Request near flights via ajax
    *
@@ -244,6 +181,8 @@ export default class MapClickHandler extends Component {
     if (!flights || !addFlight) {
       return;
     }
+
+    this.coordinate = null;
 
     try {
       let data = await this.ajax.request(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
@@ -269,153 +208,14 @@ export default class MapClickHandler extends Component {
    * @param {Number} lon Longitude.
    * @param {Number} lat Latitude.
    */
-  async getLocationInfo(lon, lat) {
+  @action async getLocationInfo(event) {
+    event.preventDefault();
+
+    let [lon, lat] = ol.proj.transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
     try {
       this.locationData = await this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
     } catch (error) {
       this.locationData = null;
     }
-    this.showLocationData();
   }
-
-  /**
-   * Show location data in infobox
-   *
-   * @param {Object} data Location data.
-   */
-  showLocationData() {
-    // do nothing if infobox is closed already
-    if (!this.visible) {
-      return;
-    }
-
-    let data = this.locationData;
-
-    let infobox = this.infobox;
-    let map = this.args.map;
-
-    let element = $(infobox.getElement());
-    element.empty();
-    let item = $('<div class="location info-item"></div>');
-    let no_data = true;
-
-    if (data) {
-      let airspace_layer = map
-        .getLayers()
-        .getArray()
-        .filter(layer => layer.get('name') === 'Airspace')[0];
-      let mwp_layer = map
-        .getLayers()
-        .getArray()
-        .filter(layer => layer.get('name') === 'Mountain Wave Project')[0];
-
-      if (!isEmpty(data['airspaces']) && airspace_layer.getVisible()) {
-        let p = $('<p></p>');
-        p.append(formatAirspaceData(data['airspaces']));
-        item.append(p);
-        no_data = false;
-      }
-
-      if (!isEmpty(data['waves']) && mwp_layer.getVisible()) {
-        let p = $('<p></p>');
-        p.append(formatMountainWaveData(data['waves']));
-        item.append(p);
-        no_data = false;
-      }
-    }
-
-    if (no_data) {
-      item.html('No data retrieved for this location');
-
-      element.delay(1500).fadeOut(1000, () => {
-        map.removeOverlay(infobox);
-        this.infobox = null;
-        this.visible = false;
-      });
-
-      this.hideCircle(1000);
-    }
-
-    element.append(item);
-  }
-}
-
-/**
- * Format Airspace data for infobox
- *
- * @param {Object} data Airspace data.
- * @return {jQuery} HTML table with the airspace data.
- */
-function formatAirspaceData(data) {
-  let table = $('<table></table>');
-
-  table.append(
-    $(`<thead>
-      <tr>
-        <th colspan="4">Airspaces</th>
-      </tr>
-      <tr>
-        <th>Name</th>
-        <th>Class</th>
-        <th>Base</th>
-        <th>Top</th>
-      </tr>
-    </thead>`),
-  );
-
-  let table_body = $('<tbody></tbody>');
-
-  for (let i = 0; i < data.length; ++i) {
-    table_body.append(
-      $(`<tr>
-        <td class="airspace_name">${data[i]['name']}</td>
-        <td class="airspace_class">${data[i]['class']}</td>
-        <td class="airspace_base">${data[i]['base']}</td>
-        <td class="airspace_top">${data[i]['top']}</td>
-      </tr>`),
-    );
-  }
-
-  table.append(table_body);
-
-  return table;
-}
-
-/**
- * Format Mountain Wave data in infobox
- *
- * @param {Object} data Wave data.
- * @return {jQuery} HTML table with the wave data.
- */
-function formatMountainWaveData(data) {
-  let table = $('<table></table>');
-
-  table.append(
-    $(`<thead>
-      <tr>
-        <th colspan="2">Mountain Waves</th>
-      </tr>
-      <tr>
-        <th>Name</th>
-        <th>Wind direction</th>
-      </tr>
-    </thead>`),
-  );
-
-  let table_body = $('<tbody></tbody>');
-
-  for (let i = 0; i < data.length; ++i) {
-    let wind_direction = data[i]['main_wind_direction'] || 'Unknown';
-
-    table_body.append(
-      $(`<tr>
-        <td class="wave_name">${data[i]['name']}</td>
-        <td class="wave_direction">${wind_direction}</td>
-      </tr>`),
-    );
-  }
-
-  table.append(table_body);
-
-  return table;
 }
