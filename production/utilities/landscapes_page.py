@@ -9,7 +9,7 @@ for item in dirlist:
     if '.torrent' in item:
         name = item.split('.torrent')[0]
         names.append(name)
-        sizes.append (os.stat('{}/{}'.format(dir,name)).st_size)
+        sizes.append (os.stat('{}/{}'.format(dir,item)).st_size)
 print names
 
 lines = []
