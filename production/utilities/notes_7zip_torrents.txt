@@ -1,0 +1,13 @@
+pip install py7zr #not used because it's slow
+
+sudo apt-get install -y mktorrent
+
+__________________________________________________________
+
+1. In Windows cmd:  
+	python d:\skylinesC\production\utilities\updateZipped.py
+
+2. When finished, on U14 skylinesC (also updates Landscape page): 
+	python createTorrents.py.
+
+3.  Drag new torrents into qBittorrent

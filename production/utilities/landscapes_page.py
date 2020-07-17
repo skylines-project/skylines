@@ -9,7 +9,7 @@ for item in dirlist:
     if '.torrent' in item:
         name = item.split('.torrent')[0]
         names.append(name)
-        sizes.append (os.stat('{}/{}'.format(dir,item)).st_size)
+        sizes.append (os.stat('{}/{}'.format(dir,name)).st_size)
 print names
 
 lines = []
@@ -23,10 +23,10 @@ lines.append('  <p> {{t "install"}} <a href="https://www.fosshub.com/qBittorrent
 lines.append('  <p> {{t "extract-with"}}  <a href="https://www.7-zip.org/download.html"> 7-zip </a>  {{t "landscapes-paste"}} </p> \n')
 lines.append('  <hr> \n')
 
-# lines.append('  < div class ="col-md-4" > \n')
-# lines.append('  < h4 > {{fa - icon "envelope"}} {{t "contact"}} < / h4 > \n')
-# lines.append('  < p > < a href = "mailto:{{' + "'skylinescondor@gmail.com'}}" + ' > {{t "contact-admin"}} < / a > {{" "}} {{t "contact-torrents"}} < / p > \n')
-# lines.append('  < / div > \n')
+lines.append('  <div class ="col-md-4" > \n')
+lines.append('  <p> {{fa-icon "envelope"}} <a href = "mailto:{{' + "'skylinescondor@gmail.com'}}" + '"> {{t "contact-admin"}} </a> {{" "}} {{t "contact-torrents"}} </p>   \n')
+lines.append('  </div> \n')
+lines.append('  <p> <hr> </p> \n')
 
 lines.append('<table class="table table-striped"> \n')
 lines.append('  <thead> \n')
@@ -39,12 +39,9 @@ lines.append('  <tbody> \n')
 
 for i, name in enumerate(names):
     lines.append('\t<tr> \n')
-    # lines.append('\t\t<td> {{"' + name + '"}} </td> \n')
     lines.append('\t\t<td> <a href="http://199.192.98.227:8080/landscapes-zip/{}.torrent" download>'.format(name) + ' {{fa-icon "download" size="sm"}}' + ' {} </a> </td> \n'.format(name.replace('.7z','')))
     sizeStr = '{:.1f} GB"'.format(sizes[i] /float(10 ** 9))
     lines.append('\t\t<td align = "right"> {{"' + sizeStr  + '}} </td> \n')
-    # lines.append('\t\t<td> <a href="http://199.192.98.227:8080/landscapes-zip/{}" download>'.format(name) + ' {{fa-icon "download" size="sm"}} HTTP </a> </td> \n')
-    # lines.append('\t\t<td> <a href="http://199.192.98.227:8080/landscapes-zip/{}.torrent" download>'.format(name) + ' {{fa-icon "download" size="sm"}} Torrent </a> </td> \n')
     lines.append('\t</tr> \n\n')
 
 lines.append('  </tbody> \n')
