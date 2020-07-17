@@ -10,6 +10,7 @@ export default class MapClickHandler extends Component {
   @service ajax;
 
   @tracked coordinate;
+  @tracked closestFlight;
 
   /**
    * The OpenLayers.Geometry object of the circle.
@@ -58,21 +59,18 @@ export default class MapClickHandler extends Component {
 
     let infobox = this.infobox;
     let infobox_element = $(infobox.getElement());
+
     this.coordinate = event.coordinate;
-
-    let closest = this.findClosestFlightPoint(this.coordinate);
-    if (closest) {
-      let { flight, closestPoint } = closest;
-
-      let time = closestPoint[3];
+    this.closestFlight = this.findClosestFlightPoint(this.coordinate);
+    if (this.closestFlight) {
+      let { closestPoint } = this.closestFlight;
 
       // flight info
-      let flight_info = this.flightInfo(flight);
+      let flight_info = this.flightInfo();
       infobox_element.append(flight_info);
 
       // near flights link
-      let loc = ol.proj.transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
-      let get_near_flights = this.nearFlights(loc[0], loc[1], time, flight);
+      let get_near_flights = this.nearFlights();
       infobox_element.append(get_near_flights);
 
       this.coordinate = closestPoint;
@@ -131,18 +129,23 @@ export default class MapClickHandler extends Component {
    * @param {slFlight} flight Flight object
    * @return {jQuery}
    */
-  flightInfo(flight) {
+  flightInfo() {
+    let { flight } = this.closestFlight;
     return $(`<span class="info-item badge" style="background:${flight.get('color')}">
       ${flight.getWithDefault('registration', '')}
     </span>`);
   }
 
-  nearFlights(lon, lat, time, flight) {
+  nearFlights() {
     let get_near_flights = $(`<div class="info-item">
       <a class="near" href="#NearFlights">Load nearby flights</a>
     </div>`);
 
     get_near_flights.on('click touchend', e => {
+      let { flight, closestPoint } = this.closestFlight;
+      let [lon, lat] = ol.proj.transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
+      let time = closestPoint[3];
+
       this.args.map.removeOverlay(this.infobox);
       this.getNearFlights(lon, lat, time, flight);
       this.visible = false;
