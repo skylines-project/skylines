@@ -1,11 +1,9 @@
-import slMapClickHandler from '../utils/map-click-handler';
 import BaseMapComponent from './base-map';
 
 export default class TakeoffsMap extends BaseMapComponent {
   didInsertElement() {
     super.didInsertElement(...arguments);
     this.fit();
-    slMapClickHandler(this.map);
   }
 
   fit() {
