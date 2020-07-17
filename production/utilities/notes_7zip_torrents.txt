@@ -10,3 +10,4 @@ __________________________________________________________
 2. When finished, on U14 skylinesC (also updates Landscape page): 
 	python createTorrents.py.
 
+3.  Drag new torrents into qBittorrent
