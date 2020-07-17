@@ -32,6 +32,10 @@ export default class MapClickHandler extends Component {
     this.args.map.on('click', event => this.trigger(event));
   }
 
+  get overlayPosition() {
+    return this.closestFlight ? this.closestFlight.closestPoint : this.coordinate;
+  }
+
   // Public attributes and functions
 
   /**
@@ -63,8 +67,6 @@ export default class MapClickHandler extends Component {
     this.coordinate = event.coordinate;
     this.closestFlight = this.findClosestFlightPoint(this.coordinate);
     if (this.closestFlight) {
-      let { closestPoint } = this.closestFlight;
-
       // flight info
       let flight_info = this.flightInfo();
       infobox_element.append(flight_info);
@@ -72,8 +74,6 @@ export default class MapClickHandler extends Component {
       // near flights link
       let get_near_flights = this.nearFlights();
       infobox_element.append(get_near_flights);
-
-      this.coordinate = closestPoint;
     }
 
     // location info
@@ -81,8 +81,8 @@ export default class MapClickHandler extends Component {
     infobox_element.append(get_location_info);
 
     event.map.addOverlay(infobox);
-    infobox.setPosition(this.coordinate);
-    this.showCircle(this.coordinate);
+    infobox.setPosition(this.overlayPosition);
+    this.showCircle(this.overlayPosition);
 
     this.visible = true;
 
@@ -162,7 +162,7 @@ export default class MapClickHandler extends Component {
     </div>`);
 
     get_location_info.on('click touchend', event => {
-      let loc = ol.proj.transform(this.coordinate, 'EPSG:3857', 'EPSG:4326');
+      let loc = ol.proj.transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
       this.getLocationInfo(loc[0], loc[1]);
       event.preventDefault();
     });
