@@ -329,6 +329,7 @@ export default class MapClickHandler extends Component {
 
       element.delay(1500).fadeOut(1000, () => {
         map.removeOverlay(infobox);
+        this.infobox = null;
         this.visible = false;
       });
 
