@@ -12,9 +12,10 @@ export default class MapSettingsService extends Service {
   @service router;
 
   _baseLayer = 'OpenStreetMap';
-  // _overlayLayers: ['Airspace'],
+  _overlayLayers = ['Airspace'];
 
   @or('_query.baselayer', '_baseLayer') baseLayer;
+
   @computed('_query.overlays', '_overlayLayers')
   get overlayLayers() {
     let queryOverlays = this.get('_query.overlays');
@@ -36,7 +37,6 @@ export default class MapSettingsService extends Service {
 
   constructor() {
     super(...arguments);
-    this.set('_overlayLayers', ['Airspace']);
 
     let cookies = this.cookies;
     let cookieBaseLayer = cookies.read(BASE_LAYER_COOKIE_KEY);
