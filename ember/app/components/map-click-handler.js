@@ -81,8 +81,7 @@ export default class MapClickHandler extends Component {
     }
 
     // location info
-    let loc = ol.proj.transform(this.coordinate, 'EPSG:3857', 'EPSG:4326');
-    let get_location_info = this.locationInfo(loc[0], loc[1]);
+    let get_location_info = this.locationInfo();
     infobox_element.append(get_location_info);
 
     event.map.addOverlay(infobox);
@@ -148,13 +147,14 @@ export default class MapClickHandler extends Component {
     return get_near_flights;
   }
 
-  locationInfo(lon, lat) {
+  locationInfo() {
     let get_location_info = $(`<div class="info-item">
       <a class="near" href="#LocationInfo">Get location info</a>
     </div>`);
 
     get_location_info.on('click touchend', event => {
-      this.getLocationInfo(lon, lat);
+      let loc = ol.proj.transform(this.coordinate, 'EPSG:3857', 'EPSG:4326');
+      this.getLocationInfo(loc[0], loc[1]);
       event.preventDefault();
     });
 
