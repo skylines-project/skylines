@@ -3,10 +3,13 @@
 import { inject as service } from '@ember/service';
 
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import ol from 'openlayers';
 
 export default class MapClickHandler extends Component {
   @service ajax;
+
+  @tracked coordinate;
 
   /**
    * The OpenLayers.Geometry object of the circle.
@@ -55,9 +58,9 @@ export default class MapClickHandler extends Component {
 
     let infobox = this.infobox;
     let infobox_element = $(infobox.getElement());
-    let coordinate = event.coordinate;
+    this.coordinate = event.coordinate;
 
-    let closest = this.findClosestFlightPoint(coordinate);
+    let closest = this.findClosestFlightPoint(this.coordinate);
     if (closest) {
       let { feature, closestPoint } = closest;
 
@@ -74,17 +77,17 @@ export default class MapClickHandler extends Component {
       let get_near_flights = this.nearFlights(loc[0], loc[1], time, flight);
       infobox_element.append(get_near_flights);
 
-      coordinate = closestPoint;
+      this.coordinate = closestPoint;
     }
 
     // location info
-    let loc = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+    let loc = ol.proj.transform(this.coordinate, 'EPSG:3857', 'EPSG:4326');
     let get_location_info = this.locationInfo(loc[0], loc[1]);
     infobox_element.append(get_location_info);
 
     event.map.addOverlay(infobox);
-    infobox.setPosition(coordinate);
-    this.showCircle(coordinate);
+    infobox.setPosition(this.coordinate);
+    this.showCircle(this.coordinate);
 
     this.visible = true;
 
