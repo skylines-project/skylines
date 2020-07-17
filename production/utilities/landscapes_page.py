@@ -23,6 +23,11 @@ lines.append('  <p> {{t "install"}} <a href="https://www.fosshub.com/qBittorrent
 lines.append('  <p> {{t "extract-with"}}  <a href="https://www.7-zip.org/download.html"> 7-zip </a>  {{t "landscapes-paste"}} </p> \n')
 lines.append('  <hr> \n')
 
+lines.append('  < div class ="col-md-4" > \n')
+lines.append('  < h4 > {{fa - icon "envelope"}} {{t "contact"}} < / h4 > \n')
+lines.append('  < p > < a href = "mailto:{{' + "'skylinescondor@gmail.com'}}" + ' > {{t "contact-admin"}} < / a > {{" "}} {{t "contact-torrents"}} < / p > \n')
+lines.append('  < / div > \n')
+
 lines.append('<table class="table table-striped"> \n')
 lines.append('  <thead> \n')
 lines.append('        <th class="column-buttons"> {{t "download-torrent"}}</th> \n')
