@@ -18,8 +18,8 @@
               <LinkTo @route="user" @model={{user.id}}>{{user.name}}</LinkTo>
 
               <div class="pull-right">
-                <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-                <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
+                <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+                <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
               </div>
             </td>
           </tr>

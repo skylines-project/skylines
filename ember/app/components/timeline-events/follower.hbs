@@ -1,6 +1,6 @@
 <tr>
   <td class="icon">
-    {{fa-icon "user"}}
+    {{svg-jar "user" class="fa-svg"}}
   </td>
   <td>
     <LinkTo @route="user" @model={{if accountUserIsFollowed event.actor.id event.user.id}} class="btn btn-default btn-sm pull-right">{{t "show"}}</LinkTo>

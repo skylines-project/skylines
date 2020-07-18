@@ -201,12 +201,12 @@
 
     {{#if success}}
       <span class="label label-success">
-        {{fa-icon "check"}} {{t "success"}}
+        {{svg-jar "check" class="fa-svg"}} {{t "success"}}
       </span>
 
     {{else}}
       <span class="label label-warning">
-        {{fa-icon "warning"}}
+        {{svg-jar "warning" class="fa-svg"}}
 
         {{#if (eq status 1)}}{{t "duplicate-file"}}
         {{else if (eq status 2)}}{{t "date-missing-in-igc-file"}}

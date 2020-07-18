@@ -2,16 +2,16 @@
   <td>
     {{#if isCircling}}
       {{#if isCirclingLeft}}
-        {{fa-icon "rotate-left" title=(t "flight-phase.circlingLeft")}}
+        <span title={{t "flight-phase.circlingLeft"}}>{{svg-jar "rotate-left" class="fa-svg"}}</span>
       {{else if isCirclingRight}}
-        {{fa-icon "rotate-right" title=(t "flight-phase.circlingRight")}}
+        <span title={{t "flight-phase.circlingRight"}}>{{svg-jar "rotate-right" class="fa-svg"}}</span>
       {{else}}
-        {{fa-icon "circle-o" title=(t "flight-phase.circlingMixed")}}
+        <span title={{t "flight-phase.circlingMixed"}}>{{svg-jar "circle-o" class="fa-svg"}}</span>
       {{/if}}
     {{else if isPowered}}
-      {{fa-icon "bolt" title=(t "flight-phase.powered")}}
+      <span title={{t "flight-phase.powered"}}>{{svg-jar "bolt" class="fa-svg"}}</span>
     {{else}}
-      {{fa-icon "long-arrow-right" title=(t "flight-phase.cruise")}}
+      <span title={{t "flight-phase.cruise"}}>{{svg-jar "long-arrow-right" class="fa-svg"}}</span>
     {{/if}}
   </td>
   <td class="start">{{format-time phase.startTime format="hhmmss" timeZone="UTC"}}</td>

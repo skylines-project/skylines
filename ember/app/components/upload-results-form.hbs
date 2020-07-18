@@ -5,7 +5,7 @@
   {{else}}
     <p>{{t "no-flight-saved"}}</p>
   {{/if}}
-  
+
   <form {{action "submit" on="submit"}} class="upload-results-form">
     {{#if (eq validatedResults.length 1)}}
       {{#each validatedResults as |result|}}
@@ -19,11 +19,11 @@
               <nav.item @active={{eq tab.activeId (concat "result-tab-" index)}}>
                 <a href="#result-tab-{{index}}" role="tab" {{action tab.select (concat "result-tab-" index)}}>
                   {{#if (and (eq result.status 0) result.validations.isValid)}}
-                    {{fa-icon "check" class="text-success"}}
+                    {{svg-jar "check" class="fa-svg text-success"}}
                   {{else}}
-                    {{fa-icon "warning" class="text-warning"}}
+                    {{svg-jar "warning" class="fa-svg text-warning"}}
                   {{/if}}
-  
+
                   {{result.name}}
                 </a>
               </nav.item>
@@ -39,16 +39,16 @@
             {{/each}}
           </div>
         </div>
-  
+
         <div class="clearfix"></div>
       </BsTab>
     {{/if}}
-  
+
     {{#if success}}
       <button class="btn btn-primary" type="submit" disabled={{or saveTask.isRunning isInvalid}}>
         {{if saveTask.isRunning (t "publishing") (t "publish-flights" num=successfulResults.length)}}
       </button>
     {{/if}}
-  
+
   </form>
 </div>

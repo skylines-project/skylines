@@ -1,8 +1,8 @@
 <@navbar.nav class="navbar-right" as |nav|>
   <nav.item>
     {{#nav.link-to "flight-upload"}}
-      {{fa-icon "upload" size="lg" class="hidden-xs" title=(t "upload-flight")}}
-      {{fa-icon "upload" fixedWidth=true class="visible-xs-inline-block"}}
+      <span class="hidden-xs" title={{t "upload-flight"}}>{{svg-jar "upload" class="fa-svg large"}}</span>
+      {{svg-jar "upload" class="fa-svg fixed-width visible-xs-inline-block"}}
       <span class="visible-xs-inline-block">{{t "upload-flight"}}</span>
     {{/nav.link-to}}
   </nav.item>
@@ -17,7 +17,7 @@
 
     <nav.dropdown @tagName="li" data-test-user-menu-dropdown as |dd|>
       <dd.toggle data-test-toggle>
-        {{account.user.name}} {{fa-icon "caret-down"}}
+        {{account.user.name}} {{svg-jar "caret-down" class="fa-svg"}}
       </dd.toggle>
       <dd.menu as |menu|>
         <NavBarUserMenu @nav={{nav}} @menu={{menu}} />
@@ -27,13 +27,13 @@
 
     <nav.item class="visible-xs">
       {{#nav.link-to "login"}}
-        {{fa-icon "sign-in" fixedWidth=true}} {{t "login"}}
+        {{svg-jar "sign-in" class="fa-svg fixed-width"}} {{t "login"}}
       {{/nav.link-to}}
     </nav.item>
 
     <nav.dropdown @closeOnMenuClick={{false}} @tagName="li" class="hidden-xs" data-test-login-dropdown as |dd|>
       <dd.toggle>
-        {{fa-icon "sign-in"}} {{t "login"}} {{fa-icon "caret-down"}}
+        {{svg-jar "sign-in" class="fa-svg"}} {{t "login"}} {{svg-jar "caret-down" class="fa-svg"}}
       </dd.toggle>
       <dd.menu>
         <LoginForm @inline={{true}} />
@@ -45,7 +45,7 @@
     <dd.toggle>
       <XFlag @code={{currentLocale.countryCode}} />
       <span class="visible-xs-inline-block">{{currentLocale.name}}</span>
-      {{fa-icon "caret-down"}}
+      {{svg-jar "caret-down" class="fa-svg"}}
     </dd.toggle>
     <dd.menu as |menu|>
       {{#each availableLocales as |locale|}}

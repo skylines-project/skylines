@@ -7,12 +7,12 @@
           <td>{{user.email}}</td>
         </tr>
       {{/if}}
-  
+
       <tr>
         <th>{{t "name"}}</th>
         <td>{{user.name}}</td>
       </tr>
-  
+
       <tr>
         <th>{{t "club"}}</th>
         <td>
@@ -21,20 +21,20 @@
           {{else}}
             [{{t "unassigned"}}]
           {{/if}}
-  
+
           {{#if editable}}
             <LinkTo @route="settings.club" class="btn btn-default btn-sm">{{t "change"}}</LinkTo>
           {{/if}}
         </td>
       </tr>
-  
+
       {{#if user.followers}}
         <tr>
           <th>{{t "followers"}}</th>
           <td><LinkTo @route="user.followers" @model={{user.id}}>{{t "NUM-pilots" num=user.followers}}</LinkTo></td>
         </tr>
       {{/if}}
-  
+
       {{#if user.following}}
         <tr>
           <th>{{t "following"}}</th>
@@ -43,12 +43,12 @@
       {{/if}}
     </table>
   </div>
-  
+
   <p style="margin-top: 10px">
     {{#if editable}}
-      <LinkTo @route="settings.profile" class="btn btn-default">{{fa-icon "cog"}} {{t "settings"}}</LinkTo>
+      <LinkTo @route="settings.profile" class="btn btn-default">{{svg-jar "cog" class="fa-svg"}} {{t "settings"}}</LinkTo>
     {{/if}}
-  
+
     {{#if (and account.user (not-eq account.user.id user.id))}}
       {{#if user.followed}}
         <button class="btn btn-default" disabled={{unfollowTask.isRunning}} {{action (perform unfollowTask)}}>{{t "unfollow"}}</button>
@@ -56,10 +56,10 @@
         <button class="btn btn-default" disabled={{followTask.isRunning}} {{action (perform followTask)}}>{{t "follow"}}</button>
       {{/if}}
     {{/if}}
-  
-    <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-    <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
-    <LinkTo @route="timeline" @query={{hash user=user.id}} class="btn btn-default">{{fa-icon "clock-o"}} {{t "timeline"}}</LinkTo>
+
+    <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+    <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
+    <LinkTo @route="timeline" @query={{hash user=user.id}} class="btn btn-default">{{svg-jar "clock-o" class="fa-svg"}} {{t "timeline"}}</LinkTo>
   </p>
-  
+
 </div>

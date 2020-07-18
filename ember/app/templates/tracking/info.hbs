@@ -32,7 +32,7 @@
       {{#if model.trackingKey}}
         <p>{{t "tracking.your-live-tracking-key-is-KEY" htmlSafe=true key=(html-safe (concat "<span class=\"label tracking-key\">" model.trackingKey "</span>"))}}</p>
 
-        <p><LinkTo @route="settings.tracking" class="btn btn-default btn-sm">{{fa-icon "cog"}} {{t "tracking.settings"}}</LinkTo></p>
+        <p><LinkTo @route="settings.tracking" class="btn btn-default btn-sm">{{svg-jar "cog" class="fa-svg"}} {{t "tracking.settings"}}</LinkTo></p>
       {{else}}
         <p>{{t "tracking.login-required"}}</p>
       {{/if}}

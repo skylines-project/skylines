@@ -1,14 +1,14 @@
-<@nav.item>{{#@nav.link-to "user" this.account.user.id}}{{fa-icon "user" fixedWidth=true}} {{this.account.user.name}}{{/@nav.link-to}}</@nav.item>
+<@nav.item>{{#@nav.link-to "user" this.account.user.id}}{{svg-jar "user" class="fa-svg fixed-width"}} {{this.account.user.name}}{{/@nav.link-to}}</@nav.item>
 {{#if this.account.club}}
-  <@nav.item>{{#@nav.link-to "club" this.account.club.id}}{{fa-icon "group" fixedWidth=true}} {{this.account.club.name}}{{/@nav.link-to}}</@nav.item>
+  <@nav.item>{{#@nav.link-to "club" this.account.club.id}}{{svg-jar "group" class="fa-svg fixed-width"}} {{this.account.club.name}}{{/@nav.link-to}}</@nav.item>
 {{/if}}
 
 {{@menu.divider}}
-<@nav.item>{{#@nav.link-to "flights.pilot" this.account.user.id}}{{fa-icon "plane" fixedWidth=true}} {{t "flights"}}{{/@nav.link-to}}</@nav.item>
-<@nav.item>{{#@nav.link-to "statistics.pilot" this.account.user.id}}{{fa-icon "bar-chart" fixedWidth=true}} {{t "statistics"}}{{/@nav.link-to}}</@nav.item>
+<@nav.item>{{#@nav.link-to "flights.pilot" this.account.user.id}}{{svg-jar "plane" class="fa-svg fixed-width"}} {{t "flights"}}{{/@nav.link-to}}</@nav.item>
+<@nav.item>{{#@nav.link-to "statistics.pilot" this.account.user.id}}{{svg-jar "bar-chart" class="fa-svg fixed-width"}} {{t "statistics"}}{{/@nav.link-to}}</@nav.item>
 
 {{@menu.divider}}
-<@nav.item>{{#@nav.link-to "settings" data-test-setting-link}}{{fa-icon "cog" fixedWidth=true}} {{t "settings"}}{{/@nav.link-to}}</@nav.item>
+<@nav.item>{{#@nav.link-to "settings" data-test-setting-link}}{{svg-jar "cog" class="fa-svg fixed-width"}} {{t "settings"}}{{/@nav.link-to}}</@nav.item>
 
 {{@menu.divider}}
-<@nav.item><a href="#" {{action (perform this.logoutTask)}}>{{fa-icon "sign-out" fixedWidth=true}} {{t "logout"}}</a></@nav.item>
+<@nav.item><a href="#" {{action (perform this.logoutTask)}}>{{svg-jar "sign-out" class="fa-svg fixed-width"}} {{t "logout"}}</a></@nav.item>
