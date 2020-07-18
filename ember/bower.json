@@ -2,7 +2,6 @@
   "name": "skylines",
   "dependencies": {
     "Flot": "flot#0.8.3",
-    "flot-marks": "https://github.com/TobiasLohner/flot-marks.git#f09ded70f5a229a38ba0b9cfa92dbb448ca4daaf",
-    "jquery": "1.10.2"
+    "flot-marks": "https://github.com/TobiasLohner/flot-marks.git#f09ded70f5a229a38ba0b9cfa92dbb448ca4daaf"
   }
 }
