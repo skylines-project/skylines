@@ -112,11 +112,6 @@ module.exports = function (defaults) {
   });
 
   app.import({
-    development: 'bower_components/moment/moment.js',
-    production: 'bower_components/moment/min/moment.min.js',
-  });
-
-  app.import({
     development: 'node_modules/sidebar-v2/js/jquery-sidebar.js',
     production: 'node_modules/sidebar-v2/js/jquery-sidebar.min.js',
   });
