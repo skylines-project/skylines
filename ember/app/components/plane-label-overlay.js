@@ -1,7 +1,7 @@
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
-
 import Component from '@glimmer/component';
+
 import ol from 'openlayers';
 
 export default class PlaneLabelOverlay extends Component {

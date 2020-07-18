@@ -1,6 +1,6 @@
 import { computed } from '@ember/object';
-
 import Component from '@glimmer/component';
+
 import ol from 'openlayers';
 
 export default class ContestLayerFeature extends Component {

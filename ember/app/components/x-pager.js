@@ -1,5 +1,4 @@
 import { readOnly } from '@ember/object/computed';
-
 import Component from '@glimmer/component';
 
 import safeComputed from '../computed/safe-computed';

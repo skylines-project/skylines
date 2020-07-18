@@ -3,9 +3,9 @@ import Component from '@ember/component';
 import { get, getProperties } from '@ember/object';
 import { filterBy, notEmpty, mapBy } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
 
 import { task } from 'ember-concurrency';
-import RSVP from 'rsvp';
 
 import UploadResult from '../utils/upload-result';
 
