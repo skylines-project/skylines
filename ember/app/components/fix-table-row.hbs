@@ -45,7 +45,9 @@
   </td>
   <td>
     {{#if row.removable}}
-      {{fa-icon "remove" click=(action "remove" bubbles=false)}}
+      <button type="button" local-class="remove-button" {{on "click" (action "remove" bubbles=false)}}>
+        {{svg-jar "remove" class="fa-svg"}}
+      </button>
     {{/if}}
   </td>
 

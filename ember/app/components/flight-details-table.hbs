@@ -7,7 +7,7 @@
       <td data-test-pilot-names>
         {{#if isWritable}}
           <LinkTo @route="flight.change-pilot" @model={{flight.id}} class="btn btn-default btn-sm pull-right">
-            {{fa-icon "pencil"}} {{t "change"}}
+            {{svg-jar "pencil" class="fa-svg"}} {{t "change"}}
           </LinkTo>
         {{/if}}
 
@@ -86,7 +86,7 @@
       <td class="column-buttons">
         {{#if isWritable}}
           <LinkTo @route="flight.change-aircraft" @model={{flight.id}} class="btn btn-default btn-sm pull-right">
-            {{fa-icon "pencil"}} {{t "change"}}
+            {{svg-jar "pencil" class="fa-svg"}} {{t "change"}}
           </LinkTo>
         {{/if}}
 
@@ -110,13 +110,13 @@
         <small><br>
           {{#if flight.distance}}
             <span title={{t "olc-distance"}}>
-              <span style="color: #ff2c73">{{fa-icon "arrows-h"}}</span>
+              <span style="color: #ff2c73">{{svg-jar "arrows-h" class="fa-svg"}}</span>
               {{format-distance flight.distance decimals=1}}
             </span>
           {{/if}}
           {{#if flight.triangleDistance}}
             <span title={{t "fai-triangle-distance"}}>
-              <span style="color: #9f14ff">{{fa-icon "play" rotate=270}}</span>
+              <span style="color: #9f14ff">{{svg-jar "play" class="fa-svg rotate-270"}}</span>
               {{format-distance flight.triangleDistance decimals=1}}
             </span>
           {{/if}}
@@ -154,12 +154,12 @@
         <th>{{t "actions"}}</th>
         <td>
           <button type="button" class="btn btn-default btn-sm" onclick={{action (mut showDeleteModal) true}}>
-            {{fa-icon "remove"}} {{t "delete"}}
+            {{svg-jar "remove" class="fa-svg"}} {{t "delete"}}
           </button>
 
           {{#if isPrivate}}
             <button type="button" class="btn btn-default btn-sm" onclick={{action (mut showPublishModal) true}}>
-              {{fa-icon "globe"}} {{t "publish"}}
+              {{svg-jar "globe" class="fa-svg"}} {{t "publish"}}
             </button>
           {{/if}}
         </td>
@@ -170,7 +170,7 @@
 
   <p>
     <a href="/files/{{flight.igcFile.filename}}" title={{flight.igcFile.filename}} class="btn btn-default" data-href-to-ignore>
-      {{fa-icon "download" size="lg"}} IGC
+      {{svg-jar "download" class="fa-svg large"}} IGC
     </a>
 
     <span title={{t "pin-button-title"}}>

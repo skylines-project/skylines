@@ -37,9 +37,9 @@
               <LinkTo @route="club.edit" @model={{club.id}} class="btn btn-default">{{t "edit"}}</LinkTo>
             {{/if}}
 
-            <LinkTo @route="flights.club" @model={{club.id}} class="btn btn-default">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-            <LinkTo @route="statistics.club" @model={{club.id}} class="btn btn-default">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
-            <LinkTo @route="club.pilots" @model={{club.id}} class="btn btn-default">{{fa-icon "group"}} {{t "members"}}</LinkTo>
+            <LinkTo @route="flights.club" @model={{club.id}} class="btn btn-default">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+            <LinkTo @route="statistics.club" @model={{club.id}} class="btn btn-default">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
+            <LinkTo @route="club.pilots" @model={{club.id}} class="btn btn-default">{{svg-jar "group" class="fa-svg"}} {{t "members"}}</LinkTo>
           </p>
         </div>
       </div>

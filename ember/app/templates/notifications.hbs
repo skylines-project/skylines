@@ -23,7 +23,7 @@
         <div class="col-xs-4" style="text-align:center">
           {{#if hasUnread}}
             <a href="#" {{action (perform markAsReadTask)}} title={{t "mark-all-as-read"}} class="btn btn-default">
-              {{fa-icon "eye-slash"}}
+              {{svg-jar "eye-slash" class="fa-svg"}}
               <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
             </a>
           {{/if}}
@@ -58,7 +58,7 @@
         <div class="col-xs-4" style="text-align:center">
           {{#if hasUnread}}
             <a href="#" {{action (perform markAsReadTask)}} title={{t "mark-all-as-read"}} class="btn btn-default">
-              {{fa-icon "eye-slash"}}
+              {{svg-jar "eye-slash" class="fa-svg"}}
               <span class="hidden-xs">{{t "mark-all-as-read"}}</span>
             </a>
           {{/if}}

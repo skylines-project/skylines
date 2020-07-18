@@ -5,7 +5,7 @@
 
   {{#if prevDate}}
     <li>
-      <LinkTo @route="flights.date" @model={{prevDate}}>&nbsp;{{fa-icon "arrow-left"}}&nbsp;</LinkTo>
+      <LinkTo @route="flights.date" @model={{prevDate}}>&nbsp;{{svg-jar "arrow-left" class="fa-svg"}}&nbsp;</LinkTo>
     </li>
   {{/if}}
 
@@ -29,7 +29,7 @@
           local-class="datepicker"
         />
         <button type="button" local-class="datepicker-button" {{on "click" this.openDatePicker}}>
-          {{fa-icon "calendar"}}
+          {{svg-jar "calendar" class="fa-svg"}}
         </button>
       </nav.linkTo>
     </nav.item>
@@ -52,7 +52,7 @@
           local-class="datepicker"
         />
         <button type="button" local-class="datepicker-button" {{on "click" this.openDatePicker}}>
-          {{fa-icon "calendar"}}
+          {{svg-jar "calendar" class="fa-svg"}}
         </button>
       </nav.linkTo>
     </nav.item>
@@ -60,7 +60,7 @@
 
   {{#if nextDate}}
     <li>
-      <LinkTo @route="flights.date" @model={{nextDate}}>&nbsp;{{fa-icon "arrow-right"}}&nbsp;</LinkTo>
+      <LinkTo @route="flights.date" @model={{nextDate}}>&nbsp;{{svg-jar "arrow-right" class="fa-svg"}}&nbsp;</LinkTo>
     </li>
   {{/if}}
 

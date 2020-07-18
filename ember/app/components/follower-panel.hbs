@@ -16,17 +16,17 @@
       {{#if account.user}}
         {{#if (eq follower.id account.user.id)}}
           <button class="btn btn-default form-control" disabled>
-            {{fa-icon "ban" fixedWidth=true}}
+            {{svg-jar "ban" class="fa-svg"}}
             {{t "this-is-you"}}
           </button>
         {{else if follower.currentUserFollows}}
           <button class="btn btn-default form-control" disabled={{unfollowTask.isRunning}} {{action (perform unfollowTask)}}>
-            {{fa-icon "minus" fixedWidth=true}}
+            {{svg-jar "minus" class="fa-svg"}}
             {{t "unfollow"}}
           </button>
         {{else}}
           <button class="btn btn-default form-control" disabled={{followTask.isRunning}} {{action (perform followTask)}}>
-            {{fa-icon "plus" fixedWidth=true}}
+            {{svg-jar "plus" class="fa-svg"}}
             {{t "follow"}}
           </button>
         {{/if}}

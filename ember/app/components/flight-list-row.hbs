@@ -84,7 +84,9 @@
 
   <td class="num_comments hidden-xs">
     {{#if (gt @flight.numComments 0)}}
-      {{fa-icon "comments-o" title=(t "n-comments" numComments=@flight.numComments)}}
+      <span title={{t "n-comments" numComments=@flight.numComments}}>
+        {{svg-jar "comments-o" class="fa-svg"}}
+      </span>
     {{/if}}
   </td>
 </tr>

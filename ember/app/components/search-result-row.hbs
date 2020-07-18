@@ -1,11 +1,11 @@
 <tr ...attributes>
   <td local-class="column-icon">
     {{#if (eq @result.type "user")}}
-      {{fa-icon "user" title=(t "pilot")}}
+      {{svg-jar "user" class="fa-svg"}}
     {{else if (eq @result.type "club")}}
-      {{fa-icon "group" title=(t "club")}}
+      {{svg-jar "group" class="fa-svg"}}
     {{else if (eq @result.type "airport")}}
-      {{fa-icon "map-marker" title=(t "airport")}}
+      {{svg-jar "map-marker" class="fa-svg"}}
     {{/if}}
   </td>
 
@@ -46,17 +46,17 @@
 
     <div class="pull-right">
       {{#if (eq @result.type "user")}}
-        <LinkTo @route="flights.pilot" @model={{@result.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-        <LinkTo @route="statistics.pilot" @model={{@result.id}} class="btn btn-default btn-sm">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
+        <LinkTo @route="flights.pilot" @model={{@result.id}} class="btn btn-default btn-sm">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+        <LinkTo @route="statistics.pilot" @model={{@result.id}} class="btn btn-default btn-sm">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
 
       {{else if (eq @result.type "club")}}
-        <LinkTo @route="club.pilots" @model={{@result.id}} class="btn btn-default btn-sm">{{fa-icon "group"}} {{t "members"}}</LinkTo>
-        <LinkTo @route="flights.club" @model={{@result.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-        <LinkTo @route="statistics.club" @model={{@result.id}} class="btn btn-default btn-sm">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
+        <LinkTo @route="club.pilots" @model={{@result.id}} class="btn btn-default btn-sm">{{svg-jar "group" class="fa-svg"}} {{t "members"}}</LinkTo>
+        <LinkTo @route="flights.club" @model={{@result.id}} class="btn btn-default btn-sm">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+        <LinkTo @route="statistics.club" @model={{@result.id}} class="btn btn-default btn-sm">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
 
       {{else if (eq @result.type "airport")}}
-        <LinkTo @route="flights.airport" @model={{@result.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-        <LinkTo @route="statistics.airport" @model={{@result.id}} class="btn btn-default btn-sm">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
+        <LinkTo @route="flights.airport" @model={{@result.id}} class="btn btn-default btn-sm">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+        <LinkTo @route="statistics.airport" @model={{@result.id}} class="btn btn-default btn-sm">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
       {{/if}}
     </div>
   </td>
