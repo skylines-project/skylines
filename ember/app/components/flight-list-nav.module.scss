@@ -1,0 +1,19 @@
+.datepicker {
+  display: none;
+}
+
+.datepicker-button {
+  padding: 0;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.flight-list-nav :global(.flatpickr-calendar.static) {
+  // this causes the calendar arrow to align with the button
+  left: -12px;
+  top: 12px;
+}
