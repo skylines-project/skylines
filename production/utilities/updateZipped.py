@@ -93,7 +93,9 @@ while keepRunning: #loops infinitely
             print('Skipping: {} does not exist'.format(iniPath))
     if count>0:
         print ('Moved {} zip files to {}'.format(count, zipDir))
-    time.sleep(10)
+    else:
+        print ('No new landscapes to zip'.format(count, zipDir))
+    time.sleep(60)
 #loops infinitely
 
 
