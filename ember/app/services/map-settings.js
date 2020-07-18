@@ -2,6 +2,8 @@ import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
 
+import { tracked } from '@glimmer/tracking';
+
 import parseQueryString from 'skylines/utils/parse-query-string';
 
 export const BASE_LAYER_COOKIE_KEY = 'base_layer';
@@ -11,10 +13,11 @@ export default class MapSettingsService extends Service {
   @service cookies;
   @service router;
 
-  _baseLayer = 'OpenStreetMap';
-  // _overlayLayers: ['Airspace'],
+  @tracked _baseLayer = 'OpenStreetMap';
+  @tracked _overlayLayers = ['Airspace'];
 
   @or('_query.baselayer', '_baseLayer') baseLayer;
+
   @computed('_query.overlays', '_overlayLayers')
   get overlayLayers() {
     let queryOverlays = this.get('_query.overlays');
@@ -36,17 +39,16 @@ export default class MapSettingsService extends Service {
 
   constructor() {
     super(...arguments);
-    this.set('_overlayLayers', ['Airspace']);
 
     let cookies = this.cookies;
     let cookieBaseLayer = cookies.read(BASE_LAYER_COOKIE_KEY);
     if (cookieBaseLayer) {
-      this.set('_baseLayer', cookieBaseLayer);
+      this._baseLayer = cookieBaseLayer;
     }
 
     let cookieOverlayLayers = cookies.read(OVERLAY_LAYERS_COOKIE_KEY);
     if (cookieOverlayLayers !== undefined) {
-      this.set('_overlayLayers', cookieOverlayLayers === '' ? [] : cookieOverlayLayers.split(';'));
+      this._overlayLayers = cookieOverlayLayers === '' ? [] : cookieOverlayLayers.split(';');
     }
   }
 
@@ -55,7 +57,7 @@ export default class MapSettingsService extends Service {
   }
 
   setBaseLayer(baseLayer) {
-    this.set('_baseLayer', baseLayer);
+    this._baseLayer = baseLayer;
     this.cookies.write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
   }
 
