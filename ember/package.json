@@ -59,6 +59,7 @@
     "ember-css-modules": "^1.3.1",
     "ember-css-modules-sass": "^1.1.0",
     "ember-fetch": "^8.0.1",
+    "ember-flatpickr": "^2.16.2",
     "ember-font-awesome": "^4.0.0-rc.4",
     "ember-freestyle": "^0.12.0",
     "ember-href-to": "^3.1.0",
