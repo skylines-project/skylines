@@ -111,9 +111,6 @@ module.exports = function (defaults) {
     production: 'node_modules/bigscreen/bigscreen.min.js',
   });
 
-  app.import('vendor/bootstrap-datepicker/datepicker.js');
-  app.import('vendor/bootstrap-datepicker/datepicker.css');
-
   app.import({
     development: 'bower_components/moment/moment.js',
     production: 'bower_components/moment/min/moment.min.js',
