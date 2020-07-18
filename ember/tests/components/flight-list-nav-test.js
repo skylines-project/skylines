@@ -35,7 +35,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 2);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
   });
 
   test('shows date', async function (assert) {
@@ -68,7 +68,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 3);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('Meiersberg');
   });
 
@@ -80,7 +80,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 3);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('SFN');
   });
 
@@ -92,7 +92,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 3);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('SFZ Aachen');
   });
 
@@ -105,7 +105,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 4);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('SFN');
     assert.dom(elements[3]).hasText('SFZ Aachen');
   });
@@ -119,7 +119,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 3);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('SFZ Aachen');
   });
 
@@ -131,7 +131,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 3);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('foobar');
   });
 
@@ -143,7 +143,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 4);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('john doe');
     assert.dom(elements[3]).hasText('Unassigned');
   });
@@ -157,7 +157,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 5);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('SFN');
     assert.dom(elements[3]).hasText('john doe');
     assert.dom(elements[4]).hasText('Unassigned');
@@ -172,7 +172,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 4);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('john doe');
     assert.dom(elements[3]).hasText('Unassigned');
   });
@@ -185,7 +185,7 @@ module('Integration | Component | flight list nav', function (hooks) {
     let elements = findAll('li');
     assert.equal(elements.length, 3);
     assert.dom(elements[0]).hasText('All');
-    assert.dom(elements[1]).hasText('Latest  ');
+    assert.dom(elements[1]).includesText('Latest');
     assert.dom(elements[2]).hasText('Pinned');
   });
 });
