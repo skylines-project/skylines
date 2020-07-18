@@ -1,0 +1,5 @@
+.upload-result-form {
+  :global(.ember-flatpickr-input.form-control[readonly]) {
+    background: white;
+  }
+}

@@ -40,6 +40,10 @@ export default class UploadResultForm extends Component {
 
   @action
   setTakeoffTime(value) {
+    if (Array.isArray(value)) {
+      value = value[0];
+    }
+
     this.set('takeoffTime', value);
 
     let times = this.getProperties('takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
@@ -56,6 +60,10 @@ export default class UploadResultForm extends Component {
 
   @action
   setScoreStartTime(value) {
+    if (Array.isArray(value)) {
+      value = value[0];
+    }
+
     this.set('scoreStartTime', value);
 
     let times = this.getProperties('takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
@@ -72,6 +80,10 @@ export default class UploadResultForm extends Component {
 
   @action
   setScoreEndTime(value) {
+    if (Array.isArray(value)) {
+      value = value[0];
+    }
+
     this.set('scoreEndTime', value);
 
     let times = this.getProperties('takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
@@ -88,6 +100,10 @@ export default class UploadResultForm extends Component {
 
   @action
   setLandingTime(value) {
+    if (Array.isArray(value)) {
+      value = value[0];
+    }
+
     this.set('landingTime', value);
 
     let times = this.getProperties('takeoffTime', 'scoreStartTime', 'scoreEndTime', 'landingTime');
