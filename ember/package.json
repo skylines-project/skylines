@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "remarkable": "^2.0.1",
+    "screenfull": "^5.0.2",
     "sidebar-v2": "^0.4.0"
   },
   "devDependencies": {
@@ -31,7 +32,6 @@
     "@sentry/browser": "^5.19.2",
     "@sentry/integrations": "^5.19.2",
     "babel-eslint": "^10.1.0",
-    "bigscreen": "^2.0.5",
     "bootstrap-sass": "^3.4.1",
     "broccoli-asset-rev": "^3.0.0",
     "ember-ajax": "^5.0.0",
