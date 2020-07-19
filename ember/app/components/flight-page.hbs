@@ -1,38 +1,38 @@
 <div class="relative-fullscreen" ...attributes {{did-insert this.setup}}>
   <div id="sidebar" class="sidebar collapsed">
     {{! Nav tabs }}
-    <ul class="sidebar-tabs" role="tablist">
+    <ul class="sidebar-tabs" role="tablist" data-test-sidebar-tabs>
       <li>
-        <a href="#tab-overview" title={{t "overview"}} role="tab">
+        <a href="#tab-overview" title={{t "overview"}} role="tab" data-test-overview>
           {{svg-jar "info" class="fa-svg large"}}
         </a>
       </li>
       <li>
-        <a href="#tab-comments" title={{t "comments"}} role="tab">
+        <a href="#tab-comments" title={{t "comments"}} role="tab" data-test-comments>
           {{svg-jar "comments-o" class="fa-svg large"}}
         </a>
       </li>
       <li>
-        <a href="#tab-stats-total" title={{t "total"}} role="tab">
+        <a href="#tab-stats-total" title={{t "total"}} role="tab" data-test-stats-total>
           {{svg-jar "bar-chart" class="fa-svg large"}}
         </a>
       </li>
       <li>
-        <a href="#tab-stats-legs" title={{t "leg-statistics"}} role="tab">
+        <a href="#tab-stats-legs" title={{t "leg-statistics"}} role="tab" data-test-stats-legs>
           {{svg-jar "arrows-h" class="fa-svg large"}}
         </a>
       </li>
 
       {{#if phases}}
         <li>
-          <a href="#tab-stats-phases" title={{t "phase-statistics"}} role="tab">
+          <a href="#tab-stats-phases" title={{t "phase-statistics"}} role="tab" data-test-stats-phases>
             {{svg-jar "step-forward" class="fa-svg large"}}
           </a>
         </li>
       {{/if}}
 
       <li>
-        <a href="#tab-wingmen" title={{t "wingmen"}} role="tab">
+        <a href="#tab-wingmen" title={{t "wingmen"}} role="tab" data-test-wingmen>
           {{svg-jar "group" class="fa-svg large"}}
         </a>
       </li>

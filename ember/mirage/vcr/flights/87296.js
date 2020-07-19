@@ -1890,7 +1890,7 @@ export const EXTENDED = {
     {
       user: {
         id: 649,
-        name: 'Sylvia C. Schuster',
+        name: 'Jane Doe',
       },
       text: '8-o',
     },
