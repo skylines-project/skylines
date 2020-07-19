@@ -11,14 +11,14 @@ export default class CommentsList extends Component {
   @tracked addCommentText = '';
 
   @(task(function* () {
-    let id = this.flightId;
+    let id = this.args.flightId;
     let text = this.addCommentText;
     let { user } = this.account;
 
     yield this.ajax.request(`/api/flights/${id}/comments`, { method: 'POST', json: { text } });
 
     this.addCommentText = '';
-    this.comments.pushObject({ text, user });
+    this.args.comments.pushObject({ text, user });
   }).drop())
   addCommentTask;
 }
