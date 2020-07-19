@@ -1,0 +1,35 @@
+.GraphicLayerSwitcher {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1200;
+}
+
+.GraphicLayerSwitcher button {
+  background: white;
+  background: rgba(255,255,255,0.7);
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(50,50,50,0.3);
+  border: 1px solid #bbb;
+  padding: 2px;
+  display: block;
+  cursor: pointer;
+}
+
+.GraphicLayerSwitcher button:hover {
+  background: white;
+}
+
+.base_layers,
+.overlay_layers {
+  background: white;
+  background: rgba(255,255,255,0.7);
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(50,50,50,0.3);
+  border: 1px solid #bbb;
+  float: right;
+}
+
+.overlay_layers {
+  margin-right: 5px;
+}

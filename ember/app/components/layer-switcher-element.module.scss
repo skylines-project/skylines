@@ -1,6 +1,39 @@
+.layer {
+  position: relative;
+  white-space: nowrap;
+  color: #555;
+  color: rgba(0,0,0,0.7);
+  display: block;
+  margin: 5px;
+  padding-right: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+
+  &.active,
+  &:hover {
+    background: white;
+    background: rgba(255,255,255,0.7);
+    text-decoration: none;
+  }
+
+  :global(.fa-svg) {
+    position: absolute;
+    left: 64px;
+    color: black;
+    font-size: 32px;
+    top: 17px;
+    display: none;
+  }
+
+  &.active :global(.fa-svg) {
+    display: inline;
+  }
+}
+
 .image {
   width: 100px;
   height: 50px;
+  margin-right: 0.4em;
   transition: filter 300ms;
 }
 
