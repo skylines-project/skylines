@@ -7,6 +7,6 @@
   {{on "touchstart" (action (mut this.highlighted) true)}}
   {{on "touchend" (action (mut this.highlighted) false)}}
 >
-  <img src={{imagePath}}>
+  <img src={{imagePath}} local-class="image {{if this.dimmed "dimmed"}}">
   {{svg-jar "check" class="fa-svg"}} {{layer.name}}
 </a>
