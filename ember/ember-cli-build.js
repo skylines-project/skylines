@@ -57,20 +57,6 @@ module.exports = function (defaults) {
       importBootstrapCSS: false,
     },
 
-    'ember-font-awesome': {
-      includeStaticIcons: [
-        'arrow-left',
-        'arrow-right',
-        'calendar',
-        'chevron-down',
-        'chevron-up',
-        'clock-o',
-        'facebook',
-        'google-plus',
-        'twitter',
-      ],
-    },
-
     freestyle: {
       snippetSearchPaths: ['lib/freestyle/app'],
     },
