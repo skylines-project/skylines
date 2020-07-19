@@ -103,11 +103,6 @@ module.exports = function (defaults) {
   app.import('vendor/jquery.flot.flight-upload.js');
 
   app.import({
-    development: 'node_modules/bigscreen/bigscreen.js',
-    production: 'node_modules/bigscreen/bigscreen.min.js',
-  });
-
-  app.import({
     development: 'node_modules/sidebar-v2/js/jquery-sidebar.js',
     production: 'node_modules/sidebar-v2/js/jquery-sidebar.min.js',
   });
