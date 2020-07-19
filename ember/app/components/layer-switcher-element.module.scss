@@ -1,0 +1,9 @@
+.image {
+  width: 100px;
+  height: 50px;
+  transition: filter 300ms;
+}
+
+.dimmed {
+  filter: grayscale(100%);
+}
