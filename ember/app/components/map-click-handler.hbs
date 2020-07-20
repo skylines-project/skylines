@@ -1,11 +1,11 @@
 {{#if this.coordinate}}
   <div
-    class="InfoBox"
+    local-class="map-click-handler"
     {{did-insert this.addOverlay}}
     {{will-destroy this.removeOverlay}}
   >
     {{#if this.locationData}}
-      <div class="location info-item">
+      <div local-class="location-info">
         {{#if (or this.locationData.airspaces this.locationData.waves)}}
           {{#if this.locationData.airspaces}}
             <table>
@@ -59,16 +59,24 @@
       </div>
     {{else}}
       {{#if this.closestFlight.flight}}
-        <span class="info-item badge" style="background: {{this.closestFlight.flight.color}}">
+        <span local-class="registration" style="background: {{this.closestFlight.flight.color}}">
           {{this.closestFlight.flight.registration}}
         </span>
-        <div class="info-item">
-          <a class="near" href="#NearFlights" {{on "click" this.loadNearbyFlights}}>Load nearby flights</a>
-        </div>
+        <button
+          type="button"
+          local-class="nearby-flights-button"
+          {{on "click" this.loadNearbyFlights}}
+        >
+          Load nearby flights
+        </button>
       {{/if}}
-      <div class="info-item">
-        <a class="near" href="#LocationInfo" {{on "click" this.getLocationInfo}}>Get location info</a>
-      </div>
+      <button
+        type="button"
+        local-class="location-info-button"
+        {{on "click" this.getLocationInfo}}
+      >
+        Get location info
+      </button>
     {{/if}}
   </div>
 {{/if}}

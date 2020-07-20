@@ -1,0 +1,54 @@
+.map-click-handler {
+  display: grid;
+  place-items: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.box {
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+
+.registration {
+  composes: badge from global;
+}
+
+.nearby-flights-button,
+.location-info-button {
+  composes: box;
+  display: block;
+  margin-top: 5px;
+  padding: 2px 5px;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.location-info {
+  composes: box;
+  margin-top: 5px;
+  padding: 5px 3px;
+
+  table {
+    border-style: hidden;
+    width: 100%;
+  }
+
+  td,
+  th {
+    border-left: 1px dotted white;
+    border-right: 1px dotted white;
+    padding: 0 0.4em;
+  }
+
+  .airspace_name,
+  .airspace_base,
+  .airspace_top,
+  .wave_name {
+    text-align: left;
+  }
+}
+
