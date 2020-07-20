@@ -53,7 +53,7 @@ module.exports = function (defaults) {
 
     'ember-bootstrap': {
       bootstrapVersion: 3,
-      importBootstrapFont: true,
+      importBootstrapFont: false,
       importBootstrapCSS: false,
     },
 
