@@ -1,0 +1,4 @@
+.label {
+  composes: badge from global;
+  min-height: 1em;
+}
