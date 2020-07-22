@@ -19,8 +19,7 @@
   },
   "dependencies": {
     "remarkable": "^2.0.1",
-    "screenfull": "^5.0.2",
-    "sidebar-v2": "^0.4.0"
+    "screenfull": "^5.0.2"
   },
   "devDependencies": {
     "@ember-intl/cp-validations": "^4.0.1",
