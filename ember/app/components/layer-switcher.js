@@ -1,6 +1,8 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
+import { BASE_LAYERS, OVERLAY_LAYERS } from '../services/map-settings';
+
 export default Component.extend({
   tagName: '',
 
@@ -8,34 +10,13 @@ export default Component.extend({
 
   map: null,
   open: false,
-  baseLayers: null,
-  overlayLayers: null,
+
+  BASE_LAYERS,
+  OVERLAY_LAYERS,
 
   actions: {
     open() {
-      this.updateLayers();
       this.set('open', true);
     },
-  },
-
-  updateLayers() {
-    let layers = this.map
-      .getLayers()
-      .getArray()
-      .filter(layer => layer.get('display_in_layer_switcher'))
-      .map(layer => {
-        let name = layer.get('name');
-        let isBaseLayer = layer.get('base_layer');
-        return { name, isBaseLayer };
-      });
-
-    this.set(
-      'baseLayers',
-      layers.filter(layer => layer.isBaseLayer).map(it => it.name),
-    );
-    this.set(
-      'overlayLayers',
-      layers.filter(layer => !layer.isBaseLayer).map(it => it.name),
-    );
   },
 });

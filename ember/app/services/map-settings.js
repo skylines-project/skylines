@@ -5,6 +5,21 @@ import { tracked } from '@glimmer/tracking';
 
 import parseQueryString from 'skylines/utils/parse-query-string';
 
+import config from '../config/environment';
+
+const HAS_BING = Boolean(config.BING_API_KEY);
+const HAS_MAPBOX = Boolean(config.MAPBOX_TILE_URL);
+
+export const BASE_LAYERS = [
+  'OpenStreetMap',
+  'Shaded Relief',
+  HAS_BING ? 'Bing Satellite' : null,
+  HAS_BING ? 'Bing Road' : null,
+  HAS_MAPBOX ? 'Terrain' : null,
+  'Empty',
+].filter(Boolean);
+export const OVERLAY_LAYERS = ['Airspace', 'Mountain Wave Project'];
+
 export const BASE_LAYER_COOKIE_KEY = 'base_layer';
 export const OVERLAY_LAYERS_COOKIE_KEY = 'overlay_layers';
 
