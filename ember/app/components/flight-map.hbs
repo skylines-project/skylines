@@ -1,4 +1,5 @@
 <div class="relative-fullscreen" ...attributes {{set-map-target this.map}}>
+  <BackgroundLayers @map={{map}} />
   <LayerSwitcher @map={{map}} />
   <MapClickHandler @map={{map}} @flights={{flights}} @addFlight={{addFlight}} />
 

@@ -6,13 +6,8 @@ export default class LayerSwitcherElement extends Component {
 
   highlighted = false;
 
-  @computed('layer.name')
-  get imagePath() {
-    return `../../images/layers/${this.get('layer.name')}.png`;
-  }
-
-  @computed('layer.visible', 'highlighted')
+  @computed('visible', 'highlighted')
   get dimmed() {
-    return !this.get('layer.visible') && !this.highlighted;
+    return !this.visible && !this.highlighted;
   }
 }

@@ -1,9 +1,24 @@
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 import parseQueryString from 'skylines/utils/parse-query-string';
+
+import config from '../config/environment';
+
+const HAS_BING = Boolean(config.BING_API_KEY);
+const HAS_MAPBOX = Boolean(config.MAPBOX_TILE_URL);
+
+export const BASE_LAYERS = [
+  'OpenStreetMap',
+  'Shaded Relief',
+  HAS_BING ? 'Bing Satellite' : null,
+  HAS_BING ? 'Bing Road' : null,
+  HAS_MAPBOX ? 'Terrain' : null,
+  'Empty',
+].filter(Boolean);
+export const OVERLAY_LAYERS = ['Airspace', 'Mountain Wave Project'];
 
 export const BASE_LAYER_COOKIE_KEY = 'base_layer';
 export const OVERLAY_LAYERS_COOKIE_KEY = 'overlay_layers';
@@ -55,12 +70,12 @@ export default class MapSettingsService extends Service {
     return this.baseLayer === layer || this.overlayLayers.includes(layer);
   }
 
-  setBaseLayer(baseLayer) {
+  @action setBaseLayer(baseLayer) {
     this._baseLayer = baseLayer;
     this.cookies.write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
   }
 
-  toggleOverlayLayer(overlayLayer) {
+  @action toggleOverlayLayer(overlayLayer) {
     let overlayLayers = this.overlayLayers;
     if (overlayLayers.includes(overlayLayer)) {
       overlayLayers.removeObject(overlayLayer);
