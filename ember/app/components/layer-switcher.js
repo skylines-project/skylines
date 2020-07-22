@@ -38,11 +38,10 @@ export default Component.extend({
       .getArray()
       .filter(layer => layer.get('display_in_layer_switcher'))
       .map(layer => {
-        let id = layer.get('id');
         let name = layer.get('name');
         let visible = mapSettings.isLayerVisible(name);
         let isBaseLayer = layer.get('base_layer');
-        return { id, name, visible, isBaseLayer };
+        return { name, visible, isBaseLayer };
       });
 
     this.set(
