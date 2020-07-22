@@ -1,4 +1,4 @@
-<form {{action (perform loginTask) on="submit"}} class="form-login" ...attributes>
+<form {{action (perform loginTask) on="submit"}} local-class="form-login" ...attributes>
   {{#if (and error (not inline))}}
     <BsAlert @type="danger" @dismissible={{false}}>{{t "wrong-credentials"}}</BsAlert>
   {{/if}}
