@@ -1,5 +1,5 @@
-<li class={{if (eq @selectedTab @id) "active"}}>
-  <a href="#tab-{{@id}}" title={{@title}} role="tab" data-test-sidebar-tab={{@id}} {{on "click" this.onClick}}>
+<li local-class="list-item {{if (eq @selectedTab @id) "active"}}">
+  <a href="#tab-{{@id}}" title={{@title}} role="tab" local-class="link" data-test-sidebar-tab={{@id}} {{on "click" this.onClick}}>
     {{svg-jar @icon class="fa-svg large"}}
   </a>
 </li>

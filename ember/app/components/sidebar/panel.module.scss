@@ -1,0 +1,44 @@
+.wrapper {
+  position: absolute;
+  left: 40px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  @media (min-width: 768px) {
+    border-radius: 0 2px 2px 0;
+  }
+}
+
+.panel {
+  right: 0;
+  box-sizing: border-box;
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    width: 265px;
+  }
+
+  @media (min-width: 992px) and (max-width: 1199px) {
+    width: 350px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 420px;
+  }
+}
+
+.title {
+  font-size: 22px;
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 20px;
+  background-color: #eee;
+}
+
+.content {
+  padding: 10px 20px;
+}

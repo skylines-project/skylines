@@ -1,8 +1,8 @@
 {{#if (eq @visibleTab @id)}}
-  <div class="sidebar-content">
-    <div class="sidebar-pane active">
-      <h3>{{@title}}</h3>
-      <div class="sidebar-pane-content">
+  <div local-class="wrapper">
+    <div local-class="panel">
+      <h3 local-class="title">{{@title}}</h3>
+      <div local-class="content">
         {{yield}}
       </div>
     </div>
