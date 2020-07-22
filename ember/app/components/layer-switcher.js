@@ -31,17 +31,14 @@ export default Component.extend({
   },
 
   updateLayers() {
-    let mapSettings = this.mapSettings;
-
     let layers = this.map
       .getLayers()
       .getArray()
       .filter(layer => layer.get('display_in_layer_switcher'))
       .map(layer => {
         let name = layer.get('name');
-        let visible = mapSettings.isLayerVisible(name);
         let isBaseLayer = layer.get('base_layer');
-        return { name, visible, isBaseLayer };
+        return { name, isBaseLayer };
       });
 
     this.set(
