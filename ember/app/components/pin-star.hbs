@@ -1,4 +1,4 @@
 <span class="pin {{if this.pinned "pinned"}}" ...attributes {{on "click" this.handleClick}}>
-  {{svg-jar (if pinned "star" "star-o") class="fa-svg"}}
+  {{svg-jar (if this.pinned "star" "star-o") class="fa-svg"}}
   <BsTooltip @placement="left">Activate this to show the flight on top of other flights on the map</BsTooltip>
 </span>
