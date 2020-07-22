@@ -1,9 +1,8 @@
 import { computed } from '@ember/object';
 import { gt } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
-import Ember from 'ember';
 
-import { task, timeout } from 'ember-concurrency';
+import { task, rawTimeout } from 'ember-concurrency';
 
 export default class NotificationCounterService extends Service {
   @service ajax;
@@ -23,11 +22,10 @@ export default class NotificationCounterService extends Service {
   }
 
   @(task(function* () {
-    // eslint-disable-next-line no-constant-condition
-    while (!Ember.testing) {
+    while (true) {
       let { events } = yield this.ajax.request('/api/notifications');
       this.set('counter', events.filter(it => it.unread).length);
-      yield timeout(60000);
+      yield rawTimeout(60000);
     }
   }).drop())
   updateTask;
