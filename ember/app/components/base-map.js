@@ -26,7 +26,5 @@ export default Component.extend({
       ol3Logo: false,
     });
     this.set('map', map);
-
-    map.getViewport().setAttribute('tabindex', '0');
   },
 });
