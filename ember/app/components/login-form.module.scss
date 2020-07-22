@@ -4,8 +4,12 @@
   margin-bottom: inherit;
 
 
-  > div, > button {
+  > div, > button, > a {
     margin: 15px 0;
+  }
+
+  > a {
+    display: block;
   }
 
   hr {
