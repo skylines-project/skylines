@@ -158,25 +158,11 @@ export default class MapClickHandler extends Component {
     this.circle.animation = { duration, start: null };
   }
 
-  @action loadNearbyFlights(event) {
-    event.preventDefault();
-
+  @(task(function* () {
     let { flight, closestPoint } = this.closestFlight;
     let [lon, lat] = ol.proj.transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
     let time = closestPoint[3];
 
-    this.getNearFlights(lon, lat, time, flight);
-  }
-
-  /**
-   * Request near flights via ajax
-   *
-   * @param {Number} lon Longitude.
-   * @param {Number} lat Latitude.
-   * @param {Number} time Time.
-   * @param {slFlight} flight Flight.
-   */
-  async getNearFlights(lon, lat, time, flight) {
     let flights = this.args.flights;
     let addFlight = this.args.addFlight;
     if (!flights || !addFlight) {
@@ -186,7 +172,7 @@ export default class MapClickHandler extends Component {
     this.coordinate = null;
 
     try {
-      let data = await this.ajax.request(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
+      let data = yield this.ajax.request(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
       for (let i = 0; i < data['flights'].length; ++i) {
         let flight = data['flights'][i];
@@ -201,7 +187,8 @@ export default class MapClickHandler extends Component {
     } finally {
       this.hideCircle(1000);
     }
-  }
+  }).restartable())
+  loadNearbyFlightsTask;
 
   @(task(function* () {
     let [lon, lat] = ol.proj.transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');

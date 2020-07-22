@@ -67,7 +67,7 @@
         <button
           type="button"
           local-class="nearby-flights-button"
-          {{on "click" this.loadNearbyFlights}}
+          {{on "click" (perform this.loadNearbyFlightsTask)}}
         >
           Load nearby flights
         </button>
