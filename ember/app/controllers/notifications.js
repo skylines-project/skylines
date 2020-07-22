@@ -9,7 +9,7 @@ import safeComputed from '../computed/safe-computed';
 
 export default class NotificationsController extends Controller {
   @service ajax;
-  @service notifications;
+  @service notificationCounter;
 
   queryParams = ['page', 'user', 'type'];
   page = 1;
@@ -40,7 +40,7 @@ export default class NotificationsController extends Controller {
   @(task(function* () {
     yield this.ajax.request('/api/notifications/clear', { method: 'POST' });
     this.get('model.events').forEach(event => set(event, 'unread', false));
-    this.set('notifications.counter', 0);
+    this.set('notificationCounter.counter', 0);
   }).drop())
   markAsReadTask;
 }
