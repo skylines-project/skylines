@@ -4,7 +4,7 @@
   <MapClickHandler @map={{map}} @flights={{flights}} @addFlight={{addFlight}} />
 
   {{#if flights}}
-    <CesiumButton @enabled={{cesiumEnabled}} @onEnable={{action "cesiumEnabled"}} @onDisable={{action "cesiumDisabled"}} />
+    <CesiumButton @enabled={{cesiumEnabled}} @onEnable={{this.enableCesium}} @onDisable={{this.disableCesium}} />
     <FlightPathLayer @map={{map}} @flights={{flights}} />
     <PhaseHighlightComposer @map={{map}} @coordinates={{phaseHighlightCoords}} @calculatePadding={{calculatePadding}} />
     <PlaneIconsComposer @map={{map}} @fixes={{fixes}} />

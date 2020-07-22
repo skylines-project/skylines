@@ -1,37 +1,38 @@
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 import BaseMapComponent from './base-map';
 
-export default BaseMapComponent.extend({
-  cesiumLoader: service(),
+export default class FlightMap extends BaseMapComponent {
+  @service cesiumLoader;
 
-  flights: null,
-  fixes: null,
-  phaseHighlightCoords: null,
-  hoverEnabled: true,
+  flights = null;
+  fixes = null;
+  phaseHighlightCoords = null;
+  hoverEnabled = true;
 
-  onExtentChange() {},
-  onTimeChange() {},
-  onCesiumEnabledChange() {},
+  onExtentChange() {}
+  onTimeChange() {}
+  onCesiumEnabledChange() {}
 
-  didInsertElement() {
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
 
     let map = this.map;
     map.on('moveend', this._handleMoveEnd, this);
     map.on('pointermove', this._handlePointerMove, this);
-  },
+  }
 
-  willDestroyElement() {
-    this._super(...arguments);
+  willDestroy() {
+    super.willDestroy(...arguments);
     let map = this.map;
     map.un('moveend', this._handleMoveEnd, this);
     map.un('pointermove', this._handlePointerMove, this);
-  },
+  }
 
   _handleMoveEnd(event) {
     this.onExtentChange(event.frameState.extent);
-  },
+  }
 
   _handlePointerMove(event) {
     if (event.dragging || !this.hoverEnabled) {
@@ -60,17 +61,16 @@ export default BaseMapComponent.extend({
 
       map.render();
     }
-  },
+  }
 
-  actions: {
-    cesiumEnabled() {
-      this.set('cesiumEnabled', true);
-      this.onCesiumEnabledChange(true);
-      this.cesiumLoader.load();
-    },
-    cesiumDisabled() {
-      this.set('cesiumEnabled', false);
-      this.onCesiumEnabledChange(false);
-    },
-  },
-});
+  @action enableCesium() {
+    this.set('cesiumEnabled', true);
+    this.onCesiumEnabledChange(true);
+    this.cesiumLoader.load();
+  }
+
+  @action disableCesium() {
+    this.set('cesiumEnabled', false);
+    this.onCesiumEnabledChange(false);
+  }
+}

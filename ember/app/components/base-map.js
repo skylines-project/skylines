@@ -1,13 +1,12 @@
 import Component from '@ember/component';
 
-import $ from 'jquery';
 import ol from 'openlayers';
 
-export default Component.extend({
-  tagName: '',
+export default class BaseMap extends Component {
+  tagName = '';
 
-  init() {
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
 
     window.flightMap = this;
 
@@ -27,10 +26,5 @@ export default Component.extend({
       ol3Logo: false,
     });
     this.set('map', map);
-
-    map.getViewport().setAttribute('tabindex', '0');
-    $(map.getViewport()).click(function () {
-      $(this).focus();
-    });
-  },
-});
+  }
+}
