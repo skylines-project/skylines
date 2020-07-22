@@ -59,9 +59,11 @@
       </div>
     {{else}}
       {{#if this.closestFlight.flight}}
-        <span local-class="registration" style="background: {{this.closestFlight.flight.color}}">
-          {{this.closestFlight.flight.registration}}
-        </span>
+        {{#if this.closestFlight.flight.registration}}
+          <span local-class="registration" style="background: {{this.closestFlight.flight.color}}">
+            {{this.closestFlight.flight.registration}}
+          </span>
+        {{/if}}
         <button
           type="button"
           local-class="nearby-flights-button"
