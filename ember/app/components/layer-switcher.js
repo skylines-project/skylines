@@ -31,11 +31,11 @@ export default Component.extend({
 
     this.set(
       'baseLayers',
-      layers.filter(layer => layer.isBaseLayer),
+      layers.filter(layer => layer.isBaseLayer).map(it => it.name),
     );
     this.set(
       'overlayLayers',
-      layers.filter(layer => !layer.isBaseLayer),
+      layers.filter(layer => !layer.isBaseLayer).map(it => it.name),
     );
   },
 });

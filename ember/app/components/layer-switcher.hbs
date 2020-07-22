@@ -4,18 +4,18 @@
       <div local-class="base_layers">
         {{#each baseLayers as |layer|}}
           <LayerSwitcherElement
-            @name={{layer.name}}
-            @visible={{eq this.mapSettings.baseLayer layer.name}}
-            @onSelect={{fn this.mapSettings.setBaseLayer layer.name}}
+            @name={{layer}}
+            @visible={{eq this.mapSettings.baseLayer layer}}
+            @onSelect={{fn this.mapSettings.setBaseLayer layer}}
           />
         {{/each}}
       </div>
       <div local-class="overlay_layers">
         {{#each overlayLayers as |layer|}}
           <LayerSwitcherElement
-            @name={{layer.name}}
-            @visible={{includes this.mapSettings.overlayLayers layer.name}}
-            @onSelect={{fn this.mapSettings.toggleOverlayLayer layer.name}}
+            @name={{layer}}
+            @visible={{includes this.mapSettings.overlayLayers layer}}
+            @onSelect={{fn this.mapSettings.toggleOverlayLayer layer}}
           />
         {{/each}}
       </div>
