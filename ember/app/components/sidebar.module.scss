@@ -35,9 +35,9 @@
   }
 }
 
-.sidebar-map {
-  .ol-scale-line,
-  .ol-zoom {
+:global(.sidebar-map) {
+  :global(.ol-scale-line),
+  :global(.ol-zoom) {
     margin-left: 46px;
 
     @media (min-width: 768px) {
