@@ -3,12 +3,12 @@
     <div id="GraphicLayerSwitcher-open" {{on-click-outside (action (mut open) false) eventType="mousedown"}}>
       <div local-class="base_layers">
         {{#each baseLayers as |layer|}}
-          <LayerSwitcherElement @layer={{layer}} @onSelect={{action "select" layer}} />
+          <LayerSwitcherElement @name={{layer.name}} @visible={{layer.visible}} @onSelect={{action "select" layer}} />
         {{/each}}
       </div>
       <div local-class="overlay_layers">
         {{#each overlayLayers as |layer|}}
-          <LayerSwitcherElement @layer={{layer}} @onSelect={{action "select" layer}} />
+          <LayerSwitcherElement @name={{layer.name}} @visible={{layer.visible}} @onSelect={{action "select" layer}} />
         {{/each}}
       </div>
     </div>
