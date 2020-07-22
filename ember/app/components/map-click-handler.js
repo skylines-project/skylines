@@ -169,8 +169,6 @@ export default class MapClickHandler extends Component {
       return;
     }
 
-    this.coordinate = null;
-
     try {
       let data = yield this.ajax.request(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
@@ -185,6 +183,7 @@ export default class MapClickHandler extends Component {
         addFlight(flight);
       }
     } finally {
+      this.coordinate = null;
       this.hideCircle(1000);
     }
   }).restartable())

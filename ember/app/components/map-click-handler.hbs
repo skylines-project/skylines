@@ -66,10 +66,16 @@
         {{/if}}
         <button
           type="button"
+          disabled={{this.loadNearbyFlightsTask.isRunning}}
           local-class="nearby-flights-button"
           {{on "click" (perform this.loadNearbyFlightsTask)}}
         >
           Load nearby flights
+          {{#if this.loadNearbyFlightsTask.isRunning}}
+            <div class="spinner spinner-white" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          {{/if}}
         </button>
       {{/if}}
       <button
