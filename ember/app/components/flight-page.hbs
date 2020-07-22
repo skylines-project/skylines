@@ -1,91 +1,44 @@
 <div class="relative-fullscreen" ...attributes {{did-insert this.setup}}>
-  <div id="sidebar" class="sidebar collapsed">
-    {{! Nav tabs }}
-    <ul class="sidebar-tabs" role="tablist" data-test-sidebar-tabs>
-      <li>
-        <a href="#tab-overview" title={{t "overview"}} role="tab" data-test-overview>
-          {{svg-jar "info" class="fa-svg large"}}
-        </a>
-      </li>
-      <li>
-        <a href="#tab-comments" title={{t "comments"}} role="tab" data-test-comments>
-          {{svg-jar "comments-o" class="fa-svg large"}}
-        </a>
-      </li>
-      <li>
-        <a href="#tab-stats-total" title={{t "total"}} role="tab" data-test-stats-total>
-          {{svg-jar "bar-chart" class="fa-svg large"}}
-        </a>
-      </li>
-      <li>
-        <a href="#tab-stats-legs" title={{t "leg-statistics"}} role="tab" data-test-stats-legs>
-          {{svg-jar "arrows-h" class="fa-svg large"}}
-        </a>
-      </li>
-
+  <Sidebar @defaultTab={{this.defaultTab}} id="sidebar" as |sidebar|>
+    <sidebar.Tabs as |tabs|>
+      <tabs.Tab @id="overview" @icon="info" @title={{t "overview"}} data-test-overview />
+      <tabs.Tab @id="comments" @icon="comments-o" @title={{t "comments"}} data-test-comments />
+      <tabs.Tab @id="stats-total" @icon="bar-chart" @title={{t "total"}} data-test-stats-total />
+      <tabs.Tab @id="stats-legs" @icon="arrows-h" @title={{t "leg-statistics"}} data-test-stats-legs />
       {{#if phases}}
-        <li>
-          <a href="#tab-stats-phases" title={{t "phase-statistics"}} role="tab" data-test-stats-phases>
-            {{svg-jar "step-forward" class="fa-svg large"}}
-          </a>
-        </li>
+        <tabs.Tab @id="stats-phases" @icon="step-forward" @title={{t "phase-statistics"}} data-test-stats-phases />
       {{/if}}
+      <tabs.Tab @id="wingmen" @icon="group" @title={{t "wingmen"}} data-test-wingmen />
+    </sidebar.Tabs>
 
-      <li>
-        <a href="#tab-wingmen" title={{t "wingmen"}} role="tab" data-test-wingmen>
-          {{svg-jar "group" class="fa-svg large"}}
-        </a>
-      </li>
-    </ul>
-    {{! Tab panes }}
-    <div class="sidebar-content">
-      <div class="sidebar-pane" id="tab-overview">
-        <h3>{{t "overview"}}</h3>
-        <div class="sidebar-pane-content">
-          <FlightDetailsTable @flight={{flight}} @transitionTo={{transitionTo}} />
-        </div>
-      </div>
+    <sidebar.Panel @id="overview" @title={{t "overview"}}>
+      <FlightDetailsTable @flight={{flight}} @transitionTo={{transitionTo}} />
+    </sidebar.Panel>
 
-      <div class="sidebar-pane" id="tab-comments">
-        <h3>{{t "comments"}}</h3>
-        <div class="sidebar-pane-content">
-          <CommentsList @comments={{comments}} @flightId={{flight.id}} />
-        </div>
-      </div>
+    <sidebar.Panel @id="comments" @title={{t "comments"}}>
+      <CommentsList @comments={{comments}} @flightId={{flight.id}} />
+    </sidebar.Panel>
 
-      <div class="sidebar-pane" id="tab-stats-total">
-        <h3>{{t "statistics"}}</h3>
-        <div class="sidebar-pane-content">
-          <FlightPerformancePanel @performance={{performance}} />
-        </div>
-      </div>
+    <sidebar.Panel @id="stats-total" @title={{t "statistics"}}>
+      <FlightPerformancePanel @performance={{performance}} />
+    </sidebar.Panel>
 
-      <div class="sidebar-pane" id="tab-stats-legs">
-        <h3>{{t "leg-statistics"}}</h3>
-        <div class="sidebar-pane-content">
-          <FlightLegPanel @legs={{legs}} @selection={{this.highlightedTimeInterval}} @onSelect={{action (mut this.highlightedTimeInterval)}} />
-        </div>
-      </div>
+    <sidebar.Panel @id="stats-legs" @title={{t "leg-statistics"}}>
+      <FlightLegPanel @legs={{legs}} @selection={{this.highlightedTimeInterval}} @onSelect={{action (mut this.highlightedTimeInterval)}} />
+    </sidebar.Panel>
 
-      {{#if phases}}
-        <div class="sidebar-pane" id="tab-stats-phases">
-          <h3>{{t "phase-statistics"}}</h3>
-          <div class="sidebar-pane-content">
-            <div class="table-responsive">
-              <FlightPhaseTable @phases={{phases}} @selection={{this.highlightedTimeInterval}} @onSelect={{action (mut this.highlightedTimeInterval)}} />
-            </div>
-          </div>
+    {{#if phases}}
+      <sidebar.Panel @id="stats-phases" @title={{t "phase-statistics"}}>
+        <div class="table-responsive">
+          <FlightPhaseTable @phases={{phases}} @selection={{this.highlightedTimeInterval}} @onSelect={{action (mut this.highlightedTimeInterval)}} />
         </div>
-      {{/if}}
+      </sidebar.Panel>
+    {{/if}}
 
-      <div class="sidebar-pane" id="tab-wingmen">
-        <h3>{{t "wingmen"}}</h3>
-        <div class="sidebar-pane-content">
-          <WingmanTable @visibleFlights={{fixCalc.flights}} @nearFlights={{nearFlights}} @onSelect={{action "selectWingman"}} />
-        </div>
-      </div>
-    </div>
-  </div>
+    <sidebar.Panel @id="wingmen" @title={{t "wingmen"}}>
+      <WingmanTable @visibleFlights={{fixCalc.flights}} @nearFlights={{nearFlights}} @onSelect={{action "selectWingman"}} />
+    </sidebar.Panel>
+  </Sidebar>
 
   <FlightMap
     @flights={{fixCalc.flights}}

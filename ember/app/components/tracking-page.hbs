@@ -1,24 +1,14 @@
 <div class="relative-fullscreen" ...attributes {{did-insert this.setup}}>
   {{#if flights}}
-    <div id="sidebar" class="sidebar collapsed">
-      {{! Nav tabs }}
-      <ul class="sidebar-tabs" role="tablist">
-        <li>
-          <a href="#tab-overview" title={{t "overview"}} role="tab">
-            {{svg-jar "info" class="fa-svg large"}}
-          </a>
-        </li>
-      </ul>
-      {{! Tab panes }}
-      <div class="sidebar-content">
-        <div class="sidebar-pane" id="tab-overview">
-          <h3>{{t "overview"}}</h3>
-          <div class="sidebar-pane-content">
-            <TrackingPilotsList @pilots={{pilots}} />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Sidebar @defaultTab={{this.defaultTab}} id="sidebar" as |sidebar|>
+      <sidebar.Tabs as |tabs|>
+        <tabs.Tab @id="overview" @icon="info" @title={{t "overview"}} data-test-overview />
+      </sidebar.Tabs>
+
+      <sidebar.Panel @id="overview" @title={{t "overview"}}>
+        <TrackingPilotsList @pilots={{pilots}} />
+      </sidebar.Panel>
+    </Sidebar>
 
     <FlightMap
       @flights={{fixCalc.flights}}

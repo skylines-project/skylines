@@ -18,6 +18,8 @@ export default Component.extend({
   fixCalc: null,
   highlightedTimeInterval: null,
 
+  defaultTab: window.innerWidth >= 768 ? 'overview' : null,
+
   highlightedCoordinates: computed('highlightedTimeInterval', function () {
     let selection = this.highlightedTimeInterval;
     if (!selection) {
@@ -71,7 +73,6 @@ export default Component.extend({
     let fixCalc = this.fixCalc;
 
     let sidebar = this.rootElement.querySelector('#sidebar');
-    let $sidebar = $(sidebar).sidebar();
 
     let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     let $barogramPanel = $(barogramPanel);
@@ -90,12 +91,6 @@ export default Component.extend({
 
     resize();
     $barogramPanel.resize(resize);
-
-    if (window.location.hash && sidebar.querySelector(`li > a[href="#${window.location.hash.substring(1)}"]`)) {
-      $sidebar.open(window.location.hash.substring(1));
-    } else if (window.innerWidth >= 768) {
-      $sidebar.open('tab-overview');
-    }
 
     let [primaryId, ...otherIds] = this.ids;
 
