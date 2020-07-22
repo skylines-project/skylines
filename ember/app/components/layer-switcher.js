@@ -25,8 +25,6 @@ export default Component.extend({
       } else {
         mapSettings.toggleOverlayLayer(layer.name);
       }
-
-      this.updateLayers();
     },
   },
 
