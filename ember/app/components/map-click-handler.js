@@ -8,6 +8,7 @@ import ol from 'openlayers';
 
 export default class MapClickHandler extends Component {
   @service ajax;
+  @service notifications;
 
   @tracked coordinate;
   @tracked closestFlight;
@@ -192,10 +193,19 @@ export default class MapClickHandler extends Component {
   @(task(function* () {
     let [lon, lat] = ol.proj.transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
     try {
-      this.locationData = yield this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
+      let locationData = yield this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
+      if (locationData.airspaces?.length || locationData.waves?.length) {
+        this.locationData = locationData;
+        return;
+      }
+
+      this.notifications.info('No data retrieved for this location.');
     } catch (error) {
-      this.locationData = null;
+      this.notifications.error('Requesting location data failed!');
     }
+
+    this.coordinate = null;
+    this.hideCircle(1000);
   }).restartable())
   loadLocationInfoTask;
 }

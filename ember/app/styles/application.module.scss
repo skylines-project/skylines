@@ -1,0 +1,7 @@
+:root {
+  --ecn-container-position: 60px;
+}
+
+:global(.c-notification) {
+  box-shadow: 0 5px 15px hsla(0, 0%, 0%, 0.2);
+}

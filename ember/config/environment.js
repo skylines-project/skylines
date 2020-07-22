@@ -32,6 +32,11 @@ module.exports = function (environment) {
     CESIUM_TOKEN:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NTBkMjZjMS1kNjdlLTQxYWYtODRhNC0yMjQ5OWMzMDdmYmQiLCJpZCI6NDg2Miwic2NvcGVzIjpbImFzciIsImdjIl0sImlhdCI6MTU0MTc4NDE2Nn0.6Y_U401Dlr4QpEfgv2q0PVeqYdZ8kmWyOPQXu1HfHzU',
 
+    'ember-cli-notifications': {
+      autoClear: true,
+      clearDuration: 5000,
+    },
+
     sentry: {
       environment,
     },
@@ -69,6 +74,9 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    // disable auto clearing so that we can manually clear the queue if needed
+    ENV['ember-cli-notifications'].autoClear = false;
   }
 
   if (environment === 'production') {
