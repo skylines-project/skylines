@@ -1,4 +1,4 @@
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -55,12 +55,12 @@ export default class MapSettingsService extends Service {
     return this.baseLayer === layer || this.overlayLayers.includes(layer);
   }
 
-  setBaseLayer(baseLayer) {
+  @action setBaseLayer(baseLayer) {
     this._baseLayer = baseLayer;
     this.cookies.write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
   }
 
-  toggleOverlayLayer(overlayLayer) {
+  @action toggleOverlayLayer(overlayLayer) {
     let overlayLayers = this.overlayLayers;
     if (overlayLayers.includes(overlayLayer)) {
       overlayLayers.removeObject(overlayLayer);
