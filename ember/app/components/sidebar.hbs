@@ -1,0 +1,6 @@
+<div class="sidebar {{if this.collapsed "collapsed"}}" ...attributes>
+  {{yield (hash
+    Tabs=(component "sidebar/tabs" selectedTab=this.selectedTab onSelect=this.onSelect)
+    Panel=(component "sidebar/panel" visibleTab=this.visibleTab)
+  )}}
+</div>

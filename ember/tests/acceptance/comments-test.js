@@ -17,7 +17,7 @@ module('Acceptance | Comments', function (hooks) {
       this.server.get('/api/flights/87296', MockFlight.EXTENDED);
 
       await visit('/flights/87296');
-      await click('[data-test-sidebar-tabs] [data-test-comments]');
+      await click('[data-test-sidebar-tab="comments"]');
       assert.dom('[data-test-comment]').exists({ count: 1 });
       assert.dom('[data-test-comment]').hasText('Jane Doe:\xa0 8-o');
       assert.dom('[data-test-add-comment]').doesNotExist();
@@ -57,7 +57,7 @@ module('Acceptance | Comments', function (hooks) {
       });
 
       await visit('/flights/87296');
-      await click('[data-test-sidebar-tabs] [data-test-comments]');
+      await click('[data-test-sidebar-tab="comments"]');
       assert.dom('[data-test-comment]').exists({ count: 1 });
       assert.dom('[data-test-comment]').hasText('Jane Doe:\xa0 8-o');
       assert.dom('[data-test-add-comment]').exists();

@@ -88,11 +88,6 @@ module.exports = function (defaults) {
   app.import('bower_components/flot-marks/src/jquery.flot.marks.js');
   app.import('vendor/jquery.flot.flight-upload.js');
 
-  app.import({
-    development: 'node_modules/sidebar-v2/js/jquery-sidebar.js',
-    production: 'node_modules/sidebar-v2/js/jquery-sidebar.min.js',
-  });
-
   // Monkey-patch the `findMissingKeys()` method
   let TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
   TranslationReducer.prototype.findMissingKeys = function () {};
