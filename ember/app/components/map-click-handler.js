@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
+import { task } from 'ember-concurrency';
 import ol from 'openlayers';
 
 export default class MapClickHandler extends Component {
@@ -157,35 +158,19 @@ export default class MapClickHandler extends Component {
     this.circle.animation = { duration, start: null };
   }
 
-  @action loadNearbyFlights(event) {
-    event.preventDefault();
-
+  @(task(function* () {
     let { flight, closestPoint } = this.closestFlight;
     let [lon, lat] = ol.proj.transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
     let time = closestPoint[3];
 
-    this.getNearFlights(lon, lat, time, flight);
-  }
-
-  /**
-   * Request near flights via ajax
-   *
-   * @param {Number} lon Longitude.
-   * @param {Number} lat Latitude.
-   * @param {Number} time Time.
-   * @param {slFlight} flight Flight.
-   */
-  async getNearFlights(lon, lat, time, flight) {
     let flights = this.args.flights;
     let addFlight = this.args.addFlight;
     if (!flights || !addFlight) {
       return;
     }
 
-    this.coordinate = null;
-
     try {
-      let data = await this.ajax.request(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
+      let data = yield this.ajax.request(`/api/flights/${flight.get('id')}/near?lon=${lon}&lat=${lat}&time=${time}`);
 
       for (let i = 0; i < data['flights'].length; ++i) {
         let flight = data['flights'][i];
@@ -198,24 +183,19 @@ export default class MapClickHandler extends Component {
         addFlight(flight);
       }
     } finally {
+      this.coordinate = null;
       this.hideCircle(1000);
     }
-  }
+  }).restartable())
+  loadNearbyFlightsTask;
 
-  /**
-   * Request location informations via ajax
-   *
-   * @param {Number} lon Longitude.
-   * @param {Number} lat Latitude.
-   */
-  @action async getLocationInfo(event) {
-    event.preventDefault();
-
+  @(task(function* () {
     let [lon, lat] = ol.proj.transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
     try {
-      this.locationData = await this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
+      this.locationData = yield this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
     } catch (error) {
       this.locationData = null;
     }
-  }
+  }).restartable())
+  loadLocationInfoTask;
 }
