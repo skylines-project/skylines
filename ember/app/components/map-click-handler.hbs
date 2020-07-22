@@ -6,55 +6,51 @@
   >
     {{#if this.locationData}}
       <div local-class="location-info">
-        {{#if (or this.locationData.airspaces this.locationData.waves)}}
-          {{#if this.locationData.airspaces}}
-            <table>
-              <thead>
+        {{#if this.locationData.airspaces}}
+          <table>
+            <thead>
+            <tr>
+              <th colspan="4">Airspaces</th>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <th>Class</th>
+              <th>Base</th>
+              <th>Top</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each this.locationData.airspaces as |airspace|}}
               <tr>
-                <th colspan="4">Airspaces</th>
+                <td class="airspace_name">{{airspace.name}}</td>
+                <td class="airspace_class">{{airspace.class}}</td>
+                <td class="airspace_base">{{airspace.base}}</td>
+                <td class="airspace_top">{{airspace.top}}</td>
               </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        {{/if}}
+        {{#if this.locationData.waves}}
+          <table>
+            <thead>
+            <tr>
+              <th colspan="2">Mountain Waves</th>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <th>Wind direction</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each this.locationData.waves as |wave|}}
               <tr>
-                <th>Name</th>
-                <th>Class</th>
-                <th>Base</th>
-                <th>Top</th>
+                <td class="wave_name">{{wave.name}}</td>
+                <td class="wave_direction">{{or wave.main_wind_direction "Unknown"}}</td>
               </tr>
-              </thead>
-              <tbody>
-              {{#each this.locationData.airspaces as |airspace|}}
-                <tr>
-                  <td class="airspace_name">{{airspace.name}}</td>
-                  <td class="airspace_class">{{airspace.class}}</td>
-                  <td class="airspace_base">{{airspace.base}}</td>
-                  <td class="airspace_top">{{airspace.top}}</td>
-                </tr>
-              {{/each}}
-              </tbody>
-            </table>
-          {{/if}}
-          {{#if this.locationData.waves}}
-            <table>
-              <thead>
-              <tr>
-                <th colspan="2">Mountain Waves</th>
-              </tr>
-              <tr>
-                <th>Name</th>
-                <th>Wind direction</th>
-              </tr>
-              </thead>
-              <tbody>
-              {{#each this.locationData.waves as |wave|}}
-                <tr>
-                  <td class="wave_name">{{wave.name}}</td>
-                  <td class="wave_direction">{{or wave.main_wind_direction "Unknown"}}</td>
-                </tr>
-              {{/each}}
-              </tbody>
-            </table>
-          {{/if}}
-        {{else}}
-          No data retrieved for this location
+            {{/each}}
+            </tbody>
+          </table>
         {{/if}}
       </div>
     {{else}}
