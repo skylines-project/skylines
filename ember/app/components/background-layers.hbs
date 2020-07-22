@@ -1,0 +1,12 @@
+<BackgroundLayers::Osm @map={{@map}} />
+<BackgroundLayers::Relief @map={{@map}} />
+<BackgroundLayers::Airspace @map={{@map}} />
+<BackgroundLayers::Mwp @map={{@map}} />
+{{#if this.bingApiKey}}
+  <BackgroundLayers::Bing::Hybrid @apiKey={{this.bingApiKey}} @map={{@map}} />
+  <BackgroundLayers::Bing::Road @apiKey={{this.bingApiKey}} @map={{@map}} />
+{{/if}}
+{{#if this.mapBoxUrl}}
+  <BackgroundLayers::Mapbox @url={{this.mapBoxUrl}} @map={{@map}} />
+{{/if}}
+<BackgroundLayers::Empty @map={{@map}} />
