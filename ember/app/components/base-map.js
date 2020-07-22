@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 
-import $ from 'jquery';
 import ol from 'openlayers';
 
 export default Component.extend({
@@ -29,8 +28,5 @@ export default Component.extend({
     this.set('map', map);
 
     map.getViewport().setAttribute('tabindex', '0');
-    $(map.getViewport()).click(function () {
-      $(this).focus();
-    });
   },
 });
