@@ -73,7 +73,7 @@
       <button
         type="button"
         local-class="location-info-button"
-        {{on "click" this.getLocationInfo}}
+        {{on "click" (perform this.loadLocationInfoTask)}}
       >
         Get location info
       </button>

@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
+import { task } from 'ember-concurrency';
 import ol from 'openlayers';
 
 export default class MapClickHandler extends Component {
@@ -202,20 +203,13 @@ export default class MapClickHandler extends Component {
     }
   }
 
-  /**
-   * Request location informations via ajax
-   *
-   * @param {Number} lon Longitude.
-   * @param {Number} lat Latitude.
-   */
-  @action async getLocationInfo(event) {
-    event.preventDefault();
-
+  @(task(function* () {
     let [lon, lat] = ol.proj.transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
     try {
-      this.locationData = await this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
+      this.locationData = yield this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
     } catch (error) {
       this.locationData = null;
     }
-  }
+  }).restartable())
+  loadLocationInfoTask;
 }
