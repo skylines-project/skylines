@@ -46,36 +46,6 @@
   background-color: rgba(255, 255, 255, 0.5);
   overflow: hidden;
 
-  > li {
-    width: 100%;
-    height: 40px;
-    color: #999;
-    font-size: 12pt;
-    overflow: hidden;
-    transition: all 80ms;
-    list-style-type: none;
-
-    &:hover {
-      color: #000;
-      background-color: #ccc;
-    }
-
-    &.active {
-      color: #fff;
-      background-color: #428bca;
-    }
-
-    > a {
-      display: block;
-      width: 100%;
-      height: 100%;
-      line-height: 40px;
-      color: inherit;
-      text-decoration: none;
-      text-align: center;
-    }
-  }
-
   @media (min-width: 768px) {
     border-radius: 2px 0 0 2px;
   }
