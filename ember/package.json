@@ -92,7 +92,7 @@
     "qunit-dom": "^1.2.0"
   },
   "engines": {
-    "node": "^12.18.0"
+    "node": "^v12.18.3"
   },
   "ember-addon": {
     "paths": [
