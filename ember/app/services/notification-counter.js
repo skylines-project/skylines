@@ -5,7 +5,7 @@ import Ember from 'ember';
 
 import { task, timeout } from 'ember-concurrency';
 
-export default class Notifications extends Service {
+export default class NotificationCounterService extends Service {
   @service ajax;
 
   counter = 0;
