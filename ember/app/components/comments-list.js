@@ -12,7 +12,9 @@ export default class CommentsList extends Component {
 
   @tracked addCommentText = '';
 
-  @(task(function* () {
+  @(task(function* (event) {
+    event.preventDefault();
+
     let id = this.args.flightId;
     let text = this.addCommentText;
     let { user } = this.account;
