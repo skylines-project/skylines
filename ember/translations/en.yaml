@@ -28,6 +28,7 @@ club-has-been-changed: Your club has been changed.
 club-was-registered: Your club was successfully registered.
 clubs: Clubs
 comments: Comments
+comment-error: An error occured while adding your comment. Please try again later.
 competition-id: Competition Id
 competitions: Competitions
 confirm-password: Confirm password

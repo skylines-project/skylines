@@ -68,7 +68,33 @@ module('Acceptance | Comments', function (hooks) {
       assert.dom('[data-test-comment="0"]').hasText('Jane Doe:\xa0 8-o');
       assert.dom('[data-test-comment="1"]').hasText('John Doe:\xa0 This is a great flight! 🎉');
 
+      assert.dom('[data-test-add-comment] [data-test-input]').hasValue('');
+
       assert.verifySteps(['add-comment(This is a great flight! 🎉)']);
+    });
+
+    test('error case', async function (assert) {
+      this.server.get('/api/flights/87296/json', MockFlight.JSON);
+      this.server.get('/api/flights/87296', MockFlight.EXTENDED);
+
+      this.server.post('/api/flights/87296/comments', {}, 500);
+
+      await visit('/flights/87296');
+      await click('[data-test-sidebar-tab="comments"]');
+      assert.dom('[data-test-comment]').exists({ count: 1 });
+      assert.dom('[data-test-comment]').hasText('Jane Doe:\xa0 8-o');
+      assert.dom('[data-test-add-comment]').exists();
+
+      await fillIn('[data-test-add-comment] [data-test-input]', 'This is a great flight! 🎉');
+      await click('[data-test-add-comment] [data-test-submit]');
+      assert
+        .dom('[data-test-notification-message]')
+        .hasText('An error occured while adding your comment. Please try again later.');
+
+      assert.dom('[data-test-comment]').exists({ count: 1 });
+      assert.dom('[data-test-comment]').hasText('Jane Doe:\xa0 8-o');
+
+      assert.dom('[data-test-add-comment] [data-test-input]').hasValue('This is a great flight! 🎉');
     });
   });
 });
