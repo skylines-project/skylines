@@ -23,7 +23,7 @@
         <td>
           <form {{action (perform this.addCommentTask) on="submit"}} data-test-add-comment>
             <Textarea @value={{this.addCommentText}} class="form-control" @disabled={{this.addCommentTask.isRunning}} data-test-input /><br>
-            <input type="submit" value={{t "add-comment"}} class="btn btn-primary" disabled={{this.addCommentTask.isRunning}} data-test-submit>
+            <button type="submit" class="btn btn-primary" disabled={{this.addCommentTask.isRunning}} data-test-submit>{{t "add-comment"}}</button>
           </form>
         </td>
       </tr>
