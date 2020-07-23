@@ -28,6 +28,7 @@ club-has-been-changed: Dein Verein wurde geändert.
 club-was-registered: Dein Verein wurde erfolgreich registriert.
 clubs: Vereine
 comments: Kommentare
+comment-error: Ein Fehler ist aufgetreten bei der Erstellung deines Kommentars. Bitte versuch es später nochmal.
 competition-id: Wettbewerbskennzeichen
 competitions: Wettbewerbe
 confirm-password: Passwort bestätigen
