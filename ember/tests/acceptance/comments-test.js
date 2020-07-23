@@ -1,6 +1,8 @@
-import { click, fillIn, visit } from '@ember/test-helpers';
+import { click, fillIn, settled, waitFor, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+
+import { defer } from 'rsvp';
 
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
@@ -95,6 +97,27 @@ module('Acceptance | Comments', function (hooks) {
       assert.dom('[data-test-comment]').hasText('Jane Doe:\xa0 8-o');
 
       assert.dom('[data-test-add-comment] [data-test-input]').hasValue('This is a great flight! 🎉');
+    });
+
+    test('loading state', async function (assert) {
+      this.server.get('/api/flights/87296/json', MockFlight.JSON);
+      this.server.get('/api/flights/87296', MockFlight.EXTENDED);
+
+      let deferred = defer();
+      this.server.post('/api/flights/87296/comments', () => deferred.promise, 500);
+
+      await visit('/flights/87296');
+      await click('[data-test-sidebar-tab="comments"]');
+      await fillIn('[data-test-add-comment] [data-test-input]', 'This is a great flight! 🎉');
+      assert.dom('[data-test-spinner]').doesNotExist();
+
+      click('[data-test-add-comment] [data-test-submit]');
+      await waitFor('[data-test-spinner]');
+      assert.dom('[data-test-spinner]').exists();
+
+      deferred.resolve();
+      await settled();
+      assert.dom('[data-test-spinner]').doesNotExist();
     });
   });
 });

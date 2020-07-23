@@ -23,7 +23,14 @@
         <td>
           <form {{on "submit" (perform this.addCommentTask)}} data-test-add-comment>
             <Textarea @value={{this.addCommentText}} class="form-control" @disabled={{this.addCommentTask.isRunning}} data-test-input /><br>
-            <button type="submit" class="btn btn-primary" disabled={{this.addCommentTask.isRunning}} data-test-submit>{{t "add-comment"}}</button>
+            <button type="submit" class="btn btn-primary" disabled={{this.addCommentTask.isRunning}} data-test-submit>
+              {{t "add-comment"}}
+              {{#if this.addCommentTask.isRunning}}
+                <div local-class="spinner" role="status" data-test-spinner>
+                  <span class="sr-only">Loading...</span>
+                </div>
+              {{/if}}
+            </button>
           </form>
         </td>
       </tr>
