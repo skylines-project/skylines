@@ -1769,6 +1769,11 @@ aproba@^1.0.3, aproba@^1.1.1:
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
   integrity sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==
 
+archy@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/archy/-/archy-1.0.0.tgz#f9c8c13757cc1dd7bc379ac77b2c62a5c2868c40"
+  integrity sha1-+cjBN1fMHde8N5rHeyxipcKGjEA=
+
 are-we-there-yet@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/are-we-there-yet/-/are-we-there-yet-1.1.2.tgz#80e470e95a084794fe1899262c5667c6e88de1b3"
@@ -5237,6 +5242,16 @@ ember-cli-dependency-checker@^3.2.0:
     resolve "^1.5.0"
     semver "^5.3.0"
 
+ember-cli-dependency-lint@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/ember-cli-dependency-lint/-/ember-cli-dependency-lint-1.1.3.tgz#ece5a319734d0b0462c12fd7a93d322e1f9fe60f"
+  integrity sha512-v836nMZuYhnvZ7MvIwGkwJkFhx7gc7RrlNcD90IHdBpR7kWBXIljLgSNIae84qKn1V1UqHImBTMnJvJCe2qvQw==
+  dependencies:
+    archy "^1.0.0"
+    broccoli-plugin "^1.3.0"
+    chalk "^2.3.0"
+    semver "^5.5.0"
+
 ember-cli-deploy-build@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-deploy-build/-/ember-cli-deploy-build-2.0.0.tgz#20d14836f5e8e1325a5b2c3d43367354783d2008"
@@ -5984,14 +5999,7 @@ ember-maybe-import-regenerator@^0.1.6:
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
 
-ember-maybe-in-element@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ember-maybe-in-element/-/ember-maybe-in-element-0.2.0.tgz#9ac51cbbd9d83d6230ad996c11e33f0eca3032e0"
-  integrity sha512-R5e6N8yDbfNbA/3lMZsFs2KEzv/jt80TsATiKMCqdqKuSG82KrD25cRdU5VkaE8dTQbziyBeuJs90bBiqOnakQ==
-  dependencies:
-    ember-cli-babel "^7.1.0"
-
-ember-maybe-in-element@^0.4.0:
+ember-maybe-in-element@^0.2.0, ember-maybe-in-element@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/ember-maybe-in-element/-/ember-maybe-in-element-0.4.0.tgz#fe1994c60ee64527d2b2f3b4479ebf8806928bd8"
   integrity sha512-ADQ9jewz46Y2MWiTAKrheIukHiU6p0QHn3xqz1BBDDOmubW1WdAjSrvtkEWsJQ08DyxIn3RdMuNDzAUo6HN6qw==
