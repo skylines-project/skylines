@@ -95,6 +95,9 @@
   "engines": {
     "node": "^12.18.0"
   },
+  "resolutions": {
+    "ember-maybe-in-element": "^0.4.0"
+  },
   "ember-addon": {
     "paths": [
       "lib/freestyle"
