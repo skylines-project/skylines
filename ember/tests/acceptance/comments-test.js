@@ -28,24 +28,15 @@ module('Acceptance | Comments', function (hooks) {
 
   module('authenticated', function (hooks) {
     hooks.beforeEach(async function () {
+      let user = this.server.create('user', {
+        firstName: 'John',
+        lastName: 'Doe',
+      });
+
+      let userSerializer = this.server.serializerOrRegistry.serializerFor(user);
+
       await authenticateSession({
-        settings: {
-          altitudeUnit: 0,
-          club: null,
-          distanceUnit: 1,
-          email: 'johnny.dee@gmail.com',
-          firstName: 'John',
-          followers: 107,
-          following: 128,
-          id: 1,
-          lastName: 'Doe',
-          liftUnit: 0,
-          name: 'John Doe',
-          speedUnit: 1,
-          trackingCallsign: 'JD',
-          trackingDelay: 0,
-          trackingKey: 'ABCDEF42',
-        },
+        settings: userSerializer.serialize(user).user,
       });
     });
 
