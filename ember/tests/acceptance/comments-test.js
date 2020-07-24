@@ -5,9 +5,10 @@ import { module, test } from 'qunit';
 import { defer } from 'rsvp';
 
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { authenticateSession } from 'ember-simple-auth/test-support';
 
 import * as MockFlight from 'skylines/mirage/vcr/flights/87296';
+
+import { authenticateAs } from '../test-helpers/auth';
 
 module('Acceptance | Comments', function (hooks) {
   setupApplicationTest(hooks);
@@ -28,25 +29,12 @@ module('Acceptance | Comments', function (hooks) {
 
   module('authenticated', function (hooks) {
     hooks.beforeEach(async function () {
-      await authenticateSession({
-        settings: {
-          altitudeUnit: 0,
-          club: null,
-          distanceUnit: 1,
-          email: 'johnny.dee@gmail.com',
-          firstName: 'John',
-          followers: 107,
-          following: 128,
-          id: 1,
-          lastName: 'Doe',
-          liftUnit: 0,
-          name: 'John Doe',
-          speedUnit: 1,
-          trackingCallsign: 'JD',
-          trackingDelay: 0,
-          trackingKey: 'ABCDEF42',
-        },
+      let user = this.server.create('user', {
+        firstName: 'John',
+        lastName: 'Doe',
       });
+
+      await authenticateAs(user);
     });
 
     test('shows existing comments and can add a new comment', async function (assert) {
