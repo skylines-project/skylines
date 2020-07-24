@@ -5,9 +5,10 @@ import { module, test } from 'qunit';
 import { defer } from 'rsvp';
 
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { authenticateSession } from 'ember-simple-auth/test-support';
 
 import * as MockFlight from 'skylines/mirage/vcr/flights/87296';
+
+import { authenticateAs } from '../test-helpers/auth';
 
 module('Acceptance | Comments', function (hooks) {
   setupApplicationTest(hooks);
@@ -33,11 +34,7 @@ module('Acceptance | Comments', function (hooks) {
         lastName: 'Doe',
       });
 
-      let userSerializer = this.server.serializerOrRegistry.serializerFor(user);
-
-      await authenticateSession({
-        settings: userSerializer.serialize(user).user,
-      });
+      await authenticateAs(user);
     });
 
     test('shows existing comments and can add a new comment', async function (assert) {
