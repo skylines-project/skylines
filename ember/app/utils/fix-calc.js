@@ -1,17 +1,20 @@
 import EmberObject from '@ember/object';
 import { bool, mapBy, min, max, map } from '@ember/object/computed';
 
-import { task, rawTimeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 import Fix from '../utils/fix';
 import slFlightCollection from '../utils/flight-collection';
 import flightFromData from '../utils/flight-from-data';
+import { nextAnimationFrame } from './raf';
 
 /**
  * List of colors for flight path display
  * @type {Array<String>}
  */
 const COLORS = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
+
+const PLAYBACK_SPEED = 50;
 
 export default class FixCalc extends EmberObject {
   flights = slFlightCollection.create();
@@ -51,10 +54,15 @@ export default class FixCalc extends EmberObject {
       this.set('time', this.minStartTime);
     }
 
+    let lastNow = performance.now();
     while (true) {
-      yield rawTimeout(50);
+      yield nextAnimationFrame();
 
-      time = this.time + 1;
+      let now = performance.now();
+      let dt = now - lastNow;
+      lastNow = now;
+
+      time = this.time + dt * (PLAYBACK_SPEED / 1000);
 
       if (time > this.maxEndTime) {
         this.stopPlayback();
