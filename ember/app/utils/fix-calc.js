@@ -53,7 +53,14 @@ export default class FixCalc extends EmberObject {
 
     while (true) {
       yield rawTimeout(50);
-      this.onTick();
+
+      time = this.time + 1;
+
+      if (time > this.maxEndTime) {
+        this.stopPlayback();
+      }
+
+      this.set('time', time);
     }
   }).drop())
   playbackTask;
@@ -73,17 +80,6 @@ export default class FixCalc extends EmberObject {
       this.startPlayback();
     }
   }
-
-  onTick() {
-    let time = this.time + 1;
-
-    if (time > this.maxEndTime) {
-      this.stopPlayback();
-    }
-
-    this.set('time', time);
-  }
-
   resetTime() {
     this.set('time', this.defaultTime);
   }
