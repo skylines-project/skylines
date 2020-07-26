@@ -1,6 +1,7 @@
 import EmberObject from '@ember/object';
 import { bool, mapBy, min, max, map } from '@ember/object/computed';
-import { later, cancel } from '@ember/runloop';
+
+import { task, rawTimeout } from 'ember-concurrency';
 
 import Fix from '../utils/fix';
 import slFlightCollection from '../utils/flight-collection';
@@ -30,9 +31,7 @@ export default class FixCalc extends EmberObject {
    */
   defaultTime = null;
 
-  timer = null;
-
-  @bool('timer') isRunning;
+  @bool('playbackTask.isRunning') isRunning;
 
   @mapBy('flights', 'startTime') startTimes;
   @min('startTimes') minStartTime;
@@ -45,22 +44,26 @@ export default class FixCalc extends EmberObject {
   })
   fixes;
 
-  startPlayback() {
+  @(task(function* () {
     let time = this.time;
 
     if (time === null || time === -1) {
       this.set('time', this.minStartTime);
     }
 
-    this.set('timer', later(this, 'onTick', 50));
+    while (true) {
+      yield rawTimeout(50);
+      this.onTick();
+    }
+  }).drop())
+  playbackTask;
+
+  startPlayback() {
+    this.playbackTask.perform();
   }
 
   stopPlayback() {
-    let timer = this.timer;
-    if (timer) {
-      cancel(timer);
-      this.set('timer', null);
-    }
+    this.playbackTask.cancelAll();
   }
 
   togglePlayback() {
@@ -79,7 +82,6 @@ export default class FixCalc extends EmberObject {
     }
 
     this.set('time', time);
-    this.set('timer', later(this, 'onTick', 50));
   }
 
   resetTime() {
