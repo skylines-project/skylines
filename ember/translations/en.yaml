@@ -83,6 +83,7 @@ followers: Followers
 following: Following
 forgot-password: Forgot password?
 friends: Friends
+fullscreen-not-supported: Sorry, your browser does not support fullscreen mode. 😢
 generate-new-key: Generate new key
 generating-new-key: Generating new key...
 glide-rate: Glide Rate
