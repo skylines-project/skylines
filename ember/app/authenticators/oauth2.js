@@ -20,7 +20,7 @@ export default class extends OAuth2PasswordGrant {
   }
 
   async _addSettings(data) {
-    data.settings = await this.account.loadSettings(data.access_token);
+    await this.account.loadSettings(data.access_token);
     return data;
   }
 }

@@ -8,7 +8,7 @@ export default class AccountService extends Service {
   @service ajax;
   @service session;
 
-  @alias('session.data.authenticated.settings') sessionData;
+  @alias('loadSettingsTask.lastSuccessful.value') sessionData;
 
   @computed('sessionData.{id,name}')
   get user() {
