@@ -1,16 +1,20 @@
 import EmberObject from '@ember/object';
 import { bool, mapBy, min, max, map } from '@ember/object/computed';
-import { later, cancel } from '@ember/runloop';
+
+import { task } from 'ember-concurrency';
 
 import Fix from '../utils/fix';
 import slFlightCollection from '../utils/flight-collection';
 import flightFromData from '../utils/flight-from-data';
+import { nextAnimationFrame } from './raf';
 
 /**
  * List of colors for flight path display
  * @type {Array<String>}
  */
 const COLORS = ['#004bbd', '#bf0099', '#cf7c00', '#ff0000', '#00c994', '#ffff00'];
+
+const PLAYBACK_SPEED = 50;
 
 export default class FixCalc extends EmberObject {
   flights = slFlightCollection.create();
@@ -30,9 +34,7 @@ export default class FixCalc extends EmberObject {
    */
   defaultTime = null;
 
-  timer = null;
-
-  @bool('timer') isRunning;
+  @bool('playbackTask.isRunning') isRunning;
 
   @mapBy('flights', 'startTime') startTimes;
   @min('startTimes') minStartTime;
@@ -45,22 +47,38 @@ export default class FixCalc extends EmberObject {
   })
   fixes;
 
-  startPlayback() {
+  @(task(function* () {
     let time = this.time;
 
     if (time === null || time === -1) {
       this.set('time', this.minStartTime);
     }
 
-    this.set('timer', later(this, 'onTick', 50));
+    let lastNow = performance.now();
+    while (true) {
+      yield nextAnimationFrame();
+
+      let now = performance.now();
+      let dt = now - lastNow;
+      lastNow = now;
+
+      time = this.time + dt * (PLAYBACK_SPEED / 1000);
+
+      if (time > this.maxEndTime) {
+        this.stopPlayback();
+      }
+
+      this.set('time', time);
+    }
+  }).drop())
+  playbackTask;
+
+  startPlayback() {
+    this.playbackTask.perform();
   }
 
   stopPlayback() {
-    let timer = this.timer;
-    if (timer) {
-      cancel(timer);
-      this.set('timer', null);
-    }
+    this.playbackTask.cancelAll();
   }
 
   togglePlayback() {
@@ -70,18 +88,6 @@ export default class FixCalc extends EmberObject {
       this.startPlayback();
     }
   }
-
-  onTick() {
-    let time = this.time + 1;
-
-    if (time > this.maxEndTime) {
-      this.stopPlayback();
-    }
-
-    this.set('time', time);
-    this.set('timer', later(this, 'onTick', 50));
-  }
-
   resetTime() {
     this.set('time', this.defaultTime);
   }
