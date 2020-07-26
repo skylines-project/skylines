@@ -4,33 +4,28 @@ import { module, test } from 'qunit';
 
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
-import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
+import { currentSession } from 'ember-simple-auth/test-support';
+
+import { authenticateAs } from '../../test-helpers/auth';
 
 module('Acceptance | Settings | Delete Account', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   function isAuthenticated() {
-    return Boolean(currentSession().data.authenticated.settings);
+    return currentSession().isAuthenticated;
   }
 
   test('users can delete their accounts on the setting page', async function (assert) {
     let { server } = this;
 
-    let settings = {
-      id: 123,
+    let user = server.create('user', {
       firstName: 'John',
       lastName: 'Doe',
-      name: 'John Doe',
       email: 'john@doe.com',
+    });
 
-      altitudeUnit: 0,
-      distanceUnit: 1,
-      liftUnit: 0,
-      speedUnit: 1,
-    };
-
-    server.get('/api/settings', settings);
+    await authenticateAs(user);
 
     server.post('/api/users/check-email', { result: 'self' });
 
@@ -47,9 +42,6 @@ module('Acceptance | Settings | Delete Account', function (hooks) {
 
       return {};
     });
-
-    await authenticateSession({ settings });
-    assert.ok(isAuthenticated());
 
     // visit the front page
     await visit('/');
