@@ -17,7 +17,7 @@
             <nav.item>{{#nav.link-to "statistics.club" club}}{{name}}{{/nav.link-to}}</nav.item>
           {{/if}}
 
-          {{#if (and session.isAuthenticated (not-eq account.club.id club))}}
+          {{#if (and account.club.id (not-eq account.club.id club))}}
             <nav.item>{{#nav.link-to "statistics.club" account.club.id}}{{account.club.name}}{{/nav.link-to}}</nav.item>
           {{/if}}
 

@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import OAuth2PasswordGrant from 'ember-simple-auth/authenticators/oauth2-password-grant';
 
 export default class extends OAuth2PasswordGrant {
-  @service ajax;
+  @service account;
 
   clientId = 'skylines.aero';
   serverTokenEndpoint = '/api/oauth/token';
@@ -20,12 +20,7 @@ export default class extends OAuth2PasswordGrant {
   }
 
   async _addSettings(data) {
-    let headers = {};
-    if (data.access_token) {
-      headers['Authorization'] = `Bearer ${data.access_token}`;
-    }
-
-    data.settings = await this.ajax.request('/api/settings', { headers });
+    await this.account.loadSettings(data.access_token);
     return data;
   }
 }
