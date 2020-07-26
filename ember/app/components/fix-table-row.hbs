@@ -16,17 +16,17 @@
     {{/if}}
   </td>
   <td>
-    {{#if (eq row.fix.alt-msl undefined)}}
+    {{#if (eq row.fix.altitudeMSL undefined)}}
       --
     {{else}}
-      {{format-altitude row.fix.alt-msl}} <small>MSL</small>
+      {{format-altitude row.fix.altitudeMSL}} <small>MSL</small>
     {{/if}}
   </td>
   <td>
-    {{#if (eq row.fix.alt-gnd undefined)}}
+    {{#if (eq row.fix.altitudeGND undefined)}}
       --
     {{else}}
-      {{format-altitude row.fix.alt-gnd}} <small>GND</small>
+      {{format-altitude row.fix.altitudeGND}} <small>GND</small>
     {{/if}}
   </td>
   <td>

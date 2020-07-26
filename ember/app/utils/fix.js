@@ -33,13 +33,13 @@ export default class Fix extends EmberObject {
   @readOnly('coordinate.0') lon;
   @readOnly('coordinate.1') lat;
 
-  @safeComputed('coordinate.2', 'flight.geoid', (altitude, geoid) => altitude - geoid) 'alt-msl';
+  @safeComputed('coordinate.2', 'flight.geoid', (altitude, geoid) => altitude - geoid) altitudeMSL;
 
-  @safeComputed('alt-msl', 'elevation', (altitude, elevation) => {
+  @safeComputed('altitudeMSL', 'elevation', (altitude, elevation) => {
     let value = altitude - elevation;
     return value >= 0 ? value : 0;
   })
-  'alt-gnd';
+  altitudeGND;
 
   @computedPoint('coordinate') point;
   @computedPoint('coordinate', 'XY') pointXY;
