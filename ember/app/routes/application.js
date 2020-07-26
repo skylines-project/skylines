@@ -41,7 +41,7 @@ export default class ApplicationRoute extends Route.extend(ApplicationRouteMixin
   setupController() {
     super.setupController(...arguments);
 
-    let settings = this.get('session.data.authenticated.settings');
+    let settings = this.account.sessionData;
     if (settings) {
       this.units.altitudeUnitIndex = settings.altitudeUnit;
       this.units.distanceUnitIndex = settings.distanceUnit;
