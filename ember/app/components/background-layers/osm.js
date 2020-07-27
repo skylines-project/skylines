@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import TileLayer from 'ol/layer/Tile';
+import OsmSource from 'ol/source/OSM';
 
 export default class extends Component {
-  layer = new ol.layer.Tile({
-    source: new ol.source.OSM(),
+  layer = new TileLayer({
+    source: new OsmSource(),
     zIndex: 1,
   });
 

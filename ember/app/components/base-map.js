@@ -1,6 +1,11 @@
 import Component from '@ember/component';
 
-import ol from 'openlayers';
+import { defaults as controlDefaults } from 'ol/control';
+import ScaleLine from 'ol/control/ScaleLine';
+import { defaults as interactionDefaults } from 'ol/interaction';
+import Map from 'ol/Map';
+import { transform } from 'ol/proj';
+import View from 'ol/View';
 
 export default class BaseMap extends Component {
   tagName = '';
@@ -10,18 +15,20 @@ export default class BaseMap extends Component {
 
     window.flightMap = this;
 
-    let interactions = ol.interaction.defaults({
+    let controls = controlDefaults({ attributionOptions: { collapsible: true } }).extend([new ScaleLine()]);
+
+    let interactions = interactionDefaults({
       altShiftDragRotate: false,
       pinchRotate: false,
     });
 
-    let map = new ol.Map({
-      view: new ol.View({
-        center: ol.proj.transform([10, 50], 'EPSG:4326', 'EPSG:3857'),
+    let map = new Map({
+      view: new View({
+        center: transform([10, 50], 'EPSG:4326', 'EPSG:3857'),
         maxZoom: 17,
         zoom: 5,
       }),
-      controls: ol.control.defaults().extend([new ol.control.ScaleLine()]),
+      controls,
       interactions,
       ol3Logo: false,
     });

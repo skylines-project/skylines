@@ -1,6 +1,8 @@
 import EmberObject from '@ember/object';
 
-import ol from 'openlayers';
+import { decodeDeltas } from 'ol/format/Polyline';
+import LineString from 'ol/geom/LineString';
+import { transform } from 'ol/proj';
 
 /**
  * Dictionary of contest names and their colors.
@@ -20,24 +22,24 @@ const CONTEST_COLORS = {
  */
 export default class slContest extends EmberObject {
   static fromData(_contest, flightId) {
-    let turnpoints = ol.format.Polyline.decodeDeltas(_contest.turnpoints, 2);
-    let times = ol.format.Polyline.decodeDeltas(_contest.times, 1, 1);
+    let turnpoints = decodeDeltas(_contest.turnpoints, 2);
+    let times = decodeDeltas(_contest.times, 1, 1);
     let name = _contest.name;
 
-    let geometry = new ol.geom.LineString([]);
+    let geometry = new LineString([]);
     let turnpointsLength = turnpoints.length;
     let triangle = name.search(/triangle/) !== -1 && turnpointsLength === 5 * 2;
 
     if (triangle) {
       for (let i = 2; i < turnpointsLength - 2; i += 2) {
-        let point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]], 'EPSG:4326', 'EPSG:3857');
+        let point = transform([turnpoints[i + 1], turnpoints[i]], 'EPSG:4326', 'EPSG:3857');
         geometry.appendCoordinate(point);
       }
 
       geometry.appendCoordinate(geometry.getFirstCoordinate());
     } else {
       for (let i = 0; i < turnpointsLength; i += 2) {
-        let point = ol.proj.transform([turnpoints[i + 1], turnpoints[i]], 'EPSG:4326', 'EPSG:3857');
+        let point = transform([turnpoints[i + 1], turnpoints[i]], 'EPSG:4326', 'EPSG:3857');
         geometry.appendCoordinate(point);
       }
     }

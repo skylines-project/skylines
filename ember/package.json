@@ -18,6 +18,9 @@
     "test": "ember test"
   },
   "dependencies": {
+    "cesium": "^1.71.0",
+    "ol": "^5.3.3",
+    "olcs": "^2.10.0",
     "remarkable": "^2.0.1",
     "screenfull": "^5.0.2"
   },
@@ -101,6 +104,7 @@
   },
   "ember-addon": {
     "paths": [
+      "lib/cesium",
       "lib/freestyle"
     ]
   },

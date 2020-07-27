@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import TileLayer from 'ol/layer/Tile';
 
 export default class extends Component {
-  layer = new ol.layer.Tile({});
+  layer = new TileLayer({});
 
   constructor() {
     super(...arguments);

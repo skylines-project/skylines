@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import Feature from 'ol/Feature';
 
 export default class FlightPathLayerFeature extends Component {
-  feature = new ol.Feature({
+  feature = new Feature({
     geometry: this.args.flight.get('geometry'),
     sfid: this.args.flight.get('id'),
     color: this.args.flight.get('color'),

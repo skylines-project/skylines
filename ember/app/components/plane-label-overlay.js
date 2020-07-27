@@ -2,7 +2,7 @@ import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import Overlay from 'ol/Overlay';
 
 export default class PlaneLabelOverlay extends Component {
   get style() {
@@ -16,8 +16,11 @@ export default class PlaneLabelOverlay extends Component {
     let { offsetWidth } = element;
     let offset = [-offsetWidth / 2, -40];
 
-    this.overlay = new ol.Overlay({ element, offset, position });
+    this.overlay = new Overlay({ element, offset });
     this.args.map.addOverlay(this.overlay);
+
+    // see https://github.com/openlayers/ol-cesium/issues/679
+    this.overlay.setPosition(position);
   }
 
   @action

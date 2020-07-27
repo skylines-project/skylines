@@ -3,7 +3,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-import olcs from 'ol-cesium';
+import OLCesium from 'olcs/OLCesium';
 
 import config from 'skylines/config/environment';
 
@@ -14,7 +14,7 @@ export default class CesiumScene extends Component {
   constructor() {
     super(...arguments);
 
-    let ol3d = new olcs.OLCesium({ map: this.args.map });
+    let ol3d = new OLCesium({ map: this.args.map });
 
     Cesium.Ion.defaultAccessToken = config.CESIUM_TOKEN;
 

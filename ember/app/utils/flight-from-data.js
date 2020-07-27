@@ -1,13 +1,13 @@
-import ol from 'openlayers';
+import { decodeDeltas } from 'ol/format/Polyline';
 
 import Contest from './contest';
 import Flight from './flight';
 
 export default function (data, units) {
-  let _time = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
-  let _lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
-  let _height = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
-  let _enl = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
+  let _time = decodeDeltas(data.barogram_t, 1, 1);
+  let _lonlat = decodeDeltas(data.points, 2);
+  let _height = decodeDeltas(data.barogram_h, 1, 1);
+  let _enl = decodeDeltas(data.enl, 1, 1);
 
   let fixes = _time.map(function (timestamp, i) {
     return {
@@ -19,8 +19,8 @@ export default function (data, units) {
     };
   });
 
-  let _elev_t = ol.format.Polyline.decodeDeltas(data.elevations_t, 1, 1);
-  let _elev_h = ol.format.Polyline.decodeDeltas(data.elevations_h, 1, 1);
+  let _elev_t = decodeDeltas(data.elevations_t, 1, 1);
+  let _elev_h = decodeDeltas(data.elevations_h, 1, 1);
 
   let elevations = _elev_t.map(function (timestamp, i) {
     let elevation = _elev_h[i];

@@ -1,21 +1,18 @@
 import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import TileLayer from 'ol/layer/Tile';
+import XYZSource from 'ol/source/XYZ';
 
 import config from '../../config/environment';
 
 export default class extends Component {
-  layer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-      attributions: [
-        new ol.Attribution({
-          html:
-            'Mountain Wave Data &copy; ' +
-            '<a href="http://www.mountain-wave-project.com/">' +
-            'Mountain Wave Project' +
-            '</a>.',
-        }),
-      ],
+  layer = new TileLayer({
+    source: new XYZSource({
+      attributions:
+        'Mountain Wave Data &copy; ' +
+        '<a href="http://www.mountain-wave-project.com/">' +
+        'Mountain Wave Project' +
+        '</a>.',
       url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/mwp/EPSG3857/{z}/{x}/{y}.png`,
     }),
     zIndex: 11,

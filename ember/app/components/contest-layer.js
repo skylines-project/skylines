@@ -1,7 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
-import ol from 'openlayers';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
 
 const DEFAULT_COLOR = '#004bbd';
 
@@ -18,8 +21,8 @@ export default class ContestLayer extends Component {
 
   @computed
   get layer() {
-    return new ol.layer.Vector({
-      source: new ol.source.Vector(),
+    return new VectorLayer({
+      source: new VectorSource(),
       style: style_function,
       name: 'Contest',
       zIndex: 49,
@@ -63,8 +66,8 @@ function style_function(feature) {
   }
 
   return [
-    new ol.style.Style({
-      stroke: new ol.style.Stroke({ color, width: 2, lineDash: [5] }),
+    new Style({
+      stroke: new Stroke({ color, width: 2, lineDash: [5] }),
       zIndex: 999,
     }),
   ];

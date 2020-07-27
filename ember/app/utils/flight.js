@@ -1,7 +1,8 @@
 import EmberObject, { observer } from '@ember/object';
 import { map, readOnly } from '@ember/object/computed';
 
-import ol from 'openlayers';
+import LineString from 'ol/geom/LineString';
+import { transform } from 'ol/proj';
 
 /**
  * A SkyLines flight.
@@ -29,7 +30,7 @@ export default EmberObject.extend({
 
   coordinates: map('fixes', function (fix) {
     let coordinate = [fix.latitude, fix.longitude, fix.altitude, fix.time];
-    return ol.proj.transform(coordinate, 'EPSG:4326', 'EPSG:3857');
+    return transform(coordinate, 'EPSG:4326', 'EPSG:3857');
   }),
 
   flot_h: map('fixes', function (fix) {
@@ -62,6 +63,6 @@ export default EmberObject.extend({
 
   init() {
     this._super(...arguments);
-    this.set('geometry', new ol.geom.LineString(this.coordinates, 'XYZM'));
+    this.set('geometry', new LineString(this.coordinates, 'XYZM'));
   },
 });

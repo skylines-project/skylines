@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 
 import { task, rawTimeout } from 'ember-concurrency';
 import $ from 'jquery';
-import ol from 'openlayers';
+import { decodeDeltas } from 'ol/format/Polyline';
 
 import FixCalc from '../utils/fix-calc';
 
@@ -140,11 +140,11 @@ function updateFlight(flights, data) {
     return;
   }
 
-  let time_decoded = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
-  let lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
-  let height_decoded = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
-  let enl_decoded = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
-  let elev = ol.format.Polyline.decodeDeltas(data.elevations, 1, 1);
+  let time_decoded = decodeDeltas(data.barogram_t, 1, 1);
+  let lonlat = decodeDeltas(data.points, 2);
+  let height_decoded = decodeDeltas(data.barogram_h, 1, 1);
+  let enl_decoded = decodeDeltas(data.enl, 1, 1);
+  let elev = decodeDeltas(data.elevations, 1, 1);
 
   // we skip the first point in the list because we assume it's the "linking"
   // fix between the data we already have and the data to add.

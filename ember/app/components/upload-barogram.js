@@ -2,7 +2,7 @@ import { action, computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
-import ol from 'openlayers';
+import { decodeDeltas } from 'ol/format/Polyline';
 
 import BarogramComponent from './base-barogram';
 
@@ -36,10 +36,10 @@ export default BarogramComponent.extend({
     this._super(...arguments);
     let units = this.units;
 
-    let height = ol.format.Polyline.decodeDeltas(this.get('trace.barogram_h'), 1, 1);
-    let time = ol.format.Polyline.decodeDeltas(this.get('trace.barogram_t'), 1, 1);
-    let enl = ol.format.Polyline.decodeDeltas(this.get('trace.enl'), 1, 1);
-    let _elev_h = ol.format.Polyline.decodeDeltas(this.get('trace.elevations_h'), 1, 1);
+    let height = decodeDeltas(this.get('trace.barogram_h'), 1, 1);
+    let time = decodeDeltas(this.get('trace.barogram_t'), 1, 1);
+    let enl = decodeDeltas(this.get('trace.enl'), 1, 1);
+    let _elev_h = decodeDeltas(this.get('trace.elevations_h'), 1, 1);
 
     let flot_h = [];
     let flot_enl = [];

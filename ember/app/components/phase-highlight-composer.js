@@ -1,9 +1,11 @@
 import Component from '@ember/component';
-import { observer } from '@ember/object';
+import { action, observer } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { once } from '@ember/runloop';
 
-import ol from 'openlayers';
+import { boundingExtent } from 'ol/extent';
+import Icon from 'ol/style/Icon';
+import Style from 'ol/style/Style';
 
 import computedPoint from '../computed/computed-point';
 
@@ -29,22 +31,22 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    let startIcon = new ol.style.Icon({
+    let startIcon = new Icon({
       anchor: [0.5, 1],
       src: '/images/marker-green.png',
     });
     startIcon.load();
 
-    let endIcon = new ol.style.Icon({
+    let endIcon = new Icon({
       anchor: [0.5, 1],
       src: '/images/marker.png',
     });
     endIcon.load();
 
-    let startStyle = new ol.style.Style({ image: startIcon });
+    let startStyle = new Style({ image: startIcon });
     this.set('startStyle', startStyle);
 
-    let endStyle = new ol.style.Style({ image: endIcon });
+    let endStyle = new Style({ image: endIcon });
     this.set('endStyle', endStyle);
 
     // activate coordinatesObserver
@@ -53,14 +55,15 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    this.map.on('postcompose', this.onPostCompose, this);
+    this.map.on('postcompose', this.onPostCompose);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.map.un('postcompose', this.onPostCompose, this);
+    this.map.un('postcompose', this.onPostCompose);
   },
 
+  @action
   onPostCompose(e) {
     this.renderMarkers(e.vectorContext);
   },
@@ -81,7 +84,7 @@ export default Component.extend({
     let coordinates = this.coordinates;
     if (coordinates) {
       let map = this.map;
-      let extent = ol.extent.boundingExtent(coordinates);
+      let extent = boundingExtent(coordinates);
       let padding = this.calculatePadding();
       map.getView().fit(extent, { padding });
     }
