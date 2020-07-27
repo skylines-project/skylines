@@ -11,27 +11,19 @@ export default class CesiumPlaneModel extends Component {
 
   scene = null;
   fix = null;
-  entity = null;
+
+  entity = Cesium.Model.fromGltf({
+    url: '../../3d/AS21.glb',
+    scale: 1,
+    minimumPixelSize: 64,
+    allowPicking: false,
+  });
 
   @safeComputed('coordinate', coordinate => {
     let lonlat = transform(coordinate, 'EPSG:3857', 'EPSG:4326');
     return Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
   })
   position;
-
-  init() {
-    super.init(...arguments);
-
-    this.set(
-      'entity',
-      Cesium.Model.fromGltf({
-        url: '../../3d/AS21.glb',
-        scale: 1,
-        minimumPixelSize: 64,
-        allowPicking: false,
-      }),
-    );
-  }
 
   didReceiveAttrs() {
     super.didReceiveAttrs(...arguments);
