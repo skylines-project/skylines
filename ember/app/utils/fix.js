@@ -1,7 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 
-import { transform } from 'ol/proj';
+import { toLonLat } from 'ol/proj';
 
 import computedPoint from '../computed/computed-point';
 import safeComputed from '../computed/safe-computed';
@@ -52,8 +52,8 @@ export default class Fix extends EmberObject {
   @safeComputed('_coordinate_prev.2', '_coordinate_next.2', '_dt', (prev, next, dt) => (next - prev) / dt) vario;
 
   @safeComputed('_coordinate_prev', '_coordinate_next', '_dt', (prev, next, dt) => {
-    let loc_prev = transform(prev, 'EPSG:3857', 'EPSG:4326');
-    let loc_next = transform(next, 'EPSG:3857', 'EPSG:4326');
+    let loc_prev = toLonLat(prev);
+    let loc_next = toLonLat(next);
 
     return geographicDistance(loc_next, loc_prev) / dt;
   })

@@ -4,7 +4,7 @@ import { defaults as controlDefaults } from 'ol/control';
 import ScaleLine from 'ol/control/ScaleLine';
 import { defaults as interactionDefaults } from 'ol/interaction';
 import Map from 'ol/Map';
-import { transform } from 'ol/proj';
+import { fromLonLat } from 'ol/proj';
 import View from 'ol/View';
 
 export default class BaseMap extends Component {
@@ -24,7 +24,7 @@ export default class BaseMap extends Component {
 
     let map = new Map({
       view: new View({
-        center: transform([10, 50], 'EPSG:4326', 'EPSG:3857'),
+        center: fromLonLat([10, 50]),
         maxZoom: 17,
         zoom: 5,
       }),

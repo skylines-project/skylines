@@ -3,7 +3,7 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
-import { transform } from 'ol/proj';
+import { toLonLat } from 'ol/proj';
 
 export default class CesiumPlaneModel extends Component {
   entity = Cesium.Model.fromGltf({
@@ -15,7 +15,7 @@ export default class CesiumPlaneModel extends Component {
 
   @action
   update([coordinate, heading]) {
-    let lonlat = transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+    let lonlat = toLonLat(coordinate);
 
     let position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
     let rotation = new Cesium.HeadingPitchRoll(heading, 0, 0);

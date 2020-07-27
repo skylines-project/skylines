@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { transform } from 'ol/proj';
+import { fromLonLat } from 'ol/proj';
 
 export default class TakeoffsLayerFeature extends Component {
   tagName = '';
@@ -14,7 +14,7 @@ export default class TakeoffsLayerFeature extends Component {
   @computed
   get feature() {
     let location = this.location;
-    let transformed = transform(location, 'EPSG:4326', 'EPSG:3857');
+    let transformed = fromLonLat(location);
 
     return new Feature({
       geometry: new Point(transformed),

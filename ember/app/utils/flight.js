@@ -2,7 +2,7 @@ import EmberObject, { observer } from '@ember/object';
 import { map, readOnly } from '@ember/object/computed';
 
 import LineString from 'ol/geom/LineString';
-import { transform } from 'ol/proj';
+import { fromLonLat } from 'ol/proj';
 
 /**
  * A SkyLines flight.
@@ -30,7 +30,7 @@ export default EmberObject.extend({
 
   coordinates: map('fixes', function (fix) {
     let coordinate = [fix.latitude, fix.longitude, fix.altitude, fix.time];
-    return transform(coordinate, 'EPSG:4326', 'EPSG:3857');
+    return fromLonLat(coordinate);
   }),
 
   flot_h: map('fixes', function (fix) {
