@@ -1,19 +1,17 @@
 <tr class="selectable {{if this.selected "selected"}}" ...attributes {{on "click" this.handleClick}}>
-  <td>
-    {{#if this.isCircling}}
-      {{#if this.isCirclingLeft}}
-        <span title={{t "flight-phase.circlingLeft"}}>{{svg-jar "rotate-left" class="fa-svg"}}</span>
-      {{else if this.isCirclingRight}}
-        <span title={{t "flight-phase.circlingRight"}}>{{svg-jar "rotate-right" class="fa-svg"}}</span>
-      {{else}}
-        <span title={{t "flight-phase.circlingMixed"}}>{{svg-jar "circle-o" class="fa-svg"}}</span>
-      {{/if}}
-    {{else if this.isPowered}}
-      <span title={{t "flight-phase.powered"}}>{{svg-jar "bolt" class="fa-svg"}}</span>
+  {{#if this.isCircling}}
+    {{#if this.isCirclingLeft}}
+      <td title={{t "flight-phase.circlingLeft"}}>{{svg-jar "rotate-left" class="fa-svg"}}</td>
+    {{else if this.isCirclingRight}}
+      <td title={{t "flight-phase.circlingRight"}}>{{svg-jar "rotate-right" class="fa-svg"}}</td>
     {{else}}
-      <span title={{t "flight-phase.cruise"}}>{{svg-jar "long-arrow-right" class="fa-svg"}}</span>
+      <td title={{t "flight-phase.circlingMixed"}}>{{svg-jar "circle-o" class="fa-svg"}}</td>
     {{/if}}
-  </td>
+  {{else if this.isPowered}}
+    <td title={{t "flight-phase.powered"}}>{{svg-jar "bolt" class="fa-svg"}}</td>
+  {{else}}
+    <td title={{t "flight-phase.cruise"}}>{{svg-jar "long-arrow-right" class="fa-svg"}}</td>
+  {{/if}}
   <td>{{format-time @phase.startTime format="hhmmss" timeZone="UTC"}}</td>
   <td class="duration hidden-md">{{format-seconds @phase.duration}}</td>
   <td class="numeric">{{format-altitude @phase.altDiff withUnit=false}}</td>
