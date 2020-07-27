@@ -3,7 +3,7 @@
 0.0.0.0:80 {
     log /home/skylines/log/caddy
 
-    root /home/skylines/src/skylines/frontend/static
+    root /usr/local/www/skylines/active
     gzip
 
     header / Strict-Transport-Security "max-age=31536000;"

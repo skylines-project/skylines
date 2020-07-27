@@ -109,3 +109,31 @@ jobs:
 
       - run: pip install black==18.9b0
       - run: black config migrations skylines tests *.py --check
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [frontend, backend, backend-lint]
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - run: yarn install --frozen-lockfile
+        working-directory: ./ember
+
+      - run: npx bower install
+        working-directory: ./ember
+
+      - uses: webfactory/ssh-agent@v0.2.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Adjust ~/.ssh/known_hosts file
+        run: echo '[skylines.aero]:2222,[212.51.149.149]:2222 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEoPRdvULvcpU92D9NbU3Yan0J9DUkX5S5OnZ/V28rbZH32uWRKemIHunXpHskoPC75nmsa12uDXxtsH02epgNc=' > ~/.ssh/known_hosts
+
+      - run: yarn ember deploy production --activate --verbose
+        working-directory: ./ember
