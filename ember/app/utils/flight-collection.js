@@ -1,11 +1,13 @@
 import ArrayProxy from '@ember/array/proxy';
 
-import ol from 'openlayers';
+import { containsCoordinate } from 'ol/extent';
+import Feature from 'ol/Feature';
+import VectorSource from 'ol/source/Vector';
 
 export default class FlightCollection extends ArrayProxy {
   init() {
     this.set('content', []);
-    this.set('source', new ol.source.Vector());
+    this.set('source', new VectorSource());
 
     super.init(...arguments);
   }
@@ -38,7 +40,7 @@ export default class FlightCollection extends ArrayProxy {
       let nextCoord = null;
       let end = coordinates.length;
 
-      let lastRel = ol.extent.containsCoordinate(extent, lastCoord);
+      let lastRel = containsCoordinate(extent, lastCoord);
 
       total_min = Math.min(total_min, lastCoord[3]);
 
@@ -49,7 +51,7 @@ export default class FlightCollection extends ArrayProxy {
       for (let i = 1; i < end; i += 1) {
         nextCoord = coordinates[i];
 
-        let nextRel = ol.extent.containsCoordinate(extent, nextCoord);
+        let nextRel = containsCoordinate(extent, nextCoord);
 
         // current vector completely within extent. do nothing.
         // current vector completely outside extent. do nothing.
@@ -107,7 +109,7 @@ export default class FlightCollection extends ArrayProxy {
 
     let source = this.source;
     addedFlights.forEach(flight => {
-      let feature = new ol.Feature({
+      let feature = new Feature({
         geometry: flight.get('geometry'),
         sfid: flight.get('id'),
         color: flight.get('color'),

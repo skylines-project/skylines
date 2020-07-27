@@ -2,7 +2,7 @@
 
 import Component from '@ember/component';
 
-import ol from 'openlayers';
+import { transform } from 'ol/proj';
 
 import safeComputed from '../computed/safe-computed';
 
@@ -14,7 +14,7 @@ export default class CesiumPlaneModel extends Component {
   entity = null;
 
   @safeComputed('coordinate', coordinate => {
-    let lonlat = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+    let lonlat = transform(coordinate, 'EPSG:3857', 'EPSG:4326');
     return Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
   })
   position;
@@ -37,7 +37,7 @@ export default class CesiumPlaneModel extends Component {
     super.didReceiveAttrs(...arguments);
     this.entity.modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
       this.position,
-      new Cesium.HeadingPitchRoll(this.heading - Math.PI / 2, 0, 0),
+      new Cesium.HeadingPitchRoll(this.heading, 0, 0),
     );
   }
 

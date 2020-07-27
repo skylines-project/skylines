@@ -1,7 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
-import ol from 'openlayers';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Icon from 'ol/style/Icon';
+import Style from 'ol/style/Style';
 
 export default class TakeoffsLayer extends Component {
   tagName = '';
@@ -11,10 +14,10 @@ export default class TakeoffsLayer extends Component {
 
   @computed
   get layer() {
-    return new ol.layer.Vector({
-      source: new ol.source.Vector(),
-      style: new ol.style.Style({
-        image: new ol.style.Icon({
+    return new VectorLayer({
+      source: new VectorSource(),
+      style: new Style({
+        image: new Icon({
           anchor: [0.5, 1],
           src: '/images/marker-gold.png',
         }),

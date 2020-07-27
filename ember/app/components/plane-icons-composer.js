@@ -1,8 +1,9 @@
 import Component from '@ember/component';
-import { observer, getWithDefault } from '@ember/object';
+import { action, observer, getWithDefault } from '@ember/object';
 import { once } from '@ember/runloop';
 
-import ol from 'openlayers';
+import Icon from 'ol/style/Icon';
+import Style from 'ol/style/Style';
 
 export default Component.extend({
   tagName: '',
@@ -52,7 +53,7 @@ export default Component.extend({
   },
 
   _initStyle(key, { src, size }) {
-    let icon = new ol.style.Icon({
+    let icon = new Icon({
       anchor: [0.5, 0.5],
       anchorXUnits: 'fraction',
       anchorYUnits: 'fraction',
@@ -64,12 +65,13 @@ export default Component.extend({
 
     icon.load();
 
-    let style = new ol.style.Style({ image: icon });
+    let style = new Style({ image: icon });
 
     this.set(`icons.${key}`, icon);
     this.set(`styles.${key}`, style);
   },
 
+  @action
   onPostCompose(e) {
     this.renderIcons(e.vectorContext);
   },

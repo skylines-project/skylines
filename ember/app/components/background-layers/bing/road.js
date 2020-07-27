@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import TileLayer from 'ol/layer/Tile';
+import BingSource from 'ol/source/BingMaps';
 
 export default class extends Component {
-  layer = new ol.layer.Tile({
-    source: new ol.source.BingMaps({
+  layer = new TileLayer({
+    source: new BingSource({
       key: this.args.apiKey,
       imagerySet: 'Road',
     }),

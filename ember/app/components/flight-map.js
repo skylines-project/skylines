@@ -19,21 +19,23 @@ export default class FlightMap extends BaseMapComponent {
     super(...arguments);
 
     let map = this.map;
-    map.on('moveend', this._handleMoveEnd, this);
-    map.on('pointermove', this._handlePointerMove, this);
+    map.on('moveend', this._handleMoveEnd);
+    map.on('pointermove', this._handlePointerMove);
   }
 
   willDestroy() {
     super.willDestroy(...arguments);
     let map = this.map;
-    map.un('moveend', this._handleMoveEnd, this);
-    map.un('pointermove', this._handlePointerMove, this);
+    map.un('moveend', this._handleMoveEnd);
+    map.un('pointermove', this._handlePointerMove);
   }
 
+  @action
   _handleMoveEnd(event) {
     this.onExtentChange(event.frameState.extent);
   }
 
+  @action
   _handlePointerMove(event) {
     if (event.dragging || !this.hoverEnabled) {
       return;

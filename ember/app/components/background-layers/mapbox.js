@@ -1,21 +1,18 @@
 import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import TileLayer from 'ol/layer/Tile';
+import XYZSource from 'ol/source/XYZ';
 
 export default class extends Component {
-  layer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-      attributions: [
-        new ol.Attribution({
-          html:
-            '<a href="https://www.mapbox.com/about/maps/"' +
-            ' target="_blank" rel="noopener">' +
-            '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
-            ' class="mapbox-improve-map"' +
-            ' href="https://www.mapbox.com/map-feedback/"' +
-            ' target="_blank" rel="noopener">Improve this map</a>',
-        }),
-      ],
+  layer = new TileLayer({
+    source: new XYZSource({
+      attributions:
+        '<a href="https://www.mapbox.com/about/maps/"' +
+        ' target="_blank" rel="noopener">' +
+        '&copy; Mapbox &copy; OpenStreetMap</a> <a' +
+        ' class="mapbox-improve-map"' +
+        ' href="https://www.mapbox.com/map-feedback/"' +
+        ' target="_blank" rel="noopener">Improve this map</a>',
       url: this.args.url,
     }),
     zIndex: 5,

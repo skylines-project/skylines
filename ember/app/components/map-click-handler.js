@@ -4,7 +4,11 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
 import { task } from 'ember-concurrency';
-import ol from 'openlayers';
+import Circle from 'ol/geom/Circle';
+import Overlay from 'ol/Overlay';
+import { transform } from 'ol/proj';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
 
 export default class MapClickHandler extends Component {
   @service ajax;
@@ -31,7 +35,7 @@ export default class MapClickHandler extends Component {
   }
 
   @action addOverlay(element) {
-    this.overlay = new ol.Overlay({ element, position: this.overlayPosition });
+    this.overlay = new Overlay({ element, position: this.overlayPosition });
     this.args.map.addOverlay(this.overlay);
   }
 
@@ -107,16 +111,16 @@ export default class MapClickHandler extends Component {
    * @param {Array<Number>} coordinate Coordinate
    */
   showCircle(coordinate) {
-    let stroke_style = new ol.style.Stroke({
+    let stroke_style = new Stroke({
       color: '#f4bd33',
       width: 3,
     });
 
-    let circle_style = new ol.style.Style({ stroke: stroke_style });
+    let circle_style = new Style({ stroke: stroke_style });
 
     let circle = this.circle;
     if (!circle.geometry) {
-      circle.geometry = new ol.geom.Circle(coordinate, 1000);
+      circle.geometry = new Circle(coordinate, 1000);
     } else {
       circle.geometry.setCenterAndRadius(coordinate, 1000);
     }
@@ -161,7 +165,7 @@ export default class MapClickHandler extends Component {
 
   @(task(function* () {
     let { flight, closestPoint } = this.closestFlight;
-    let [lon, lat] = ol.proj.transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
+    let [lon, lat] = transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
     let time = closestPoint[3];
 
     let flights = this.args.flights;
@@ -191,7 +195,7 @@ export default class MapClickHandler extends Component {
   loadNearbyFlightsTask;
 
   @(task(function* () {
-    let [lon, lat] = ol.proj.transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
+    let [lon, lat] = transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
     try {
       let locationData = yield this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
       if (locationData.airspaces?.length || locationData.waves?.length) {

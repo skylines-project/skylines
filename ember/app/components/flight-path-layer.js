@@ -1,12 +1,15 @@
 import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
 
 const DEFAULT_COLOR = '#004bbd';
 
 export default class FlightPathLayer extends Component {
-  layer = new ol.layer.Vector({
-    source: new ol.source.Vector(),
+  layer = new VectorLayer({
+    source: new VectorSource(),
     style: style_function,
     name: 'Flight',
     zIndex: 50,
@@ -39,8 +42,8 @@ function style_function(feature) {
   }
 
   return [
-    new ol.style.Style({
-      stroke: new ol.style.Stroke({ color, width: 2 }),
+    new Style({
+      stroke: new Stroke({ color, width: 2 }),
       zIndex: 1000,
     }),
   ];
