@@ -137,3 +137,5 @@ jobs:
 
       - run: yarn ember deploy production --activate --verbose
         working-directory: ./ember
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
