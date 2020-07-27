@@ -1,5 +1,5 @@
 {{#if (gt this.pages 1)}}
-  <ul class="pagination pagination-condensed" ...attributes>
+  <ul local-class="pagination" ...attributes>
     <li class="prev {{if this.prevDisabled "disabled"}}">
       <LinkTo @query={{hash page=this.prevPage}}>&laquo;</LinkTo>
     </li>
