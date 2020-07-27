@@ -23,8 +23,13 @@ export default class NotificationCounterService extends Service {
 
   @(task(function* () {
     while (true) {
-      let { events } = yield this.ajax.request('/api/notifications');
-      this.set('counter', events.filter(it => it.unread).length);
+      try {
+        let { events } = yield this.ajax.request('/api/notifications');
+        this.set('counter', events.filter(it => it.unread).length);
+      } catch (error) {
+        // ignore errors and try again in 60 sec
+      }
+
       yield rawTimeout(60000);
     }
   }).drop())
