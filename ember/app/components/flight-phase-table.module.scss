@@ -1,0 +1,9 @@
+.table {
+  composes: table table-condensed table-striped from global;
+
+  font-size: 85%;
+
+  thead tr th {
+    vertical-align: top;
+  }
+}
