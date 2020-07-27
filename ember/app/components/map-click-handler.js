@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import Circle from 'ol/geom/Circle';
 import Overlay from 'ol/Overlay';
-import { transform } from 'ol/proj';
+import { toLonLat } from 'ol/proj';
 import Stroke from 'ol/style/Stroke';
 import Style from 'ol/style/Style';
 
@@ -165,7 +165,7 @@ export default class MapClickHandler extends Component {
 
   @(task(function* () {
     let { flight, closestPoint } = this.closestFlight;
-    let [lon, lat] = transform(closestPoint, 'EPSG:3857', 'EPSG:4326');
+    let [lon, lat] = toLonLat(closestPoint);
     let time = closestPoint[3];
 
     let flights = this.args.flights;
@@ -195,7 +195,7 @@ export default class MapClickHandler extends Component {
   loadNearbyFlightsTask;
 
   @(task(function* () {
-    let [lon, lat] = transform(this.overlayPosition, 'EPSG:3857', 'EPSG:4326');
+    let [lon, lat] = toLonLat(this.overlayPosition);
     try {
       let locationData = yield this.ajax.request(`/api/mapitems?lon=${lon}&lat=${lat}`);
       if (locationData.airspaces?.length || locationData.waves?.length) {

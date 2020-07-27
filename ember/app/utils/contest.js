@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 
 import { decodeDeltas } from 'ol/format/Polyline';
 import LineString from 'ol/geom/LineString';
-import { transform } from 'ol/proj';
+import { fromLonLat } from 'ol/proj';
 
 /**
  * Dictionary of contest names and their colors.
@@ -32,14 +32,14 @@ export default class slContest extends EmberObject {
 
     if (triangle) {
       for (let i = 2; i < turnpointsLength - 2; i += 2) {
-        let point = transform([turnpoints[i + 1], turnpoints[i]], 'EPSG:4326', 'EPSG:3857');
+        let point = fromLonLat([turnpoints[i + 1], turnpoints[i]]);
         geometry.appendCoordinate(point);
       }
 
       geometry.appendCoordinate(geometry.getFirstCoordinate());
     } else {
       for (let i = 0; i < turnpointsLength; i += 2) {
-        let point = transform([turnpoints[i + 1], turnpoints[i]], 'EPSG:4326', 'EPSG:3857');
+        let point = fromLonLat([turnpoints[i + 1], turnpoints[i]]);
         geometry.appendCoordinate(point);
       }
     }
