@@ -38,13 +38,9 @@ module.exports = function (deployTarget) {
 
     ENV['with-rsync'] = {
       host: 'skylines.aero',
-      username: 'skylines',
+      username: 'frontend',
       privateKeyPath: process.env['PRIVATE_KEY_PATH'],
       port: 2222,
-      root: '/home/skylines/frontend',
-      activationDestination() {
-        return '/home/skylines/src/skylines/frontend/static';
-      },
     };
   }
 
