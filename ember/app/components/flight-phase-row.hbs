@@ -1,25 +1,25 @@
 <tr class="selectable {{if this.selected "selected"}}" ...attributes {{on "click" this.handleClick}}>
   <td>
-    {{#if isCircling}}
-      {{#if isCirclingLeft}}
+    {{#if this.isCircling}}
+      {{#if this.isCirclingLeft}}
         <span title={{t "flight-phase.circlingLeft"}}>{{svg-jar "rotate-left" class="fa-svg"}}</span>
-      {{else if isCirclingRight}}
+      {{else if this.isCirclingRight}}
         <span title={{t "flight-phase.circlingRight"}}>{{svg-jar "rotate-right" class="fa-svg"}}</span>
       {{else}}
         <span title={{t "flight-phase.circlingMixed"}}>{{svg-jar "circle-o" class="fa-svg"}}</span>
       {{/if}}
-    {{else if isPowered}}
+    {{else if this.isPowered}}
       <span title={{t "flight-phase.powered"}}>{{svg-jar "bolt" class="fa-svg"}}</span>
     {{else}}
       <span title={{t "flight-phase.cruise"}}>{{svg-jar "long-arrow-right" class="fa-svg"}}</span>
     {{/if}}
   </td>
-  <td class="start">{{format-time phase.startTime format="hhmmss" timeZone="UTC"}}</td>
-  <td class="duration hidden-md">{{format-seconds phase.duration}}</td>
-  <td class="numeric">{{format-altitude phase.altDiff withUnit=false}}</td>
-  <td class="numeric">{{if (not isCircling) (format-distance phase.distance decimals=1 withUnit=false)}}</td>
-  <td class="numeric">{{format-lift phase.vario withUnit=false}}</td>
-  <td class="numeric">{{format-speed phase.speed withUnit=false}}</td>
-  <td class="numeric">{{#if (not isCircling)}}{{format-number glideRate maximumFractionDigits=1}}{{/if}}</td>
+  <td class="start">{{format-time @phase.startTime format="hhmmss" timeZone="UTC"}}</td>
+  <td class="duration hidden-md">{{format-seconds @phase.duration}}</td>
+  <td class="numeric">{{format-altitude @phase.altDiff withUnit=false}}</td>
+  <td class="numeric">{{if (not this.isCircling) (format-distance @phase.distance decimals=1 withUnit=false)}}</td>
+  <td class="numeric">{{format-lift @phase.vario withUnit=false}}</td>
+  <td class="numeric">{{format-speed @phase.speed withUnit=false}}</td>
+  <td class="numeric">{{#if (not this.isCircling)}}{{format-number this.glideRate maximumFractionDigits=1}}{{/if}}</td>
 
 </tr>
