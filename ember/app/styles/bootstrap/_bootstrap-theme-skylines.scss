@@ -76,14 +76,6 @@ input[type="file"].form-control {
   line-height: 22px;
 }
 
-/* Give a quick and non-cross-browser friendly divider */
-ul.list-with-dividers li[class*="col"] {
-  margin-left: 0 !important;
-  padding-left: 19px;
-  border-left: 1px solid #eee;
-  list-style: none;
-}
-
 .tooltip {
   /*
    * The tooltips in the flight table are broken otherwise because
