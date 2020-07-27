@@ -1,6 +1,6 @@
 {{#if (gt this.pages 1)}}
   <ul local-class="pagination" ...attributes>
-    <li class="prev {{if this.prevDisabled "disabled"}}">
+    <li class="{{if this.prevDisabled "disabled"}}">
       <LinkTo @query={{hash page=this.prevPage}}>&laquo;</LinkTo>
     </li>
 
@@ -38,7 +38,7 @@
       <li><LinkTo @query={{hash page=(sum @page 4)}}>{{sum @page 4}}</LinkTo></li>
     {{/if}}
 
-    <li class="next {{if this.nextDisabled "disabled"}}">
+    <li class="{{if this.nextDisabled "disabled"}}">
       <LinkTo @query={{hash page=this.nextPage}}>&raquo;</LinkTo>
     </li>
   </ul>
