@@ -14,7 +14,7 @@
       <span title={{t "flight-phase.cruise"}}>{{svg-jar "long-arrow-right" class="fa-svg"}}</span>
     {{/if}}
   </td>
-  <td class="start">{{format-time @phase.startTime format="hhmmss" timeZone="UTC"}}</td>
+  <td>{{format-time @phase.startTime format="hhmmss" timeZone="UTC"}}</td>
   <td class="duration hidden-md">{{format-seconds @phase.duration}}</td>
   <td class="numeric">{{format-altitude @phase.altDiff withUnit=false}}</td>
   <td class="numeric">{{if (not this.isCircling) (format-distance @phase.distance decimals=1 withUnit=false)}}</td>
