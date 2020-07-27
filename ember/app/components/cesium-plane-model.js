@@ -1,10 +1,9 @@
 /* globals Cesium */
 
 import Component from '@ember/component';
+import { action } from '@ember/object';
 
 import { transform } from 'ol/proj';
-
-import safeComputed from '../computed/safe-computed';
 
 export default class CesiumPlaneModel extends Component {
   tagName = '';
@@ -19,18 +18,14 @@ export default class CesiumPlaneModel extends Component {
     allowPicking: false,
   });
 
-  @safeComputed('coordinate', coordinate => {
+  @action
+  update([coordinate, heading]) {
     let lonlat = transform(coordinate, 'EPSG:3857', 'EPSG:4326');
-    return Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
-  })
-  position;
 
-  didReceiveAttrs() {
-    super.didReceiveAttrs(...arguments);
-    this.entity.modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
-      this.position,
-      new Cesium.HeadingPitchRoll(this.heading, 0, 0),
-    );
+    let position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
+    let rotation = new Cesium.HeadingPitchRoll(heading, 0, 0);
+
+    this.entity.modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position, rotation);
   }
 
   didInsertElement() {
