@@ -35,8 +35,11 @@ export default class MapClickHandler extends Component {
   }
 
   @action addOverlay(element) {
-    this.overlay = new Overlay({ element, position: this.overlayPosition });
+    this.overlay = new Overlay({ element });
     this.args.map.addOverlay(this.overlay);
+
+    // see https://github.com/openlayers/ol-cesium/issues/679
+    this.overlay.setPosition(this.overlayPosition);
   }
 
   @action removeOverlay() {
