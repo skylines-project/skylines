@@ -33,7 +33,7 @@ module('Integration | Component | timeline events/new user', function (hooks) {
   test('renders default text', async function (assert) {
     await render(hbs`{{timeline-events/new-user event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText('John Doe joined SkyLines.');
+    assert.dom('[data-test-text]').hasText('John Doe joined SkyLines.');
   });
 
   test('renders alternate text if actor is current user', async function (assert) {
@@ -41,6 +41,6 @@ module('Integration | Component | timeline events/new user', function (hooks) {
 
     await render(hbs`{{timeline-events/new-user event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText('You joined SkyLines.');
+    assert.dom('[data-test-text]').hasText('You joined SkyLines.');
   });
 });

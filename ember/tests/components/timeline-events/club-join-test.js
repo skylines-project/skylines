@@ -37,7 +37,7 @@ module('Integration | Component | timeline events/club join', function (hooks) {
   test('renders default text', async function (assert) {
     await render(hbs`{{timeline-events/club-join event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText('John Doe joined SFN.');
+    assert.dom('[data-test-text]').hasText('John Doe joined SFN.');
   });
 
   test('renders alternate text if actor is current user', async function (assert) {
@@ -45,6 +45,6 @@ module('Integration | Component | timeline events/club join', function (hooks) {
 
     await render(hbs`{{timeline-events/club-join event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText('You joined SFN.');
+    assert.dom('[data-test-text]').hasText('You joined SFN.');
   });
 });

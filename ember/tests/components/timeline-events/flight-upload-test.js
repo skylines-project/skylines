@@ -40,7 +40,7 @@ module('Integration | Component | timeline events/flight upload', function (hook
   test('renders default text', async function (assert) {
     await render(hbs`{{timeline-events/flight-upload event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/John Doe uploaded a 123 km flight on [\d/]+./);
+    assert.dom('[data-test-text]').hasText(/John Doe uploaded a 123 km flight on [\d/]+./);
   });
 
   test('renders alternate text if actor is current user', async function (assert) {
@@ -48,6 +48,6 @@ module('Integration | Component | timeline events/flight upload', function (hook
 
     await render(hbs`{{timeline-events/flight-upload event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/You uploaded a 123 km flight on [\d/]+./);
+    assert.dom('[data-test-text]').hasText(/You uploaded a 123 km flight on [\d/]+./);
   });
 });
