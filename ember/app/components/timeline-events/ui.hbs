@@ -1,0 +1,15 @@
+<tr>
+  <td local-class="icon">
+    {{svg-jar @icon class=(if @smallIcon "fa-svg small" "fa-svg")}}
+  </td>
+  <td>
+    <a href={{@url}} class="btn btn-default btn-sm pull-right">{{t "show"}}</a>
+    <p>
+      {{#if @newBadge}}<span local-class="new-badge">{{t "new"}}</span>{{/if}}
+      <small><abbr title={{format-time @time format="full"}}>{{format-relative @time}}</abbr></small>
+    </p>
+    <p local-class="text">
+      {{@text}}
+    </p>
+  </td>
+</tr>

@@ -1,0 +1,15 @@
+.icon {
+  width: 30px;
+  text-align: center;
+  font-size: 200%;
+  padding-right: 0;
+}
+
+.new-badge {
+  composes: badge badge-warning from global;
+  margin-right: 10px;
+}
+
+.text a {
+  color: inherit;
+}
