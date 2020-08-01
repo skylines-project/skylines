@@ -37,7 +37,7 @@
       </div>
 
       {{#if events}}
-        <Timeline @events={{events}} />
+        <Timeline @events={{events}} local-class="timeline" />
       {{else}}
         {{t "you-have-no-notifications"}}
       {{/if}}
