@@ -37,13 +37,7 @@
       </div>
 
       {{#if events}}
-        <table class="table table-events">
-          <tbody>
-          {{#each events as |event|}}
-            <TimelineEvent @event={{event}} />
-          {{/each}}
-          </tbody>
-        </table>
+        <Timeline @events={{events}} />
       {{else}}
         {{t "you-have-no-notifications"}}
       {{/if}}

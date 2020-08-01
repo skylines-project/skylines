@@ -25,13 +25,7 @@
         </div>
       </div>
 
-      <table class="table table-events">
-        <tbody>
-        {{#each events as |event|}}
-          <TimelineEvent @event={{event}} />
-        {{/each}}
-        </tbody>
-      </table>
+      <Timeline @events={{events}} />
 
       <div class="row">
         <div class="col-xs-6">
