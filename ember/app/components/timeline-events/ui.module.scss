@@ -1,15 +1,39 @@
+.event {
+  display: grid;
+  grid-template-columns: 30px auto min-content;
+  align-items: start;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 4px;
+
+  &:hover {
+    background: #eeeeee;
+  }
+}
+
 .icon {
-  width: 30px;
-  text-align: center;
+  justify-self: center;
   font-size: 200%;
-  padding-right: 0;
+}
+
+.badge-and-time {
+  margin-bottom: 4px;
 }
 
 .new-badge {
   composes: badge badge-warning from global;
-  margin-right: 10px;
+  margin-left: 6px;
+  margin-top: -6px;
+}
+
+.time {
+  font-size: 11px;
 }
 
 .text a {
   color: inherit;
+}
+
+.show-button {
+  composes: btn btn-default btn-sm from global;
 }

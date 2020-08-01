@@ -1,7 +1,7 @@
-<table class="table" ...attributes>
-  <tbody>
+<ul local-class="list" ...attributes>
   {{#each @events as |event|}}
-    <TimelineEvent @event={{event}} />
+    <li>
+      <TimelineEvent @event={{event}} />
+    </li>
   {{/each}}
-  </tbody>
-</table>
+</ul>
