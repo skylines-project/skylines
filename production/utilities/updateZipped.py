@@ -69,11 +69,12 @@ while keepRunning: #loops infinitely
         if os.path.exists(iniPath):
             lines = readfile(iniPath)
             if len(lines) > 1:
-                version = lines[1].split('=')[1].replace('00','0').replace('.10.','.1.')
+                version = lines[1].split('=')[1].split(',')[0].replace('00','0').replace('.10.','.1.')
             else:
                 print ('lines', lines)
                 sys.exit('Stop: version line does not exist')
-            zipPath = '{}\\{}.v{}.7z'.format(zipDir,land.replace(' ','_'),version) #no zips will have spaces, but landscapes folders might
+            zipName = '{}.v{}.7z'.format(land.replace(' ','_'),version) #no zips will have spaces, but landscapes folders might
+            zipPath = '{}\\{}'.format(zipDir,zipName) #no zips will have spaces, but landscapes folders might
             if zipPath not in allZips:
                 print()
                 print('----------------------------------------------------------')
@@ -82,6 +83,7 @@ while keepRunning: #loops infinitely
                     #create new zip
                     landZip = zipPath.split('.')[0].split('\\')[-1]
                     tempPathZip = mainDir+'\\temp_{}.7z'.format(landZip)
+                    print ('Creating {}'.format(zipName))
                     sevenzip(tempPathZip,landPath)
                     print('Moving to zip directory')
                     shutil.move(tempPathZip,zipPath)
