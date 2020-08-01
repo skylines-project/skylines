@@ -6214,7 +6214,7 @@ ember-modifier-manager-polyfill@^1.0.1, ember-modifier-manager-polyfill@^1.1.0, 
     ember-cli-version-checker "^2.1.2"
     ember-compatibility-helpers "^1.2.0"
 
-ember-modifier@^1.0.3, ember-modifier@^2.0.0, ember-modifier@^2.0.1:
+ember-modifier@^1.0.3, ember-modifier@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ember-modifier/-/ember-modifier-2.0.1.tgz#026543864880bb3ce96c832493394ab35ebd764d"
   integrity sha512-PgoY/RIfPjXRo4H1TjOxSLY/knpSdW5VnCPLQxgQMnz3j6SrAOjrW4EdFfWH85px/xNKADBpfReb26GnLQKyKQ==
