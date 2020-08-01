@@ -2,7 +2,9 @@
   "extends": [
     "config:base"
   ],
-  "enabledManagers": ["npm"],
+  "python": {
+    "enabled": false
+  },
   "rangeStrategy": "bump",
   "semanticCommits": false,
   "postUpdateOptions": ["yarnDedupeHighest"]
