@@ -40,7 +40,7 @@ module('Integration | Component | timeline events/flight comment', function (hoo
   test('renders default text', async function (assert) {
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/John Doe commented on a 123 km flight on [\d/]+./);
+    assert.dom('[data-test-text]').hasText(/John Doe commented on a 123 km flight on [\d/]+./);
   });
 
   test('renders alternate text if actor is current user', async function (assert) {
@@ -48,7 +48,7 @@ module('Integration | Component | timeline events/flight comment', function (hoo
 
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/You commented on a 123 km flight on [\d/]+./);
+    assert.dom('[data-test-text]').hasText(/You commented on a 123 km flight on [\d/]+./);
   });
 
   test('renders alternate text if pilot or copilot is current user', async function (assert) {
@@ -56,7 +56,7 @@ module('Integration | Component | timeline events/flight comment', function (hoo
 
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/John Doe commented on your 123 km flight on [\d/]+./);
+    assert.dom('[data-test-text]').hasText(/John Doe commented on your 123 km flight on [\d/]+./);
   });
 
   test('renders alternate text if pilot or copilot and actor is current user', async function (assert) {
@@ -65,6 +65,6 @@ module('Integration | Component | timeline events/flight comment', function (hoo
 
     await render(hbs`{{timeline-events/flight-comment event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText(/You commented on your 123 km flight on [\d/]+./);
+    assert.dom('[data-test-text]').hasText(/You commented on your 123 km flight on [\d/]+./);
   });
 });

@@ -1,18 +1,13 @@
-<tr>
-  <td class="icon">
-    {{svg-jar "asterisk" class="fa-svg small"}}
-  </td>
-  <td>
-    <LinkTo @route="user" @model={{event.actor.id}} class="btn btn-default btn-sm pull-right">{{t "show"}}</LinkTo>
-    <p>
-      {{#if event.unread}}<span class="badge badge-warning">{{t "new"}}</span>{{/if}}
-      <small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small>
-    </p>
-    <p>
-      {{t translationKey
-        htmlSafe=true
-        actor=event.actor.name
-        actorURL=(href-to "user" event.actor.id)}}
-    </p>
-  </td>
-</tr>
+<TimelineEvents::Ui
+  @icon="asterisk"
+  @smallIcon={{true}}
+  @url={{href-to "user" event.actor.id}}
+  @newBadge={{event.unread}}
+  @time={{event.time}}
+  @text={{t
+    translationKey
+    htmlSafe=true
+    actor=event.actor.name
+    actorURL=(href-to "user" event.actor.id)
+  }}
+/>

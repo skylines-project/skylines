@@ -37,7 +37,7 @@ module('Integration | Component | timeline events/follower', function (hooks) {
   test('renders default text', async function (assert) {
     await render(hbs`{{timeline-events/follower event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText('John Doe started following Jane Doe.');
+    assert.dom('[data-test-text]').hasText('John Doe started following Jane Doe.');
   });
 
   test('renders alternate text if actor is current user', async function (assert) {
@@ -45,7 +45,7 @@ module('Integration | Component | timeline events/follower', function (hooks) {
 
     await render(hbs`{{timeline-events/follower event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText('You started following Jane Doe.');
+    assert.dom('[data-test-text]').hasText('You started following Jane Doe.');
   });
 
   test('renders alternate text if followed user is current user', async function (assert) {
@@ -53,6 +53,6 @@ module('Integration | Component | timeline events/follower', function (hooks) {
 
     await render(hbs`{{timeline-events/follower event=event}}`);
 
-    assert.dom('td:nth-of-type(2) p:nth-of-type(2)').hasText('John Doe started following you.');
+    assert.dom('[data-test-text]').hasText('John Doe started following you.');
   });
 });

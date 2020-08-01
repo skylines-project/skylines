@@ -1,20 +1,14 @@
-<tr>
-  <td class="icon">
-    {{svg-jar "user" class="fa-svg"}}
-  </td>
-  <td>
-    <LinkTo @route="user" @model={{if accountUserIsFollowed event.actor.id event.user.id}} class="btn btn-default btn-sm pull-right">{{t "show"}}</LinkTo>
-    <p>
-      {{#if event.unread}}<span class="badge badge-warning">{{t "new"}}</span>{{/if}}
-      <small><abbr title={{format-time event.time format="full"}}>{{format-relative event.time}}</abbr></small>
-    </p>
-    <p>
-      {{t translationKey
-        htmlSafe=true
-        actor=event.actor.name
-        actorURL=(href-to "user" event.actor.id)
-        user=event.user.name
-        userURL=(href-to "user" event.user.id)}}
-    </p>
-  </td>
-</tr>
+<TimelineEvents::Ui
+  @icon="user"
+  @url={{href-to "user" (if accountUserIsFollowed event.actor.id event.user.id)}}
+  @newBadge={{event.unread}}
+  @time={{event.time}}
+  @text={{t
+    translationKey
+    htmlSafe=true
+    actor=event.actor.name
+    actorURL=(href-to "user" event.actor.id)
+    user=event.user.name
+    userURL=(href-to "user" event.user.id)}}
+  }}
+/>

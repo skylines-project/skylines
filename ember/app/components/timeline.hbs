@@ -1,0 +1,7 @@
+<ul local-class="list" ...attributes>
+  {{#each @events as |event|}}
+    <li>
+      <TimelineEvent @event={{event}} />
+    </li>
+  {{/each}}
+</ul>
