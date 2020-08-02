@@ -1,3 +1,21 @@
+.panel-heading {
+  composes: panel-heading from global;
+  position: relative;
+}
+
+.help-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 20pt;
+  color: #aaa;
+  text-decoration: none;
+
+  &:hover {
+    color: #666;
+  }
+}
+
 .tracking-key {
   composes: label from global;
 

@@ -1,9 +1,9 @@
 <div class="panel panel-default" ...attributes>
-  <div class="panel-heading">
+  <div local-class="panel-heading">
     <h3 class="panel-title">{{t "live-tracking-key"}}</h3>
-    <p class="panel-help-icon">
-      <LinkTo @route="tracking.info">{{svg-jar "question" class="fa-svg fixed-width"}}</LinkTo>
-    </p>
+    <LinkTo @route="tracking.info" local-class="help-icon">
+      {{svg-jar "question" class="fa-svg fixed-width"}}
+    </LinkTo>
   </div>
   <div class="panel-body">
     {{#if error}}
