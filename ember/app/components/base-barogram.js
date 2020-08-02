@@ -134,12 +134,12 @@ export default Component.extend({
   })),
 
   contestData: map('contests.@each.{times,color}', contest => {
-    let times = contest.get('times');
+    let times = contest.times;
     if (times.length < 1) {
       return;
     }
 
-    let color = contest.get('color');
+    let color = contest.color;
 
     // Add the turnpoint markers to the markings array
     let markings = times.map(time => ({

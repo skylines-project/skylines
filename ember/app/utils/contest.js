@@ -1,5 +1,3 @@
-import EmberObject from '@ember/object';
-
 import { decodeDeltas } from 'ol/format/Polyline';
 import LineString from 'ol/geom/LineString';
 import { fromLonLat } from 'ol/proj';
@@ -20,38 +18,32 @@ const CONTEST_COLORS = {
  *   turnpoints and times are googlePolyEncoded strings.
  * @param {Number} _sfid The SkyLines flight id this contest trace belongs to.
  */
-export default class slContest extends EmberObject {
-  static fromData(_contest, flightId) {
-    let turnpoints = decodeDeltas(_contest.turnpoints, 2);
-    let times = decodeDeltas(_contest.times, 1, 1);
-    let name = _contest.name;
+export default class Contest {
+  constructor(_contest, flightId) {
+    this.flightId = flightId;
 
-    let geometry = new LineString([]);
+    this.name = _contest.name;
+    this.times = decodeDeltas(_contest.times, 1, 1);
+    let turnpoints = decodeDeltas(_contest.turnpoints, 2);
+
+    this.geometry = new LineString([]);
     let turnpointsLength = turnpoints.length;
-    let triangle = name.search(/triangle/) !== -1 && turnpointsLength === 5 * 2;
+    let triangle = this.name.search(/triangle/) !== -1 && turnpointsLength === 5 * 2;
 
     if (triangle) {
       for (let i = 2; i < turnpointsLength - 2; i += 2) {
         let point = fromLonLat([turnpoints[i + 1], turnpoints[i]]);
-        geometry.appendCoordinate(point);
+        this.geometry.appendCoordinate(point);
       }
 
-      geometry.appendCoordinate(geometry.getFirstCoordinate());
+      this.geometry.appendCoordinate(this.geometry.getFirstCoordinate());
     } else {
       for (let i = 0; i < turnpointsLength; i += 2) {
         let point = fromLonLat([turnpoints[i + 1], turnpoints[i]]);
-        geometry.appendCoordinate(point);
+        this.geometry.appendCoordinate(point);
       }
     }
 
-    let color = CONTEST_COLORS[name] || '#ff2c73';
-
-    return slContest.create({
-      flightId,
-      times,
-      name,
-      geometry,
-      color,
-    });
+    this.color = CONTEST_COLORS[this.name] || '#ff2c73';
   }
 }

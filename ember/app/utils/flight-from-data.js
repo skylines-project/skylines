@@ -35,7 +35,7 @@ export default function (data, units) {
 
   let contests;
   if (data.contests) {
-    contests = data.contests.map(it => Contest.fromData(it, data.sfid));
+    contests = data.contests.map(it => new Contest(it, data.sfid));
   }
 
   return Flight.create({
