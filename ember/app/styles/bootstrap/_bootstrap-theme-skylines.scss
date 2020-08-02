@@ -67,14 +67,6 @@ input[type="file"].form-control {
   height: auto;
 }
 
-.tooltip {
-  /*
-   * The tooltips in the flight table are broken otherwise because
-   * of the "table .show" rule that changes this setting.
-   */
-  white-space: normal;
-}
-
 /* Font size adjustments */
 body, .btn, .form-control, .dropdown-menu {
   font-size: 13px;
