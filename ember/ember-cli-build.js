@@ -6,6 +6,8 @@ let EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 const CssModules = require('./build/css-modules');
 
+const { USE_EMBROIDER } = process.env;
+
 module.exports = function (defaults) {
   let environment = process.env.EMBER_ENV;
   let isProduction = environment === 'production';
@@ -22,7 +24,7 @@ module.exports = function (defaults) {
 
     cssModules: {
       extension: 'module.scss',
-      intermediateOutputPath: 'app/styles/_css-modules.scss',
+      intermediateOutputPath: USE_EMBROIDER ? '_css-modules.scss' : 'app/styles/_css-modules.scss',
       generateScopedName(className, modulePath) {
         return CssModules.generateName(className, modulePath, { isProduction });
       },
@@ -87,6 +89,11 @@ module.exports = function (defaults) {
   // Monkey-patch the `findMissingKeys()` method
   let TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
   TranslationReducer.prototype.findMissingKeys = function () {};
+
+  if (USE_EMBROIDER) {
+    const { Webpack } = require('@embroider/webpack');
+    return require('@embroider/compat').compatBuild(app, Webpack);
+  }
 
   return app.toTree();
 };
