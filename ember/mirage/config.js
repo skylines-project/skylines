@@ -1,6 +1,4 @@
-import { Response } from 'ember-cli-mirage';
-
-import { getSession } from './utils/session';
+import * as Settings from './route-handlers/settings';
 
 export default function () {
   this.passthrough('/translations/**');
@@ -9,13 +7,5 @@ export default function () {
 
   this.get('/api/notifications', { events: [] });
 
-  this.get('/api/settings', function (schema) {
-    let { user } = getSession(schema);
-    if (!user) {
-      return new Response(401, {}, { error: 'invalid-token' });
-    }
-
-    let serialized = this.serialize(user, 'user');
-    return serialized.user;
-  });
+  Settings.register(this);
 }
