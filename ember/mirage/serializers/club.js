@@ -6,7 +6,7 @@ export default BaseSerializer.extend({
 
     if (object.owner) {
       json.owner = {
-        id: object.owner.id,
+        id: Number(object.owner.id),
         name: object.owner.name,
       };
     } else {

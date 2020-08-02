@@ -18,7 +18,7 @@ module('Mirage | Settings', function (hooks) {
 
       let responsePayload = await response.json();
       assert.matchJson(responsePayload, {
-        id: '1',
+        id: 1,
         altitudeUnit: 0,
         club: null,
         distanceUnit: 1,

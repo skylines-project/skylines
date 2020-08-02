@@ -17,7 +17,7 @@ module('Mirage | User', function (hooks) {
 
       let responsePayload = await response.json();
       assert.matchJson(responsePayload, {
-        id: '1',
+        id: 1,
         club: null,
         firstName: 'John',
         followers: 107,

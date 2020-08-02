@@ -17,7 +17,7 @@ module('Mirage | Clubs', function (hooks) {
 
       let responsePayload = await response.json();
       assert.matchJson(responsePayload, {
-        id: '1',
+        id: 1,
         name: 'AeroClub Aachen',
         owner: null,
         timeCreated: '2020-05-24T21:41:03Z',
@@ -34,10 +34,10 @@ module('Mirage | Clubs', function (hooks) {
 
       let responsePayload = await response.json();
       assert.matchJson(responsePayload, {
-        id: '1',
+        id: 1,
         name: 'AeroClub Aachen',
         owner: {
-          id: '1',
+          id: 1,
           name: 'John Doe',
         },
         timeCreated: '2020-05-24T21:41:03Z',
