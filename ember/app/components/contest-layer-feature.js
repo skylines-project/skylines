@@ -9,9 +9,7 @@ export default class ContestLayerFeature extends Component {
     let contest = this.args.contest;
     return new Feature({
       geometry: contest.geometry,
-      sfid: contest.flightId,
       color: contest.color,
-      type: 'contest',
     });
   }
 
