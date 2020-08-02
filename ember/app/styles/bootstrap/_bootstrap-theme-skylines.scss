@@ -75,15 +75,6 @@ input[type="file"].form-control {
   white-space: normal;
 }
 
-.pin {
-  visibility: hidden;
-  cursor: pointer;
-}
-
-tr:hover .pin, .pin.pinned {
-  visibility: visible;;
-}
-
 /* Font size adjustments */
 body, .btn, .form-control, .dropdown-menu {
   font-size: 13px;
