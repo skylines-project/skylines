@@ -26,10 +26,6 @@ body {
   }
 }
 
-abbr[title] {
-  text-decoration: none;
-}
-
 .fullscreen-below-nav-bar {
   position: absolute;
   width: 100%;
@@ -51,51 +47,9 @@ abbr[title] {
   height: 100%;
 }
 
-.content {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
-@media (max-width: 767px) {
-  .dropdown-menu .divider {
-    background-color: #666;
-  }
-}
-
 /* File upload field fix */
 input[type="file"].form-control {
   height: auto;
-}
-
-.tooltip {
-  /*
-   * The tooltips in the flight table are broken otherwise because
-   * of the "table .show" rule that changes this setting.
-   */
-  white-space: normal;
-}
-
-.pin {
-  visibility: hidden;
-  cursor: pointer;
-}
-
-tr:hover .pin, .pin.pinned {
-  visibility: visible;;
-}
-
-.table .modal input,
-.table .modal select {
-  width: auto;
-}
-
-/* Font size adjustments */
-body, .btn, .form-control, .dropdown-menu {
-  font-size: 13px;
-}
-
-.btn-sm, .btn-xs {
-  font-size: 11px;
 }
 
 .upload-results-form {

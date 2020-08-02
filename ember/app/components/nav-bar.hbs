@@ -5,6 +5,7 @@
   @collapsed={{this.collapsed}}
   @onCollapse={{action (mut this.collapsed) true}}
   @onExpand={{action (mut this.collapsed) false}}
+  local-class="navbar"
   data-test-nav-bar
   ...attributes
   as |navbar|
@@ -12,8 +13,8 @@
   <div class="navbar-header">
     {{navbar.toggle}}
 
-    <LinkTo @route="index" class="navbar-brand" @click={{action (mut this.collapsed) true}}>
-      {{svg-jar "logo" class="logo"}} <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
+    <LinkTo @route="index" local-class="brand" @click={{action (mut this.collapsed) true}}>
+      {{svg-jar "logo" local-class="logo"}} <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
     </LinkTo>
   </div>
 

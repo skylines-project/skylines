@@ -2,7 +2,12 @@
   <td>{{@label}}</td>
   <td class="column-buttons">
     {{#if @flight}}
-      <abbr title={{format-date @flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}>{{format-relative @flight.scoreDate}}</abbr>
+      <time
+        datetime={{to-iso-string @flight.scoreDate}}
+        title={{format-date @flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}
+      >
+        {{format-relative @flight.scoreDate}}
+      </time>
       <div class="pull-right">
         <LinkTo @route="flight" @model={{@flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
       </div>

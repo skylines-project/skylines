@@ -1,3 +1,9 @@
+.content {
+  composes: container from global;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 .footer {
   /* center align it with the container */
   text-align: center;

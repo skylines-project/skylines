@@ -1,5 +1,5 @@
 <BasePage>
-  <div class="page-header page-header-with-tabs">
+  <div local-class="header">
     <h1>
       {{t "ranking"}}
 
@@ -8,7 +8,7 @@
       {{/if}}
     </h1>
 
-    <div class="page-header-tabs">
+    <div local-class="tabs">
       <BsNav @type="tabs" as |nav|>
         <nav.item>
           {{#nav.link-to "ranking.clubs"}}{{t "clubs"}}{{/nav.link-to}}

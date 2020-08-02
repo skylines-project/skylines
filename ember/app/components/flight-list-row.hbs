@@ -1,4 +1,4 @@
-<tr class={{if this.isPrivate "not_published"}} ...attributes>
+<tr local-class="row" class={{if this.isPrivate "not_published"}} ...attributes>
   {{#if @showDate}}
     <td class="date">
       {{#if @flight.scoreDate}}
@@ -79,7 +79,7 @@
 
   <td class="column-buttons">
     <LinkTo @route="flight" @model={{@flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
-    <PinStar @flightId={{@flight.id}} />
+    <PinStar @flightId={{@flight.id}} local-class="pin" />
   </td>
 
   <td class="num_comments hidden-xs">
