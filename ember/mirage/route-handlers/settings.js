@@ -9,7 +9,6 @@ export function register(server) {
       return new Response(401, {}, { error: 'invalid-token' });
     }
 
-    let serialized = this.serialize(user, 'user');
-    return serialized.user;
+    return user;
   });
 }
