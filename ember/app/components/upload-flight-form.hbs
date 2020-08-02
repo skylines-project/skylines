@@ -11,6 +11,7 @@
         multiple="multiple"
         class="form-control"
         disabled={{uploadTask.isRunning}}
+        data-test-files
         {{on "change" (action "setFilesFromEvent")}}
       >
     </ValidatedBlock>
@@ -31,7 +32,7 @@
     <input type="hidden" name="pilotId" value={{pilotId}}>
     <input type="hidden" name="pilotName" value={{pilotName}}>
 
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or uploadTask.isRunning (not validations.isValid)}}>
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or uploadTask.isRunning (not validations.isValid)}} data-test-submit-button>
       {{t (if uploadTask.isRunning "uploading" "upload")}}
     </button>
   </form>

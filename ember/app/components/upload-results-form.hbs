@@ -45,7 +45,7 @@
     {{/if}}
 
     {{#if success}}
-      <button class="btn btn-primary" type="submit" disabled={{or saveTask.isRunning isInvalid}}>
+      <button class="btn btn-primary" type="submit" disabled={{or saveTask.isRunning isInvalid}} data-test-publish-button>
         {{if saveTask.isRunning (t "publishing") (t "publish-flights" num=successfulResults.length)}}
       </button>
     {{/if}}
