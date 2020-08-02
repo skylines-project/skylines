@@ -1,0 +1,34 @@
+.navbar {
+  min-height: 40px;
+  font-weight: 400;
+  border: 0;
+
+  :global(.navbar-nav) > li > a {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+
+    text-shadow: 0 1px 1px black;
+  }
+}
+
+.brand {
+  composes: navbar-brand from global;
+
+  font-size: 20px;
+  font-weight: 400;
+  text-shadow: 0 1px 1px black;
+  line-height: 20px;
+  padding: 10px 15px;
+  height: 100%;
+
+  @media (max-width: 767px) {
+    padding: 15px;
+  }
+}
+
+.logo {
+  width: 24px;
+  height: 24px;
+  margin: -2px 6px -2px 0;
+  vertical-align: bottom;
+}
