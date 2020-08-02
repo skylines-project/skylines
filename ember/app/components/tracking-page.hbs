@@ -42,7 +42,9 @@
         @hoverMode={{not fixCalc.isRunning}}
         @timeInterval={{timeInterval}}
         @time={{fixCalc.time}}
-        @defaultTime={{fixCalc.defaultTime}} />
+        @defaultTime={{fixCalc.defaultTime}}
+        @onTimeChange={{action (mut fixCalc.time)}}
+      />
     </div>
 
   {{else}}

@@ -75,6 +75,8 @@
       @timeInterval={{timeInterval}}
       @timeHighlight={{this.highlightedTimeInterval}}
       @time={{fixCalc.time}}
-      @defaultTime={{fixCalc.defaultTime}} />
+      @defaultTime={{fixCalc.defaultTime}}
+      @onTimeChange={{action (mut fixCalc.time)}}
+    />
   </div>
 </div>
