@@ -1,4 +1,4 @@
-import EmberObject from '@ember/object';
+import EmberObject, { action } from '@ember/object';
 import { bool, mapBy, min, max, map } from '@ember/object/computed';
 
 import { task } from 'ember-concurrency';
@@ -51,7 +51,7 @@ export default class FixCalc extends EmberObject {
     let time = this.time;
 
     if (time === null || time === -1) {
-      this.set('time', this.minStartTime);
+      this.setTime(this.minStartTime);
     }
 
     let lastNow = performance.now();
@@ -68,7 +68,7 @@ export default class FixCalc extends EmberObject {
         this.stopPlayback();
       }
 
-      this.set('time', time);
+      this.setTime(time);
     }
   }).drop())
   playbackTask;
@@ -88,8 +88,9 @@ export default class FixCalc extends EmberObject {
       this.startPlayback();
     }
   }
-  resetTime() {
-    this.set('time', this.defaultTime);
+
+  @action setTime(time) {
+    this.set('time', time);
   }
 
   /**

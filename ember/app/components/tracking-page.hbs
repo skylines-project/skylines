@@ -15,7 +15,7 @@
       @fixes={{fixCalc.fixes}}
       @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}}
       @defaultTime={{fixCalc.defaultTime}}
-      @onTimeChange={{action (mut fixCalc.time)}}
+      @onTimeChange={{this.fixCalc.setTime}}
       @onExtentChange={{action (mut mapExtent)}}
       @onCesiumEnabledChange={{action (mut cesiumEnabled)}}
       @calculatePadding={{action "calculatePadding"}}
@@ -43,7 +43,7 @@
         @timeInterval={{timeInterval}}
         @time={{fixCalc.time}}
         @defaultTime={{fixCalc.defaultTime}}
-        @onTimeChange={{action (mut fixCalc.time)}}
+        @onTimeChange={{this.fixCalc.setTime}}
       />
     </div>
 
