@@ -23,9 +23,6 @@ const STYLES = {
 
 function createStyle({ src, size = [40, 24] }) {
   let icon = new Icon({
-    anchor: [0.5, 0.5],
-    anchorXUnits: 'fraction',
-    anchorYUnits: 'fraction',
     size,
     src,
     rotation: 0,
