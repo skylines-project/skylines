@@ -6,7 +6,10 @@
   {{#if flights}}
     <CesiumButton @enabled={{cesiumEnabled}} @onEnable={{this.enableCesium}} @onDisable={{this.disableCesium}} />
     <FlightPathLayer @map={{map}} @flights={{flights}} />
-    <PhaseHighlightComposer @map={{map}} @coordinates={{phaseHighlightCoords}} @calculatePadding={{calculatePadding}} />
+
+    <PhaseHighlightComposer @map={{map}} @coordinates={{phaseHighlightCoords}} />
+    {{did-update this.zoomToPhase @phaseHighlightCoords @calculatePadding}}
+
     <PlaneIconsComposer @map={{map}} @fixes={{fixes}} />
     <ContestLayer @map={{map}} @flights={{flights}} @visible={{not cesiumEnabled}} />
 

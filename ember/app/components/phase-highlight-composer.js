@@ -3,7 +3,6 @@ import { action, observer } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { once } from '@ember/runloop';
 
-import { boundingExtent } from 'ol/extent';
 import Icon from 'ol/style/Icon';
 import Style from 'ol/style/Style';
 
@@ -15,7 +14,6 @@ export default Component.extend({
   map: null,
   paddingFn: null,
   coordinates: null,
-  calculatePadding() {},
 
   startCoordinate: readOnly('coordinates.firstObject'),
   endCoordinate: readOnly('coordinates.lastObject'),
@@ -24,7 +22,6 @@ export default Component.extend({
   endPoint: computedPoint('coordinates.lastObject'),
 
   coordinatesObserver: observer('coordinates.[]', function () {
-    this.adjustMapView();
     once(this.map, 'render');
   }),
 
@@ -77,16 +74,6 @@ export default Component.extend({
     if (coordinate) {
       context.setStyle(style);
       context.drawGeometry(coordinate);
-    }
-  },
-
-  adjustMapView() {
-    let coordinates = this.coordinates;
-    if (coordinates) {
-      let map = this.map;
-      let extent = boundingExtent(coordinates);
-      let padding = this.calculatePadding();
-      map.getView().fit(extent, { padding });
     }
   },
 });
