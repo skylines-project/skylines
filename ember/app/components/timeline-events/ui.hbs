@@ -3,7 +3,13 @@
 
   <div>
     <div local-class="badge-and-time">
-      <abbr title={{format-time @time format="full"}} local-class="time">{{format-relative @time}}</abbr>
+      <time
+        datetime={{to-iso-string @time}}
+        title={{format-time @time format="full"}}
+        local-class="time"
+      >
+        {{format-relative @time}}
+      </time>
 
       {{#if @newBadge}}
         <span local-class="new-badge">{{t "new"}}</span>
