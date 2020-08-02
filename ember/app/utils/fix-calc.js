@@ -1,5 +1,6 @@
 import EmberObject, { action } from '@ember/object';
 import { bool, mapBy, min, max, map } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
 
 import { task } from 'ember-concurrency';
 
@@ -26,7 +27,7 @@ export default class FixCalc extends EmberObject {
    * >= 0 -> show the associated time in the barogram and on the map
    * @type {!Number}
    */
-  time = null;
+  @tracked time = null;
 
   /**
    * Default time - the time to set when no time is set
@@ -90,7 +91,7 @@ export default class FixCalc extends EmberObject {
   }
 
   @action setTime(time) {
-    this.set('time', time);
+    this.time = time;
   }
 
   /**
