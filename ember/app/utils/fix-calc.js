@@ -20,11 +20,11 @@ const PLAYBACK_SPEED = 50;
 export default class FixCalc extends EmberObject {
   flights = slFlightCollection.create();
 
-  /*
+  /**
    * Global time, can be:
-   * null -> no time is set, don't show barogram crosshair/plane position
-   * -1 -> always show the latest time/fix for each flight
-   * >= 0 -> show the associated time in the barogram and on the map
+   * - null -> no time is set, don't show barogram crosshair/plane position
+   * - -1 -> always show the latest time/fix for each flight
+   * - >= 0 -> show the associated time in the barogram and on the map
    * @type {!Number}
    */
   @tracked time = null;
