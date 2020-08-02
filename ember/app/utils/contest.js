@@ -19,9 +19,7 @@ const CONTEST_COLORS = {
  * @param {Number} _sfid The SkyLines flight id this contest trace belongs to.
  */
 export default class Contest {
-  constructor(_contest, flightId) {
-    this.flightId = flightId;
-
+  constructor(_contest) {
     this.name = _contest.name;
     this.times = decodeDeltas(_contest.times, 1, 1);
     let turnpoints = decodeDeltas(_contest.turnpoints, 2);
