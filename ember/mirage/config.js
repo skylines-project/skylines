@@ -1,3 +1,4 @@
+import * as Notifications from './route-handlers/notifications';
 import * as Settings from './route-handlers/settings';
 
 export default function () {
@@ -5,7 +6,6 @@ export default function () {
 
   this.get('/api/locale', { locale: 'en' });
 
-  this.get('/api/notifications', { events: [] });
-
+  Notifications.register(this);
   Settings.register(this);
 }
