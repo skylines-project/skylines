@@ -1,8 +1,8 @@
 <tr ...attributes>
   <td class="hidden-xs date">
-    <abbr title={{format-time track.time format="full"}}>
+    <time title={{format-time track.time format="full"}} datetime={{to-iso-string track.time}}>
       {{format-relative track.time interval=1000}}
-    </abbr>
+    </time>
   </td>
 
   <td><LinkTo @route="user" @model={{track.pilot.id}}>{{track.pilot.name}}</LinkTo></td>
