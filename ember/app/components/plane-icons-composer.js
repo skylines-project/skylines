@@ -1,9 +1,41 @@
 import Component from '@ember/component';
-import { action, observer, getWithDefault } from '@ember/object';
+import { action, getWithDefault, observer } from '@ember/object';
 import { once } from '@ember/runloop';
 
 import Icon from 'ol/style/Icon';
 import Style from 'ol/style/Style';
+
+const STYLES = {
+  glider: createStyle({
+    src: '/images/glider_symbol.png',
+  }),
+  motorglider: createStyle({
+    src: '/images/motorglider_symbol.png',
+  }),
+  paraglider: createStyle({
+    src: '/images/paraglider_symbol.png',
+  }),
+  hangglider: createStyle({
+    size: [40, 14],
+    src: '/images/hangglider_symbol.png',
+  }),
+};
+
+function createStyle({ src, size = [40, 24] }) {
+  let icon = new Icon({
+    anchor: [0.5, 0.5],
+    anchorXUnits: 'fraction',
+    anchorYUnits: 'fraction',
+    size,
+    src,
+    rotation: 0,
+    rotateWithView: true,
+  });
+
+  icon.load();
+
+  return new Style({ image: icon });
+}
 
 export default Component.extend({
   tagName: '',
@@ -15,33 +47,6 @@ export default Component.extend({
     once(this.map, 'render');
   }),
 
-  init() {
-    this._super(...arguments);
-
-    this.set('icons', {});
-    this.set('styles', {});
-
-    this._initStyle('glider', {
-      size: [40, 24],
-      src: '/images/glider_symbol.png',
-    });
-
-    this._initStyle('motorglider', {
-      size: [40, 24],
-      src: '/images/motorglider_symbol.png',
-    });
-
-    this._initStyle('paraglider', {
-      size: [40, 24],
-      src: '/images/paraglider_symbol.png',
-    });
-
-    this._initStyle('hangglider', {
-      size: [40, 14],
-      src: '/images/hangglider_symbol.png',
-    });
-  },
-
   didInsertElement() {
     this._super(...arguments);
     this.map.on('postcompose', this.onPostCompose, this);
@@ -52,43 +57,20 @@ export default Component.extend({
     this.map.un('postcompose', this.onPostCompose, this);
   },
 
-  _initStyle(key, { src, size }) {
-    let icon = new Icon({
-      anchor: [0.5, 0.5],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'fraction',
-      size,
-      src,
-      rotation: 0,
-      rotateWithView: true,
-    });
-
-    icon.load();
-
-    let style = new Style({ image: icon });
-
-    this.set(`icons.${key}`, icon);
-    this.set(`styles.${key}`, style);
-  },
-
   @action
   onPostCompose(e) {
     this.renderIcons(e.vectorContext);
   },
 
   renderIcons(context) {
-    let icons = this.icons;
-    let styles = this.styles;
-
     this.fixes.forEach(fix => {
       let point = fix.get('pointXY');
 
       if (point) {
         let type = getWithDefault(fix, 'flight.model.type', 'glider');
-        let icon = icons[type] || icons['glider'];
-        let style = styles[type] || styles['glider'];
+        let style = STYLES[type] || STYLES['glider'];
 
-        icon.setRotation(fix.get('heading'));
+        style.getImage().setRotation(fix.get('heading'));
         context.setStyle(style);
         context.drawGeometry(point);
       }
