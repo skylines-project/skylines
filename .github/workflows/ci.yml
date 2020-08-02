@@ -42,6 +42,26 @@ jobs:
       - run: yarn test
         working-directory: ./ember
 
+  embroider:
+    name: Frontend (embroider)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+
+      - run: yarn install --frozen-lockfile
+        working-directory: ./ember
+
+      - run: npx bower install
+        working-directory: ./ember
+
+      - run: yarn ember build
+        working-directory: ./ember
+        continue-on-error: true
+        env:
+          USE_EMBROIDER: true
+
   backend:
     name: Backend
     runs-on: ubuntu-latest
