@@ -17,8 +17,33 @@ module('Mirage | User', function (hooks) {
 
       let responsePayload = await response.json();
       assert.matchJson(responsePayload, {
-        id: '1',
+        id: 1,
         club: null,
+        firstName: 'John',
+        followers: 107,
+        following: 128,
+        lastName: 'Doe',
+        name: 'John Doe',
+        trackingCallsign: 'JD',
+        trackingDelay: 0,
+      });
+    });
+
+    test('returns the requested user and club', async function (assert) {
+      let user = this.server.create('user');
+      let club = this.server.create('club', { owner: user });
+      user.update({ club });
+
+      let response = await fetch(`/api/users/${user.id}`);
+      assert.equal(response.status, 200);
+
+      let responsePayload = await response.json();
+      assert.matchJson(responsePayload, {
+        id: 1,
+        club: {
+          id: 1,
+          name: 'AeroClub Aachen',
+        },
         firstName: 'John',
         followers: 107,
         following: 128,
