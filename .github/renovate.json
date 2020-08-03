@@ -1,11 +1,21 @@
 {
   "extends": [
-    "config:base"
+    "config:js-app",
+    ":dependencyDashboard",
+    ":maintainLockFilesWeekly",
+    ":semanticCommitsDisabled"
   ],
   "python": {
     "enabled": false
   },
-  "rangeStrategy": "bump",
-  "semanticCommits": false,
-  "postUpdateOptions": ["yarnDedupeHighest"]
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "packageRules": [{
+    "groupName": "embroider",
+    "packagePatterns": [
+      "^@embroider/"
+    ]
+  }, {
+    "packageNames": ["ember-cli", "ember-data", "ember-source"],
+    "separateMinorPatch": true
+  }]
 }
