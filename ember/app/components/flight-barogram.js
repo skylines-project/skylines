@@ -62,7 +62,7 @@ export default BarogramComponent.extend({
     this.onHoverModeUpdate();
 
     this.placeholder.on('plotclick', (event, pos) => {
-      this.set('time', pos.x / 1000);
+      this.onTimeChange(pos.x / 1000);
     });
   }),
 
@@ -137,11 +137,11 @@ export default BarogramComponent.extend({
 
     if (this.hoverMode) {
       placeholder.on('plothover', (event, pos) => {
-        this.set('time', pos.x / 1000);
+        this.onTimeChange(pos.x / 1000);
       });
 
       placeholder.on('mouseout', () => {
-        this.set('time', this.defaultTime);
+        this.onTimeChange(this.defaultTime);
       });
     } else {
       placeholder.off('plothover');

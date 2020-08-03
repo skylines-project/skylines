@@ -68,7 +68,7 @@ export default class extends Component {
     let map = window.flightMap.get('map');
 
     fixCalc.set('defaultTime', -1);
-    fixCalc.set('time', -1);
+    fixCalc.setTime(-1);
 
     flights.forEach(flight => fixCalc.addFlight(flight));
 
