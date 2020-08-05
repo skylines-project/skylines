@@ -5970,6 +5970,7 @@ ember-cli-head@^0.4.0:
     ember-cli-htmlbars "^2.0.3"
 
 "ember-cli-htmlbars-3@npm:ember-cli-htmlbars@3", ember-cli-htmlbars@^3.0.0, ember-cli-htmlbars@^3.0.1:
+  name ember-cli-htmlbars-3
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-3.1.0.tgz#87806c2a0bca2ab52d4fb8af8e2215c1ca718a99"
   integrity sha512-cgvRJM73IT0aePUG7oQ/afB7vSRBV3N0wu9BrWhHX2zkR7A7cUBI7KC9VPk6tbctCXoM7BRGsCC4aIjF7yrfXA==
@@ -6490,10 +6491,10 @@ ember-fetch@8.0.1:
     node-fetch "^2.6.0"
     whatwg-fetch "^3.0.0"
 
-ember-flatpickr@2.16.2:
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/ember-flatpickr/-/ember-flatpickr-2.16.2.tgz#755cd488d4d6f68c9ba429e82e52df1f4c9b4245"
-  integrity sha512-LyHdNCNiy53wDcL0JW567Ad5tE5Pr2FxqpBhDC5HMkoO8CI2LaV/f4OpXB7QnRtWmHd5Md2SbHRNAXxoJj+lxg==
+ember-flatpickr@2.16.3:
+  version "2.16.3"
+  resolved "https://registry.yarnpkg.com/ember-flatpickr/-/ember-flatpickr-2.16.3.tgz#1dcdc357d0c816c9ec03367ae761049ef8c83ce3"
+  integrity sha512-gPs+JMn+UHqP4j1Xj62R/uoPihf/fju/EW986znJ7f3SiBPlk9bY1lX1IJnBrRUb63vF4+4m+wwQxHNq+76IdQ==
   dependencies:
     ember-cli-babel "^7.19.0"
     ember-cli-htmlbars "^5.0.0"
