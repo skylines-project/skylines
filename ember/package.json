@@ -69,7 +69,7 @@
     "ember-fetch": "8.0.1",
     "ember-flatpickr": "2.16.2",
     "ember-freestyle": "0.12.0",
-    "ember-href-to": "3.1.0",
+    "ember-href-to": "4.0.0",
     "ember-intl": "4.4.1",
     "ember-load-initializers": "2.1.1",
     "ember-maybe-import-regenerator": "0.1.6",
