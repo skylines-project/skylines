@@ -5970,6 +5970,7 @@ ember-cli-head@^0.4.0:
     ember-cli-htmlbars "^2.0.3"
 
 "ember-cli-htmlbars-3@npm:ember-cli-htmlbars@3", ember-cli-htmlbars@^3.0.0, ember-cli-htmlbars@^3.0.1:
+  name ember-cli-htmlbars-3
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-3.1.0.tgz#87806c2a0bca2ab52d4fb8af8e2215c1ca718a99"
   integrity sha512-cgvRJM73IT0aePUG7oQ/afB7vSRBV3N0wu9BrWhHX2zkR7A7cUBI7KC9VPk6tbctCXoM7BRGsCC4aIjF7yrfXA==
@@ -7157,13 +7158,13 @@ eslint-config-simplabs@0.4.0:
     pify "^2.3.0"
     supports-color "^3.2.3"
 
-eslint-plugin-ember@8.9.2:
-  version "8.9.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.9.2.tgz#064f2ca391958806885356d85d71962b3a69e665"
-  integrity sha512-oHQkQdCkT+q9TVjhYAdpqWQh7y6Z/a8thFgTS1LnlJVuv+M+J/evkOejjr+BM9wrZdBQwPG49d2OK0vIXsm9dw==
+eslint-plugin-ember@8.10.0:
+  version "8.10.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.10.0.tgz#48571e205fd42859c7e84640563e8de3a2725712"
+  integrity sha512-Ci7LuoBC1vJqWX00v1AcjXNhPo9TY47WwE9hMfNIxmvUvg0oKqaaYVHdzbz2oEkhnJ38kA7v3AjE4ga9BvaDkw==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
-    ember-rfc176-data "^0.3.13"
+    ember-rfc176-data "^0.3.15"
     lodash.kebabcase "^4.1.1"
     snake-case "^3.0.3"
 
