@@ -80,12 +80,12 @@ export default Component.extend({
     this.set('flot', $.plot(placeholder, [], opts));
   },
 
-  draw() {
+  draw: action(function () {
     let flot = this.flot;
     flot.setData(this.data);
     flot.setupGrid();
     flot.draw();
-  },
+  }),
 
   data: computed('elevations.[]', 'activeTraces.[]', 'passiveTraces.[]', 'enlData.[]', 'contestData.[]', function () {
     let elevations = {
@@ -168,10 +168,4 @@ export default Component.extend({
     let options = this.flot.getOptions();
     options.grid.markings = markings;
   }),
-
-  actions: {
-    redraw() {
-      this.draw();
-    },
-  },
 });
