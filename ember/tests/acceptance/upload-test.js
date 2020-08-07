@@ -6,11 +6,9 @@ import { IGC } from 'skylines/mirage/vcr/flights/94bf14k1';
 
 import { setupApplicationTest } from '../test-helpers';
 import { authenticateAs } from '../test-helpers/auth';
-import { setupMockCookies } from '../test-helpers/cookies';
 
 module('Acceptance | flight upload', function (hooks) {
   setupApplicationTest(hooks);
-  setupMockCookies(hooks);
 
   test('flights can be uploaded', async function (assert) {
     let user = this.server.create('user', {
