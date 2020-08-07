@@ -19,13 +19,19 @@ export default Component.extend({
   contests: null,
   elevations: null,
 
+  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+  xaxis: {
+    mode: 'time',
+    timeformat: '%H:%M',
+  },
+
   initFlot: action(function (element) {
     this._initFlot(element);
     this.setCrosshair(this.crosshair);
   }),
 
   _initFlot(element) {
-    let units = this.units;
+    let { units, xaxis } = this;
 
     let opts = {
       grid: {
@@ -35,10 +41,7 @@ export default Component.extend({
         autoHighlight: false,
         margin: 5,
       },
-      xaxis: {
-        mode: 'time',
-        timeformat: '%H:%M',
-      },
+      xaxis,
       yaxes: [
         {
           min: 0,
@@ -158,5 +161,13 @@ export default Component.extend({
   setGridMarkings: action(function ([markings]) {
     let options = this.flot.getOptions();
     options.grid.markings = markings;
+  }),
+
+  setXAxis: action(function ([axis]) {
+    let options = this.flot.getOptions();
+    for (let key of Object.keys(axis)) {
+      options.xaxes[0][key] = axis[key];
+    }
+    this.draw();
   }),
 });

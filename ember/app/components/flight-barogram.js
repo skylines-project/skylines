@@ -69,28 +69,18 @@ export default BarogramComponent.extend({
   didUpdateAttrs() {
     this._super(...arguments);
     let selection = this.selection;
-    let timeInterval = this.timeInterval;
     let timeHighlight = this.timeHighlight;
     let hoverMode = this.hoverMode;
-
-    if (timeInterval !== this.oldTimeInterval) {
-      this.updateInterval();
-    }
 
     if (hoverMode !== this.oldHoverMode) {
       this.onHoverModeUpdate();
     }
 
-    if (
-      selection !== this.oldSelection ||
-      timeInterval !== this.oldTimeInterval ||
-      timeHighlight !== this.oldTimeHighlight
-    ) {
+    if (selection !== this.oldSelection || timeHighlight !== this.oldTimeHighlight) {
       this.draw();
     }
 
     this.set('oldSelection', selection);
-    this.set('oldTimeInterval', timeInterval);
     this.set('oldTimeHighlight', timeHighlight);
     this.set('oldHoverMode', hoverMode);
   },
@@ -107,18 +97,23 @@ export default BarogramComponent.extend({
     }
   }),
 
-  updateInterval() {
-    let { flot, timeInterval: interval } = this;
-    let opt = flot.getOptions();
-
-    if (!interval) {
-      opt.xaxes[0].min = opt.xaxes[0].max = null;
+  xaxis: computed('timeInterval', function () {
+    let min, max;
+    if (!this.timeInterval) {
+      min = max = null;
     } else {
-      let [start, end] = interval;
-      opt.xaxes[0].min = start * 1000;
-      opt.xaxes[0].max = end * 1000;
+      let [start, end] = this.timeInterval;
+      min = start * 1000;
+      max = end * 1000;
     }
-  },
+
+    return {
+      mode: 'time',
+      timeformat: '%H:%M',
+      min,
+      max,
+    };
+  }),
 
   onHoverModeUpdate() {
     let placeholder = this.placeholder;
