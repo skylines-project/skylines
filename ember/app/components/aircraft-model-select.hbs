@@ -2,7 +2,7 @@
   @options={{modelsWithNull}}
   @selected={{model}}
   @searchField="name"
-  @onchange={{action "onChange"}}
+  @onChange={{action "onChange"}}
 as |model|>
   {{#if (eq model.id null)}}
     [{{t "unspecified"}}]
