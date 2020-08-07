@@ -11,13 +11,13 @@
     <div local-class="tabs">
       <BsNav @type="tabs" as |nav|>
         <nav.item>
-          {{#nav.link-to "ranking.clubs"}}{{t "clubs"}}{{/nav.link-to}}
+          <nav.linkTo @route="ranking.clubs">{{t "clubs"}}</nav.linkTo>
         </nav.item>
         <nav.item>
-          {{#nav.link-to "ranking.pilots"}}{{t "pilots"}}{{/nav.link-to}}
+          <nav.linkTo @route="ranking.pilots">{{t "pilots"}}</nav.linkTo>
         </nav.item>
         <nav.item>
-          {{#nav.link-to "ranking.airports"}}{{t "airports"}}{{/nav.link-to}}
+          <nav.linkTo @route="ranking.airports">{{t "airports"}}</nav.linkTo>
         </nav.item>
       </BsNav>
     </div>

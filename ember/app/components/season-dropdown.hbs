@@ -10,12 +10,12 @@
     </dd.toggle>
 
     <dd.menu as |menu|>
-      <nav.item>{{#nav.link-to (query-params year="all")}}{{t "all-time"}}{{/nav.link-to}}</nav.item>
+      <nav.item><nav.linkTo @query={{hash year="all"}}>{{t "all-time"}}</nav.linkTo></nav.item>
 
       {{menu.divider}}
 
       {{#each this.recentYears as |year|}}
-        <nav.item>{{#nav.link-to (query-params year=year)}}{{year}}{{/nav.link-to}}</nav.item>
+        <nav.item><nav.linkTo @query={{hash year=year}}>{{year}}</nav.linkTo></nav.item>
       {{/each}}
     </dd.menu>
   </nav.dropdown>
