@@ -41,7 +41,7 @@
     "broccoli-asset-rev": "3.0.0",
     "ember-ajax": "5.0.0",
     "ember-auto-import": "1.6.0",
-    "ember-bootstrap": "3.1.4",
+    "ember-bootstrap": "4.0.0",
     "ember-cli": "3.20.0",
     "ember-cli-babel": "7.22.1",
     "ember-cli-bundle-analyzer": "0.2.1",
