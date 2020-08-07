@@ -1,5 +1,6 @@
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
+
+import { setupTest } from '../test-helpers';
 
 module('Service | units', function (hooks) {
   setupTest(hooks);

@@ -1,9 +1,10 @@
 import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
 
 import Service from '@ember/service';
+
+import { setupRenderingTest } from '../../test-helpers';
 
 module('Integration | Component | timeline events/new user', function (hooks) {
   setupRenderingTest(hooks);

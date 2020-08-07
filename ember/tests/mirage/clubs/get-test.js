@@ -1,8 +1,9 @@
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import fetch from 'fetch';
+
+import { setupTest } from '../../test-helpers';
 
 module('Mirage | Clubs', function (hooks) {
   setupTest(hooks);
