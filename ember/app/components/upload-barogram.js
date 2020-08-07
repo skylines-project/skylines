@@ -10,7 +10,6 @@ export default BarogramComponent.extend({
   units: service(),
 
   uploadMode: true,
-  height: 160,
 
   flight: null,
   trace: null,
