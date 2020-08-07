@@ -9,6 +9,7 @@ export default class extends Component {
       attributions:
         'SRTM relief maps from <a target="_blank" rel="noopener" ' +
         'href="http://maps-for-free.com/">maps-for-free.com</a>',
+      crossOrigin: 'anonymous',
       url: 'http://maps-for-free.com/layer/relief/z{z}/row{y}/{z}_{x}-{y}.jpg',
     }),
     zIndex: 2,
