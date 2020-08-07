@@ -59,7 +59,17 @@ export default BarogramComponent.extend({
   initFlot: action(function (element) {
     this._initFlot(element);
 
-    this.onHoverModeUpdate();
+    this.placeholder.on('plothover', (event, pos) => {
+      if (this.hoverMode) {
+        this.onTimeChange(pos.x / 1000);
+      }
+    });
+
+    this.placeholder.on('mouseout', () => {
+      if (this.hoverMode) {
+        this.onTimeChange(this.defaultTime);
+      }
+    });
 
     this.placeholder.on('plotclick', (event, pos) => {
       this.onTimeChange(pos.x / 1000);
@@ -70,11 +80,6 @@ export default BarogramComponent.extend({
     this._super(...arguments);
     let selection = this.selection;
     let timeHighlight = this.timeHighlight;
-    let hoverMode = this.hoverMode;
-
-    if (hoverMode !== this.oldHoverMode) {
-      this.onHoverModeUpdate();
-    }
 
     if (selection !== this.oldSelection || timeHighlight !== this.oldTimeHighlight) {
       this.draw();
@@ -82,7 +87,6 @@ export default BarogramComponent.extend({
 
     this.set('oldSelection', selection);
     this.set('oldTimeHighlight', timeHighlight);
-    this.set('oldHoverMode', hoverMode);
   },
 
   crosshair: computed('time', function () {
@@ -115,21 +119,12 @@ export default BarogramComponent.extend({
     };
   }),
 
-  onHoverModeUpdate() {
+  willDestroy() {
     let placeholder = this.placeholder;
 
-    if (this.hoverMode) {
-      placeholder.on('plothover', (event, pos) => {
-        this.onTimeChange(pos.x / 1000);
-      });
-
-      placeholder.on('mouseout', () => {
-        this.onTimeChange(this.defaultTime);
-      });
-    } else {
-      placeholder.off('plothover');
-      placeholder.off('mouseout');
-    }
+    placeholder.off('plothover');
+    placeholder.off('mouseout');
+    placeholder.off('plotclick');
   },
 
   gridMarkings: computed('timeHighlight.{start,end}', function () {
