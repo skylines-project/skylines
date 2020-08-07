@@ -79,14 +79,12 @@ export default BarogramComponent.extend({
   didUpdateAttrs() {
     this._super(...arguments);
     let selection = this.selection;
-    let timeHighlight = this.timeHighlight;
 
-    if (selection !== this.oldSelection || timeHighlight !== this.oldTimeHighlight) {
+    if (selection !== this.oldSelection) {
       this.draw();
     }
 
     this.set('oldSelection', selection);
-    this.set('oldTimeHighlight', timeHighlight);
   },
 
   crosshair: computed('time', function () {
