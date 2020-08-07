@@ -1,13 +1,10 @@
 import { visit, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
-import { setupMirage } from 'ember-cli-mirage/test-support';
-
 import { setupApplicationTest } from '../test-helpers';
 
 module('Acceptance | index', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function (assert) {
     await visit('/');

@@ -4,6 +4,8 @@ import {
   setupApplicationTest as _setupApplicationTest,
 } from 'ember-qunit';
 
+import { setupMirage } from 'ember-cli-mirage/test-support';
+
 export function setupTest(hooks, options) {
   _setupTest(hooks, options);
 }
@@ -14,4 +16,5 @@ export function setupRenderingTest(hooks, options) {
 
 export function setupApplicationTest(hooks, options) {
   _setupApplicationTest(hooks, options);
+  setupMirage(hooks);
 }

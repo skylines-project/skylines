@@ -1,13 +1,10 @@
 import { visit, click } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
-import { setupMirage } from 'ember-cli-mirage/test-support';
-
 import { setupApplicationTest } from '../test-helpers';
 
 module('Acceptance | login', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   const LOGIN_DROPDOWN = '[data-test-login-dropdown]';
   const LOGIN_DROPDOWN_TOGGLE = `${LOGIN_DROPDOWN} a`;

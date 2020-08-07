@@ -1,8 +1,6 @@
 import { visit, currentURL, click, triggerEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
-import { setupMirage } from 'ember-cli-mirage/test-support';
-
 import * as MockFlight from 'skylines/mirage/vcr/flights/87296';
 import { IGC } from 'skylines/mirage/vcr/flights/94bf14k1';
 
@@ -12,7 +10,6 @@ import { setupMockCookies } from '../test-helpers/cookies';
 
 module('Acceptance | flight upload', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupMockCookies(hooks);
 
   test('flights can be uploaded', async function (assert) {
