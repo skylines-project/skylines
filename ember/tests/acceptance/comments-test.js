@@ -1,5 +1,4 @@
 import { click, fillIn, settled, waitFor, visit } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 import { defer } from 'rsvp';
@@ -8,6 +7,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 
 import * as MockFlight from 'skylines/mirage/vcr/flights/87296';
 
+import { setupApplicationTest } from '../test-helpers';
 import { authenticateAs } from '../test-helpers/auth';
 
 module('Acceptance | Comments', function (hooks) {

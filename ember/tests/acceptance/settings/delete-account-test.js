@@ -1,11 +1,11 @@
 import { visit, click, currentURL, fillIn, waitFor } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { percySnapshot } from 'ember-percy';
 import { currentSession } from 'ember-simple-auth/test-support';
 
+import { setupApplicationTest } from '../../test-helpers';
 import { authenticateAs } from '../../test-helpers/auth';
 
 module('Acceptance | Settings | Delete Account', function (hooks) {

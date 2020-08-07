@@ -1,9 +1,10 @@
-import { setupTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
 import Service from '@ember/service';
 
 import { BASE_LAYER_COOKIE_KEY, OVERLAY_LAYERS_COOKIE_KEY } from 'skylines/services/map-settings';
+
+import { setupTest } from '../test-helpers';
 
 module('Unit | Service | map-settings', function (hooks) {
   setupTest(hooks);
