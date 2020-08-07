@@ -1,5 +1,5 @@
 <BsNav @type="pills" ...attributes as |nav|>
-  <nav.dropdown @tagName="li" as |dd|>
+  <nav.dropdown as |dd|>
     <dd.toggle>
       {{#if (eq @year "all")}}
         {{t "all-time"}}
