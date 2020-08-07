@@ -7,26 +7,26 @@
     <div class="col-md-12">
       {{#if (or pilot club airport account.user)}}
         <BsNav @type="pills" as |nav|>
-          <nav.item>{{#nav.link-to "statistics.index"}}SkyLines{{/nav.link-to}}</nav.item>
+          <nav.item><nav.linkTo @route="statistics.index">SkyLines</nav.linkTo></nav.item>
 
           {{#if airport}}
-            <nav.item>{{#nav.link-to "statistics.airport" airport}}{{name}}{{/nav.link-to}}</nav.item>
+            <nav.item><nav.linkTo @route="statistics.airport" @model={{airport}}>{{name}}</nav.linkTo></nav.item>
           {{/if}}
 
           {{#if club}}
-            <nav.item>{{#nav.link-to "statistics.club" club}}{{name}}{{/nav.link-to}}</nav.item>
+            <nav.item><nav.linkTo @route="statistics.club" @model={{club}}>{{name}}</nav.linkTo></nav.item>
           {{/if}}
 
           {{#if (and account.club.id (not-eq account.club.id club))}}
-            <nav.item>{{#nav.link-to "statistics.club" account.club.id}}{{account.club.name}}{{/nav.link-to}}</nav.item>
+            <nav.item><nav.linkTo @route="statistics.club" @model={{account.club.id}}>{{account.club.name}}</nav.linkTo></nav.item>
           {{/if}}
 
           {{#if pilot}}
-            <nav.item>{{#nav.link-to "statistics.pilot" pilot}}{{name}}{{/nav.link-to}}</nav.item>
+            <nav.item><nav.linkTo @route="statistics.pilot" @model={{pilot}}>{{name}}</nav.linkTo></nav.item>
           {{/if}}
 
           {{#if (and account.user (not-eq account.user.id pilot))}}
-            <nav.item>{{#nav.link-to "statistics.pilot" account.user.id}}{{account.user.name}}{{/nav.link-to}}</nav.item>
+            <nav.item><nav.linkTo @route="statistics.pilot" @model={{account.user.id}}>{{account.user.name}}</nav.linkTo></nav.item>
           {{/if}}
         </BsNav>
       {{/if}}
