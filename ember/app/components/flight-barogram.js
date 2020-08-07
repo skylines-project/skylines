@@ -87,8 +87,6 @@ export default BarogramComponent.extend({
       timeHighlight !== this.oldTimeHighlight
     ) {
       this.draw();
-    } else {
-      this.updateCrosshair();
     }
 
     this.set('oldSelection', selection);
@@ -102,22 +100,17 @@ export default BarogramComponent.extend({
     this._super(...arguments);
   },
 
-  draw() {
-    this.updateCrosshair();
-    this._super(...arguments);
-  },
-
-  updateCrosshair() {
-    let { flot, time } = this;
+  crosshair: computed('time', function () {
+    let { time } = this;
 
     if (time === null) {
-      flot.clearCrosshair();
+      return undefined;
     } else if (time === -1) {
-      flot.lockCrosshair({ x: 999999999 });
+      return { x: 999999999 };
     } else {
-      flot.lockCrosshair({ x: time * 1000 });
+      return { x: time * 1000 };
     }
-  },
+  }),
 
   updateInterval() {
     let { flot, timeInterval: interval } = this;

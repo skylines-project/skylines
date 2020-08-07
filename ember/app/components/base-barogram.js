@@ -30,6 +30,7 @@ export default Component.extend({
 
   initFlot: action(function (element) {
     this._initFlot(element);
+    this.setCrosshair(this.crosshair);
   }),
 
   _initFlot(element) {
@@ -158,6 +159,14 @@ export default Component.extend({
       data: [],
       markdata: markings,
     };
+  }),
+
+  setCrosshair: action(function ([crosshair]) {
+    if (crosshair) {
+      this.flot.lockCrosshair(crosshair);
+    } else {
+      this.flot.clearCrosshair();
+    }
   }),
 
   actions: {
