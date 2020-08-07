@@ -116,18 +116,16 @@ export default BarogramComponent.extend({
 
   gridMarkings: computed('timeHighlight.{start,end}', function () {
     let { timeHighlight } = this;
-    if (!timeHighlight) {
-      return [];
-    }
-
-    return [
-      {
-        color: '#fff083',
-        xaxis: {
-          from: timeHighlight.start * 1000,
-          to: timeHighlight.end * 1000,
+    if (timeHighlight) {
+      return [
+        {
+          color: '#fff083',
+          xaxis: {
+            from: timeHighlight.start * 1000,
+            to: timeHighlight.end * 1000,
+          },
         },
-      },
-    ];
+      ];
+    }
   }),
 });

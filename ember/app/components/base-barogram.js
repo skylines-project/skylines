@@ -161,6 +161,7 @@ export default Component.extend({
   setGridMarkings: action(function ([markings]) {
     let options = this.flot.getOptions();
     options.grid.markings = markings;
+    this.draw();
   }),
 
   setXAxis: action(function ([axis]) {
