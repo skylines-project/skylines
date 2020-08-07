@@ -1,7 +1,7 @@
 import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
-import { percySnapshot } from 'ember-percy';
+import percySnapshot from '@percy/ember';
 
 import * as MockFlight from 'skylines/mirage/vcr/flights/87296';
 

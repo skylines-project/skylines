@@ -1,7 +1,7 @@
 import { visit, click, currentURL, fillIn, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
-import { percySnapshot } from 'ember-percy';
+import percySnapshot from '@percy/ember';
 import { currentSession } from 'ember-simple-auth/test-support';
 
 import { setupApplicationTest } from '../../test-helpers';

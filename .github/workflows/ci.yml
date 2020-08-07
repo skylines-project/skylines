@@ -39,7 +39,7 @@ jobs:
       - run: yarn ember dependency-lint
         working-directory: ./ember
 
-      - run: yarn test
+      - run: yarn percy exec -- yarn test
         working-directory: ./ember
 
   embroider:
