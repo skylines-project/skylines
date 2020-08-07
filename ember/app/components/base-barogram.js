@@ -81,15 +81,10 @@ export default Component.extend({
   },
 
   draw() {
-    this.update();
-
     let flot = this.flot;
+    flot.setData(this.data);
     flot.setupGrid();
     flot.draw();
-  },
-
-  update() {
-    this.flot.setData(this.data);
   },
 
   data: computed('elevations.[]', 'activeTraces.[]', 'passiveTraces.[]', 'enlData.[]', 'contestData.[]', function () {
