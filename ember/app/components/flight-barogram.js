@@ -95,11 +95,6 @@ export default BarogramComponent.extend({
     this.set('oldHoverMode', hoverMode);
   },
 
-  update() {
-    this.updateTimeHighlight();
-    this._super(...arguments);
-  },
-
   crosshair: computed('time', function () {
     let { time } = this;
 
@@ -142,26 +137,20 @@ export default BarogramComponent.extend({
     }
   },
 
-  updateTimeHighlight() {
-    // There is no flot.setOptions(), so we modify them in-place.
-    let options = this.flot.getOptions();
-
-    // Clear the markings if there is no time highlight
-    let time_highlight = this.timeHighlight;
-    if (!time_highlight) {
-      options.grid.markings = [];
-      return;
+  gridMarkings: computed('timeHighlight.{start,end}', function () {
+    let { timeHighlight } = this;
+    if (!timeHighlight) {
+      return [];
     }
 
-    // Add time highlight as flot markings
-    options.grid.markings = [
+    return [
       {
         color: '#fff083',
         xaxis: {
-          from: time_highlight.start * 1000,
-          to: time_highlight.end * 1000,
+          from: timeHighlight.start * 1000,
+          to: timeHighlight.end * 1000,
         },
       },
     ];
-  },
+  }),
 });
