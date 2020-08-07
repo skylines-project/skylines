@@ -76,17 +76,6 @@ export default BarogramComponent.extend({
     });
   }),
 
-  didUpdateAttrs() {
-    this._super(...arguments);
-    let selection = this.selection;
-
-    if (selection !== this.oldSelection) {
-      this.draw();
-    }
-
-    this.set('oldSelection', selection);
-  },
-
   crosshair: computed('time', function () {
     let { time } = this;
 
