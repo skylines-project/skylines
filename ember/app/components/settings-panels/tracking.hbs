@@ -8,27 +8,27 @@
       {{else if messageKey}}
         <BsAlert @type="success" @dismissible={{false}}>{{t messageKey}}</BsAlert>
       {{/if}}
-  
+
       <ValidatedInput
         @value={{callsign}}
         @validation={{validations.attrs.callsign}}
         @label={{t "tracking-callsign"}}
         @disabled={{saveTask.isRunning}}
         @didValidate={{didValidate}} />
-  
+
       <div class="form-group">
         <label class="control-label">{{t "tracking-delay"}}</label>
-  
+
         <PowerSelect
           @options={{delays}}
           @searchEnabled={{false}}
           @selected={{_delay}}
-          @onchange={{action (mut delay)}}
+          @onChange={{action (mut delay)}}
         as |delay|>
           {{t "tracking-delay-choice" delay=delay}}
         </PowerSelect>
       </div>
-  
+
       <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
         {{t (if saveTask.isRunning "changing" "change")}}
       </button>
