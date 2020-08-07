@@ -39,8 +39,11 @@ jobs:
       - run: yarn ember dependency-lint
         working-directory: ./ember
 
-      - run: yarn percy exec -- yarn test
-        working-directory: ./ember
+      - uses: percy/exec-action@v0.3.0
+        with:
+          command: yarn test
+          verbose: true
+          working-directory: ./ember
 
   embroider:
     name: Frontend (embroider)
