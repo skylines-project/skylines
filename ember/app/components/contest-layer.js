@@ -9,24 +9,17 @@ import Style from 'ol/style/Style';
 const DEFAULT_COLOR = '#004bbd';
 
 export default class ContestLayer extends Component {
+  source = new VectorSource();
+  layer = new VectorLayer({
+    source: this.source,
+    style: style_function,
+    name: 'Contest',
+    zIndex: 49,
+  });
+
   @computed('args.flights.@each.contests')
   get contests() {
     return this.args.flights.map(flight => flight.get('contests')).reduce((a, b) => a.concat(b), []);
-  }
-
-  @computed
-  get layer() {
-    return new VectorLayer({
-      source: new VectorSource(),
-      style: style_function,
-      name: 'Contest',
-      zIndex: 49,
-    });
-  }
-
-  @computed('layer')
-  get source() {
-    return this.layer.getSource();
   }
 
   @action
