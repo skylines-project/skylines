@@ -42,7 +42,6 @@ jobs:
       - uses: percy/exec-action@v0.3.0
         with:
           command: yarn test
-          verbose: true
           working-directory: ./ember
 
   embroider:
