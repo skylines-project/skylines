@@ -1,74 +1,42 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Stroke from 'ol/style/Stroke';
 import Style from 'ol/style/Style';
 
-const DEFAULT_COLOR = '#004bbd';
+const CLASSIC_STYLE = createStyle('#ff2c73');
+const TRIANGLE_STYLE = createStyle('#9f14ff');
+
+function createStyle(color) {
+  let stroke = new Stroke({ color, width: 2, lineDash: [5] });
+  return new Style({ stroke });
+}
 
 export default class ContestLayer extends Component {
-  tagName = '';
+  source = new VectorSource();
+  layer = new VectorLayer({
+    source: this.source,
+    style(feature) {
+      let isTriangle = feature.get('isTriangle');
+      return isTriangle ? TRIANGLE_STYLE : CLASSIC_STYLE;
+    },
+    zIndex: 49,
+  });
 
-  map = null;
-  flights = null;
-
-  @computed('flights.@each.contests')
-  get contests() {
-    return this.flights.map(flight => flight.get('contests')).reduce((a, b) => a.concat(b), []);
-  }
-
-  @computed
-  get layer() {
-    return new VectorLayer({
-      source: new VectorSource(),
-      style: style_function,
-      name: 'Contest',
-      zIndex: 49,
-    });
-  }
-
-  @computed('layer')
-  get source() {
-    return this.layer.getSource();
-  }
-
-  @computed
-  get visible() {
-    return this.layer.getVisible();
-  }
-
-  set visible(value) {
+  @action
+  setVisible([value]) {
     this.layer.setVisible(value);
   }
 
-  didInsertElement() {
-    super.didInsertElement(...arguments);
-    this.map.addLayer(this.layer);
+  constructor() {
+    super(...arguments);
+    this.args.map.addLayer(this.layer);
   }
 
-  willDestroyElement() {
-    super.willDestroyElement(...arguments);
-    this.map.removeLayer(this.layer);
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.map.removeLayer(this.layer);
   }
-}
-
-/**
- * Determin the drawing style for the feature
- * @param {ol.feature} feature Feature to style
- * @return {!Array<ol.style.Style>} Style of the feature
- */
-function style_function(feature) {
-  let color = DEFAULT_COLOR;
-  if (feature.getKeys().includes('color')) {
-    color = feature.get('color');
-  }
-
-  return [
-    new Style({
-      stroke: new Stroke({ color, width: 2, lineDash: [5] }),
-      zIndex: 999,
-    }),
-  ];
 }
