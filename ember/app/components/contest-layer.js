@@ -46,7 +46,6 @@ function style_function(feature) {
   return [
     new Style({
       stroke: new Stroke({ color, width: 2, lineDash: [5] }),
-      zIndex: 999,
     }),
   ];
 }
