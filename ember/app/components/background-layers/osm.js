@@ -5,7 +5,9 @@ import OsmSource from 'ol/source/OSM';
 
 export default class extends Component {
   layer = new TileLayer({
-    source: new OsmSource(),
+    source: new OsmSource({
+      crossOrigin: 'anonymous',
+    }),
     zIndex: 1,
   });
 

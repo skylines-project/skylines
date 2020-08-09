@@ -13,6 +13,7 @@ export default class extends Component {
         '<a href="http://www.mountain-wave-project.com/">' +
         'Mountain Wave Project' +
         '</a>.',
+      crossOrigin: 'anonymous',
       url: `${config.SKYLINES_TILE_BASEURL || ''}/tiles/1.0.0/mwp/EPSG3857/{z}/{x}/{y}.png`,
     }),
     zIndex: 11,

@@ -13,6 +13,7 @@ export default class extends Component {
         ' class="mapbox-improve-map"' +
         ' href="https://www.mapbox.com/map-feedback/"' +
         ' target="_blank" rel="noopener">Improve this map</a>',
+      crossOrigin: 'anonymous',
       url: this.args.url,
     }),
     zIndex: 5,
