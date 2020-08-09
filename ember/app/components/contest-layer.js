@@ -1,4 +1,4 @@
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 
 import VectorLayer from 'ol/layer/Vector';
@@ -16,11 +16,6 @@ export default class ContestLayer extends Component {
     name: 'Contest',
     zIndex: 49,
   });
-
-  @computed('args.flights.@each.contests')
-  get contests() {
-    return this.args.flights.map(flight => flight.get('contests')).reduce((a, b) => a.concat(b), []);
-  }
 
   @action
   setVisible([value]) {

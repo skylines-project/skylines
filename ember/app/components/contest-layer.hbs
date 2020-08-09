@@ -1,7 +1,9 @@
 {{did-insert this.setVisible @visible}}
 {{did-update this.setVisible @visible}}
-{{#each this.contests as |contest|}}
-  {{#if contest}}
-    <ContestLayerFeature @source={{this.source}} @contest={{contest}} />
-  {{/if}}
+{{#each @flights as |flight|}}
+  {{#each flight.contests as |contest|}}
+    {{#if contest}}
+      <ContestLayerFeature @source={{this.source}} @contest={{contest}} />
+    {{/if}}
+  {{/each}}
 {{/each}}
