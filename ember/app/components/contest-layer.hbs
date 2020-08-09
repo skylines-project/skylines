@@ -1,7 +1,7 @@
 {{did-insert this.setVisible @visible}}
 {{did-update this.setVisible @visible}}
-{{#each contests as |contest|}}
+{{#each this.contests as |contest|}}
   {{#if contest}}
-    <ContestLayerFeature @source={{source}} @contest={{contest}} />
+    <ContestLayerFeature @source={{this.source}} @contest={{contest}} />
   {{/if}}
 {{/each}}

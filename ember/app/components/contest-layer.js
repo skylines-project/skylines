@@ -1,5 +1,5 @@
-import Component from '@ember/component';
 import { action, computed } from '@ember/object';
+import Component from '@glimmer/component';
 
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
@@ -9,14 +9,9 @@ import Style from 'ol/style/Style';
 const DEFAULT_COLOR = '#004bbd';
 
 export default class ContestLayer extends Component {
-  tagName = '';
-
-  map = null;
-  flights = null;
-
-  @computed('flights.@each.contests')
+  @computed('args.flights.@each.contests')
   get contests() {
-    return this.flights.map(flight => flight.get('contests')).reduce((a, b) => a.concat(b), []);
+    return this.args.flights.map(flight => flight.get('contests')).reduce((a, b) => a.concat(b), []);
   }
 
   @computed
@@ -39,14 +34,14 @@ export default class ContestLayer extends Component {
     this.layer.setVisible(value);
   }
 
-  init() {
-    super.init(...arguments);
-    this.map.addLayer(this.layer);
+  constructor() {
+    super(...arguments);
+    this.args.map.addLayer(this.layer);
   }
 
   willDestroy() {
     super.willDestroy(...arguments);
-    this.map.removeLayer(this.layer);
+    this.args.map.removeLayer(this.layer);
   }
 }
 
