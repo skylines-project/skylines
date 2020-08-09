@@ -19,7 +19,6 @@ export default class ContestLayer extends Component {
   layer = new VectorLayer({
     source: this.source,
     style: style_function,
-    name: 'Contest',
     zIndex: 49,
   });
 
