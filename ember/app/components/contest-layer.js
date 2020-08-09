@@ -18,7 +18,10 @@ export default class ContestLayer extends Component {
   source = new VectorSource();
   layer = new VectorLayer({
     source: this.source,
-    style: style_function,
+    style(feature) {
+      let isTriangle = feature.get('isTriangle');
+      return isTriangle ? TRIANGLE_STYLE : CLASSIC_STYLE;
+    },
     zIndex: 49,
   });
 
@@ -36,14 +39,4 @@ export default class ContestLayer extends Component {
     super.willDestroy(...arguments);
     this.args.map.removeLayer(this.layer);
   }
-}
-
-/**
- * Determin the drawing style for the feature
- * @param {ol.feature} feature Feature to style
- * @return {!Array<ol.style.Style>} Style of the feature
- */
-function style_function(feature) {
-  let isTriangle = feature.get('isTriangle');
-  return isTriangle ? TRIANGLE_STYLE : CLASSIC_STYLE;
 }
