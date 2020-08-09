@@ -39,13 +39,13 @@ export default class ContestLayer extends Component {
     this.layer.setVisible(value);
   }
 
-  didInsertElement() {
-    super.didInsertElement(...arguments);
+  init() {
+    super.init(...arguments);
     this.map.addLayer(this.layer);
   }
 
-  willDestroyElement() {
-    super.willDestroyElement(...arguments);
+  willDestroy() {
+    super.willDestroy(...arguments);
     this.map.removeLayer(this.layer);
   }
 }
