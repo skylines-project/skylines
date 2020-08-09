@@ -6,8 +6,13 @@ import VectorSource from 'ol/source/Vector';
 import Stroke from 'ol/style/Stroke';
 import Style from 'ol/style/Style';
 
-const CLASSIC_COLOR = '#ff2c73';
-const TRIANGLE_COLOR = '#9f14ff';
+const CLASSIC_STYLE = createStyle('#ff2c73');
+const TRIANGLE_STYLE = createStyle('#9f14ff');
+
+function createStyle(color) {
+  let stroke = new Stroke({ color, width: 2, lineDash: [5] });
+  return new Style({ stroke });
+}
 
 export default class ContestLayer extends Component {
   source = new VectorSource();
@@ -41,11 +46,5 @@ export default class ContestLayer extends Component {
  */
 function style_function(feature) {
   let isTriangle = feature.get('isTriangle');
-  let color = isTriangle ? TRIANGLE_COLOR : CLASSIC_COLOR;
-
-  return [
-    new Style({
-      stroke: new Stroke({ color, width: 2, lineDash: [5] }),
-    }),
-  ];
+  return isTriangle ? TRIANGLE_STYLE : CLASSIC_STYLE;
 }
