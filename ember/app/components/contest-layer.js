@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
@@ -34,12 +34,8 @@ export default class ContestLayer extends Component {
     return this.layer.getSource();
   }
 
-  @computed
-  get visible() {
-    return this.layer.getVisible();
-  }
-
-  set visible(value) {
+  @action
+  setVisible([value]) {
     this.layer.setVisible(value);
   }
 
