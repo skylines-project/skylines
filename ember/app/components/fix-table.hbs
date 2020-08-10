@@ -1,13 +1,13 @@
 <div ...attributes>
   <table local-class="fix-table" class="table table-condensed">
     <tbody>
-      {{#each data as |row|}}
+      {{#each this.data as |row|}}
         <FixTableRow
           @row={{row}}
-          @selectable={{selectable}}
-          @selected={{and selectable (eq row.id selection)}}
+          @selectable={{this.selectable}}
+          @selected={{and this.selectable (eq row.id @selection)}}
           @onSelect={{this.select}}
-          @onRemove={{onRemove}} />
+          @onRemove={{this.onRemove}} />
       {{/each}}
     </tbody>
   </table>
