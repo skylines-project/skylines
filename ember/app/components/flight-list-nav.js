@@ -1,4 +1,3 @@
-import { getOwner } from '@ember/application';
 import Component from '@ember/component';
 import { action } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
@@ -12,16 +11,12 @@ export default class FlightListNav extends Component {
 
   @service account;
   @service pinnedFlights;
+  @service router;
 
   @notEmpty('pinnedFlights.pinned') hasPinned;
 
   @safeComputed('date', date => addDays(date, -1)) prevDate;
   @safeComputed('date', date => addDays(date, 1)) nextDate;
-
-  init() {
-    super.init(...arguments);
-    this.set('router', getOwner(this).lookup('router:main'));
-  }
 
   @action
   dateSelected(_, date) {
