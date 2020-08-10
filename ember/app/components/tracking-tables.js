@@ -1,28 +1,26 @@
-import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { setDiff } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isNone } from '@ember/utils';
+import Component from '@glimmer/component';
 
 export default class TrackingTables extends Component {
-  tagName = '';
-
   @service account;
 
   tracks = null;
   friends = null;
 
-  @computed('tracks.[]', 'friends.[]', 'account.user.id')
+  @computed('args.{tracks.[],friends.[]}', 'account.user.id')
   get friendsTracks() {
-    let self = this.get('account.user.id');
+    let self = this.account.user?.id;
     if (isNone(self)) {
       return [];
     }
 
-    let friends = this.friends;
+    let friends = this.args.friends;
 
-    return this.tracks.filter(track => track.pilot.id === self || friends.includes(track.pilot.id));
+    return this.args.tracks.filter(track => track.pilot.id === self || friends.includes(track.pilot.id));
   }
 
-  @setDiff('tracks', 'friendsTracks') othersTracks;
+  @setDiff('args.tracks', 'friendsTracks') othersTracks;
 }
