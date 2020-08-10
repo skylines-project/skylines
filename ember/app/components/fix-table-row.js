@@ -5,8 +5,6 @@ import { htmlSafe } from '@ember/template';
 export default class extends Component {
   tagName = '';
 
-  selectable = false;
-
   @computed('row.color')
   get badgeStyle() {
     return htmlSafe(`background-color: ${this.row.color}`);
@@ -14,13 +12,13 @@ export default class extends Component {
 
   @action
   remove() {
-    this.onRemove(this.get('row.id'));
+    this.onRemove(this.row.id);
   }
 
   @action
   handleClick() {
     if (this.selectable) {
-      this.onSelect(this.get('row.id'));
+      this.onSelect(this.row.id);
     }
   }
 }

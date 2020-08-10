@@ -1,54 +1,53 @@
-<tr local-class="fix-table-row" class="{{if this.selected "selected"}} {{if this.selectable "selectable"}}" ...attributes {{on "click" this.handleClick}}>
+<tr local-class="fix-table-row" class="{{if @selected "selected"}} {{if @selectable "selectable"}}" ...attributes {{on "click" this.handleClick}}>
   <td>
-    <span class="badge" style={{badgeStyle}}>
-      {{#if row.competitionId}}
-        {{row.competitionId}}
+    <span class="badge" style={{this.badgeStyle}}>
+      {{#if @row.competitionId}}
+        {{@row.competitionId}}
       {{else}}
         &nbsp;
       {{/if}}
     </span>
   </td>
   <td>
-    {{#if (eq row.fix.time undefined)}}
+    {{#if (eq @row.fix.time undefined)}}
       --:--:--
     {{else}}
-      {{format-time (multiply row.fix.time 1000) format="hhmmss" timeZone="UTC"}}
+      {{format-time (multiply @row.fix.time 1000) format="hhmmss" timeZone="UTC"}}
     {{/if}}
   </td>
   <td>
-    {{#if (eq row.fix.altitudeMSL undefined)}}
+    {{#if (eq @row.fix.altitudeMSL undefined)}}
       --
     {{else}}
-      {{format-altitude row.fix.altitudeMSL}} <small>MSL</small>
+      {{format-altitude @row.fix.altitudeMSL}} <small>MSL</small>
     {{/if}}
   </td>
   <td>
-    {{#if (eq row.fix.altitudeGND undefined)}}
+    {{#if (eq @row.fix.altitudeGND undefined)}}
       --
     {{else}}
-      {{format-altitude row.fix.altitudeGND}} <small>GND</small>
+      {{format-altitude @row.fix.altitudeGND}} <small>GND</small>
     {{/if}}
   </td>
   <td>
-    {{#if (eq row.fix.vario undefined)}}
+    {{#if (eq @row.fix.vario undefined)}}
       --
     {{else}}
-      {{format-lift row.fix.vario}}
+      {{format-lift @row.fix.vario}}
     {{/if}}
   </td>
   <td>
-    {{#if (eq row.fix.speed undefined)}}
+    {{#if (eq @row.fix.speed undefined)}}
       --
     {{else}}
-      {{format-speed row.fix.speed}}
+      {{format-speed @row.fix.speed}}
     {{/if}}
   </td>
   <td>
-    {{#if row.removable}}
-      <button type="button" local-class="remove-button" {{on "click" (action "remove" bubbles=false)}}>
+    {{#if @row.removable}}
+      <button type="button" local-class="remove-button" {{on "click" this.remove}}>
         {{svg-jar "remove" class="fa-svg"}}
       </button>
     {{/if}}
   </td>
-
 </tr>
