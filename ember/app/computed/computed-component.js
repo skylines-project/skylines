@@ -1,9 +1,9 @@
 import { getOwner } from '@ember/application';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 
 export default function computedComponent(baseNameProperty, prefix = '') {
   return computed(baseNameProperty, function () {
-    let componentName = this.get(baseNameProperty);
+    let componentName = get(this, baseNameProperty);
     if (!componentName) {
       return;
     }
