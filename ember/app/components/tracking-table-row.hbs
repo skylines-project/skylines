@@ -1,26 +1,26 @@
 <tr ...attributes>
   <td class="hidden-xs date">
-    <time title={{format-time track.time format="full"}} datetime={{to-iso-string track.time}}>
-      {{format-relative track.time interval=1000}}
+    <time title={{format-time @track.time format="full"}} datetime={{to-iso-string @track.time}}>
+      {{format-relative @track.time interval=1000}}
     </time>
   </td>
 
-  <td><LinkTo @route="user" @model={{track.pilot.id}}>{{track.pilot.name}}</LinkTo></td>
+  <td><LinkTo @route="user" @model={{@track.pilot.id}}>{{@track.pilot.name}}</LinkTo></td>
 
   <td>
-    {{#if track.nearestAirport}}
-      <XFlag @code={{track.nearestAirport.countryCode}} />
-      {{track.nearestAirport.name}}
-      ({{format-distance track.nearestAirportDistance}})
+    {{#if @track.nearestAirport}}
+      <XFlag @code={{@track.nearestAirport.countryCode}} />
+      {{@track.nearestAirport.name}}
+      ({{format-distance @track.nearestAirportDistance}})
     {{/if}}
   </td>
 
   <td class="hidden-xs numeric">
-    {{#if (not-eq altitudeAGL undefined)}}
-      {{format-altitude altitudeAGL}}
+    {{#if (not-eq this.altitudeAGL undefined)}}
+      {{format-altitude this.altitudeAGL}}
       <small>AGL</small>
-    {{else if track.altitude}}
-      {{format-altitude track.altitude}}
+    {{else if @track.altitude}}
+      {{format-altitude @track.altitude}}
       <small>MSL</small>
     {{else}}
       <small>{{t "unknown"}}</small>
@@ -28,6 +28,6 @@
   </td>
 
   <td nowrap="nowrap" class="column-buttons">
-    <LinkTo @route="tracking.details" @model={{track.pilot.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
+    <LinkTo @route="tracking.details" @model={{@track.pilot.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>
   </td>
 </tr>
