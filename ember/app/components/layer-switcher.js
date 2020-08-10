@@ -3,20 +3,13 @@ import { inject as service } from '@ember/service';
 
 import { BASE_LAYERS, OVERLAY_LAYERS } from '../services/map-settings';
 
-export default Component.extend({
-  tagName: '',
+export default class LayerSwitcher extends Component {
+  tagName = '';
 
-  mapSettings: service(),
+  @service mapSettings;
 
-  map: null,
-  open: false,
+  open = false;
 
-  BASE_LAYERS,
-  OVERLAY_LAYERS,
-
-  actions: {
-    open() {
-      this.set('open', true);
-    },
-  },
-});
+  BASE_LAYERS = BASE_LAYERS;
+  OVERLAY_LAYERS = OVERLAY_LAYERS;
+}
