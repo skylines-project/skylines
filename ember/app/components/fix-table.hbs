@@ -6,7 +6,7 @@
           @row={{row}}
           @selectable={{selectable}}
           @selected={{and selectable (eq row.id selection)}}
-          @onSelect={{action "select"}}
+          @onSelect={{this.select}}
           @onRemove={{onRemove}} />
       {{/each}}
     </tbody>
