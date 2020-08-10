@@ -1,15 +1,10 @@
-import Component from '@ember/component';
 import { action, computed } from '@ember/object';
+import Component from '@glimmer/component';
 
 export default class extends Component {
-  tagName = '';
-
-  nearFlights = null;
-  visibleFlights = null;
-
-  @computed('nearFlights.[]', 'visibleFlights.[]')
+  @computed('args.{nearFlights.[],visibleFlights.[]}')
   get nearFlightsWithColors() {
-    let { nearFlights, visibleFlights } = this;
+    let { nearFlights, visibleFlights } = this.args;
     return nearFlights.map(it => {
       let id = it.flight.id;
       let visibleFlight = visibleFlights.findBy('id', id);
@@ -24,6 +19,6 @@ export default class extends Component {
 
   @action
   select(id) {
-    this.onSelect(id);
+    this.args.onSelect(id);
   }
 }
