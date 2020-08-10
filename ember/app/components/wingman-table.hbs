@@ -1,16 +1,14 @@
-<div ...attributes>
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th>{{t "aircraft"}}</th>
-        <th>{{t "pilot"}}</th>
-        <th>{{t "first-last"}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each nearFlightsWithColors as |nearFlight|}}
-        <WingmanRow @nearFlight={{nearFlight}} {{on "click" (action "select" nearFlight.flight.id)}} />
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+<table class="table table-condensed" ...attributes>
+  <thead>
+    <tr>
+      <th>{{t "aircraft"}}</th>
+      <th>{{t "pilot"}}</th>
+      <th>{{t "first-last"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each nearFlightsWithColors as |nearFlight|}}
+      <WingmanRow @nearFlight={{nearFlight}} {{on "click" (action "select" nearFlight.flight.id)}} />
+    {{/each}}
+  </tbody>
+</table>
