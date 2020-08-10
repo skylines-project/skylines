@@ -1,24 +1,22 @@
-import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { htmlSafe } from '@ember/template';
+import Component from '@glimmer/component';
 
 export default class extends Component {
-  tagName = '';
-
-  @computed('row.color')
+  @computed('args.row.color')
   get badgeStyle() {
-    return htmlSafe(`background-color: ${this.row.color}`);
+    return htmlSafe(`background-color: ${this.args.row.color}`);
   }
 
   @action
   remove() {
-    this.onRemove(this.row.id);
+    this.onRemove(this.args.row.id);
   }
 
   @action
   handleClick() {
-    if (this.selectable) {
-      this.onSelect(this.row.id);
+    if (this.args.selectable) {
+      this.args.onSelect(this.args.row.id);
     }
   }
 }
