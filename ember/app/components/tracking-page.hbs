@@ -32,7 +32,8 @@
         <FixTable
           @flights={{fixCalc.flights}}
           @fixes={{fixCalc.fixes}}
-          @selection={{mut selectedFlightId}}
+          @selection={{this.selectedFlightId}}
+          @onSelectionChange={{fn (mut this.selectedFlightId)}}
           @onRemove={{action "removeFlight"}} />
       </div>
 

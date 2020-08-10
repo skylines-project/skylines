@@ -23,6 +23,6 @@ export default class extends Component {
 
   @action
   select(id) {
-    this.set('selection', this.selection === id ? null : id);
+    this.onSelectionChange(this.selection === id ? null : id);
   }
 }
