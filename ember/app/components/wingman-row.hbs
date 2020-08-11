@@ -1,60 +1,60 @@
-<tr local-class="wingman-row" class="selectable" style={{colorStripeStyle}} ...attributes>
+<tr local-class="wingman-row" class="selectable" style={{this.colorStripeStyle}} ...attributes>
   <td>
-    {{#if flight.model.id}}
+    {{#if this.flight.model.id}}
       <span>
-        <BsTooltip @title={{concat "Handicap: " flight.model.index}} @placement="bottom" />
-        {{flight.model.name}}
+        <BsTooltip @title={{concat "Handicap: " this.flight.model.index}} @placement="bottom" />
+        {{this.flight.model.name}}
       </span>
-    {{else if igcFile.model}}
-      [{{igcFile.model}}]
+    {{else if this.igcFile.model}}
+      [{{this.igcFile.model}}]
     {{else}}
       [{{t "unknown"}}]
     {{/if}}
 
     <small><br>
-      {{#if flight.registration}}
-        {{flight.registration}}
-      {{else if igcFile.registration}}
-        {{igcFile.registration}}
+      {{#if this.flight.registration}}
+        {{this.flight.registration}}
+      {{else if this.igcFile.registration}}
+        {{this.igcFile.registration}}
       {{/if}}
 
-      {{#if flight.competitionId}}
-        &ndash; {{flight.competitionId}}
-      {{else if igcFile.competitionId}}
-        &ndash; {{igcFile.competitionId}}
+      {{#if this.flight.competitionId}}
+        &ndash; {{this.flight.competitionId}}
+      {{else if this.igcFile.competitionId}}
+        &ndash; {{this.igcFile.competitionId}}
       {{/if}}
     </small>
   </td>
   <td>
-    {{#if pilotName}}
-      {{#if pilot.id}}
-        <LinkTo @route="user" @model={{pilot.id}} @bubbles={{false}}>{{pilotName}}</LinkTo>
+    {{#if this.pilotName}}
+      {{#if this.pilot.id}}
+        <LinkTo @route="user" @model={{this.pilot.id}} @bubbles={{false}}>{{this.pilotName}}</LinkTo>
       {{else}}
-        {{pilotName}}
+        {{this.pilotName}}
       {{/if}}
     {{/if}}
 
-    {{#if (and pilotName copilotName)}}<br>{{/if}}
+    {{#if (and this.pilotName this.copilotName)}}<br>{{/if}}
 
-    {{#if copilotName}}
-      {{#if copilot.id}}
-        <LinkTo @route="user" @model={{copilot.id}} @bubbles={{false}}>{{copilotName}}</LinkTo>
+    {{#if this.copilotName}}
+      {{#if this.copilot.id}}
+        <LinkTo @route="user" @model={{this.copilot.id}} @bubbles={{false}}>{{this.copilotName}}</LinkTo>
       {{else}}
-        {{copilotName}}
+        {{this.copilotName}}
       {{/if}}
     {{/if}}
 
-    {{#if (not (or pilotName copilotName))}}
+    {{#if (not (or this.pilotName this.copilotName))}}
     [{{t "unspecified"}}]
     {{/if}}
   </td>
   <td class="times-column">
-    {{format-time times.firstObject.start format="hhmmss" timeZone="UTC"}}<br>
-    {{format-time times.lastObject.end format="hhmmss" timeZone="UTC"}}
+    {{format-time this.times.firstObject.start format="hhmmss" timeZone="UTC"}}<br>
+    {{format-time this.times.lastObject.end format="hhmmss" timeZone="UTC"}}
 
     <BsPopover @title="Periods" @triggerEvents="hover">
       <table>
-        {{#each times as |interval|}}
+        {{#each this.times as |interval|}}
           <tr>
             <td style="text-align: right;">{{format-time interval.start format="hhmmss" timeZone="UTC"}}</td>
             <td>-</td>

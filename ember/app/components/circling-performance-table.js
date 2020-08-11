@@ -1,9 +1,7 @@
-import Component from '@ember/component';
 import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
 export default class CirclingPerformanceTable extends Component {
-  tagName = '';
-
   @findBy('perf', 'circlingDirection', 'left') left;
   @findBy('perf', 'circlingDirection', 'right') right;
   @findBy('perf', 'circlingDirection', 'mixed') mixed;
@@ -12,6 +10,6 @@ export default class CirclingPerformanceTable extends Component {
 
 function findBy(array, key, value) {
   return computed(`${array}.@each.${key}`, function () {
-    return this[array].findBy(key, value);
+    return this.args[array]?.findBy(key, value);
   });
 }

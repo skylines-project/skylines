@@ -1,13 +1,11 @@
-import Component from '@ember/component';
 import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
 export default class LayerSwitcherElement extends Component {
-  tagName = '';
-
   highlighted = false;
 
-  @computed('visible', 'highlighted')
+  @computed('args.visible', 'highlighted')
   get dimmed() {
-    return !this.visible && !this.highlighted;
+    return !this.args.visible && !this.highlighted;
   }
 }

@@ -1,6 +1,5 @@
 <a
   local-class="layer {{if @visible "active"}}"
-  style="cursor: pointer;"
   {{on "click" (fn @onSelect @layer)}}
   {{on "mouseenter" (action (mut this.highlighted) true)}}
   {{on "mouseleave" (action (mut this.highlighted) false)}}

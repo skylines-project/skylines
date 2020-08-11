@@ -1,14 +1,12 @@
-<div ...attributes>
-  <table local-class="fix-table" class="table table-condensed">
-    <tbody>
-      {{#each data as |row|}}
-        <FixTableRow
-          @row={{row}}
-          @selectable={{selectable}}
-          @selected={{and selectable (eq row.id selection)}}
-          @onSelect={{action "select"}}
-          @onRemove={{onRemove}} />
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+<table local-class="fix-table" class="table table-condensed" ...attributes>
+  <tbody>
+    {{#each this.data as |row|}}
+      <FixTableRow
+        @row={{row}}
+        @selectable={{this.selectable}}
+        @selected={{and this.selectable (eq row.id @selection)}}
+        @onSelect={{this.select}}
+        @onRemove={{this.onRemove}} />
+    {{/each}}
+  </tbody>
+</table>

@@ -1,6 +1,6 @@
 <div local-class="GraphicLayerSwitcher" class="ol-unselectable" ...attributes>
-  {{#if open}}
-    <div id="GraphicLayerSwitcher-open" {{on-click-outside (action (mut open) false) eventType="mousedown"}}>
+  {{#if this.open}}
+    <div id="GraphicLayerSwitcher-open" {{on-click-outside (fn (mut this.open) false) eventType="mousedown"}}>
       <div local-class="base_layers">
         {{#each this.BASE_LAYERS as |layer|}}
           <LayerSwitcherElement
@@ -22,7 +22,9 @@
     </div>
   {{else}}
     <div id="GraphicLayerSwitcher-closed">
-      <button {{action "open"}}><img src="../../images/layers.png"></button>
+      <button type="button" {{on "click" (fn (mut this.open) true)}}>
+        <img src="../../images/layers.png">
+      </button>
     </div>
   {{/if}}
 </div>
