@@ -6962,12 +6962,14 @@ ember-maybe-import-regenerator@0.1.6, ember-maybe-import-regenerator@^0.1.6:
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
 
-ember-maybe-in-element@1.0.0, ember-maybe-in-element@^0.4.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-maybe-in-element/-/ember-maybe-in-element-1.0.0.tgz#55fdbe3784a9807c69bf681c53926426a4a16498"
-  integrity sha512-aXYAb+u/kkZmPqjRhBNoaGAr3vZndf9Lrqy6xdPfpQ5ekM/a0oE9fAAZNg4Cq09bPecEnty4LJqAYZqS/oWvjg==
+ember-maybe-in-element@2.0.1, ember-maybe-in-element@^0.4.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ember-maybe-in-element/-/ember-maybe-in-element-2.0.1.tgz#fa3a26cc2c522a27129d6528b400b9c820943be6"
+  integrity sha512-Mp/HTVOGu9H7kWoq5xncVLEvPFgRuHdsqWyZ1v/gBA8Y3d2q2LdrmDK9Zg59i+cCs4oa9LrMeFyKMAbBS3vyDw==
   dependencies:
-    ember-cli-babel "^7.7.3"
+    ember-cli-babel "^7.21.0"
+    ember-cli-htmlbars "^5.2.0"
+    ember-cli-version-checker "^5.1.1"
     ember-in-element-polyfill "^1.0.0"
 
 ember-modifier-manager-polyfill@^1.1.0, ember-modifier-manager-polyfill@^1.2.0:
