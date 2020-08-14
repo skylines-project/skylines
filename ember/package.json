@@ -104,7 +104,7 @@
   "resolutions": {
     "@percy/agent": "0.24.3",
     "ember-element-helper": "0.3.1",
-    "ember-maybe-in-element": "1.0.0",
+    "ember-maybe-in-element": "2.0.1",
     "ember-modifier": "2.1.0"
   },
   "ember-addon": {
