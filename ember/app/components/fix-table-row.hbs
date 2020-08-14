@@ -45,7 +45,7 @@
   </td>
   <td>
     {{#if @row.removable}}
-      <button type="button" local-class="remove-button" {{on "click" this.remove}}>
+      <button type="button" local-class="remove-button" {{on "click" (fn @onRemove @row.id)}}>
         {{svg-jar "remove" class="fa-svg"}}
       </button>
     {{/if}}
