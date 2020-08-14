@@ -9,11 +9,6 @@ export default class extends Component {
   }
 
   @action
-  remove() {
-    this.onRemove(this.args.row.id);
-  }
-
-  @action
   handleClick() {
     if (this.args.selectable) {
       this.args.onSelect(this.args.row.id);
