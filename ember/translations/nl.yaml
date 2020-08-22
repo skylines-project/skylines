@@ -256,7 +256,7 @@ tracking:
   clients: Klanten
   xcsoar-description: starten beschikbaar met {release}
   instructions-below: Instructies beneden
-  available-in-gaggle: nu beschikbaar in de huidige versie van Gaggle
+  skylines-tracker-description: nu beschikbaar in de huidige versie van SkyLines Tracker
   lt24-clients: LiveTrack24 klanten
   lt24-description: Je kan ook alle beschikbare applicaties gebruiken met het {livetrack24} protocol om je locatie te verzenden naar SkyLines. Gebruik je Live Tracking Key als gebruikersnaam, kies een wachtwoord en configureer {skylines} als server.
   your-live-tracking-key-is-KEY: 'Je Live Tracking Key is: {key}'

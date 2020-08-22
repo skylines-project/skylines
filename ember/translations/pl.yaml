@@ -256,7 +256,7 @@ tracking:
   clients: Klienci
   xcsoar-description: dostępne zaczynając od {release}
   instructions-below: Instrukcje poniżej.
-  available-in-gaggle: teraz dostępne w bieżącej Gaggle
+  skylines-tracker-description: teraz dostępne w bieżącej SkyLines Tracker
   lt24-clients: Klienci LiveTrack24
   lt24-description: Możesz także użyć wszystkich dostępnych aplikacji, które używają protokołu {livetrack24} do wysyłania twojej pozycji do SkyLines. Po prostu użyj swojego klucza Live Tracking jako nazwę użytkownika, wybierz dowolne hasło jakie chcesz i ustaw {skylines} jako serwer.
   your-live-tracking-key-is-KEY: 'Twój klucz Live Tracking: {key}'
