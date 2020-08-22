@@ -253,7 +253,7 @@ tracking:
   clients: Clients
   xcsoar-description: Disponible depuis la version {release}
   instructions-below: Instructions ci-dessous.
-  available-in-gaggle: Maintenant disponible dans la version courante de Gaggle
+  skylines-tracker-description: Maintenant disponible dans la version courante de SkyLines Tracker
   lt24-clients: Clients LiveTrack24
   lt24-description: Vous pouvez utilisez toutes les applications utilisant le protocole {livetrack24} pour envoyer vos positions dans SkyLines. Utilisez seulement votre clé de pistage comme nom d'utilisateur, choisissez un mot de passe et utilisez {skylines} comme serveur.
   your-live-tracking-key-is-KEY: 'Votre de clé de pistage est : {key}'
