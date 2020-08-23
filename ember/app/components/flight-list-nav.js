@@ -34,6 +34,11 @@ export default class FlightListNav extends Component {
   }
 
   @action
+  onFlatpickrReady(_selectedDates, _dateStr, instance) {
+    this.flatpickr = instance;
+  }
+
+  @action
   maybePreventDefault(event) {
     // if the click happened inside the datepicker we don't want the link to trigger
     let { target } = event;
