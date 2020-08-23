@@ -13,6 +13,7 @@ export default Factory.extend({
   name() {
     return `${this.firstName} ${this.lastName}`;
   },
+  recoveryKey: null,
   speedUnit: 1,
   trackingCallsign: 'JD',
   trackingDelay: 0,
