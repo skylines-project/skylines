@@ -1,30 +1,41 @@
 <div class="panel-body" ...attributes>
   <form {{action "submit" on="submit"}}>
     {{#if error}}
-      <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
+      <BsAlert @type="danger" @dismissible={{false}} data-test-error-message>{{error}}</BsAlert>
     {{else if success}}
-      <BsAlert @type="success" @dismissible={{false}}>{{t "password-recovered"}}</BsAlert>
+      <BsAlert @type="success" @dismissible={{false}} data-test-success-message>
+        {{t "password-recovered"}}
+      </BsAlert>
     {{/if}}
-  
+
     <ValidatedInput
       @type="password"
       @value={{password}}
       @validation={{validations.attrs.password}}
       @label={{t "password"}}
       @disabled={{recoverTask.isRunning}}
-      @didValidate={{didValidate}} />
-  
+      @didValidate={{didValidate}}
+      data-test-password-input
+    />
+
     <ValidatedInput
       @type="password"
       @value={{passwordConfirmation}}
       @validation={{validations.attrs.passwordConfirmation}}
       @label={{t "confirm-password"}}
       @disabled={{recoverTask.isRunning}}
-      @didValidate={{didValidate}} />
-  
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or recoverTask.isRunning success (not validations.isValid)}}>
+      @didValidate={{didValidate}}
+      data-test-password-confirmation-input
+    />
+
+    <button
+      class="btn btn-primary btn-block"
+      type="submit"
+      disabled={{or recoverTask.isRunning success (not validations.isValid)}}
+      data-test-submit-button
+    >
       {{t (if recoverTask.isRunning "changing-password" "change-password")}}
     </button>
   </form>
-  
+
 </div>
