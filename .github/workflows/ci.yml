@@ -13,6 +13,7 @@ jobs:
     name: Frontend
     runs-on: ubuntu-latest
     env:
+      COVERAGE: true
       JOBS: 1 # See https://git.io/vdao3 for details.
 
       # Percy secrets are included here to enable Percy's GitHub integration
