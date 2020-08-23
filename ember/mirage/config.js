@@ -5,6 +5,7 @@ import * as Users from './route-handlers/users';
 
 export default function () {
   this.passthrough('/translations/**');
+  this.passthrough('/write-coverage');
 
   this.get('/api/locale', { locale: 'en' });
 
