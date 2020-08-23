@@ -4,6 +4,10 @@ export default BaseSerializer.extend({
   serialize(object, request) {
     let json = BaseSerializer.prototype.serialize.apply(this, arguments);
 
+    delete json.admin;
+    delete json.password;
+    delete json.recoveryKey;
+
     if (object.club) {
       json.club = {
         id: Number(object.club.id),

@@ -1,6 +1,7 @@
 import { Factory } from 'ember-cli-mirage';
 
 export default Factory.extend({
+  admin: false,
   altitudeUnit: 0,
   distanceUnit: 1,
   email: 'johnny.dee@gmail.com',
@@ -12,6 +13,8 @@ export default Factory.extend({
   name() {
     return `${this.firstName} ${this.lastName}`;
   },
+  password: 'secret123',
+  recoveryKey: null,
   speedUnit: 1,
   trackingCallsign: 'JD',
   trackingDelay: 0,

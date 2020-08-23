@@ -25,8 +25,6 @@ module('Acceptance | Settings | Delete Account', function (hooks) {
 
     await authenticateAs(user);
 
-    server.post('/api/users/check-email', { result: 'self' });
-
     server.post('/api/settings/password/check', function (schema, request) {
       let json = JSON.parse(request.requestBody);
       return { result: json.password === 'secret123' };
