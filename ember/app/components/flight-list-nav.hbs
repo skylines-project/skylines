@@ -23,7 +23,7 @@
         {{/if}}
         <EmberFlatpickr
           @date={{or @date null}}
-          @getFlatpickrRef={{action (mut this.flatpickr)}}
+          @onReady={{this.onFlatpickrReady}}
           @onChange={{this.dateSelected}}
           @static={{true}}
           local-class="datepicker"
@@ -46,7 +46,7 @@
         {{format-date @date format="ddmmyyyy" timeZone="UTC"}}
         <EmberFlatpickr
           @date={{@date}}
-          @getFlatpickrRef={{action (mut this.flatpickr)}}
+          @onReady={{this.onFlatpickrReady}}
           @onChange={{this.dateSelected}}
           @static={{true}}
           local-class="datepicker"

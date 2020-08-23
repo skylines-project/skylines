@@ -2599,7 +2599,6 @@ atob@^2.1.2:
 
 "auto-changelog@github:mansona/auto-changelog#epic":
   version "2.2.0"
-  uid "2e310617dbe34ddbc78662218bf915160f5d712d"
   resolved "https://codeload.github.com/mansona/auto-changelog/tar.gz/2e310617dbe34ddbc78662218bf915160f5d712d"
   dependencies:
     commander "^5.0.0"
@@ -6079,7 +6078,7 @@ ember-cli-babel@7.22.1, ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cl
     rimraf "^3.0.1"
     semver "^5.5.0"
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.11.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.1, ember-cli-babel@^6.8.1, ember-cli-babel@^6.9.0, ember-cli-babel@^6.9.2:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.11.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.1, ember-cli-babel@^6.8.1, ember-cli-babel@^6.9.0, ember-cli-babel@^6.9.2:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
   integrity sha512-7ceC8joNYxY2wES16iIBlbPSxwKDBhYwC8drU3ZEvuPDMwVv1KzxCNu1fvxyFEBWhwaRNTUxSCsEVoTd9nosGA==
@@ -6276,7 +6275,7 @@ ember-cli-htmlbars-inline-precompile@^2.1.0:
     heimdalljs-logger "^0.1.9"
     silent-error "^1.1.0"
 
-ember-cli-htmlbars@5.3.1, ember-cli-htmlbars@^5.0.0, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1:
+ember-cli-htmlbars@5.3.1, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-5.3.1.tgz#61793964fc2599ce750db9e972ab55c6dd177c48"
   integrity sha512-ZjQTt44euDoqLvUkWbt1svgNCXgLzOztEbc2qqYMQvhQig416LMrWK7l3SSbNU+BtLD5UIxmwvLfF1tsO2CVyA==
@@ -6744,13 +6743,6 @@ ember-destroyable-polyfill@^2.0.1:
     ember-cli-version-checker "^5.1.1"
     ember-compatibility-helpers "^1.2.1"
 
-ember-diff-attrs@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/ember-diff-attrs/-/ember-diff-attrs-0.2.2.tgz#57baf6907957de004d9aff947809dfe78a054b3b"
-  integrity sha512-dziQ8G8QVRMqSFMg2l9E+Te19kcwk7+Aad7Q8lOci2b3EAiU7s0IFB3Z8rRed0JRJ3e6mPJyRmNbyUuNoyCM8g==
-  dependencies:
-    ember-cli-babel "^6.16.0"
-
 ember-element-helper@0.3.1, ember-element-helper@^0.2.0, ember-element-helper@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.3.1.tgz#dd6017a64a9952058c16050c7a9eb0fff5ebfe90"
@@ -6786,17 +6778,17 @@ ember-fetch@8.0.2:
     node-fetch "^2.6.0"
     whatwg-fetch "^3.4.0"
 
-ember-flatpickr@2.16.3:
-  version "2.16.3"
-  resolved "https://registry.yarnpkg.com/ember-flatpickr/-/ember-flatpickr-2.16.3.tgz#1dcdc357d0c816c9ec03367ae761049ef8c83ce3"
-  integrity sha512-gPs+JMn+UHqP4j1Xj62R/uoPihf/fju/EW986znJ7f3SiBPlk9bY1lX1IJnBrRUb63vF4+4m+wwQxHNq+76IdQ==
+ember-flatpickr@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-flatpickr/-/ember-flatpickr-3.0.0.tgz#369f6e6f1ce91c54a956f50c8e21102a1920e340"
+  integrity sha512-/63l1qYfkCclP03VVUs9l2n3eOtLoZhfhZtlfrOwk2tth4296oEK47hXlkybvS1lPvfy7Bz+32uIkRL20RtNDQ==
   dependencies:
-    ember-cli-babel "^7.19.0"
-    ember-cli-htmlbars "^5.0.0"
+    "@ember/render-modifiers" "^1.0.2"
+    ember-cli-babel "^7.21.0"
+    ember-cli-htmlbars "^5.2.0"
     ember-cli-node-assets "^0.2.2"
-    ember-diff-attrs "^0.2.2"
     fastboot-transform "^0.1.3"
-    flatpickr "^4.6.3"
+    flatpickr "^4.6.6"
 
 ember-focus-trap@^0.4.0:
   version "0.4.0"
@@ -8200,10 +8192,10 @@ flat-cache@^2.0.1:
     rimraf "2.6.3"
     write "1.0.3"
 
-flatpickr@^4.6.3:
-  version "4.6.5"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.6.5.tgz#02c121d2957194cb96d0dafd691e019799a64d91"
-  integrity sha512-ebcCWmHS+NwNqQPx9zyyDQjnVfa4swbaylZSSxAufAe8/7A9WWyEN7NKiyZDq7TC0myhsnw+EQZLX4gB1Hs3iQ==
+flatpickr@^4.6.6:
+  version "4.6.6"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.6.6.tgz#34d2ad80adfa34254e62583a34264d472f1038d6"
+  integrity sha512-EZ48CJMttMg3maMhJoX+GvTuuEhX/RbA1YeuI19attP3pwBdbYy6+yqAEVm0o0hSBFYBiLbVxscLW6gJXq6H3A==
 
 flatted@^2.0.0:
   version "2.0.2"
