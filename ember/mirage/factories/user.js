@@ -1,6 +1,7 @@
 import { Factory } from 'ember-cli-mirage';
 
 export default Factory.extend({
+  admin: false,
   altitudeUnit: 0,
   distanceUnit: 1,
   email: 'johnny.dee@gmail.com',
