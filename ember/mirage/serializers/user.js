@@ -5,6 +5,7 @@ export default BaseSerializer.extend({
     let json = BaseSerializer.prototype.serialize.apply(this, arguments);
 
     delete json.admin;
+    delete json.password;
     delete json.recoveryKey;
 
     if (object.club) {
