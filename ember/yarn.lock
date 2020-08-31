@@ -6762,10 +6762,10 @@ ember-css-modules-sass@1.1.0:
   dependencies:
     postcss-scss "^2.0.0"
 
-ember-css-modules@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/ember-css-modules/-/ember-css-modules-1.3.1.tgz#45f10dbe9fa00a2e13a95b81f1b5756493da12a4"
-  integrity sha512-LbjM2Rhjlm891wqxB1Bs1q99AEF4lBu6s8X/AGLxBLXIUOvbY1FtXJjAsZhRsuoWiFa9u1rTvmCGeMgLOdbKRA==
+ember-css-modules@1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/ember-css-modules/-/ember-css-modules-1.3.2.tgz#5288ceb7793cc34a1e6de9203b2b7a9bce21068e"
+  integrity sha512-s5splTyO0ElloI9IJx9iWU090fnmtsm/taFr8BYs1LpSIeM0GBDAnRADW3qyf6irkQvGstMNY7hJJqkBG4Dc+w==
   dependencies:
     broccoli-bridge "^1.0.0"
     broccoli-concat "^3.2.2"
