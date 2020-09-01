@@ -6110,10 +6110,10 @@ ember-basic-dropdown@^3.0.3:
     ember-maybe-in-element "^2.0.1"
     ember-truth-helpers "2.1.0"
 
-ember-bootstrap@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-4.0.1.tgz#158f3275cd080141db56c12863e195047f1aca83"
-  integrity sha512-aaMJbnSmBTjPz16MIyWhUsynoLn6/kFnRVWOlMRRS7hV/DoF1Xyto9QbxMXgrzbXI1iyC5vEefqdgeciDsZJwg==
+ember-bootstrap@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-4.1.0.tgz#e61a83fa5c19dbc2d2a0077431175102472ce638"
+  integrity sha512-mJn1x5SwIeT3fln+DmyFgIUOq2G4y4vQ0SCXXmgES2VZT40HnINkEUOmiaSzmssRX7P0vlRiaGWcoOR2MgW9Jg==
   dependencies:
     "@ember/render-modifiers" "^1.0.2"
     "@embroider/macros" "^0.21.0"
@@ -6134,7 +6134,7 @@ ember-bootstrap@4.0.1:
     ember-in-element-polyfill "^1.0.0"
     ember-on-helper "^0.1.0"
     ember-popper "^0.11.3"
-    ember-ref-bucket "^1.0.0"
+    ember-ref-bucket "^1.0.1"
     ember-style-modifier "^0.6.0"
     findup-sync "^4.0.0"
     fs-extra "^9.0.1"
@@ -7123,7 +7123,7 @@ ember-raf-scheduler@^0.1.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-ref-bucket@^1.0.0:
+ember-ref-bucket@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ember-ref-bucket/-/ember-ref-bucket-1.0.1.tgz#e0287c1209fc255d8bfa2cc35f11e64ddc438114"
   integrity sha512-mHnCkcBJn4KUM5bUin0GWhyOtjFzzDBy7VKfoZ6PypkXLhP3vw479OL89sm9x4mTKWZ8e173GnjwyRiWZkWAiw==
