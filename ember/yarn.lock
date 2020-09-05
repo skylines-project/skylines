@@ -6110,10 +6110,10 @@ ember-basic-dropdown@^3.0.3:
     ember-maybe-in-element "^2.0.1"
     ember-truth-helpers "2.1.0"
 
-ember-bootstrap@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-4.1.0.tgz#e61a83fa5c19dbc2d2a0077431175102472ce638"
-  integrity sha512-mJn1x5SwIeT3fln+DmyFgIUOq2G4y4vQ0SCXXmgES2VZT40HnINkEUOmiaSzmssRX7P0vlRiaGWcoOR2MgW9Jg==
+ember-bootstrap@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/ember-bootstrap/-/ember-bootstrap-4.1.1.tgz#5893b83758b1bee286cfdfa63f3b2c4192b8ffe0"
+  integrity sha512-N2Ayp7UJxvTfDX8gjHLd1Ay4KTUagE8SojLw4/t2Zrqeh8gr4gLDjvOEnInTY97IXszDHy23Wexk9TTW9OpAVw==
   dependencies:
     "@ember/render-modifiers" "^1.0.2"
     "@embroider/macros" "^0.21.0"
