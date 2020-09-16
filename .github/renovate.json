@@ -3,7 +3,9 @@
     "config:js-app",
     ":dependencyDashboard",
     ":maintainLockFilesWeekly",
-    ":semanticCommitsDisabled"
+    ":semanticCommitsDisabled",
+    ":automergeLinters",
+    ":automergeTesters"
   ],
   "python": {
     "enabled": false
