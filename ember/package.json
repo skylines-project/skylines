@@ -100,7 +100,7 @@
     "node-sass": "4.14.1",
     "prettier": "2.1.2",
     "qunit-console-grouper": "0.2.0",
-    "qunit-dom": "1.4.0"
+    "qunit-dom": "1.5.0"
   },
   "resolutions": {
     "@percy/agent": "0.24.3",
