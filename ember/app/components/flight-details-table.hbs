@@ -144,7 +144,7 @@
       <td>
         {{t "TIME-by-USER"
           htmlSafe=true
-          time=(format-relative flight.timeCreated)
+          time=(relative-time flight.timeCreated)
           user=flight.igcFile.owner.name
           userURL=(href-to "user" flight.igcFile.owner.id)}}</td>
     </tr>

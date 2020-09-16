@@ -1,7 +1,7 @@
 <tr ...attributes>
   <td class="hidden-xs date">
     <time title={{format-time @track.time format="full"}} datetime={{to-iso-string @track.time}}>
-      {{format-relative @track.time interval=1000}}
+      {{relative-time @track.time}}
     </time>
   </td>
 
