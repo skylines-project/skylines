@@ -6,7 +6,7 @@
         datetime={{to-iso-string @flight.scoreDate}}
         title={{format-date @flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}
       >
-        {{format-relative @flight.scoreDate}}
+        {{relative-time @flight.scoreDate}}
       </time>
       <div class="pull-right">
         <LinkTo @route="flight" @model={{@flight.id}} class="btn btn-default btn-sm">{{t "show"}}</LinkTo>

@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
 
-import BaseHelper from 'ember-intl/helpers/-format-base';
+import BaseHelper from 'ember-intl/-private/helpers/-format-base';
 
 export default class extends BaseHelper {
   @service units;

@@ -24,9 +24,9 @@
               <th>{{t "created"}}</th>
               <td>
                 {{#if club.owner}}
-                  {{format-relative club.timeCreated}} by <LinkTo @route="user" @model={{club.owner.id}}>{{club.owner.name}}</LinkTo>
+                  {{relative-time club.timeCreated}} by <LinkTo @route="user" @model={{club.owner.id}}>{{club.owner.name}}</LinkTo>
                 {{else}}
-                  {{format-relative club.timeCreated}}
+                  {{relative-time club.timeCreated}}
                 {{/if}}
               </td>
             </tr>
