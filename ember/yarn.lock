@@ -1644,13 +1644,13 @@
     which "^2.0.1"
     winston "^3.0.0"
 
-"@percy/ember@2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@percy/ember/-/ember-2.1.3.tgz#0b419ce69e273eeb6e8387234d60c9ec8e90f7db"
-  integrity sha512-EOTzWE9RtUrYgr07hbq3q9B1MZ998C4PSHAHF+Sj53pIt6j8Y+6gLtGAZ2a8rzSHs/Vue21qV4lrzT6/IV27yw==
+"@percy/ember@2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@percy/ember/-/ember-2.1.4.tgz#874f82a5f6dbad0068dae452688ea34b7d98f47b"
+  integrity sha512-qkLNhx/Is6KKKSeXIpotGh6VjwafxpyErIAScw1c7sTOcAApCkym2+Isiqtz6ckR7EmLUXBl3rz4f1M8iBSieg==
   dependencies:
     "@percy/agent" "~0"
-    ember-cli-babel "^7.19.0"
+    ember-cli-babel "^7.22.1"
 
 "@sentry/browser@5.24.2":
   version "5.24.2"
@@ -6377,6 +6377,7 @@ ember-cli-head@^0.4.0:
     ember-cli-htmlbars "^2.0.3"
 
 "ember-cli-htmlbars-3@npm:ember-cli-htmlbars@3", ember-cli-htmlbars@^3.0.0, ember-cli-htmlbars@^3.0.1:
+  name ember-cli-htmlbars-3
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-3.1.0.tgz#87806c2a0bca2ab52d4fb8af8e2215c1ca718a99"
   integrity sha512-cgvRJM73IT0aePUG7oQ/afB7vSRBV3N0wu9BrWhHX2zkR7A7cUBI7KC9VPk6tbctCXoM7BRGsCC4aIjF7yrfXA==
