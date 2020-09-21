@@ -97,7 +97,7 @@ sudo vim /etc/nginx/sites-available/skylinescondor.com
 	  }
 
 	server {    
-		    client_max_body_size 2M;
+		    client_max_body_size 4M;
 		    listen 80;
 		    listen [::]:80;
 
