@@ -7,6 +7,18 @@ sudo unlink /etc/nginx/sites-enabled/acme-challenge
 sudo ln -s /etc/nginx/sites-available/skylinescondor.com /etc/nginx/sites-enabled
 ngrestart
 
+# Automatic renewals.  See https://onepagezen.com/letsencrypt-auto-renew-certbot-apache/#step1
+0 0 */28 * * bash /home/bret/servers/repo-skylinesC/skylinesC/production/utilities/renewSSL.sh # every 28 days crontab line.  sudo crontab -e
+
+renewSSL.xh #don't need sudo because crontab runs as root.  Try after sudo -i to get to root
+	unlink /etc/nginx/sites-enabled/skylinescondor.com
+	ln -s /etc/nginx/sites-available/acme-challenge /etc/nginx/sites-enabled
+	systemctl restart nginx
+	certbot renew # remove --dry run part after testing
+	unlink /etc/nginx/sites-enabled/acme-challenge
+	ln -s /etc/nginx/sites-available/skylinescondor.com /etc/nginx/sites-enabled
+	systemctl restart nginx
+
 #install on an Ubuntu 18+ machine
 
 sudo apt-get update
@@ -40,11 +52,6 @@ sudo service nginx reload
 sudo certbot certonly --dry-run --webroot --webroot-path=/var/www/html -d skylinescondor.com
 ##### if that works, remove --dry-run and run again 
 #success!
-#Test renewal.  Certbot has a cron job running to do the renewal automatically:
-#This tests it:
-
-sudo certbot renew --dry-run
-
 
 sudo ls -l /etc/letsencrypt/live/skylinescondor.com
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
@@ -90,7 +97,7 @@ sudo vim /etc/nginx/sites-available/skylinescondor.com
 	  }
 
 	server {    
-		    client_max_body_size 2M;
+		    client_max_body_size 4M;
 		    listen 80;
 		    listen [::]:80;
 

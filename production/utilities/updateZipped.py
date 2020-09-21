@@ -83,7 +83,7 @@ while keepRunning: #loops infinitely
                     #create new zip
                     landZip = zipPath.split('.')[0].split('\\')[-1]
                     tempPathZip = mainDir+'\\temp_{}.7z'.format(landZip)
-                    print ('Creating {}'.format(zipName))
+                    print ('***Creating {}***'.format(zipName))
                     sevenzip(tempPathZip,landPath)
                     print('Moving to zip directory')
                     shutil.move(tempPathZip,zipPath)
