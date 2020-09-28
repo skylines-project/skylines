@@ -6377,6 +6377,7 @@ ember-cli-head@^0.4.0:
     ember-cli-htmlbars "^2.0.3"
 
 "ember-cli-htmlbars-3@npm:ember-cli-htmlbars@3", ember-cli-htmlbars@^3.0.0, ember-cli-htmlbars@^3.0.1:
+  name ember-cli-htmlbars-3
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-3.1.0.tgz#87806c2a0bca2ab52d4fb8af8e2215c1ca718a99"
   integrity sha512-cgvRJM73IT0aePUG7oQ/afB7vSRBV3N0wu9BrWhHX2zkR7A7cUBI7KC9VPk6tbctCXoM7BRGsCC4aIjF7yrfXA==
@@ -6500,10 +6501,10 @@ ember-cli-normalize-entity-name@^1.0.0:
   dependencies:
     silent-error "^1.0.0"
 
-ember-cli-notifications@6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-notifications/-/ember-cli-notifications-6.3.0.tgz#36b2377f0f3b3c1fdaad628667360e5ca35bca92"
-  integrity sha512-MyusWolyDcVGwIei0yNZNrVzgBtElVGHGDIoIIGq6CLyRcTTYGrF8ECpiVKc1nfW4lTrXyHNuhkb9R6tQ3Y1aQ==
+ember-cli-notifications@6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-notifications/-/ember-cli-notifications-6.3.1.tgz#dbea75874a78881c4127dc170c89c1d2b995880f"
+  integrity sha512-k6SyjKxFCaUoblKRc7P6q8u5tkitgvvvht7UK84VUAm5PzXATenm5bsexm9AlhsfpXVfJA7PluwVYyMLTyHyhQ==
   dependencies:
     auto-changelog "github:mansona/auto-changelog#epic"
     broccoli-funnel "^3.0.2"
