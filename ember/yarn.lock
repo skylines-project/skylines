@@ -6212,10 +6212,10 @@ ember-cli-bundle-analyzer@0.2.1:
     tmp "^0.2.1"
     touch "^3.1.0"
 
-ember-cli-code-coverage@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-code-coverage/-/ember-cli-code-coverage-1.0.1.tgz#8381c56f6dc0701b092244644bc086b7eb0a44ea"
-  integrity sha512-Uyv1/jYwHfiQ9iMwqe2xjtojtbAWsmRhDiZJZCUQmzWB/nosXLKIdcKw3fpgwExBeDlVi7nNdgNbFMKO4xpEbA==
+ember-cli-code-coverage@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-code-coverage/-/ember-cli-code-coverage-1.0.2.tgz#615fc7af8bc7d9388a28371c2825c224a936d73f"
+  integrity sha512-uD0RA6A4p/AOpPGq8JXIiZeDFWjzEm5fyWZLU5W8nCF//t3wbkly8tZukiYchJNNYEeESzd6gqdwgDkLMRzZYA==
   dependencies:
     babel-plugin-istanbul "^6.0.0"
     body-parser "^1.19.0"
@@ -6360,6 +6360,7 @@ ember-cli-head@^0.4.0:
     ember-cli-htmlbars "^2.0.3"
 
 "ember-cli-htmlbars-3@npm:ember-cli-htmlbars@3", ember-cli-htmlbars@^3.0.0, ember-cli-htmlbars@^3.0.1:
+  name ember-cli-htmlbars-3
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-3.1.0.tgz#87806c2a0bca2ab52d4fb8af8e2215c1ca718a99"
   integrity sha512-cgvRJM73IT0aePUG7oQ/afB7vSRBV3N0wu9BrWhHX2zkR7A7cUBI7KC9VPk6tbctCXoM7BRGsCC4aIjF7yrfXA==
