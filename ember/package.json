@@ -81,7 +81,7 @@
     "ember-qunit": "4.6.0",
     "ember-render-helpers": "0.1.1",
     "ember-resolver": "8.0.2",
-    "ember-simple-auth": "3.0.0",
+    "ember-simple-auth": "3.0.1",
     "ember-source": "3.21.3",
     "ember-svg-jar": "2.2.3",
     "ember-template-lint": "2.14.0",
