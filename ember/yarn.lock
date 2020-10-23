@@ -6239,10 +6239,10 @@ ember-cli-deploy-compress@0.3.2:
     minimatch "^3.0.3"
     rsvp "^3.5.0"
 
-ember-cli-deploy-display-revisions@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-display-revisions/-/ember-cli-deploy-display-revisions-2.1.0.tgz#506b53d33291149820da81278a4d567acb5956f7"
-  integrity sha512-BrmTNYHjvdbpqe5nmJA3ZbONRiRmh3i27KBQuC35riUJ7NxGiIeIFMr53x3cOjlLfLJ4EOfzGmSCP98X3q5tOw==
+ember-cli-deploy-display-revisions@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-display-revisions/-/ember-cli-deploy-display-revisions-2.1.1.tgz#32ea7aac7ab775e158b847da9be762160dc58044"
+  integrity sha512-tIzI9ovg+qo9xkb23Mu1TqkfCjdvLhb9a3/99ITOJEMl8ETz1yMwVcIiKl2/UpBRA5wDJkeefxxkZ8Tz7yr44g==
   dependencies:
     cli-table3 "^0.6.0"
     core-object "^3.1.5"
