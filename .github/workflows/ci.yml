@@ -40,7 +40,7 @@ jobs:
       - run: yarn ember dependency-lint
         working-directory: ./ember
 
-      - uses: percy/exec-action@v0.3.0
+      - uses: percy/exec-action@v0.3.1
         with:
           command: yarn test
           working-directory: ./ember
