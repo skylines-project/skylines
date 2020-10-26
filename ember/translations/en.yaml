@@ -265,7 +265,7 @@ your-flights-have-been-saved: Your flights have been saved.
 your-live-tracking-key: 'Your Live Tracking key is:'
 about:
   welcome: SkyLinesCondor -- flight sharing and group flights in the Condor simulator
-  flights: <a href="{uploadURL}">Upload</a> your Condor IGC files and share them.  Export IGC files from Condor:Flight Analysis
+  flights: <a href="{uploadURL}">Upload</a> your Condor IGC files and share them.  Export IGC files from Condor:Flight Analysis.  Download flight plan of any flight.
   tracking: Use your mobile phone to send position updates to SkyLines. Find out how it works <a href="{url}">here</a>.
   analysis: See your flights in detail and improve them. Animated 2-D and 3-D tracks. OLC+ method scores any type of flight.
   task-planning: Use your browser to plan your tasks before the flight and upload them quickly to your flight computer. Integration of {prosoar} is planned.

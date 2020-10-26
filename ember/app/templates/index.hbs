@@ -20,7 +20,7 @@
 
     <div class="row">
       <div class="col-md-4">
-        <h2><LinkTo @route="flights">{{fa-icon "plane"}} {{t "flight-database"}}</LinkTo></h2>
+        <h2><LinkTo @route="flights">{{fa-icon "random"}} {{t "flight-database"}}</LinkTo></h2>
         <p>{{t "about.flights" htmlSafe=true uploadURL=(href-to "flight-upload")}}</p>
       </div>
 
@@ -32,7 +32,7 @@
     <div class="row">
 
       <div class="col-md-4">
-        <h2>{{fa-icon "plane"}} {{t "groupflights"}} </h2>
+        <h2><LinkTo @route="groupflights">{{fa-icon "plane"}} {{t "groupflights"}} </LinkTo></h2>
         <p>{{t "about.groupflights" htmlSafe=true joinURL=(href-to "settings")}}</p>
       </div>
       <div class="col-md-4">
@@ -42,7 +42,7 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <h2>{{fa-icon "map"}} {{t "landscapes"}} </h2>
+        <h2><LinkTo @route="landscapes">{{fa-icon "map"}} {{t "landscapes"}}</LinkTo> </h2>
         <p>{{t "about.landscapes" htmlSafe=true landURL=(href-to "landscapes")}}</p>
       </div>
       <div class="col-md-4">
