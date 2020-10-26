@@ -178,7 +178,7 @@
 <p>
 
   <a href="/files/{{flight.igcFile.filename}}" class="btn btn-default" download>{{fa-icon "download" size="lg"}} IGC</a>
-
+  <a href="/files/{{replace-str flight.igcFile.filename '.igc' '.fpl'}}" class="btn btn-default" download>{{fa-icon "download" size="lg"}} Flight plan file</a>
   <span title={{t "pin-button-title"}}>
     <PinButton @flightId={{flight.id}} />
   </span>

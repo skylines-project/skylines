@@ -56,6 +56,25 @@ import xcsoar
 
 flights_blueprint = Blueprint("flights", "skylines")
 
+def readfileNoStrip(filepath):
+    with open(filepath) as f:
+        lines = f.read().splitlines(True) #keeplinebreaks=True.  Does not strip the lines of \n
+    return lines
+
+def writefile(lines,filepath): #need to have \n's inserted already
+    file1 = open(filepath,'w')
+    file1.writelines(lines)
+    file1.close()
+    return
+
+def create_fpl_file(igc_file):
+    '''Extract fpl file from igc and save in files section'''
+    lines = readfileNoStrip(igc_file)
+    keep = []
+    for line in lines:
+        if "LCONFPL" in line:
+            keep.append(line.replace('LCONFPL',''))
+    writefile(keep, igc_file.replace('.igc','.fpl'))
 
 def mark_user_notifications_read(pilot):
     if not request.user_id:
@@ -544,7 +563,8 @@ def json(flight_id):
     flight = get_requested_record(
         Flight, flight_id, joinedload=(Flight.igc_file, Flight.model)
     )
-
+    igc_file = '/home/bret/servers/repo-skylinesC/skylinesC/htdocs/files/{}'.format(flight.igc_file.filename)
+    create_fpl_file(igc_file)
     current_user = User.get(request.user_id) if request.user_id else None
     if not flight.is_viewable(current_user):
         return jsonify(), 404
@@ -585,7 +605,7 @@ def json(flight_id):
                 competition_id=flight.competition_id,
                 model=model,
                 score=flight.index_score,
-                groupflight_id=flight.groupflight_id
+                groupflight_id=flight.groupflight_id,
             ),
         )
     )

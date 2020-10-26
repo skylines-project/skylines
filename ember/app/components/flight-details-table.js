@@ -22,6 +22,8 @@ export default Component.extend({
     (takeoff, landing) => (new Date(landing).getTime() - new Date(takeoff).getTime()) / 1000,
   ),
 
+
+
   registration: alias('flight.registration'),
   competitionId: alias('flight.competitionId'),
 

@@ -5,12 +5,12 @@ import tarfile
 from shutil import copy2
 
 """
-!!!!! Run as ***sudo ***:  sudo python backup_skylines.py
 
 Ember server runs this script and saves to Nginx server, which saves to Google Drive
 1. Database:  Keep nkeep dumps.  If the size of the current database is greater than the oldest dump, 
 then delete the oldest dump.
 2. htdocs:  Incremental: Add the igc files that are newer than the last backup to a new tar file.
+3. htdocs: remove .fpl files that are more than an hour old.
 """
 
 # dumpOutDir = '/home/bret/google_drive/skylines_backup'
@@ -139,6 +139,11 @@ while run:
                     count += 1
                 except:
                     print 'Error adding {} to tar file'.format(item)
+        elif '.fpl' in item:
+            fplStoredTime = datetime.datetime.fromtimestamp(os.path.getctime('{}/{}'.format(igcsInDir, item)))
+            if igcStoredTime > 3600*36: #delete if older than 36 hrs
+                os.system('rm {}'.format(os.path.join(igcsInDir,item)))
+
     igcsTar.close()
 
 
