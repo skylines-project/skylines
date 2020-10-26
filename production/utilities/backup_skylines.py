@@ -141,8 +141,8 @@ while run:
                     print 'Error adding {} to tar file'.format(item)
         elif '.fpl' in item:
             fplStoredTime = datetime.datetime.fromtimestamp(os.path.getctime('{}/{}'.format(igcsInDir, item)))
-            if igcStoredTime > 3600*36: #delete if older than 36 hrs
-                os.system('rm {}'.format(os.path.join(igcsInDir,item)))
+            if (now - fplStoredTime).total_seconds() > 3600*36: #delete if older than 36 hrs
+                    os.system('rm {}'.format(os.path.join(igcsInDir,item)))
 
     igcsTar.close()
 

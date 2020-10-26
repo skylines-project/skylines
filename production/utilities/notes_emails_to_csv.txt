@@ -1,0 +1,5 @@
+psql skylines
+
+\copy users(email_address) to /home/bret/servers/database_backups/emails.csv with csv
+
+cntrl-D to exit
