@@ -87,7 +87,7 @@
     "ember-template-lint": "2.14.0",
     "ember-test-selectors": "5.0.0",
     "ember-truth-helpers": "2.1.0",
-    "ember-web-app": "5.0.0",
+    "ember-web-app": "5.0.1",
     "eslint": "7.12.1",
     "eslint-config-prettier": "6.15.0",
     "eslint-config-simplabs": "0.4.0",
