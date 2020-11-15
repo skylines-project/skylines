@@ -100,19 +100,19 @@ sudo pipenv install --verbose  blinker
 
 # create PostGIS databases
 
-sudo sudo -u postgres createuser -s $USER
+# sudo sudo -u postgres createuser -s $USER
 
-sudo sudo -u postgres createdb skylines -O $USER
-sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION postgis;'
-sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION fuzzystrmatch;'
+# sudo sudo -u postgres createdb skylines -O $USER
+# sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION postgis;'
+# sudo sudo -u postgres psql -d skylines -c 'CREATE EXTENSION fuzzystrmatch;'
 
-sudo sudo -u postgres createdb skylines_test -O $USER
-sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION postgis;'
-sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
+# sudo sudo -u postgres createdb skylines_test -O $USER
+# sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION postgis;'
+# sudo sudo -u postgres psql -d skylines_test -c 'CREATE EXTENSION fuzzystrmatch;'
 
-sudo sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'secret123';"
+# sudo sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'secret123';"
 
-pipenv run ./manage.py db create
+# pipenv run ./manage.py db create
 
 # create folder for downloaded files
 mkdir -p htdocs/files
@@ -141,7 +141,7 @@ sudo npm install -y -g bower
 sudo npm install -y -g ember-cli
 
 cd ember
-yarn install
+yarn -d #npm packgas including dev
 sudo bower install --allow-root
 cd ../
 sudo chown $USER -R ~/.config/*
