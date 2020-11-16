@@ -9,8 +9,11 @@ export default class extends Component {
       let id = flight.get('id');
       let color = flight.get('color');
       let competitionId = flight.get('competition_id') || flight.get('registration');
+      let score = flight.get('score')*1000
+      let distance = flight.get('distance')
+      let triangleDistance = flight.get('triangleDistance')
       let removable = i !== 0;
-      return { id, color, competitionId, removable, fix };
+      return { id, color, competitionId, score, distance, triangleDistance, removable, fix };
     });
   }
 
