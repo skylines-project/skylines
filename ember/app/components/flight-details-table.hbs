@@ -31,10 +31,10 @@
       </td>
     </tr>
 
-    {{#if flight.scoreDate}}
+  {{#if flight.flightDate}}
       <tr>
         <th>{{t "date"}}</th>
-        <td><LinkTo @route="flights.date" @model={{flight.scoreDate}}>{{format-date flight.scoreDate format="ddmmyyyy" timeZone="UTC"}}</LinkTo></td>
+      <td><LinkTo @route="flights.date" @model={{flight.flightDate}}>{{format-date flight.flightDate format="ddmmyyyy" timeZone="UTC"}}</LinkTo></td>
       </tr>
     {{/if}}
 
@@ -149,6 +149,14 @@
           userURL=(href-to "user" flight.igcFile.owner.id)}}</td>
     </tr>
 
+{{#if flight.groupflight_id}}
+  <tr>
+    <td class="column-buttons">
+      <LinkTo @route="groupflight" @model={{flight.groupflight_id}} class="btn btn-default btn-sm">{{t "groupflight"}}</LinkTo>
+    </td>
+  </tr>
+{{/if}}
+
     {{#if isOwner}}
       <tr>
         <th>{{t "actions"}}</th>
@@ -173,6 +181,8 @@
       {{svg-jar "download" class="fa-svg large"}} IGC
     </a>
 
+  <a href="/files/{{flight.igcFile.filename}}" class="btn btn-default" download>{{fa-icon "download" size="lg"}} IGC</a>
+  <a href="/files/{{replace-str flight.igcFile.filename '.igc' '.fpl'}}" class="btn btn-default" download>{{fa-icon "download" size="lg"}} Flight plan file</a>
     <span title={{t "pin-button-title"}}>
       <PinButton @flightId={{flight.id}} />
     </span>

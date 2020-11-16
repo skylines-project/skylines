@@ -94,12 +94,6 @@
     </nav.item>
   {{/if}}
 
-  {{#if this.account.user}}
-    <nav.item>
-      {{#nav.link-to "flights.unassigned"}}{{t "unassigned"}}{{/nav.link-to}}
-    </nav.item>
-  {{/if}}
-
   {{#if this.hasPinned}}
     <nav.item>
       {{#nav.link-to "flights.pinned"}}{{t "pinned"}}{{/nav.link-to}}
