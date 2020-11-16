@@ -1,0 +1,20 @@
+.fa-svg {
+  position: relative;
+  height: 1em;
+  width: auto;
+  top: 0.125em;
+
+  &.large {
+    height: 1.33333em;
+    vertical-align: -7.5%;
+  }
+
+  &.fixed-width {
+    width: 1.28571429em;
+    text-align: center;
+  }
+
+  &.rotate-270 {
+    transform: rotateZ(270deg);
+  }
+}

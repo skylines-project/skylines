@@ -1,0 +1,31 @@
+<div class="panel-body" ...attributes>
+  <form {{action "submit" on="submit"}}>
+    {{#if error}}
+      <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
+    {{/if}}
+  
+    <div class="form-group">
+      <label class="control-label">{{t "aircraft-type"}}</label>
+      <AircraftModelSelect @models={{models}} @modelId={{modelId}} @onChange={{action (mut modelId)}} />
+    </div>
+  
+    <ValidatedInput
+      @value={{registration}}
+      @validation={{validations.attrs.registration}}
+      @label={{t "registration"}}
+      @disabled={{saveTask.isRunning}}
+      @didValidate={{didValidate}} />
+  
+    <ValidatedInput
+      @value={{competitionId}}
+      @validation={{validations.attrs.competitionId}}
+      @label={{t "competition-id"}}
+      @disabled={{saveTask.isRunning}}
+      @didValidate={{didValidate}} />
+  
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+      {{t (if saveTask.isRunning "changing" "change")}}
+    </button>
+  </form>
+  
+</div>

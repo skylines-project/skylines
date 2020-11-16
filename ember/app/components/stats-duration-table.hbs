@@ -1,0 +1,32 @@
+<table class="table table-condensed table-striped" ...attributes>
+  <thead>
+  <tr>
+    <th>{{t "year"}}</th>
+    <th colspan="2">{{t "flight-time"}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each @years as |year|}}
+    <tr>
+      <td class="col-xs-2">{{year.year}}</td>
+      <td class="col-xs-2">
+        <span>
+          {{t "n-hours" num=(format-hours year.duration)}}
+          <BsTooltip @title={{t "n-avg-hours-per-flight" num=(format-hours year.average_duration)}} />
+        </span>
+      </td>
+      <td class="col-xs-8">
+        <BsProgress as |p|>
+          <p.bar @value={{percent year.duration this.max}} @type="warning" />
+        </BsProgress>
+      </td>
+    </tr>
+  {{/each}}
+
+  <tr>
+    <td><strong>{{t "total"}}</strong></td>
+    <td colspan="2"><strong>{{t "n-hours" num=(format-hours this.sum)}}</strong></td>
+  </tr>
+  </tbody>
+
+</table>

@@ -1,0 +1,14 @@
+<TimelineEvents::Ui
+  @icon="comments-o"
+  @url={{href-to "flight" event.flight.id}}
+  @newBadge={{event.unread}}
+  @time={{event.time}}
+  @text={{t
+    translationKey
+    htmlSafe=true
+    actor=event.actor.name
+    actorURL=(href-to "user" event.actor.id)
+    distance=(format-distance event.flight.distance)
+    date=(format-date event.flight.date format="ddmmyyyy")}}
+  }}
+/>

@@ -1,0 +1,13 @@
+{{#if friendsTracks}}
+  {{#if othersTracks}}
+    <h3>{{t "friends"}}</h3>
+  {{/if}}
+  <TrackingTable @tracks={{friendsTracks}} />
+{{/if}}
+
+{{#if othersTracks}}
+  {{#if friendsTracks}}
+    <h3>{{t "other-pilots"}}</h3>
+  {{/if}}
+  <TrackingTable @tracks={{othersTracks}} />
+{{/if}}

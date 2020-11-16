@@ -1,0 +1,15 @@
+<TimelineEvents::Ui
+  @icon="group"
+  @smallIcon={{true}}
+  @url={{href-to "club" event.club.id}}
+  @newBadge={{event.unread}}
+  @time={{event.time}}
+  @text={{t
+    translationKey
+    htmlSafe=true
+    actor=event.actor.name
+    actorURL=(href-to "user" event.actor.id)
+    club=event.club.name
+    clubURL=(href-to "club" event.club.id)
+  }}
+/>

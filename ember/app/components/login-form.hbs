@@ -1,0 +1,33 @@
+<form {{action (perform loginTask) on="submit"}} local-class="form-login" ...attributes>
+  {{#if (and error (not inline))}}
+    <BsAlert @type="danger" @dismissible={{false}}>{{t "wrong-credentials"}}</BsAlert>
+  {{/if}}
+
+  <ValidatedInput
+    @value={{email}}
+    @label={{t "email-address"}}
+    @autocomplete="email"
+    @disabled={{loginTask.isRunning}}
+    @forceErrorClass={{error}}
+    @didValidate={{didValidate}}
+    @testSelector="login-email" />
+
+  <ValidatedInput
+    @type="password"
+    @value={{password}}
+    @label={{t "password"}}
+    @autocomplete="current-password"
+    @disabled={{loginTask.isRunning}}
+    @forceErrorClass={{error}}
+    @didValidate={{didValidate}}
+    @testSelector="login-password" />
+
+  <button class="btn btn-primary btn-block" type="submit" disabled={{loginTask.isRunning}} data-test-login-button>
+    {{t "login"}}
+  </button>
+
+  <hr>
+
+  <LinkTo @route="users.recover">{{t "forgot-password"}}</LinkTo>
+  <LinkTo @route="users.new">{{t "dont-have-an-account"}}</LinkTo>
+</form>

@@ -1,0 +1,28 @@
+<div class="relative-fullscreen" ...attributes {{set-map-target this.map}}>
+  <BackgroundLayers @map={{map}} />
+  <LayerSwitcher @map={{map}} />
+  <MapClickHandler @map={{map}} @flights={{flights}} @addFlight={{addFlight}} />
+
+  {{#if flights}}
+    <CesiumButton @enabled={{cesiumEnabled}} @onEnable={{this.enableCesium}} @onDisable={{this.disableCesium}} />
+    <FlightPathLayer @map={{map}} @flights={{flights}} />
+
+    <PhaseIconsLayer @map={{map}} @coordinates={{phaseHighlightCoords}} />
+    {{did-update this.zoomToPhase @phaseHighlightCoords @calculatePadding}}
+
+    <PlaneIconsComposer @map={{map}} @fixes={{fixes}} />
+    <ContestLayer @map={{map}} @flights={{flights}} @visible={{not cesiumEnabled}} />
+
+    {{#if (and (not cesiumEnabled) (gt flights.length 1))}}
+      <PlaneLabelOverlays @map={{map}} @fixes={{fixes}} />
+    {{/if}}
+  {{/if}}
+
+  {{#if (and cesiumEnabled this.cesiumLoader.loaded)}}
+    <CesiumScene @map={{map}} as |cesium|>
+      <CesiumPlaneModels @scene={{cesium.scene}} @fixes={{fixes}} />
+    </CesiumScene>
+  {{/if}}
+
+  {{yield}}
+</div>

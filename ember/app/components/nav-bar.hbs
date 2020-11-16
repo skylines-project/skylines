@@ -1,0 +1,33 @@
+<BsNavbar
+  @type="inverse"
+  @fluid={{false}}
+  @position="fixed-top"
+  @collapsed={{this.collapsed}}
+  @onCollapse={{action (mut this.collapsed) true}}
+  @onExpand={{action (mut this.collapsed) false}}
+  local-class="navbar"
+  data-test-nav-bar
+  ...attributes
+  as |navbar|
+>
+  <div class="navbar-header">
+    {{navbar.toggle}}
+
+    <LinkTo @route="index" local-class="brand" @click={{action (mut this.collapsed) true}}>
+      {{svg-jar "logo" local-class="logo"}} <span class="skylines-blue">Sky</span><span class="skylines-white">Lines</span>
+    </LinkTo>
+  </div>
+
+  <navbar.content>
+    <navbar.nav as |nav|>
+      <NavBarLink @nav={{nav}} @target="tracking" @title={{t "live-tracking-nav-bar-link"}} @icon="rss" />
+      <NavBarLink @nav={{nav}} @target="flights" @title={{t "flights"}} @icon="plane" />
+      <NavBarLink @nav={{nav}} @target="ranking" @title={{t "ranking"}} @icon="reorder" />
+      <NavBarLink @nav={{nav}} @target="statistics" @title={{t "statistics"}} @icon="bar-chart" />
+      <NavBarLink @nav={{nav}} @target="search" @title={{t "search.search"}} @icon="search" class="hidden-lg" />
+    </navbar.nav>
+
+    <NavBarSearchForm @onSearch={{@onSearch}} />
+    <NavBarMenuRight @navbar={{navbar}} />
+  </navbar.content>
+</BsNavbar>

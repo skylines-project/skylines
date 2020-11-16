@@ -1,0 +1,25 @@
+<div local-class="event">
+  {{svg-jar @icon local-class="icon" class=(if @smallIcon "fa-svg small" "fa-svg")}}
+
+  <div>
+    <div local-class="badge-and-time">
+      <time
+        datetime={{to-iso-string @time}}
+        title={{format-time @time format="full"}}
+        local-class="time"
+      >
+        {{format-relative @time}}
+      </time>
+
+      {{#if @newBadge}}
+        <span local-class="new-badge">{{t "new"}}</span>
+      {{/if}}
+    </div>
+
+    <div local-class="text" data-test-text>
+      {{@text}}
+    </div>
+  </div>
+
+  <a href={{@url}} local-class="show-button">{{t "show"}}</a>
+</div>

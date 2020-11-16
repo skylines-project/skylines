@@ -1,0 +1,7 @@
+<BsButton @onClick={{this.toggle}}>
+  {{#if this.pinned}}
+    {{svg-jar "star" class="fa-svg large"}} {{t "flight-pinned"}}
+  {{else}}
+    {{svg-jar "star-o" class="fa-svg large"}} {{t "flight-unpinned"}}
+  {{/if}}
+</BsButton>

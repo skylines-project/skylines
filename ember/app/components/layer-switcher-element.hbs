@@ -1,0 +1,11 @@
+<a
+  local-class="layer {{if @visible "active"}}"
+  {{on "click" (fn @onSelect @layer)}}
+  {{on "mouseenter" (action (mut this.highlighted) true)}}
+  {{on "mouseleave" (action (mut this.highlighted) false)}}
+  {{on "touchstart" (action (mut this.highlighted) true)}}
+  {{on "touchend" (action (mut this.highlighted) false)}}
+>
+  <img src="../../images/layers/{{@name}}.png" alt={{@name}} local-class="image {{if this.dimmed "dimmed"}}">
+  {{svg-jar "check" class="fa-svg"}} {{@name}}
+</a>

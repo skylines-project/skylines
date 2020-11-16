@@ -1,0 +1,10 @@
+.pagination {
+  composes: pagination from global;
+
+  margin: 0;
+
+  > li > a {
+    line-height: 22px;
+  }
+}
+

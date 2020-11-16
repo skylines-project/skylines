@@ -1,0 +1,22 @@
+<BasePage>
+  <div class="page-header">
+    <h1>
+      {{t "groupflights"}}
+    </h1>
+    <div class="col-xs-12 banner">
+      <div class="col-xs-6"><LinkTo @route="settings.club" class="btn btn-default"> {{t "group-choose-new"}}</LinkTo></div>
+      <div class="col-xs-6"><LinkTo @route="groupflights.info" class="btn btn-default">{{fa-icon "question-circle"}} {{t "groupflights-info"}}</LinkTo></div>
+    </div>
+      {{#if loading}}
+        <small>{{t "loading"}}</small>
+      {{/if}}
+      <p>{{"   "}}</p>
+      <hr>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      {{outlet}}
+    </div>
+  </div>
+</BasePage>

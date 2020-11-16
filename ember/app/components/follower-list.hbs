@@ -1,0 +1,7 @@
+<ul class="row list-unstyled">
+  {{#each @followers as |follower|}}
+    <li class="col-md-3 col-sm-4 col-xs-6">
+      <FollowerPanel @follower={{follower}} />
+    </li>
+  {{/each}}
+</ul>

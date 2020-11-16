@@ -1,0 +1,21 @@
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: text-bottom;
+  border: .2em solid rgba(0, 0, 0, 0.35);
+  border-right-color: black;
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+}
+
+.spinner-white {
+  border-color: rgba(255, 255, 255, 0.35);
+  border-right-color: white;
+}

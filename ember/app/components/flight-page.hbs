@@ -1,0 +1,84 @@
+<div class="relative-fullscreen" ...attributes {{did-insert this.setup}}>
+  <Sidebar @defaultTab={{this.defaultTab}} id="sidebar" as |sidebar|>
+    <sidebar.Tabs as |tabs|>
+      <tabs.Tab @id="overview" @icon="info" @title={{t "overview"}} data-test-overview />
+      <tabs.Tab @id="comments" @icon="comments-o" @title={{t "comments"}} data-test-comments />
+      <tabs.Tab @id="stats-total" @icon="bar-chart" @title={{t "total"}} data-test-stats-total />
+      <tabs.Tab @id="stats-legs" @icon="arrows-h" @title={{t "leg-statistics"}} data-test-stats-legs />
+      {{#if phases}}
+        <tabs.Tab @id="stats-phases" @icon="step-forward" @title={{t "phase-statistics"}} data-test-stats-phases />
+      {{/if}}
+      <tabs.Tab @id="wingmen" @icon="group" @title={{t "wingmen"}} data-test-wingmen />
+    </sidebar.Tabs>
+
+    <sidebar.Panel @id="overview" @title={{t "overview"}}>
+      <FlightDetailsTable @flight={{flight}} @transitionTo={{transitionTo}} />
+    </sidebar.Panel>
+
+    <sidebar.Panel @id="comments" @title={{t "comments"}}>
+      <CommentsList @comments={{comments}} @flightId={{flight.id}} />
+    </sidebar.Panel>
+
+    <sidebar.Panel @id="stats-total" @title={{t "statistics"}}>
+      <FlightPerformancePanel @performance={{performance}} />
+    </sidebar.Panel>
+
+    <sidebar.Panel @id="stats-legs" @title={{t "leg-statistics"}}>
+      <FlightLegPanel @legs={{legs}} @selection={{this.highlightedTimeInterval}} @onSelect={{action (mut this.highlightedTimeInterval)}} />
+    </sidebar.Panel>
+
+    {{#if phases}}
+      <sidebar.Panel @id="stats-phases" @title={{t "phase-statistics"}}>
+        <div class="table-responsive">
+          <FlightPhaseTable @phases={{phases}} @selection={{this.highlightedTimeInterval}} @onSelect={{action (mut this.highlightedTimeInterval)}} />
+        </div>
+      </sidebar.Panel>
+    {{/if}}
+
+    <sidebar.Panel @id="wingmen" @title={{t "wingmen"}}>
+      <WingmanTable @visibleFlights={{fixCalc.flights}} @nearFlights={{nearFlights}} @onSelect={{action "selectWingman"}} />
+    </sidebar.Panel>
+  </Sidebar>
+
+  <FlightMap
+    @flights={{fixCalc.flights}}
+    @fixes={{fixCalc.fixes}}
+    @phaseHighlightCoords={{this.highlightedCoordinates}}
+    @hoverEnabled={{not (or fixCalc.isRunning cesiumEnabled)}}
+    @defaultTime={{fixCalc.defaultTime}}
+    @onTimeChange={{this.fixCalc.setTime}}
+    @onExtentChange={{action (mut mapExtent)}}
+    @onCesiumEnabledChange={{action (mut cesiumEnabled)}}
+    @addFlight={{action "addFlight"}}
+    @calculatePadding={{action "calculatePadding"}}
+    class="sidebar-map ol-with-barogram"
+  >
+
+    <FullscreenButton @fullscreenElement="#fullscreen-content" />
+    <PlaybackButton @isRunning={{fixCalc.isRunning}} @onToggle={{action "togglePlayback"}} />
+
+  </FlightMap>
+
+  <div id="barogram_panel" class="map-bottom-panel map-overlay">
+    <div style="overflow: auto; max-height: 115px">
+      <FixTable
+        @flights={{fixCalc.flights}}
+        @fixes={{fixCalc.fixes}}
+        @selection={{this.selectedFlightId}}
+        @onSelectionChange={{fn (mut this.selectedFlightId)}}
+        @onRemove={{action "removeFlight"}} />
+    </div>
+
+    <FlightBarogram
+      @flights={{fixCalc.flights}}
+      @selection={{selectedFlightId}}
+      @hoverMode={{not fixCalc.isRunning}}
+      @timeInterval={{timeInterval}}
+      @timeHighlight={{this.highlightedTimeInterval}}
+      @time={{fixCalc.time}}
+      @defaultTime={{fixCalc.defaultTime}}
+      @onTimeChange={{this.fixCalc.setTime}}
+      local-class="barogram"
+    />
+  </div>
+</div>

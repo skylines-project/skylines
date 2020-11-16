@@ -1,0 +1,22 @@
+{{#if @legs}}
+  <table class="table table-condensed text-right">
+    <thead>
+    <tr class="small">
+      <th></th>
+      <th class="numeric">{{t "distance-abbr"}}</th>
+      <th class="numeric hidden-md"><abbr title={{t "duration"}}>&Delta;t</abbr></th>
+      <th class="numeric">{{t "avg-speed-abbr"}}</th>
+      <th class="numeric">{{t "climb-percentage-abbr"}}</th>
+      <th class="numeric">{{t "avg-vario-abbr"}}</th>
+      <th class="numeric"><abbr title={{t "glide-rate"}}>{{t "glide-rate-abbr"}}</abbr></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each @legs as |leg index|}}
+      <FlightLegRow @num={{sum index 1}} @leg={{leg}} @selection={{@selection}} @onSelect={{@onSelect}} />
+    {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  {{t "no-data"}}
+{{/if}}

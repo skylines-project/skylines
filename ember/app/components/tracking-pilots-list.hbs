@@ -1,0 +1,39 @@
+{{#if (eq @pilots.length 1)}}
+  <table class="table">
+    <tbody>
+    {{#each @pilots as |pilot|}}
+      <tr>
+        <th>{{t "pilot"}}</th>
+        <td><LinkTo @route="user" @model={{pilot.id}}>{{pilot.name}}</LinkTo></td>
+      </tr>
+
+      {{#if pilot.club}}
+        <tr>
+          <th>{{t "club"}}</th>
+          <td><LinkTo @route="club" @model={{pilot.club.id}}>{{pilot.club.name}}</LinkTo></td>
+        </tr>
+      {{/if}}
+
+      {{#if (gt pilot.trackingDelay 0)}}
+        <tr>
+          <th>{{t "delay"}}</th>
+          <td>{{t "tracking-delay-choice" delay=pilot.trackingDelay}}</td>
+        </tr>
+      {{/if}}
+    {{/each}}
+    </tbody>
+  </table>
+
+{{else}}
+  <table class="table">
+    <tbody>
+    {{#each @pilots as |pilot|}}
+      <tr>
+        <td><span class="badge" style="background-color: {{ pilot.color }}">{{or pilot.trackingCallsign (initials pilot.name)}}</span></td>
+        <td><LinkTo @route="user" @model={{pilot.id}}>{{pilot.name}}</LinkTo></td>
+        <td>{{#if pilot.club}}<LinkTo @route="club" @model={{pilot.club.id}}>{{truncate pilot.club.name 25}}</LinkTo>{{/if}}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+{{/if}}

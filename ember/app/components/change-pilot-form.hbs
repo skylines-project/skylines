@@ -1,0 +1,36 @@
+<div class="panel-body" ...attributes>
+  <form {{action "submit" on="submit"}}>
+    {{#if error}}
+      <BsAlert @type="danger" @dismissible={{false}}>{{error}}</BsAlert>
+    {{/if}}
+  
+    <ValidatedBlock @label={{t "pilot"}} @validation={{validations.attrs.pilotId}} @didValidate={{didValidate}}>
+      <PilotSelect @clubMembers={{clubMembers}} @pilotId={{pilotId}} @onChange={{action (mut pilotId)}} />
+    </ValidatedBlock>
+  
+    {{#if showPilotNameInput}}
+      <ValidatedInput
+        @value={{pilotName}}
+        @validation={{validations.attrs.pilotName}}
+        @label={{t "pilot"}} @disabled={{saveTask.isRunning}}
+        @didValidate={{didValidate}} />
+    {{/if}}
+  
+    <ValidatedBlock @label={{t "copilot"}} @validation={{validations.attrs.copilotId}} @didValidate={{didValidate}}>
+      <PilotSelect @clubMembers={{clubMembers}} @pilotId={{copilotId}} @onChange={{action (mut copilotId)}} />
+    </ValidatedBlock>
+  
+    {{#if showCopilotNameInput}}
+      <ValidatedInput
+        @value={{copilotName}}
+        @validation={{validations.attrs.copilotName}}
+        @label={{t "copilot"}} @disabled={{saveTask.isRunning}}
+        @didValidate={{didValidate}} />
+    {{/if}}
+  
+    <button class="btn btn-primary btn-block" type="submit" disabled={{or saveTask.isRunning (not validations.isValid)}}>
+      {{t (if saveTask.isRunning "changing" "change")}}
+    </button>
+  </form>
+  
+</div>

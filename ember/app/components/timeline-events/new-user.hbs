@@ -1,0 +1,13 @@
+<TimelineEvents::Ui
+  @icon="asterisk"
+  @smallIcon={{true}}
+  @url={{href-to "user" event.actor.id}}
+  @newBadge={{event.unread}}
+  @time={{event.time}}
+  @text={{t
+    translationKey
+    htmlSafe=true
+    actor=event.actor.name
+    actorURL=(href-to "user" event.actor.id)
+  }}
+/>

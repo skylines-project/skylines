@@ -1,0 +1,108 @@
+<BsNav @type="pills" local-class="flight-list-nav" as |nav|>
+  <nav.item>
+    {{#nav.link-to "flights.all"}}{{t "all"}}{{/nav.link-to}}
+  </nav.item>
+
+  {{#if this.prevDate}}
+    <li>
+      <LinkTo @route="flights.date" @model={{this.prevDate}}>&nbsp;{{svg-jar "arrow-left" class="fa-svg"}}&nbsp;</LinkTo>
+    </li>
+  {{/if}}
+
+  {{#if (or (not @date) @latest)}}
+    <nav.item>
+      <nav.linkTo
+        @route="flights.latest"
+        {{on "click" this.maybePreventDefault}}
+        {{on-click-outside this.closeDatePicker}}
+      >
+        {{#if @date}}
+          {{format-date @date format="ddmmyyyy" timeZone="UTC"}}
+        {{else}}
+          {{t "latest"}}
+        {{/if}}
+        <EmberFlatpickr
+          @date={{or @date null}}
+          @onReady={{this.onFlatpickrReady}}
+          @onChange={{this.dateSelected}}
+          @static={{true}}
+          local-class="datepicker"
+        />
+        <button type="button" local-class="datepicker-button" {{on "click" this.openDatePicker}}>
+          {{svg-jar "calendar" class="fa-svg"}}
+        </button>
+      </nav.linkTo>
+    </nav.item>
+  {{/if}}
+
+  {{#if (and @date (not @latest))}}
+    <nav.item>
+      <nav.linkTo
+        @route="flights.date"
+        @model={{@date}}
+        {{on "click" this.maybePreventDefault}}
+        {{on-click-outside this.closeDatePicker}}
+      >
+        {{format-date @date format="ddmmyyyy" timeZone="UTC"}}
+        <EmberFlatpickr
+          @date={{@date}}
+          @onReady={{this.onFlatpickrReady}}
+          @onChange={{this.dateSelected}}
+          @static={{true}}
+          local-class="datepicker"
+        />
+        <button type="button" local-class="datepicker-button" {{on "click" this.openDatePicker}}>
+          {{svg-jar "calendar" class="fa-svg"}}
+        </button>
+      </nav.linkTo>
+    </nav.item>
+  {{/if}}
+
+  {{#if this.nextDate}}
+    <li>
+      <LinkTo @route="flights.date" @model={{this.nextDate}}>&nbsp;{{svg-jar "arrow-right" class="fa-svg"}}&nbsp;</LinkTo>
+    </li>
+  {{/if}}
+
+  {{#if @airport}}
+    <nav.item>
+      {{#nav.link-to "flights.airport" @airport.id}}{{@airport.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if @club}}
+    <nav.item>
+      {{#nav.link-to "flights.club" @club.id}}{{@club.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if (and this.account.club (not-eq this.account.club.id @club.id))}}
+    <nav.item>
+      {{#nav.link-to "flights.club" this.account.club.id}}{{this.account.club.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if @pilot}}
+    <nav.item>
+      {{#nav.link-to "flights.pilot" @pilot.id}}{{@pilot.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if (and this.account.user (not-eq this.account.user.id @pilot.id))}}
+    <nav.item>
+      {{#nav.link-to "flights.pilot" this.account.user.id}}{{this.account.user.name}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if this.account.user}}
+    <nav.item>
+      {{#nav.link-to "flights.unassigned"}}{{t "unassigned"}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+
+  {{#if this.hasPinned}}
+    <nav.item>
+      {{#nav.link-to "flights.pinned"}}{{t "pinned"}}{{/nav.link-to}}
+    </nav.item>
+  {{/if}}
+</BsNav>

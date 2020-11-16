@@ -1,0 +1,5 @@
+<li local-class="list-item {{if (eq @selectedTab @id) "active"}}">
+  <button type="button" title={{@title}} role="tab" local-class="button" data-test-sidebar-tab={{@id}} {{on "click" this.onClick}}>
+    {{svg-jar @icon class="fa-svg large"}}
+  </button>
+</li>

@@ -1,0 +1,14 @@
+<TimelineEvents::Ui
+  @icon="user"
+  @url={{href-to "user" (if accountUserIsFollowed event.actor.id event.user.id)}}
+  @newBadge={{event.unread}}
+  @time={{event.time}}
+  @text={{t
+    translationKey
+    htmlSafe=true
+    actor=event.actor.name
+    actorURL=(href-to "user" event.actor.id)
+    user=event.user.name
+    userURL=(href-to "user" event.user.id)}}
+  }}
+/>

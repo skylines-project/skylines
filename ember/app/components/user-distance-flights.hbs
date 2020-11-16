@@ -1,0 +1,22 @@
+<h2>{{t "distance-flights"}}</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th>{{t "distance"}}</th>
+    <th>{{t "date"}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#if @flights.50km}}<UserDistanceFlight @label="50 km" @flight={{@flights.50km}} />{{/if}}
+  {{#if @flights.100km}}<UserDistanceFlight @label="100 km" @flight={{@flights.100km}} />{{/if}}
+  {{#if @flights.300km}}<UserDistanceFlight @label="300 km" @flight={{@flights.300km}} />{{/if}}
+  {{#if @flights.500km}}<UserDistanceFlight @label="500 km" @flight={{@flights.500km}} />{{/if}}
+  {{#if @flights.700km}}<UserDistanceFlight @label="700 km" @flight={{@flights.700km}} />{{/if}}
+  {{#if @flights.1000km}}<UserDistanceFlight @label="1000 km" @flight={{@flights.1000km}} />{{/if}}
+  {{#if @flights.largest}}
+    <UserDistanceFlight
+      @label={{concat (format-number (multiply @flights.largest.distance 0.001) maximumFractionDigits=0) " km"}}
+      @flight={{@flights.largest}} />
+  {{/if}}
+  </tbody>
+</table>

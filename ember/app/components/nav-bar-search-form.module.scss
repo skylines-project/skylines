@@ -1,0 +1,16 @@
+.form {
+  margin: 5px 0;
+}
+
+.input {
+  composes: form-control from global;
+  height: 30px;
+  color: #bbb;
+  background-color: #626262;
+  border: 1px solid #333;
+
+  &:focus {
+    color: #666;
+    background-color: white;
+  }
+}

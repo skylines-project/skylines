@@ -1,0 +1,32 @@
+<table class="table table-condensed">
+  <tbody>
+  <tr>
+    <th>{{t "duration"}}</th>
+    <td>{{format-seconds @perf.duration}} ({{format-number @perf.fraction maximumFractionDigits=1}}%)</td>
+  </tr>
+  <tr>
+    <th>&Delta;H</th>
+    <td>{{format-altitude @perf.altDiff}}</td>
+  </tr>
+  <tr>
+    <th>{{t "distance"}}</th>
+    <td>{{format-distance @perf.distance decimals=1}}</td>
+  </tr>
+  <tr>
+    <th>{{t "avg-vario-abbr"}}</th>
+    <td>{{format-lift @perf.vario}}</td>
+  </tr>
+  <tr>
+    <th>{{t "avg-speed-abbr"}}</th>
+    <td>{{format-speed @perf.speed}}</td>
+  </tr>
+  <tr>
+    <th><abbr title={{t "glide-rate"}}>{{t "glide-rate-abbr"}}</abbr></th>
+    <td>{{format-number @perf.glideRate  maximumFractionDigits=1}}</td>
+  </tr>
+  <tr>
+    <th>{{t "glides"}}</th>
+    <td>{{perf.count}}</td>
+  </tr>
+  </tbody>
+</table>

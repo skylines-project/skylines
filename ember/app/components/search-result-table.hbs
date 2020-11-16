@@ -1,0 +1,17 @@
+<table class="table table-striped search-results">
+  <tbody>
+  {{#each @results as |result|}}
+    <SearchResultRow @result={{result}} />
+  {{else}}
+    <tr>
+      <td colspan="4">
+        {{#if @searchText}}
+          {{t "search.no-results"}}
+        {{else}}
+          {{t "search.no-search-text"}}
+        {{/if}}
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

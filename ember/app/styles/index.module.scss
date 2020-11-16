@@ -1,0 +1,40 @@
+.social-buttons {
+  composes: btn-group visible-md visible-lg from global;
+  float: right;
+
+  :global(.btn) {
+    width: 40px;
+  }
+}
+
+.about {
+  h2 {
+    font-size: 22px;
+
+    :global(.fa) {
+      width: 1.2em;
+      text-align: center;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: #666;
+      }
+    }
+
+    small {
+      font-size: 13px;
+    }
+  }
+
+  p {
+    text-align: justify;
+  }
+
+  .banner div {
+    padding: 0;
+  }
+}

@@ -1,0 +1,30 @@
+<div local-class="GraphicLayerSwitcher" class="ol-unselectable" ...attributes>
+  {{#if this.open}}
+    <div id="GraphicLayerSwitcher-open" {{on-click-outside (fn (mut this.open) false) eventType="mousedown"}}>
+      <div local-class="base_layers">
+        {{#each this.BASE_LAYERS as |layer|}}
+          <LayerSwitcherElement
+            @name={{layer}}
+            @visible={{eq this.mapSettings.baseLayer layer}}
+            @onSelect={{fn this.mapSettings.setBaseLayer layer}}
+          />
+        {{/each}}
+      </div>
+      <div local-class="overlay_layers">
+        {{#each this.OVERLAY_LAYERS as |layer|}}
+          <LayerSwitcherElement
+            @name={{layer}}
+            @visible={{includes this.mapSettings.overlayLayers layer}}
+            @onSelect={{fn this.mapSettings.toggleOverlayLayer layer}}
+          />
+        {{/each}}
+      </div>
+    </div>
+  {{else}}
+    <div id="GraphicLayerSwitcher-closed">
+      <button type="button" {{on "click" (fn (mut this.open) true)}}>
+        <img src="../../images/layers.png">
+      </button>
+    </div>
+  {{/if}}
+</div>

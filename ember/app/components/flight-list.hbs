@@ -1,0 +1,49 @@
+<table class="table table-striped table-condensed table-flights" ...attributes>
+  <thead>
+  <tr>
+    {{#if (not-eq @showDate false)}}
+      <SortableTableHeader @column="date" @sortColumn={{@sortColumn}} @sortOrder={{@sortOrder}} @defaultOrder="desc" class="date">{{t "date"}}</SortableTableHeader>
+    {{/if}}
+
+    <SortableTableHeader @column="score" @sortColumn={{@sortColumn}} @sortOrder={{@sortOrder}} @defaultOrder="desc" class="numeric">{{t "score"}}</SortableTableHeader>
+
+    {{#if (not-eq @showPilot false)}}
+      <SortableTableHeader @column="pilot" @sortColumn={{@sortColumn}} @sortOrder={{@sortOrder}} class="pilot">{{t "pilot"}}</SortableTableHeader>
+    {{/if}}
+
+    <SortableTableHeader @column="distance" @sortColumn={{@sortColumn}} @sortOrder={{@sortOrder}} @defaultOrder="desc" class="numeric">{{t "distance"}}</SortableTableHeader>
+
+    {{#if (not-eq @showAirport false)}}
+      <SortableTableHeader @column="airport" @sortColumn={{@sortColumn}} @sortOrder={{@sortOrder}} class="airport">{{t "airport"}}</SortableTableHeader>
+    {{/if}}
+
+    {{#if (not-eq @showClub false)}}
+      <SortableTableHeader @column="club" @sortColumn={{@sortColumn}} @sortOrder={{@sortOrder}} class="club hidden-sm hidden-xs">{{t "club"}}</SortableTableHeader>
+    {{/if}}
+
+    <SortableTableHeader @column="aircraft" @sortColumn={{@sortColumn}} @sortOrder={{@sortOrder}} class="aircraft hidden-xs">{{t "aircraft"}}</SortableTableHeader>
+
+    {{#if (not-eq @showTimes false)}}
+      <SortableTableHeader @column="time" @sortColumn={{@sortColumn}} @sortOrder={{@sortOrder}} @defaultOrder="desc" class="times hidden-xs">{{t "time"}}</SortableTableHeader>
+    {{/if}}
+
+    <th class="column-buttons"></th>
+    <th class="num_comments hidden-xs"></th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each @flights as |flight|}}
+    <FlightListRow
+      @flight={{flight}}
+      @showDate={{not-eq @showDate false}}
+      @showPilot={{not-eq @showPilot false}}
+      @showAirport={{not-eq @showAirport false}}
+      @showClub={{not-eq @showClub false}}
+      @showTimes={{not-eq @showTimes false}} />
+  {{else}}
+    <tr>
+      <td colspan="10">{{t "no-flights-found"}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

@@ -1,0 +1,22 @@
+<BsNav @type="pills" ...attributes as |nav|>
+  <nav.dropdown as |dd|>
+    <dd.toggle>
+      {{#if (eq @year "all")}}
+        {{t "all-time"}}
+      {{else}}
+        {{t "season-YEAR" year=@year}}
+      {{/if}}
+      <span class="caret"></span>
+    </dd.toggle>
+
+    <dd.menu as |menu|>
+      <nav.item><nav.linkTo @query={{hash year="all"}}>{{t "all-time"}}</nav.linkTo></nav.item>
+
+      {{menu.divider}}
+
+      {{#each this.recentYears as |year|}}
+        <nav.item><nav.linkTo @query={{hash year=year}}>{{year}}</nav.linkTo></nav.item>
+      {{/each}}
+    </dd.menu>
+  </nav.dropdown>
+</BsNav>

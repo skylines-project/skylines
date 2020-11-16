@@ -1,0 +1,10 @@
+{{#if (eq @visibleTab @id)}}
+  <div local-class="wrapper">
+    <div local-class="panel">
+      <h3 local-class="title">{{@title}}</h3>
+      <div local-class="content">
+        {{yield}}
+      </div>
+    </div>
+  </div>
+{{/if}}
