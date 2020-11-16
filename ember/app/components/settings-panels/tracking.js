@@ -16,9 +16,9 @@ const Validations = buildValidations({
 const DELAYS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 45, 60];
 
 export default Component.extend(Validations, {
-  ajax: service(),
+  tagName: '',
 
-  classNames: ['panel', 'panel-default'],
+  ajax: service(),
 
   callsign: null,
   delay: null,
@@ -28,7 +28,7 @@ export default Component.extend(Validations, {
   delays: DELAYS,
 
   /* ember-power-select can't handle `0` */
-  _delay: computed('delay', function() {
+  _delay: computed('delay', function () {
     return this.delay === 0 ? '0' : this.delay;
   }),
 
@@ -41,7 +41,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let json = {
       trackingCallsign: this.callsign,
       trackingDelay: this.delay,

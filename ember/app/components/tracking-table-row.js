@@ -1,11 +1,8 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Component.extend({
-  tagName: 'tr',
-
-  altitudeAGL: safeComputed('track.altitude', 'track.elevation', (altitude, elevation) =>
-    Math.max(altitude - elevation, 0),
-  ),
-});
+export default class TrackingTableRow extends Component {
+  @safeComputed('track.altitude', 'track.elevation', (altitude, elevation) => Math.max(altitude - elevation, 0))
+  altitudeAGL;
+}

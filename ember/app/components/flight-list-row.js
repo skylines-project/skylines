@@ -1,15 +1,10 @@
-import Component from '@ember/component';
 import { or, equal, not } from '@ember/object/computed';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: 'tr',
-  classNameBindings: ['isPrivate:not_published'],
+export default class FlightListRow extends Component {
+  @or('args.flight.pilot.name', 'args.flight.pilotName') pilotName;
+  @or('args.flight.copilot.name', 'args.flight.copilotName') copilotName;
 
-  flight: null,
-
-  pilotName: or('flight.pilot.name', 'flight.pilotName'),
-  copilotName: or('flight.copilot.name', 'flight.copilotName'),
-
-  isPublic: equal('flight.privacyLevel', 0),
-  isPrivate: not('isPublic'),
-});
+  @equal('args.flight.privacyLevel', 0) isPublic;
+  @not('isPublic') isPrivate;
+}

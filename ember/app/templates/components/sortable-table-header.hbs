@@ -1,7 +1,0 @@
-{{#if (not-eq column sortColumn)}}
-  <LinkTo @query={{hash column=column order=defaultOrder}} @tagName="th" class={{cssClass}}>{{yield}}</LinkTo>
-{{else if (eq sortOrder "asc")}}
-  <LinkTo @query={{hash column=column order="desc"}} @tagName="th" class={{cssClass}}>{{fa-icon "chevron-up"}} {{yield}}</LinkTo>
-{{else}}
-  <LinkTo @query={{hash column=column order="asc"}} @tagName="th" class={{cssClass}}>{{fa-icon "chevron-down"}} {{yield}}</LinkTo>
-{{/if}}

@@ -1,21 +1,19 @@
-import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { alias, or } from '@ember/object/computed';
 import { htmlSafe } from '@ember/template';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: 'tr',
-  classNames: ['selectable'],
+export default class extends Component {
+  @alias('args.nearFlight.flight') flight;
+  @alias('flight.igcFile') igcFile;
+  @alias('flight.pilot') pilot;
+  @or('flight.{pilot.name,pilotName}') pilotName;
+  @alias('flight.copilot') copilot;
+  @or('flight.{copilot.name,copilotName}') copilotName;
+  @alias('args.nearFlight.times') times;
 
-  flight: alias('nearFlight.flight'),
-  igcFile: alias('flight.igcFile'),
-  pilot: alias('flight.pilot'),
-  pilotName: or('flight.{pilot.name,pilotName}'),
-  copilot: alias('flight.copilot'),
-  copilotName: or('flight.{copilot.name,copilotName}'),
-  times: alias('nearFlight.times'),
-
-  colorStripeStyle: computed('nearFlight.color', function() {
-    return htmlSafe(`background-color: ${this.nearFlight.color}`);
-  }),
-});
+  @computed('args.nearFlight.color')
+  get colorStripeStyle() {
+    return htmlSafe(`border-left: 3px solid ${this.args.nearFlight.color ?? 'transparent'}`);
+  }
+}

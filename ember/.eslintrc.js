@@ -1,7 +1,12 @@
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    ecmaFeatures: {
+      legacyDecorators: true,
+    },
   },
   plugins: ['prettier', 'import-helpers'],
   extends: ['simplabs', 'simplabs/plugins/ember', 'prettier'],
@@ -22,11 +27,12 @@ module.exports = {
       {
         newlinesBetween: 'always',
         groups: [
+          // Node.js built-in modules
           '/^(assert|async_hooks|buffer|child_process|cluster|console|constants|crypto|dgram|dns|domain|events|fs|http|http2|https|inspector|module|net|os|path|perf_hooks|process|punycode|querystring|readline|repl|stream|string_decoder|timers|tls|trace_events|tty|url|util|v8|vm|zli)/',
           // Testing modules
-          ['/^qunit/', '/^ember-qunit/', '/^@ember/test-helpers/', '/^ember-exam/'],
+          ['/^(qunit|ember-qunit|@ember/test-helpers|ember-exam|htmlbars-inline-precompile)$/', '/^ember-exam\\//'],
           // Ember.js modules
-          ['/^ember$/', '/^@ember/', '/^ember-data/'],
+          ['/^@(ember|ember-data|glimmer)\\//', '/^(ember|ember-data|rsvp)$/', '/^ember-data\\//'],
           ['module'],
           [`/^${require('./package.json').name}\\//`],
           ['parent', 'sibling', 'index'],
@@ -43,6 +49,7 @@ module.exports = {
         '.template-lintrc.js',
         'ember-cli-build.js',
         'testem.js',
+        'build/**/*.js',
         'config/**/*.js',
         'lib/*/index.js',
       ],

@@ -1,37 +1,43 @@
-import slMapClickHandler from '../utils/map-click-handler';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+
+import { boundingExtent } from 'ol/extent';
+
 import BaseMapComponent from './base-map';
 
-export default BaseMapComponent.extend({
-  flights: null,
-  fixes: null,
-  phaseHighlightCoords: null,
-  hoverEnabled: true,
+export default class FlightMap extends BaseMapComponent {
+  @service cesiumLoader;
 
-  onExtentChange() {},
-  onTimeChange() {},
-  onCesiumEnabledChange() {},
+  flights = null;
+  fixes = null;
+  phaseHighlightCoords = null;
+  hoverEnabled = true;
 
-  didInsertElement() {
-    this._super(...arguments);
+  onExtentChange() {}
+  onTimeChange() {}
+  onCesiumEnabledChange() {}
+
+  constructor() {
+    super(...arguments);
 
     let map = this.map;
-    map.on('moveend', this._handleMoveEnd, this);
-    map.on('pointermove', this._handlePointerMove, this);
+    map.on('moveend', this._handleMoveEnd);
+    map.on('pointermove', this._handlePointerMove);
+  }
 
-    slMapClickHandler(this.map, this.flights, this.addFlight);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
+  willDestroy() {
+    super.willDestroy(...arguments);
     let map = this.map;
-    map.un('moveend', this._handleMoveEnd, this);
-    map.un('pointermove', this._handlePointerMove, this);
-  },
+    map.un('moveend', this._handleMoveEnd);
+    map.un('pointermove', this._handlePointerMove);
+  }
 
+  @action
   _handleMoveEnd(event) {
     this.onExtentChange(event.frameState.extent);
-  },
+  }
 
+  @action
   _handlePointerMove(event) {
     if (event.dragging || !this.hoverEnabled) {
       return;
@@ -59,16 +65,24 @@ export default BaseMapComponent.extend({
 
       map.render();
     }
-  },
+  }
 
-  actions: {
-    cesiumEnabled() {
-      this.set('cesiumEnabled', true);
-      this.onCesiumEnabledChange(true);
-    },
-    cesiumDisabled() {
-      this.set('cesiumEnabled', false);
-      this.onCesiumEnabledChange(false);
-    },
-  },
-});
+  @action enableCesium() {
+    this.set('cesiumEnabled', true);
+    this.onCesiumEnabledChange(true);
+    this.cesiumLoader.load();
+  }
+
+  @action disableCesium() {
+    this.set('cesiumEnabled', false);
+    this.onCesiumEnabledChange(false);
+  }
+
+  @action zoomToPhase([coordinates, calculatePadding]) {
+    if (coordinates) {
+      let extent = boundingExtent(coordinates);
+      let padding = calculatePadding();
+      this.map.getView().fit(extent, { padding });
+    }
+  }
+}

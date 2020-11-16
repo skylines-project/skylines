@@ -2,8 +2,8 @@ import { inject as service } from '@ember/service';
 
 import BaseRoute from './-base';
 
-export default BaseRoute.extend({
-  pinnedFlights: service(),
+export default class PinnedRoute extends BaseRoute {
+  @service pinnedFlights;
 
   model(params) {
     let pinned = this.get('pinnedFlights.pinned') || [];
@@ -18,5 +18,5 @@ export default BaseRoute.extend({
         order: params.order,
       },
     });
-  },
-});
+  }
+}

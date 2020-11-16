@@ -1,21 +1,12 @@
-import Component from '@ember/component';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  classNames: ['CesiumSwitcher', 'ol-unselectable'],
-
-  enabled: false,
-  onEnable() {},
-  onDisable() {},
-
-  click() {
-    this.toggle();
-  },
-
-  toggle() {
-    if (this.enabled) {
-      this.onDisable();
+export default class CesiumButton extends Component {
+  @action toggle() {
+    if (this.args.enabled) {
+      this.args.onDisable();
     } else {
-      this.onEnable();
+      this.args.onEnable();
     }
-  },
-});
+  }
+}

@@ -3,23 +3,25 @@ import { alias } from '@ember/object/computed';
 
 import safeComputed from '../computed/safe-computed';
 
-export default Controller.extend({
-  queryParams: ['page', 'user', 'type'],
-  page: 1,
-  user: null,
-  type: null,
+export default class TimelineController extends Controller {
+  queryParams = ['page', 'user', 'type'];
+  page = 1;
+  user = null;
+  type = null;
 
-  events: alias('model.events'),
+  @alias('model.events') events;
 
-  prevPage: safeComputed('page', page => {
+  @safeComputed('page', page => {
     if (page > 1) {
       return page - 1;
     }
-  }),
+  })
+  prevPage;
 
-  nextPage: safeComputed('page', 'events.length', 'perPage', (page, numEvents, perPage) => {
+  @safeComputed('page', 'events.length', 'perPage', (page, numEvents, perPage) => {
     if (numEvents === perPage) {
       return page + 1;
     }
-  }),
-});
+  })
+  nextPage;
+}

@@ -1,6 +1,6 @@
-import Component from '@ember/component';
 import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  units: service(),
-});
+export default class FlightPhaseTable extends Component {
+  @service units;
+}

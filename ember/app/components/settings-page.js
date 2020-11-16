@@ -1,6 +1,6 @@
-import Component from '@ember/component';
 import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  account: service(),
-});
+export default class SettingsPage extends Component {
+  @service account;
+}

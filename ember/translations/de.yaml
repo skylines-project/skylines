@@ -28,8 +28,9 @@ club-has-been-changed: Dein Verein wurde geändert.
 club-was-registered: Dein Verein wurde erfolgreich registriert.
 clubs: Vereine
 comments: Kommentare
+comment-error: Ein Fehler ist aufgetreten bei der Erstellung deines Kommentars. Bitte versuch es später nochmal.
 competition-id: Wettbewerbskennzeichen
-competitions:
+competitions: Wettbewerbe
 confirm-password: Passwort bestätigen
 copilot: Copilot
 count: Anzahl
@@ -81,6 +82,7 @@ followers: Verfolger
 following: Verfolgen
 forgot-password: Passwort vergessen?
 friends: Freunde
+fullscreen-not-supported: Dein Browser unterstützt leider keinen Vollbildmodus. 😢
 generate-new-key: Generiere neuen Key
 generating-new-key: Generiere neuen Key...
 glide-rate: Gleitzahl
@@ -253,7 +255,7 @@ tracking:
   clients: Software
   xcsoar-description: verfügbar ab {release}
   instructions-below: Eine Anleitung findest du weiter unten.
-  available-in-gaggle: jetzt in der aktuellen Version von Gaggle verfügbar
+  skylines-tracker-description: jetzt in der aktuellen Version von SkyLines Tracker verfügbar
   lt24-clients: LiveTrack24 clients
   lt24-description: Du kannst auch jede Software nutzen, die das {livetrack24} Protokoll zum Senden der Positionen an SkyLines benutzt. Trage deinen Live Tracking Key als Benutzernamen ein, wähle ein beliebiges Passwort und nutze {skylines} als Server.
   your-live-tracking-key-is-KEY: 'Dein Live Tracking Key ist: {key}'

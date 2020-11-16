@@ -1,28 +1,11 @@
-import Component from '@ember/component';
 import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  highlighted: false,
+export default class LayerSwitcherElement extends Component {
+  highlighted = false;
 
-  imagePath: computed('layer.visible', 'highlighted', function() {
-    let colorful = this.get('layer.visible') || this.highlighted;
-    return `../../images/layers/${this.get('layer.name')}${colorful ? '.png' : '.bw.png'}`;
-  }),
-
-  mouseEnter() {
-    this.set('highlighted', true);
-  },
-  mouseLeave() {
-    this.set('highlighted', false);
-  },
-  touchStart() {
-    this.set('highlighted', true);
-  },
-  touchEnd() {
-    this.set('highlighted', false);
-  },
-
-  click() {
-    this.onSelect(this.layer);
-  },
-});
+  @computed('args.visible', 'highlighted')
+  get dimmed() {
+    return !this.args.visible && !this.highlighted;
+  }
+}

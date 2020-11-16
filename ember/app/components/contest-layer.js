@@ -1,68 +1,42 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
 
-const DEFAULT_COLOR = '#004bbd';
+const CLASSIC_STYLE = createStyle('#ff2c73');
+const TRIANGLE_STYLE = createStyle('#9f14ff');
 
-export default Component.extend({
-  tagName: '',
+function createStyle(color) {
+  let stroke = new Stroke({ color, width: 2, lineDash: [5] });
+  return new Style({ stroke });
+}
 
-  map: null,
-  flights: null,
-
-  contests: computed('flights.@each.contests', function() {
-    return this.flights.map(flight => flight.get('contests')).reduce((a, b) => a.concat(b), []);
-  }),
-
-  layer: computed(function() {
-    return new ol.layer.Vector({
-      source: new ol.source.Vector(),
-      style: style_function,
-      name: 'Contest',
-      zIndex: 49,
-    });
-  }),
-
-  source: computed('layer', function() {
-    return this.layer.getSource();
-  }),
-
-  visible: computed({
-    get() {
-      return this.layer.getVisible();
+export default class ContestLayer extends Component {
+  source = new VectorSource();
+  layer = new VectorLayer({
+    source: this.source,
+    style(feature) {
+      let isTriangle = feature.get('isTriangle');
+      return isTriangle ? TRIANGLE_STYLE : CLASSIC_STYLE;
     },
-    set(key, value) {
-      this.layer.setVisible(value);
-    },
-  }),
+    zIndex: 49,
+  });
 
-  didInsertElement() {
-    this._super(...arguments);
-    this.map.addLayer(this.layer);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    this.map.removeLayer(this.layer);
-  },
-});
-
-/**
- * Determin the drawing style for the feature
- * @param {ol.feature} feature Feature to style
- * @return {!Array<ol.style.Style>} Style of the feature
- */
-function style_function(feature) {
-  let color = DEFAULT_COLOR;
-  if (feature.getKeys().includes('color')) {
-    color = feature.get('color');
+  @action
+  setVisible([value]) {
+    this.layer.setVisible(value);
   }
 
-  return [
-    new ol.style.Style({
-      stroke: new ol.style.Stroke({ color, width: 2, lineDash: [5] }),
-      zIndex: 999,
-    }),
-  ];
+  constructor() {
+    super(...arguments);
+    this.args.map.addLayer(this.layer);
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.map.removeLayer(this.layer);
+  }
 }

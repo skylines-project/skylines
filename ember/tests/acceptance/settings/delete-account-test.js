@@ -1,65 +1,43 @@
 import { visit, click, currentURL, fillIn, waitFor } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 
-import { percySnapshot } from 'ember-percy';
-import { authenticateSession, currentSession } from 'ember-simple-auth/test-support';
+import percySnapshot from '@percy/ember';
+import { currentSession } from 'ember-simple-auth/test-support';
 
-import { setupPolly } from 'skylines/tests/helpers/setup-polly';
+import { setupApplicationTest } from '../../test-helpers';
+import { authenticateAs } from '../../test-helpers/auth';
 
-module('Acceptance | Settings | Delete Account', function(hooks) {
+module('Acceptance | Settings | Delete Account', function (hooks) {
   setupApplicationTest(hooks);
-  setupPolly(hooks, { recordIfMissing: false });
 
   function isAuthenticated() {
-    return Boolean(currentSession().data.authenticated.settings);
+    return currentSession().isAuthenticated;
   }
 
-  test('users can delete their accounts on the setting page', async function(assert) {
-    let { server } = this.polly;
+  test('users can delete their accounts on the setting page', async function (assert) {
+    let { server } = this;
 
-    let settings = {
-      id: 123,
+    let user = server.create('user', {
       firstName: 'John',
       lastName: 'Doe',
-      name: 'John Doe',
       email: 'john@doe.com',
-
-      altitudeUnit: 0,
-      distanceUnit: 1,
-      liftUnit: 0,
-      speedUnit: 1,
-    };
-
-    server.get('/api/settings').intercept((req, res) => {
-      res.status(200);
-      res.json(settings);
     });
 
-    server.post('/api/users/check-email').intercept((req, res) => {
-      res.status(200);
-      res.json({ result: 'self' });
+    await authenticateAs(user);
+
+    server.post('/api/settings/password/check', function (schema, request) {
+      let json = JSON.parse(request.requestBody);
+      return { result: json.password === 'secret123' };
     });
 
-    server.post('/api/settings/password/check').intercept((req, res) => {
-      let json = JSON.parse(req.body);
-      let result = json.password === 'secret123';
-      res.status(200);
-      res.json({ result });
-    });
-
-    server.delete('/api/account').intercept((req, res) => {
-      let json = JSON.parse(req.body);
+    server.delete('/api/account', function (schema, request) {
+      let json = JSON.parse(request.requestBody);
 
       assert.equal(json.password, 'secret123');
       assert.step('account-deleted');
 
-      res.status(200);
-      res.json({});
+      return {};
     });
-
-    await authenticateSession({ settings });
-    assert.ok(isAuthenticated());
 
     // visit the front page
     await visit('/');

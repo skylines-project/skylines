@@ -1,31 +1,21 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import Feature from 'ol/Feature';
 
-export default Component.extend({
-  tagName: '',
+export default class ContestLayerFeature extends Component {
+  constructor() {
+    super(...arguments);
 
-  source: null,
-  contest: null,
+    const { contest, source } = this.args;
 
-  feature: computed(function() {
-    let contest = this.contest;
-    return new ol.Feature({
-      geometry: contest.get('geometry'),
-      sfid: contest.get('flightId'),
-      color: contest.get('color'),
-      type: 'contest',
-    });
-  }),
+    let { geometry, isTriangle } = contest;
+    this.feature = new Feature({ geometry, isTriangle });
 
-  didInsertElement() {
-    this._super(...arguments);
-    this.source.addFeature(this.feature);
-  },
+    source.addFeature(this.feature);
+  }
 
-  willDestroyElement() {
-    this._super(...arguments);
-    this.source.removeFeature(this.feature);
-  },
-});
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.source.removeFeature(this.feature);
+  }
+}

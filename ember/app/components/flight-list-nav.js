@@ -1,30 +1,61 @@
-import { getOwner } from '@ember/application';
-import Component from '@ember/component';
+import { action } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
 
 import safeComputed from '../computed/safe-computed';
 import addDays from '../utils/add-days';
 
-export default Component.extend({
-  account: service(),
-  pinnedFlights: service(),
+export default class FlightListNav extends Component {
+  @service account;
+  @service pinnedFlights;
+  @service router;
 
-  tagName: '',
+  @notEmpty('pinnedFlights.pinned') hasPinned;
 
-  hasPinned: notEmpty('pinnedFlights.pinned'),
+  @safeComputed('args.date', date => addDays(date, -1)) prevDate;
+  @safeComputed('args.date', date => addDays(date, 1)) nextDate;
 
-  prevDate: safeComputed('date', date => addDays(date, -1)),
-  nextDate: safeComputed('date', date => addDays(date, 1)),
+  @action
+  dateSelected(_, date) {
+    this.router.transitionTo('flights.date', date);
+  }
 
-  init() {
-    this._super(...arguments);
-    this.set('router', getOwner(this).lookup('router:main'));
-  },
+  @action
+  openDatePicker(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.flatpickr.open();
+  }
 
-  actions: {
-    dateSelected(date) {
-      this.router.transitionTo('flights.date', date);
-    },
-  },
-});
+  @action
+  closeDatePicker() {
+    this.flatpickr.close();
+  }
+
+  @action
+  onFlatpickrReady(_selectedDates, _dateStr, instance) {
+    this.flatpickr = instance;
+  }
+
+  @action
+  maybePreventDefault(event) {
+    // if the click happened inside the datepicker we don't want the link to trigger
+    let { target } = event;
+
+    for (let parent of parents(target)) {
+      if (parent.classList.contains('flatpickr-wrapper')) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+    }
+  }
+}
+
+function* parents(element) {
+  let parent = element;
+  while ((parent = parent.parentElement)) {
+    yield parent;
+  }
+}

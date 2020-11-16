@@ -12,15 +12,11 @@
               <th>{{t "name"}}</th>
               <td>{{club.name}}</td>
             </tr>
-            <tr>
-              <th>{{t "contact"}}</th>
-              <td><a href="mailto:{{club.email}}">{{t "email-for-info"}}</a></td>
-            </tr>
 
             {{#if club.website}}
               <tr>
                 <th>{{t "website"}}</th>
-                <td><a target="_blank" rel="noopener" href="{{club.website}}">{{club.website}}</a></td>
+                <td><a target="_blank" rel="noopener" href={{club.website}}>{{club.website}}</a></td>
               </tr>
             {{/if}}
 
@@ -41,9 +37,9 @@
               <LinkTo @route="club.edit" @model={{club.id}} class="btn btn-default">{{t "edit"}}</LinkTo>
             {{/if}}
 
-            <LinkTo @route="flights.club" @model={{club.id}} class="btn btn-default">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-            <LinkTo @route="statistics.club" @model={{club.id}} class="btn btn-default">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
-            <LinkTo @route="club.pilots" @model={{club.id}} class="btn btn-default">{{fa-icon "group"}} {{t "members"}}</LinkTo>
+            <LinkTo @route="flights.club" @model={{club.id}} class="btn btn-default">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+            <LinkTo @route="statistics.club" @model={{club.id}} class="btn btn-default">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
+            <LinkTo @route="club.pilots" @model={{club.id}} class="btn btn-default">{{svg-jar "group" class="fa-svg"}} {{t "members"}}</LinkTo>
           </p>
         </div>
       </div>

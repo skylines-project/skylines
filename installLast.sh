@@ -142,6 +142,7 @@ sudo npm install -y -g ember-cli
 
 cd ember
 yarn -d #npm packgas including dev
+yarn add broccoli-funnel #15 Nov 20
 sudo bower install --allow-root
 cd ../
 sudo chown $USER -R ~/.config/*

@@ -1,59 +1,66 @@
 <BasePage>
-  <div id="about">
+  <div local-class="about">
     <div class="row">
       <div class="col-md-12 tagline">
         <p class="lead pull-left" data-test-welcome-message>{{t "about.welcome"}}</p>
 
-        <div class="btn-group social-buttons pull-right visible-md visible-lg">
-{{!--           <a href="https://www.facebook.com/skylines.project" class="btn btn-default" target="_blank" rel="noopener">{{fa-icon "facebook-square"}}</a> --}}
-{{!--           <a href="https://twitter.com/skylinesproject" class="btn btn-default" target="_blank" rel="noopener">{{fa-icon "twitter"}}</a> --}}
-          <a href="https://github.com/hess8/skylinesC" class="btn btn-default" target="_blank" rel="noopener">{{fa-icon "github-alt"}}</a>
+        <div local-class="social-buttons">
+          <a href="https://www.facebook.com/skylines.project" class="btn btn-default" target="_blank" rel="noopener">{{svg-jar "facebook-square" class="fa-svg"}}</a>
+          <a href="https://twitter.com/skylinesproject" class="btn btn-default" target="_blank" rel="noopener">{{svg-jar "twitter" class="fa-svg"}}</a>
+          <a href="https://github.com/skylines-project/skylines" class="btn btn-default" target="_blank" rel="noopener">{{svg-jar "github-alt" class="fa-svg"}}</a>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-xs-12 banner">
-        <div class="col-xs-12"><LinkTo @route="groupflights" ><img src="/images/teamlong.jpg" class="img-responsive"/></LinkTo></div>
+      <div local-class="banner" class="col-xs-12">
+        <div class="col-xs-3"><LinkTo @route="flight" @model={{17613}} @query={{hash baselayer="Google Physical" overlays="Airspace"}}><img src="/images/about-1.jpeg" class="img-responsive"></LinkTo></div>
+        <div class="col-xs-3"><LinkTo @route="flight" @model={{17537}} @query={{hash baselayer="Empty" overlays="Airspace"}}><img src="/images/about-2.jpeg" class="img-responsive"></LinkTo></div>
+        <div class="col-xs-3"><LinkTo @route="flight" @model={{17567}} @query={{hash baselayer="OpenStreetMap" overlays="Airspace"}}><img src="/images/about-3.jpeg" class="img-responsive"></LinkTo></div>
+        <div class="col-xs-3"><LinkTo @route="flight" @model={{17577}} @query={{hash baselayer="Shaded Relief" overlays="Airspace"}}><img src="/images/about-4.jpeg" class="img-responsive"></LinkTo></div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4">
-        <h2><LinkTo @route="flights">{{fa-icon "plane"}} {{t "flight-database"}}</LinkTo></h2>
+        <h2><LinkTo @route="flights">{{svg-jar "plane" class="fa-svg fixed-width"}} {{t "flight-database"}}</LinkTo></h2>
         <p>{{t "about.flights" htmlSafe=true uploadURL=(href-to "flight-upload")}}</p>
       </div>
-
       <div class="col-md-4">
-        <h2>{{fa-icon "info-circle"}} {{t "flight-analysis"}}</h2>
+        <h2><LinkTo @route="tracking">{{svg-jar "rss" class="fa-svg fixed-width"}} {{t "live-tracking"}}</LinkTo></h2>
+        <p>{{t "about.tracking" htmlSafe=true url=(href-to "tracking.info")}}</p>
+      </div>
+      <div class="col-md-4">
+        <h2>{{svg-jar "info-circle" class="fa-svg fixed-width"}} {{t "flight-analysis"}}</h2>
         <p>{{t "about.analysis" htmlSafe=true}}</p>
       </div>
     </div>
     <div class="row">
-
       <div class="col-md-4">
-        <h2><LinkTo @route="groupflights">{{fa-icon "random"}} {{t "groupflights"}} </LinkTo></h2>
-        <p>{{t "about.groupflights" htmlSafe=true joinURL=(href-to "settings")}}</p>
+        <h2>{{svg-jar "map-marker" class="fa-svg fixed-width"}} {{t "task-planning"}} <small>({{t "planned"}})</small></h2>
+        <p>{{t "about.task-planning" htmlSafe=true prosoar=(html-safe "<a href=\"http://www.prosoar.de/\" target=\"_blank\" rel=\"noopener\">proSoar</a>")}}</p>
       </div>
       <div class="col-md-4">
-        <h2>{{fa-icon "address-card"}} {{t "social-network"}}</h2>
+        <h2>{{svg-jar "trophy" class="fa-svg fixed-width"}} {{t "competitions"}} <small>({{t "planned"}})</small></h2>
+        <p>{{t "about.competitions" htmlSafe=true}}</p>
+      </div>
+      <div class="col-md-4">
+        <h2>{{svg-jar "check-square-o" class="fa-svg fixed-width"}} {{t "achievements"}} <small>({{t "planned"}})</small></h2>
+        <p>{{t "about.achievements" htmlSafe=true}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <h2>{{svg-jar "group" class="fa-svg fixed-width"}} {{t "social-network"}}</h2>
         <p>{{t "about.notifications" htmlSafe=true url=(href-to notificationsTarget)}}</p>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-4">
-        <h2><LinkTo @route="landscapes">{{fa-icon "map"}} {{t "landscapes"}}</LinkTo> </h2>
-        <p>{{t "about.landscapes" htmlSafe=true landURL=(href-to "landscapes")}}</p>
+        <h2>{{svg-jar "cloud" class="fa-svg fixed-width"}} {{t "open-data"}}</h2>
+        <p>{{t "about.open-data" htmlSafe=true license=(html-safe "<a href=\"http://opendatacommons.org/licenses/by/summary/\" target=\"_blank\" rel=\"noopener\">Open Data Commons Attribution License (ODBY)</a>") welt2000=(html-safe "<a href=\"http://www.segelflug.de/vereine/welt2000/\" target=\"_blank\" rel=\"noopener\">WELT2000</a>")}}</p>
       </div>
       <div class="col-md-4">
-        <h2>{{fa-icon "envelope"}} {{t "contact"}}</h2>
-        <p><a href="mailto:{{'skylinescondor@gmail.com'}}">{{t "contact-admin"}}</a>{{" "}}{{t "contact-content"}}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <h2>{{fa-icon "wrench"}} {{t "open-source"}}</h2>
-        <p>{{t "about.open-source" htmlSafe=true teamURL="/about/team" licenseURL="/about/license" github=(html-safe "<a href=\"https://github.com/hess8/skylinesC#contact-and-contributing\" target=\"_blank\" rel=\"noopener\">GitHub</a>")}}</p>
+        <h2>{{svg-jar "wrench" class="fa-svg fixed-width"}} {{t "open-source"}}</h2>
+        <p>{{t "about.open-source" htmlSafe=true teamURL="/about/team" licenseURL="/about/license" github=(html-safe "<a href=\"https://github.com/skylines-project/skylines#contact-and-contributing\" target=\"_blank\" rel=\"noopener\">GitHub</a>")}}</p>
       </div>
     </div>
   </div>

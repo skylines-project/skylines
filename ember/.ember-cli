@@ -7,5 +7,5 @@
   */
   "disableAnalytics": false,
   "outputPath": "../skylines/frontend/static",
-  "proxy": "https://skylinescondor.com"
+  "proxy": "https://skylines.aero"
 }

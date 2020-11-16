@@ -18,9 +18,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, {
-  ajax: service(),
+  tagName: '',
 
-  classNames: ['panel-body'],
+  ajax: service(),
 
   flightId: null,
   models: null,
@@ -40,7 +40,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
+  saveTask: task(function* () {
     let id = this.flightId;
     let json = this.getProperties('modelId', 'registration', 'competitionId');
 

@@ -36,9 +36,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, {
-  ajax: service(),
+  tagName: '',
 
-  classNames: ['panel-body'],
+  ajax: service(),
 
   error: null,
 
@@ -51,8 +51,8 @@ export default Component.extend(Validations, {
     },
   },
 
-  saveTask: task(function*() {
-    let json = this.getProperties('email', 'lastName', 'firstName', 'password');
+  saveTask: task(function* () {
+    let json = this.getProperties('email', 'firstName', 'lastName', 'password');
 
     try {
       yield this.ajax.request('/api/users', { method: 'POST', json });

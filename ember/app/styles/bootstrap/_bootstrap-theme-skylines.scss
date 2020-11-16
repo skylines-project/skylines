@@ -26,10 +26,6 @@ body {
   }
 }
 
-abbr[title] {
-  text-decoration: none;
-}
-
 .fullscreen-below-nav-bar {
   position: absolute;
   width: 100%;
@@ -41,21 +37,14 @@ abbr[title] {
   }
 }
 
+.relative,
 .relative-fullscreen {
   position: relative;
+}
+
+.relative-fullscreen {
   width: 100%;
   height: 100%;
-}
-
-.content {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
-@media (max-width: 767px) {
-  .dropdown-menu .divider {
-    background-color: #666;
-  }
 }
 
 /* File upload field fix */
@@ -63,87 +52,6 @@ input[type="file"].form-control {
   height: auto;
 }
 
-/* Pagination */
-.pagination-condensed {
-  margin: 0;
-}
-
-.pagination-condensed a {
-  line-height: 22px;
-}
-
-/* Give a quick and non-cross-browser friendly divider */
-ul.list-with-dividers li[class*="col"] {
-  margin-left: 0 !important;
-  padding-left: 19px;
-  border-left: 1px solid #eee;
-  list-style: none;
-}
-
-.tooltip {
-  /*
-   * The tooltips in the flight table are broken otherwise because
-   * of the "table .show" rule that changes this setting.
-   */
-  white-space: normal;
-}
-
-.pin {
-  visibility: hidden;
-  cursor: pointer;
-}
-
-tr:hover .pin, .pin.pinned {
-  visibility: visible;;
-}
-
-a.no-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.table .modal input,
-.table .modal select {
-  width: auto;
-}
-
-/* Font size adjustments */
-body {
-  font-size: 13px;
-}
-
-.label-warning {
-  font-size: 15px;
-}
-
-.btn, .form-control, .dropdown-menu {
-  font-size: 13px;
-}
-
-.btn-sm, .btn-xs {
-  font-size: 11px;
-}
-
-.tracking-key {
-    font-size: 100%;
-    font-family: monospace;
-    margin: 0px 6px;
-    background: #008eda;
-}
-
-.phases-table-condensed {
-  font-size: 85%;
-}
-
-.phases-table-condensed thead tr th {
-  vertical-align: top;
-}
-
 .upload-results-form {
   padding: 10px;
-}
-
-.btn-share {
-  margin-top: 5px;
-  margin-right: 28px;
 }

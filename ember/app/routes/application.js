@@ -1,56 +1,63 @@
 import { debug } from '@ember/debug';
+import { action } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import Ember from 'ember';
-
-import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import RSVP from 'rsvp';
+
+import * as Sentry from '@sentry/browser';
+import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 
 import _availableLocales from '../utils/locales';
 
 const FALLBACK_LOCALE = 'en';
 
-export default Route.extend(ApplicationRouteMixin, {
-  account: service(),
-  ajax: service(),
-  cookies: service(),
-  intl: service(),
-  raven: service(),
-  session: service(),
-  units: service(),
+export default class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
+  @service account;
+  @service ajax;
+  @service cookies;
+  @service intl;
+  @service progress;
+  @service session;
+  @service units;
 
   async beforeModel() {
     let locale = await this._determineLocale();
-    if (!window.Intl) {
-      debug(`Loading Intl.js polyfill...`);
-      await this.intl.loadIntlPolyfill();
-    }
     await this.intl.loadAndSetLocale(locale);
-  },
+  }
+
+  afterModel() {
+    super.afterModel(...arguments);
+
+    // remove loading spinner from the page (see `index.html`)
+    let spinnner = document.querySelector('#initial-load-spinner');
+    if (spinnner) {
+      spinnner.classList.add('fade');
+      setTimeout(() => spinnner.remove(), 1500);
+    }
+  }
 
   setupController() {
-    this._super(...arguments);
+    super.setupController(...arguments);
 
-    let settings = this.get('session.data.authenticated.settings');
+    let settings = this.account.sessionData;
     if (settings) {
-      this.units.setProperties({
-        altitudeUnitIndex: settings.altitudeUnit,
-        distanceUnitIndex: settings.distanceUnit,
-        liftUnitIndex: settings.liftUnit,
-        speedUnitIndex: settings.speedUnit,
-      });
+      this.units.altitudeUnitIndex = settings.altitudeUnit;
+      this.units.distanceUnitIndex = settings.distanceUnit;
+      this.units.liftUnitIndex = settings.liftUnit;
+      this.units.speedUnitIndex = settings.speedUnit;
     }
-  },
+  }
 
   activate() {
-    this._super(...arguments);
+    super.activate(...arguments);
 
     let userId = this.get('account.user.id');
     if (userId) {
-      this.raven.callRaven('setUserContext', { id: userId });
+      Sentry.configureScope(scope => scope.setUser({ id: userId }));
     }
-  },
+  }
 
   async _determineLocale() {
     let availableLocales = _availableLocales.map(it => it.code);
@@ -71,7 +78,7 @@ export default Route.extend(ApplicationRouteMixin, {
     } catch (error) {
       return FALLBACK_LOCALE;
     }
-  },
+  }
 
   sessionAuthenticated() {
     const attemptedTransition = this.get('session.attemptedTransition');
@@ -83,5 +90,11 @@ export default Route.extend(ApplicationRouteMixin, {
     } else if (inLoginRoute) {
       this.transitionTo('index');
     }
-  },
-});
+  }
+
+  @action
+  loading(transition) {
+    this.progress.handle(transition);
+    return true;
+  }
+}

@@ -1,52 +1,34 @@
-import Component from '@ember/component';
+import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
+import Component from '@glimmer/component';
 
-import $ from 'jquery';
-import ol from 'openlayers';
+import Overlay from 'ol/Overlay';
 
-export default Component.extend({
-  tagName: '',
+export default class PlaneLabelOverlay extends Component {
+  get style() {
+    return htmlSafe(`background: ${this.args.flight.color}`);
+  }
 
-  map: null,
-  flight: null,
-  position: null,
+  @action
+  addToMap(element) {
+    let { position } = this.args;
 
-  overlay: null,
+    let { offsetWidth } = element;
+    let offset = [-offsetWidth / 2, -40];
 
-  init() {
-    this._super(...arguments);
+    this.overlay = new Overlay({ element, offset });
+    this.args.map.addOverlay(this.overlay);
 
-    let badgeStyle = `display: inline-block; text-align: center; background: ${this.get('flight.color')}`;
+    // see https://github.com/openlayers/ol-cesium/issues/679
+    this.overlay.setPosition(position);
+  }
 
-    let id = this.getWithDefault('flight.competition_id', '') || this.getWithDefault('flight.registration', '');
-    let badge = $(`<span class="badge plane_marker" style="${badgeStyle}">
-      ${id}
-    </span>`);
+  @action
+  updatePosition() {
+    this.overlay.setPosition(this.args.position);
+  }
 
-    this.set(
-      'overlay',
-      new ol.Overlay({
-        element: badge.get(0),
-      }),
-    );
-  },
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.overlay.setPosition(this.position);
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-    let overlay = this.overlay;
-    this.map.addOverlay(overlay);
-
-    let width = $(overlay.getElement()).width();
-    overlay.setOffset([-width / 2, -40]);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    let overlay = this.overlay;
-    this.map.removeOverlay(overlay);
-  },
-});
+  willDestroy() {
+    this.args.map.removeOverlay(this.overlay);
+  }
+}

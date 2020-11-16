@@ -1,11 +1,10 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-
 import RSVP from 'rsvp';
 
-export default Route.extend({
-  ajax: service(),
-  account: service(),
+export default class ChangePilotRoute extends Route {
+  @service ajax;
+  @service account;
 
   model() {
     let id = this.modelFor('flight').ids[0];
@@ -19,5 +18,5 @@ export default Route.extend({
       : [];
 
     return RSVP.hash({ id, flight, clubMembers });
-  },
-});
+  }
+}

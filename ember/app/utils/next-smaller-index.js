@@ -11,7 +11,7 @@
  * @param {Number} value Number.
  * @return {int} Index next smaller to Number in Array.
  */
-export default function(array, value) {
+export default function (array, value) {
   let low = 1;
   let high = array.length - 1;
 

@@ -11,19 +11,19 @@
       <h3>{{t "tracking.clients"}}</h3>
       <ul>
         <li>
-          <b>XCSoar:</b><br/>
+          <b>XCSoar:</b><br>
           {{t "tracking.xcsoar-description" htmlSafe=true release=(html-safe "<a href=\"http://www.xcsoar.org/download/latest.html\">XCSoar 6.4</a>")}}
           (<a href="https://play.google.com/store/apps/details?id=org.xcsoar" target="_blank" rel="noopener">Google Play</a>).
           {{t "tracking.instructions-below"}}
         </li>
         <li>
-          <b>Gaggle:</b><br/>
-          {{t "tracking.available-in-gaggle"}}
-          (<a href="https://play.google.com/store/apps/details?id=com.geeksville.gaggle" target="_blank" rel="noopener">Google Play</a>)
+          <b>SkyLines Tracker:</b><br>
+          {{t "tracking.skylines-tracker-description"}}
+          (<a href="https://play.google.com/store/apps/details?id=ch.luethi.skylinestracker" target="_blank" rel="noopener">Google Play</a>)
         </li>
         <li>
-          <b>{{t "tracking.lt24-clients"}}:</b><br/>
-          {{t "tracking.lt24-description" htmlSafe=true livetrack24=(html-safe "<a href=\"http://www.livetrack24.com/docs/wiki/LiveTracking%20API\">LiveTrack24</a>") skylines=(html-safe "<code>skylinescondor.com</code>")}}
+          <b>{{t "tracking.lt24-clients"}}:</b><br>
+          {{t "tracking.lt24-description" htmlSafe=true livetrack24=(html-safe "<a href=\"http://www.livetrack24.com/docs/wiki/LiveTracking%20API\">LiveTrack24</a>") skylines=(html-safe "<code>skylines.aero</code>")}}
         </li>
       </ul>
 
@@ -32,7 +32,7 @@
       {{#if model.trackingKey}}
         <p>{{t "tracking.your-live-tracking-key-is-KEY" htmlSafe=true key=(html-safe (concat "<span class=\"label tracking-key\">" model.trackingKey "</span>"))}}</p>
 
-        <p><LinkTo @route="settings.tracking" class="btn btn-default btn-sm">{{fa-icon "cog"}} {{t "tracking.settings"}}</LinkTo></p>
+        <p><LinkTo @route="settings.tracking" class="btn btn-default btn-sm">{{svg-jar "cog" class="fa-svg"}} {{t "tracking.settings"}}</LinkTo></p>
       {{else}}
         <p>{{t "tracking.login-required"}}</p>
       {{/if}}

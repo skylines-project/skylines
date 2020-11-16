@@ -2,7 +2,7 @@
 
 /* eslint-env node */
 
-module.exports = function(deployTarget) {
+module.exports = function (deployTarget) {
   let ENV = {
     build: {},
     // include other plugin configuration that applies to all deploy targets here
@@ -27,13 +27,20 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
+
     // configure other plugins for production deploy target here
-    ENV['rsync-assets'] = {
-      destination: 'skylines@skylinescondor.com:/home/skylines/src/skylines/frontend/static',
-      flags: ['z'],
-      ssh: true,
+
+    ENV['sentry-cli'] = {
+      appName: 'frontend',
+      orgName: 'skylines',
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+    };
+
+    ENV['with-rsync'] = {
+      host: 'skylines.aero',
+      username: 'frontend',
       privateKeyPath: process.env['PRIVATE_KEY_PATH'],
-      excludeIndexHTML: false,
+      port: 2222,
     };
   }
 

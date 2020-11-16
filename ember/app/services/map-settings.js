@@ -1,21 +1,39 @@
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 import parseQueryString from 'skylines/utils/parse-query-string';
+
+import config from '../config/environment';
+
+const HAS_BING = Boolean(config.BING_API_KEY);
+const HAS_MAPBOX = Boolean(config.MAPBOX_TILE_URL);
+
+export const BASE_LAYERS = [
+  'OpenStreetMap',
+  'Shaded Relief',
+  HAS_BING ? 'Bing Satellite' : null,
+  HAS_BING ? 'Bing Road' : null,
+  HAS_MAPBOX ? 'Terrain' : null,
+  'Empty',
+].filter(Boolean);
+export const OVERLAY_LAYERS = ['Airspace', 'Mountain Wave Project'];
 
 export const BASE_LAYER_COOKIE_KEY = 'base_layer';
 export const OVERLAY_LAYERS_COOKIE_KEY = 'overlay_layers';
 
-export default Service.extend({
-  cookies: service(),
-  router: service(),
+export default class MapSettingsService extends Service {
+  @service cookies;
+  @service router;
 
-  _baseLayer: 'OpenStreetMap',
-  // _overlayLayers: ['Airspace'],
+  @tracked _baseLayer = 'OpenStreetMap';
+  @tracked _overlayLayers = ['Airspace'];
 
-  baseLayer: or('_query.baselayer', '_baseLayer'),
-  overlayLayers: computed('_query.overlays', '_overlayLayers', function() {
+  @or('_query.baselayer', '_baseLayer') baseLayer;
+
+  @computed('_query.overlays', '_overlayLayers')
+  get overlayLayers() {
     let queryOverlays = this.get('_query.overlays');
     if (queryOverlays === undefined) {
       return this._overlayLayers;
@@ -24,40 +42,40 @@ export default Service.extend({
     } else {
       return queryOverlays.split(';');
     }
-  }),
+  }
 
-  _query: computed('router.currentURL', function() {
+  @computed('router.currentURL')
+  get _query() {
     let currentURL = this.get('router.currentURL');
     let queryString = extractQueryString(currentURL);
     return parseQueryString(queryString);
-  }),
+  }
 
-  init() {
-    this._super(...arguments);
-    this.set('_overlayLayers', ['Airspace']);
+  constructor() {
+    super(...arguments);
 
     let cookies = this.cookies;
     let cookieBaseLayer = cookies.read(BASE_LAYER_COOKIE_KEY);
     if (cookieBaseLayer) {
-      this.set('_baseLayer', cookieBaseLayer);
+      this._baseLayer = cookieBaseLayer;
     }
 
     let cookieOverlayLayers = cookies.read(OVERLAY_LAYERS_COOKIE_KEY);
     if (cookieOverlayLayers !== undefined) {
-      this.set('_overlayLayers', cookieOverlayLayers === '' ? [] : cookieOverlayLayers.split(';'));
+      this._overlayLayers = cookieOverlayLayers === '' ? [] : cookieOverlayLayers.split(';');
     }
-  },
+  }
 
   isLayerVisible(layer) {
     return this.baseLayer === layer || this.overlayLayers.includes(layer);
-  },
+  }
 
-  setBaseLayer(baseLayer) {
-    this.set('_baseLayer', baseLayer);
+  @action setBaseLayer(baseLayer) {
+    this._baseLayer = baseLayer;
     this.cookies.write(BASE_LAYER_COOKIE_KEY, baseLayer, { path: '/', expires: new Date('2099-12-31') });
-  },
+  }
 
-  toggleOverlayLayer(overlayLayer) {
+  @action toggleOverlayLayer(overlayLayer) {
     let overlayLayers = this.overlayLayers;
     if (overlayLayers.includes(overlayLayer)) {
       overlayLayers.removeObject(overlayLayer);
@@ -69,8 +87,8 @@ export default Service.extend({
       path: '/',
       expires: new Date('2099-12-31'),
     });
-  },
-});
+  }
+}
 
 function extractQueryString(url) {
   let qIndex = url.indexOf('?');

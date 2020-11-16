@@ -1,22 +1,25 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { cancel, later } from '@ember/runloop';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
+import { task, rawTimeout } from 'ember-concurrency';
 import $ from 'jquery';
-import ol from 'openlayers';
+import { decodeDeltas } from 'ol/format/Polyline';
 
 import FixCalc from '../utils/fix-calc';
 
-export default Component.extend({
-  ajax: service(),
-  units: service(),
+export default class extends Component {
+  tagName = '';
 
-  classNames: ['relative-fullscreen'],
+  @service ajax;
+  @service units;
 
-  fixCalc: null,
+  fixCalc = FixCalc.create({ ajax: this.ajax, units: this.units });
 
-  timeInterval: computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]', function() {
+  defaultTab = window.innerWidth >= 768 ? 'overview' : null;
+
+  @computed('mapExtent', 'cesiumEnabled', 'fixCalc.flights.[]')
+  get timeInterval() {
     if (this.cesiumEnabled) {
       return null;
     }
@@ -29,20 +32,12 @@ export default Component.extend({
     let interval = this.get('fixCalc.flights').getMinMaxTimeInExtent(extent);
 
     return interval.max === -Infinity ? null : [interval.min, interval.max];
-  }),
+  }
 
-  init() {
-    this._super(...arguments);
+  @action
+  setup(element) {
+    this.rootElement = element;
 
-    let ajax = this.ajax;
-    let units = this.units;
-
-    let fixCalc = FixCalc.create({ ajax, units });
-    this.set('fixCalc', fixCalc);
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
     let flights = this.flights;
     if (flights.length === 0) {
       return;
@@ -50,14 +45,13 @@ export default Component.extend({
 
     let fixCalc = this.fixCalc;
 
-    let sidebar = this.element.querySelector('#sidebar');
-    let $sidebar = $(sidebar).sidebar();
+    let sidebar = this.rootElement.querySelector('#sidebar');
 
-    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     let $barogramPanel = $(barogramPanel);
 
-    let olScaleLine = this.element.querySelector('.ol-scale-line');
-    let olAttribution = this.element.querySelector('.ol-attribution');
+    let olScaleLine = this.rootElement.querySelector('.ol-scale-line');
+    let olAttribution = this.rootElement.querySelector('.ol-attribution');
 
     let resize = () => {
       let bottom = Number(getComputedStyle(barogramPanel).bottom.replace('px', ''));
@@ -71,52 +65,43 @@ export default Component.extend({
     resize();
     $barogramPanel.resize(resize);
 
-    if (window.location.hash && sidebar.querySelector(`li > a[href="#${window.location.hash.substring(1)}"]`)) {
-      $sidebar.open(window.location.hash.substring(1));
-    } else if (window.innerWidth >= 768 && flights.length > 1) {
-      $sidebar.open('tab-overview');
-    }
-
     let map = window.flightMap.get('map');
 
     fixCalc.set('defaultTime', -1);
-    fixCalc.set('time', -1);
+    fixCalc.setTime(-1);
 
     flights.forEach(flight => fixCalc.addFlight(flight));
 
     let extent = fixCalc.get('flights').getBounds();
     map.getView().fit(extent, { padding: this._calculatePadding() });
 
-    // update flight track every 15 seconds
-    this._scheduleUpdate();
-  },
+    this.updateLoopTask.perform();
+  }
 
-  willDestroyElement() {
-    this._super(...arguments);
-    let updateTimer = this.updateTimer;
-    if (updateTimer) {
-      cancel(updateTimer);
+  // update flight track every 15 seconds
+  @task(function* () {
+    while (true) {
+      yield rawTimeout(15 * 1000);
+      this._update();
     }
-  },
+  })
+  updateLoopTask;
 
-  actions: {
-    togglePlayback() {
-      this.fixCalc.togglePlayback();
-    },
+  @action
+  togglePlayback() {
+    this.fixCalc.togglePlayback();
+  }
 
-    removeFlight(id) {
-      let flights = this.get('fixCalc.flights');
-      flights.removeObjects(flights.filterBy('id', id));
-    },
+  @action
+  removeFlight(id) {
+    let flights = this.get('fixCalc.flights');
+    flights.removeObjects(flights.filterBy('id', id));
+  }
 
-    calculatePadding() {
-      return this._calculatePadding();
-    },
-  },
-
-  _scheduleUpdate() {
-    this.set('updateTimer', later(() => this._update(), 15 * 1000));
-  },
+  @action
+  calculatePadding() {
+    return this._calculatePadding();
+  }
 
   _update() {
     let flights = this.get('fixCalc.flights');
@@ -134,16 +119,14 @@ export default Component.extend({
           // ignore update errors
         });
     });
-
-    this._scheduleUpdate();
-  },
+  }
 
   _calculatePadding() {
-    let sidebar = this.element.querySelector('#sidebar');
-    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let sidebar = this.rootElement.querySelector('#sidebar');
+    let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
-  },
-});
+  }
+}
 
 /**
  * Updates a tracking flight.
@@ -157,11 +140,11 @@ function updateFlight(flights, data) {
     return;
   }
 
-  let time_decoded = ol.format.Polyline.decodeDeltas(data.barogram_t, 1, 1);
-  let lonlat = ol.format.Polyline.decodeDeltas(data.points, 2);
-  let height_decoded = ol.format.Polyline.decodeDeltas(data.barogram_h, 1, 1);
-  let enl_decoded = ol.format.Polyline.decodeDeltas(data.enl, 1, 1);
-  let elev = ol.format.Polyline.decodeDeltas(data.elevations, 1, 1);
+  let time_decoded = decodeDeltas(data.barogram_t, 1, 1);
+  let lonlat = decodeDeltas(data.points, 2);
+  let height_decoded = decodeDeltas(data.barogram_h, 1, 1);
+  let enl_decoded = decodeDeltas(data.enl, 1, 1);
+  let elev = decodeDeltas(data.elevations, 1, 1);
 
   // we skip the first point in the list because we assume it's the "linking"
   // fix between the data we already have and the data to add.

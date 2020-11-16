@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  queryParams: ['page'],
-  page: 1,
-});
+export default class PilotsController extends Controller {
+  queryParams = ['page'];
+  page = 1;
+}

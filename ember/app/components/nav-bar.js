@@ -1,7 +1,5 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: '',
-
-  collapsed: true,
-});
+export default class NavBar extends Component {
+  collapsed = true;
+}

@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import { alias, equal } from '@ember/object/computed';
+import { equal, alias } from '@ember/object/computed';
 
 import { validator, buildValidations } from 'ember-cp-validations';
 
@@ -31,16 +31,13 @@ export const Validations = buildValidations({
   },
 });
 
-export default EmberObject.extend(Validations, {
-  pilotId: alias('flight.pilotId'),
-  pilotName: alias('flight.pilotName'),
-
-  copilotId: alias('flight.copilotId'),
-  copilotName: alias('flight.copilotName'),
-
-  modelId: alias('flight.modelId'),
-  registration: alias('flight.registration'),
-  competitionId: alias('flight.competitionId'),
-
-  success: equal('status', 0),
-});
+export default class UploadResult extends EmberObject.extend(Validations) {
+  @alias('flight.pilotId') pilotId;
+  @alias('flight.pilotName') pilotName;
+  @alias('flight.copilotId') copilotId;
+  @alias('flight.copilotName') copilotName;
+  @alias('flight.modelId') modelId;
+  @alias('flight.registration') registration;
+  @alias('flight.competitionId') competitionId;
+  @equal('status', 0) success;
+}

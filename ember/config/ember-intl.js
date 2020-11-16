@@ -2,7 +2,7 @@
 
 /* eslint-env node */
 
-module.exports = function(/* env */) {
+module.exports = function (/* env */) {
   return {
     /**
      * The locales that are application supports.
@@ -47,7 +47,7 @@ module.exports = function(/* env */) {
      * @type {Boolean}
      * @default "false"
      */
-    disablePolyfill: false,
+    disablePolyfill: true,
 
     /**
      * prevents the translations from being bundled with the application code.

@@ -1,53 +1,35 @@
 /* globals Cesium */
 
-import Component from '@ember/component';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 
-import ol from 'openlayers';
+import { toLonLat } from 'ol/proj';
 
-import safeComputed from '../computed/safe-computed';
+export default class CesiumPlaneModel extends Component {
+  entity = Cesium.Model.fromGltf({
+    url: '../../3d/AS21.glb',
+    scale: 1,
+    minimumPixelSize: 64,
+    allowPicking: false,
+  });
 
-export default Component.extend({
-  tagName: '',
+  @action
+  update([coordinate, heading]) {
+    let lonlat = toLonLat(coordinate);
 
-  scene: null,
-  fix: null,
+    let position = Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
+    let rotation = new Cesium.HeadingPitchRoll(heading, 0, 0);
 
-  entity: null,
+    this.entity.modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(position, rotation);
+  }
 
-  position: safeComputed('coordinate', coordinate => {
-    let lonlat = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
-    return Cesium.Cartesian3.fromDegrees(lonlat[0], lonlat[1], lonlat[2]);
-  }),
+  constructor() {
+    super(...arguments);
+    this.args.scene.primitives.add(this.entity);
+  }
 
-  init() {
-    this._super(...arguments);
-
-    this.set(
-      'entity',
-      Cesium.Model.fromGltf({
-        url: '../../3d/AS21.glb',
-        scale: 1,
-        minimumPixelSize: 64,
-        allowPicking: false,
-      }),
-    );
-  },
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.entity.modelMatrix = Cesium.Transforms.headingPitchRollToFixedFrame(
-      this.position,
-      new Cesium.HeadingPitchRoll(this.heading - Math.PI / 2, 0, 0),
-    );
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-    this.scene.primitives.add(this.entity);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    this.scene.primitives.remove(this.entity);
-  },
-});
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.scene.primitives.remove(this.entity);
+  }
+}

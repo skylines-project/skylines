@@ -5,14 +5,6 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 
 const Validations = buildValidations({
-  email: {
-    descriptionKey: 'email-address',
-    validators: [
-      validator('presence', true),
-      validator('format', { type: 'email' }, { allowBlank: false})
-    ],
-    debounce: 500,
-  },
   name: {
     descriptionKey: 'name',
     validators: [
@@ -26,18 +18,12 @@ const Validations = buildValidations({
     ],
     debounce: 500,
   },
-  website: {
-    descriptionKey: 'website',
-    validators: [validator('format', { allowBlank: true, type: 'url' })],
-    debounce: 500,
-  }
 });
 
 export default Component.extend(Validations, {
+  tagName: '',
   ajax: service(),
   account: service(),
-
-  classNames: ['panel', 'panel-default'],
 
   name: null,
   messageKey: null,
@@ -48,19 +34,17 @@ export default Component.extend(Validations, {
       let { validations } = await this.validate();
       if (validations.get('isValid')) {
         this.saveTask.perform();
-      alert("Your group won't appear in the Groups list until someone in your group uploads a flight.");
       }
     },
   },
 
-  saveTask: task(function*() {
-    let json = this.getProperties('email','name', 'website');
-
+  saveTask: task(function* () {
+    let json = this.getProperties('name');
 
     try {
       let { id } = yield this.ajax.request('/api/clubs', { method: 'PUT', json });
-      this.setProperties({
 
+      this.setProperties({
         messageKey: 'club-was-registered',
         error: null,
       });
@@ -69,7 +53,5 @@ export default Component.extend(Validations, {
     } catch (error) {
       this.setProperties({ messageKey: null, error });
     }
-
   }).drop(),
-
 });

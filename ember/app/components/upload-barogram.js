@@ -1,8 +1,8 @@
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
-import ol from 'openlayers';
+import { decodeDeltas } from 'ol/format/Polyline';
 
 import BarogramComponent from './base-barogram';
 
@@ -10,7 +10,6 @@ export default BarogramComponent.extend({
   units: service(),
 
   uploadMode: true,
-  height: 160,
 
   flight: null,
   trace: null,
@@ -36,10 +35,10 @@ export default BarogramComponent.extend({
     this._super(...arguments);
     let units = this.units;
 
-    let height = ol.format.Polyline.decodeDeltas(this.get('trace.barogram_h'), 1, 1);
-    let time = ol.format.Polyline.decodeDeltas(this.get('trace.barogram_t'), 1, 1);
-    let enl = ol.format.Polyline.decodeDeltas(this.get('trace.enl'), 1, 1);
-    let _elev_h = ol.format.Polyline.decodeDeltas(this.get('trace.elevations_h'), 1, 1);
+    let height = decodeDeltas(this.get('trace.barogram_h'), 1, 1);
+    let time = decodeDeltas(this.get('trace.barogram_t'), 1, 1);
+    let enl = decodeDeltas(this.get('trace.enl'), 1, 1);
+    let _elev_h = decodeDeltas(this.get('trace.elevations_h'), 1, 1);
 
     let flot_h = [];
     let flot_enl = [];
@@ -65,8 +64,8 @@ export default BarogramComponent.extend({
     this.set('elevations', flot_elev);
   },
 
-  didInsertElement() {
-    this._super(...arguments);
+  initFlot: action(function (element) {
+    this._initFlot(element);
 
     this.placeholder.on('plotselecting', (event, range, marker) => {
       let date = secondsToDate(this.date, range[marker]);
@@ -84,7 +83,7 @@ export default BarogramComponent.extend({
 
     this.updateSelection();
     this.draw();
-  },
+  }),
 
   didUpdateAttrs() {
     this._super(...arguments);
@@ -102,7 +101,7 @@ export default BarogramComponent.extend({
 });
 
 function computedSecondsOfDay(dateKey, timeKey) {
-  return computed(dateKey, timeKey, function() {
+  return computed(dateKey, timeKey, function () {
     let date = new Date(this.get(dateKey));
     date.setUTCHours(0, 0, 0, 0);
 

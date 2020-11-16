@@ -1,26 +1,12 @@
 @import '_power-select';
 
 @import 'bootstrap';
-
-@import 'components/cesium-button';
-@import 'components/fix-table';
-@import 'components/follower-panel';
-@import 'components/fullscreen-button';
-@import 'components/layer-switcher';
-@import 'components/loading-page';
-@import 'components/login-form';
-@import 'components/map-click-handler';
-@import 'components/playback-button';
-@import 'components/search-results-table';
-@import 'components/tracking-table';
-@import 'components/wingman-table';
-
-@import 'routes/index';
+@import 'flatpickr';
+@import 'font-awesome';
 
 @import 'tables';
-@import 'events';
-@import 'ol3-sidebar';
-@import 'flags';
-@import 'loading-indicator';
-@import 'footer';
 @import 'map';
+@import 'spinner';
+
+// ember-css-modules
+@import 'css-modules';

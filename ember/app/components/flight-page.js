@@ -1,23 +1,47 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 import $ from 'jquery';
 
 import FixCalc from '../utils/fix-calc';
-import FltPhase from '../utils/flight-phase';
+import getNextSmallerIndex from '../utils/next-smaller-index';
 
 export default Component.extend({
+  tagName: '',
+
   ajax: service(),
   pinnedFlights: service(),
+  progress: service(),
   units: service(),
 
-  classNames: ['relative-fullscreen'],
-
   fixCalc: null,
-  flightPhase: null,
+  highlightedTimeInterval: null,
 
-  timeInterval: computed('mapExtent', 'cesiumEnabled', function() {
+  defaultTab: window.innerWidth >= 768 ? 'overview' : null,
+
+  highlightedCoordinates: computed('highlightedTimeInterval', function () {
+    let selection = this.highlightedTimeInterval;
+    if (!selection) {
+      return;
+    }
+
+    let { start, end } = selection;
+
+    let flight = this.get('fixCalc.flights.firstObject');
+    let times = flight.get('time');
+
+    let start_index = getNextSmallerIndex(times, start);
+    let end_index = getNextSmallerIndex(times, end);
+    if (start_index >= end_index) {
+      return;
+    }
+
+    let coordinates = flight.get('geometry').getCoordinates();
+    return coordinates.slice(start_index, end_index + 1);
+  }),
+
+  timeInterval: computed('mapExtent', 'cesiumEnabled', function () {
     if (this.cesiumEnabled) {
       return null;
     }
@@ -41,23 +65,20 @@ export default Component.extend({
     let fixCalc = FixCalc.create({ ajax, units });
     fixCalc.addFlight(this._primaryFlightPath);
     this.set('fixCalc', fixCalc);
-
-    let flightPhase = FltPhase.create({ fixCalc });
-    this.set('flightPhase', flightPhase);
   },
 
-  didInsertElement() {
-    this._super(...arguments);
+  setup: action(function (element) {
+    this.rootElement = element;
+
     let fixCalc = this.fixCalc;
 
-    let sidebar = this.element.querySelector('#sidebar');
-    let $sidebar = $(sidebar).sidebar();
+    let sidebar = this.rootElement.querySelector('#sidebar');
 
-    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     let $barogramPanel = $(barogramPanel);
 
-    let olScaleLine = this.element.querySelector('.ol-scale-line');
-    let olAttribution = this.element.querySelector('.ol-attribution');
+    let olScaleLine = this.rootElement.querySelector('.ol-scale-line');
+    let olAttribution = this.rootElement.querySelector('.ol-attribution');
 
     let resize = () => {
       let bottom = Number(getComputedStyle(barogramPanel).bottom.replace('px', ''));
@@ -71,25 +92,25 @@ export default Component.extend({
     resize();
     $barogramPanel.resize(resize);
 
-    if (window.location.hash && sidebar.querySelector(`li > a[href="#${window.location.hash.substring(1)}"]`)) {
-      $sidebar.open(window.location.hash.substring(1));
-    } else if (window.innerWidth >= 768) {
-      $sidebar.open('tab-overview');
-    }
-
     let [primaryId, ...otherIds] = this.ids;
 
     let map = window.flightMap.get('map');
 
-    otherIds.forEach(id => fixCalc.addFlightFromJSON(`/api/groupflights/${id}/json`));
+    otherIds.forEach(id => {
+      let promise = fixCalc.addFlightFromJSON(`/api/flights/${id}/json`);
+      this.progress.handle(promise);
+    });
 
     let extent = fixCalc.get('flights').getBounds();
     map.getView().fit(extent, { padding: this._calculatePadding() });
 
     this.get('pinnedFlights.pinned')
       .filter(id => id !== primaryId)
-      .forEach(id => fixCalc.addFlightFromJSON(`/api/groupflights/${id}/json`));
-  },
+      .forEach(id => {
+        let promise = fixCalc.addFlightFromJSON(`/api/flights/${id}/json`);
+        this.progress.handle(promise);
+      });
+  }),
 
   actions: {
     togglePlayback() {
@@ -116,7 +137,8 @@ export default Component.extend({
         flights.removeObjects(matches);
         pinnedFlights.unpin(id);
       } else {
-        fixCalc.addFlightFromJSON(`/api/groupflights/${id}/json`);
+        let promise = fixCalc.addFlightFromJSON(`/api/flights/${id}/json`);
+        this.progress.handle(promise);
         pinnedFlights.pin(id);
       }
     },
@@ -127,8 +149,8 @@ export default Component.extend({
   },
 
   _calculatePadding() {
-    let sidebar = this.element.querySelector('#sidebar');
-    let barogramPanel = this.element.querySelector('#barogram_panel');
+    let sidebar = this.rootElement.querySelector('#sidebar');
+    let barogramPanel = this.rootElement.querySelector('#barogram_panel');
     return [20, 20, barogramPanel.offsetHeight + 20, sidebar.offsetWidth + 20];
   },
 });

@@ -18,10 +18,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, {
+  tagName: '',
   ajax: service(),
   session: service(),
-
-  classNames: ['panel', 'panel-default'],
 
   password: null,
 
@@ -37,7 +36,7 @@ export default Component.extend(Validations, {
     },
   },
 
-  deleteTask: task(function*() {
+  deleteTask: task(function* () {
     let json = this.getProperties('password');
 
     try {

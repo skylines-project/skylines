@@ -1,18 +1,19 @@
-/* global BigScreen */
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
 
-import Component from '@ember/component';
+import screenfull from 'screenfull';
 
-import $ from 'jquery';
+export default class FullscreenButton extends Component {
+  @service intl;
+  @service notifications;
 
-export default Component.extend({
-  classNames: ['FullscreenButton', 'ol-unselectable'],
-
-  click() {
-    this.toggle();
-  },
-
-  toggle() {
-    let element = this.fullscreenElement;
-    BigScreen.toggle($(element)[0]);
-  },
-});
+  @action toggle() {
+    if (screenfull.isEnabled) {
+      let element = this.args.fullscreenElement;
+      screenfull.toggle(document.querySelector(element));
+    } else {
+      this.notifications.warning(this.intl.t('fullscreen-not-supported'));
+    }
+  }
+}

@@ -4,19 +4,30 @@
 
 let EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-module.exports = function(defaults) {
+const CssModules = require('./build/css-modules');
+
+const { USE_EMBROIDER } = process.env;
+
+module.exports = function (defaults) {
   let environment = process.env.EMBER_ENV;
+  let isProduction = environment === 'production';
 
   let pluginsToBlacklist = [];
-  if (environment === 'production') {
+  if (isProduction) {
     pluginsToBlacklist.push('ember-freestyle', 'freestyle');
-  } else if (environment === 'test') {
-    pluginsToBlacklist.push('ember-cli-pace');
   }
 
   let app = new EmberApp(defaults, {
     addons: {
       blacklist: pluginsToBlacklist,
+    },
+
+    cssModules: {
+      extension: 'module.scss',
+      intermediateOutputPath: USE_EMBROIDER ? '_css-modules.scss' : 'app/styles/_css-modules.scss',
+      generateScopedName(className, modulePath) {
+        return CssModules.generateName(className, modulePath, { isProduction });
+      },
     },
 
     fingerprint: {
@@ -33,10 +44,6 @@ module.exports = function(defaults) {
       extensions: ['css', 'js'],
     },
 
-    vendorFiles: {
-      'jquery.js': 'bower_components/jquery/jquery.js',
-    },
-
     sassOptions: { implementation: require('node-sass') },
 
     svgJar: {
@@ -48,22 +55,8 @@ module.exports = function(defaults) {
 
     'ember-bootstrap': {
       bootstrapVersion: 3,
-      importBootstrapFont: true,
+      importBootstrapFont: false,
       importBootstrapCSS: false,
-    },
-
-    'ember-font-awesome': {
-      includeStaticIcons: [
-        'arrow-left',
-        'arrow-right',
-        'calendar',
-        'chevron-down',
-        'chevron-up',
-        'clock-o',
-        'facebook',
-        'google-plus',
-        'twitter',
-      ],
     },
 
     freestyle: {
@@ -84,11 +77,7 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  app.import('vendor/openlayers/olcesium.js');
-  app.import('vendor/openlayers/ol.css');
-
-  app.import('vendor/shims/openlayers.js');
-  app.import('vendor/shims/ol-cesium.js');
+  app.import('node_modules/ol/ol.css');
 
   app.import('bower_components/Flot/jquery.flot.js');
   app.import('bower_components/Flot/jquery.flot.time.js');
@@ -97,29 +86,14 @@ module.exports = function(defaults) {
   app.import('bower_components/flot-marks/src/jquery.flot.marks.js');
   app.import('vendor/jquery.flot.flight-upload.js');
 
-  app.import({
-    development: 'node_modules/bigscreen/bigscreen.js',
-    production: 'node_modules/bigscreen/bigscreen.min.js',
-  });
-
-  app.import('vendor/bootstrap-datepicker/datepicker.js');
-  app.import('vendor/bootstrap-datepicker/datepicker.css');
-
-  app.import({
-    development: 'bower_components/moment/moment.js',
-    production: 'bower_components/moment/min/moment.min.js',
-  });
-
-  app.import('bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js');
-
-  app.import({
-    development: 'bower_components/sidebar-v2/js/jquery-sidebar.js',
-    production: 'bower_components/sidebar-v2/js/jquery-sidebar.min.js',
-  });
-
   // Monkey-patch the `findMissingKeys()` method
   let TranslationReducer = require('ember-intl/lib/broccoli/translation-reducer');
-  TranslationReducer.prototype.findMissingKeys = function() {};
+  TranslationReducer.prototype.findMissingKeys = function () {};
+
+  if (USE_EMBROIDER) {
+    const { Webpack } = require('@embroider/webpack');
+    return require('@embroider/compat').compatBuild(app, Webpack);
+  }
 
   return app.toTree();
 };

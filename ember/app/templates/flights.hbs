@@ -2,15 +2,11 @@
   <div class="page-header">
     <h1>
       {{t "flights"}}
-      <span class="center-block" style = "width:500px">
-      <LinkTo @route="flight-upload" class="btn btn-default"> {{t "upload"}}</LinkTo>
-      <LinkTo @route="flights.info" class="btn btn-default"> {{fa-icon "question-circle"}} {{t "scoring"}}</LinkTo>
-      </span>
+
       {{#if loading}}
         <small>{{t "loading"}}</small>
       {{/if}}
-  </h1>
-
+    </h1>
   </div>
 
   <div class="row">

@@ -1,4 +1,4 @@
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { isNone } from '@ember/utils';
 
 export default function safeComputed(func) {
@@ -9,10 +9,10 @@ export default function safeComputed(func) {
     func = args.pop();
   }
 
-  args.push(function() {
+  args.push(function () {
     let values = [];
     for (let i = 0; i < args.length - 1; i++) {
-      let value = this.get(args[i]);
+      let value = get(this, args[i]);
 
       // drop out if any `value` is undefined
       if (isNone(value)) {

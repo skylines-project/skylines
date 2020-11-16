@@ -1,26 +1,17 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { htmlSafe } from '@ember/template';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: 'tr',
-  classNameBindings: ['selected', 'selectable'],
+export default class extends Component {
+  @computed('args.row.color')
+  get badgeStyle() {
+    return htmlSafe(`background-color: ${this.args.row.color}`);
+  }
 
-  selectable: false,
-
-  badgeStyle: computed('row.color', function() {
-    return htmlSafe(`background-color: ${this.row.color}`);
-  }),
-
-  actions: {
-    remove() {
-      this.onRemove(this.get('row.id'));
-    },
-  },
-
-  click() {
-    if (this.selectable) {
-      this.onSelect(this.get('row.id'));
+  @action
+  handleClick() {
+    if (this.args.selectable) {
+      this.args.onSelect(this.args.row.id);
     }
-  },
-});
+  }
+}

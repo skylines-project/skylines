@@ -24,8 +24,8 @@
               {{/if}}
 
               <div class="pull-right hidden-xs">
-                <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{fa-icon "plane"}} {{t "flights"}}</LinkTo>
-                <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default btn-sm hidden-xs-inline">{{fa-icon "bar-chart"}} {{t "statistics"}}</LinkTo>
+                <LinkTo @route="flights.pilot" @model={{user.id}} class="btn btn-default btn-sm">{{svg-jar "plane" class="fa-svg"}} {{t "flights"}}</LinkTo>
+                <LinkTo @route="statistics.pilot" @model={{user.id}} class="btn btn-default btn-sm hidden-xs-inline">{{svg-jar "bar-chart" class="fa-svg"}} {{t "statistics"}}</LinkTo>
               </div>
             </td>
           </tr>
