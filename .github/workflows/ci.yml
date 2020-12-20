@@ -112,7 +112,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       # Install Python dependencies
-      - run: pip install pipenv==v2020.4.1b2
+      - run: pip install pipenv==2020.11.15
       - run: pipenv install --dev
 
       # Run the test suite
