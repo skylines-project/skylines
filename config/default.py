@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import os.path
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -44,8 +45,8 @@ SKYLINES_LISTS_DISPLAY_LENGTH = 50
 
 SKYLINES_MAP_TILE_URL = "https://www.skylines.aero/mapproxy"
 
-BROKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+BROKER_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 CELERYD_LOG_LEVEL = "INFO"
 
 # limits for AnalyseFlight
