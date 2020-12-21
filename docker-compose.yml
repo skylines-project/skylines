@@ -1,0 +1,44 @@
+version: '3.9'
+
+volumes:
+  postgres_data:
+
+services:
+  db:
+    image: postgis/postgis:10-2.5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: skylines_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 5s
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: redis-cli ping
+      interval: 5s
+
+  api:
+    build: .
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/home/skylines/code/
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
