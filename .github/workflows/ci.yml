@@ -74,49 +74,14 @@ jobs:
       matrix:
         python-version: [2.7, 3.6]
 
-    services:
-      postgres:
-        image: postgis/postgis:10-2.5
-        env:
-          POSTGRES_DB: skylines_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
-      redis:
-        image: redis
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 6379:6379
-
-    env:
-      PGHOST: localhost
-      PGUSER: postgres
-      PGPASSWORD: postgres
-
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
 
-      # Install Python dependencies
-      - run: pip install pipenv==v2020.4.1b2
-      - run: pipenv install --dev
+      # Build Docker images
+      - run: docker-compose build --build-arg PYTHON_VERSION=${{ matrix.python-version }}
 
       # Run the test suite
-      - run: pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
+      - run: docker-compose run api pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
 
   backend-lint:
     name: Backend (Lint)
