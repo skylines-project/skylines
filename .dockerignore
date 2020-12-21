@@ -1,0 +1,10 @@
+.cache/
+.coverage
+.envrc
+.git/
+.github/
+.idea/
+.local/
+.vagrant/
+ember/node_modules/
+htdocs/
