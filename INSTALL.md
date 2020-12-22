@@ -9,10 +9,9 @@ our developers use Ubuntu or Debian too. We recommend to use either one of
 those systems for development, but it may also be possible to make it work on
 OS X or Windows.
 
-There is also a [Vagrant](http://www.vagrantup.com/) environment for
-*SkyLines*. This makes it possible to run a virtual machine with Ubuntu
-dedicated to *SkyLines* development on OS X or Windows. More information
-can be found in [INSTALL.vagrant.md](INSTALL.vagrant.md).
+There is also a [Docker](http://www.docker.com/) environment for *SkyLines*. 
+This makes it possible to run a containerized *SkyLines* development 
+environment. More information can be found in [INSTALL.docker.md](INSTALL.docker.md).
 
 
 ## Python, Flask and other dependencies
