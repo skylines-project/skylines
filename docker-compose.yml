@@ -6,6 +6,7 @@ volumes:
 x-api: &api
   build: .
   environment:
+    C_FORCE_ROOT: "1"
     PGHOST: db
     PGUSER: postgres
     PGPASSWORD: postgres
@@ -46,3 +47,8 @@ services:
     <<: *api
     ports:
       - 5000:5000
+
+  worker:
+    <<: *api
+    command: pipenv run ./manage.py celery runworker
+
