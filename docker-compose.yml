@@ -7,9 +7,9 @@ services:
   db:
     image: postgis/postgis:10-2.5
     volumes:
+      - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: skylines_test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
