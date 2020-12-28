@@ -1,16 +1,20 @@
 # Docker
 
-[docker](http://www.docker.com/) can be used to easily set up a development
-environment for *SkyLines*.
+[Docker](http://www.docker.com/) can be used to set up a development environment
+for *SkyLines*, even if you're not running Linux as your operating system.
 
-The environment configuration is described in [docker-compose.yml](docker-compose.yml).
+The environment configuration is described in the
+[docker-compose.yml](docker-compose.yml) file.
 
-The same environment is used on github to run the tests.
+The same setup is also used on GitHub to run the tests.
 
-## Direct usage
+## docker-compose
 
-If you are familiar with [Docker](http://www.vagrantup.com/), you can use 
-[docker-compose.yml](docker-compose.yml) to set up your development environment.
+[docker-compose](https://docs.docker.com/compose/) can be used to run and
+coordinate multiple containers in parallel. Once you have it
+[installed](https://docs.docker.com/compose/install/), you should be able to
+run `docker-compose up` to automatically build the necessary container images
+and run them.
 
 ## Usage with VSCode
 
@@ -30,16 +34,16 @@ re-opened from inside the container.
 
 ## Running tests
 
-To execute the unit tests, launch:
+If you want to run the testsuite, launch:
 
 ```
-root@xxx:/home/skylines/code# pipenv run py.test -vv
+docker-compose run api pipenv run pytest -vv
 ```
 
 You can restrict the unit tests to run by passing a file or a folder:
 
 ```
-pipenv run py.test -vv tests/api/views/clubs/
+docker-compose run api pipenv run pytest -vv tests/api/views/clubs/
 ```
 
 See the [pytest documentation](https://docs.pytest.org/en/stable/contents.html)
