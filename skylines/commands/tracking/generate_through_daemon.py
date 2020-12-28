@@ -10,7 +10,6 @@ from skylines.tracking.server import (
     datetime,
     FLAG_LOCATION,
     FLAG_ALTITUDE,
-    TrackingFix,
     MAGIC,
     TYPE_FIX,
     set_crc,
@@ -55,10 +54,6 @@ class GenerateThroughDaemon(Command):
             altitude = sin(i / 20.0) * 300 + _altitude
 
             flags = FLAG_LOCATION | FLAG_ALTITUDE
-            fix = TrackingFix()
-            fix.pilot_id = user.id
-            fix.set_location(longitude, latitude)
-            fix.altitude = altitude
 
             data = struct.pack(
                 "!IHHQIIiiIHHHhhH",
