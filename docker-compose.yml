@@ -3,6 +3,22 @@ version: '3.9'
 volumes:
   postgres_data:
 
+x-api: &api
+  build: .
+  environment:
+    PGHOST: db
+    PGUSER: postgres
+    PGPASSWORD: postgres
+    REDIS_URL: redis://redis:6379/0
+  volumes:
+    - .:/home/skylines/code/
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+
 services:
   db:
     image: postgis/postgis:10-2.5
@@ -27,18 +43,6 @@ services:
       interval: 5s
 
   api:
-    build: .
-    environment:
-      PGHOST: db
-      PGUSER: postgres
-      PGPASSWORD: postgres
-      REDIS_URL: redis://redis:6379/0
+    <<: *api
     ports:
       - 5000:5000
-    volumes:
-      - .:/home/skylines/code/
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
