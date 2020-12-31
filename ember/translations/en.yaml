@@ -327,6 +327,9 @@ errors:
   phone: '{description} must be a valid phone number'
   url: '{description} must be a valid url'
 weglide:
+  example-prefix: 'Example:'
   upload-failed: Upload to WeGlide was unsuccessful!
   upload-in-progress: Upload to WeGlide still in progress…
+  user-id: WeGlide User ID
+  user-id-help: Open your "Profile" page on WeGlide and enter the numeric ID from the URL here.
   weglide: WeGlide
