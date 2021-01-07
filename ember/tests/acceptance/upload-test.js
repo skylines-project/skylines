@@ -1,5 +1,9 @@
-import { visit, currentURL, click, triggerEvent } from '@ember/test-helpers';
+import { visit, currentURL, click, triggerEvent, settled, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
+
+import { defer } from 'rsvp';
+
+import { t } from 'ember-intl/test-support';
 
 import * as MockFlight from 'skylines/mirage/vcr/flights/87296';
 import { IGC } from 'skylines/mirage/vcr/flights/94bf14k1';
@@ -18,7 +22,33 @@ module('Acceptance | flight upload', function (hooks) {
 
     await authenticateAs(user);
 
-    this.server.post('/api/flights/upload/', {
+    let deferred = defer();
+    this.server.post('/api/flights/upload/', deferred.promise);
+
+    this.server.post('/api/flights/upload/verify', {});
+
+    this.server.get('/api/flights/87296/json', MockFlight.JSON);
+    this.server.get('/api/flights/87296', MockFlight.EXTENDED);
+
+    await visit('/flights/upload');
+    assert.equal(currentURL(), '/flights/upload');
+    assert.dom('[data-test-files]').isEnabled();
+    assert.dom('[data-test-pilot] .ember-power-select-trigger').doesNotHaveAria('disabled');
+    assert.dom('[data-test-submit-button]').isDisabled().hasText(t('upload'));
+
+    let blob = new Blob([IGC], { type: 'text/plain' });
+    let file = new File([blob], '94bf14k1.igc', { type: blob.type });
+
+    await triggerEvent('[data-test-files]', 'change', { files: [file] });
+    assert.dom('[data-test-submit-button]').isEnabled().hasText(t('upload'));
+
+    click('[data-test-submit-button]');
+    await waitFor('[data-test-upload-form="uploading"]');
+    assert.dom('[data-test-files]').isDisabled();
+    assert.dom('[data-test-pilot] .ember-power-select-trigger').hasAria('disabled', 'true');
+    assert.dom('[data-test-submit-button]').isDisabled().hasText(t('uploading'));
+
+    deferred.resolve({
       club_members: [],
       aircraft_models: [],
       results: [
@@ -73,20 +103,7 @@ module('Acceptance | flight upload', function (hooks) {
         },
       ],
     });
-
-    this.server.post('/api/flights/upload/verify', {});
-
-    this.server.get('/api/flights/87296/json', MockFlight.JSON);
-    this.server.get('/api/flights/87296', MockFlight.EXTENDED);
-
-    await visit('/flights/upload');
-    assert.equal(currentURL(), '/flights/upload');
-
-    let blob = new Blob([IGC], { type: 'text/plain' });
-    let file = new File([blob], '94bf14k1.igc', { type: blob.type });
-
-    await triggerEvent('[data-test-files]', 'change', { files: [file] });
-    await click('[data-test-submit-button]');
+    await settled();
     assert.equal(currentURL(), '/flights/upload');
 
     await click('[data-test-publish-button]');
