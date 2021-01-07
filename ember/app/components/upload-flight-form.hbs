@@ -17,7 +17,12 @@
     </ValidatedBlock>
 
     <ValidatedBlock @label={{t "pilot"}} @validation={{validations.attrs.pilotId}} @didValidate={{didValidate}}>
-      <PilotSelect @clubMembers={{clubMembers}} @pilotId={{pilotId}} @onChange={{action (mut pilotId)}} />
+      <PilotSelect
+        @clubMembers={{clubMembers}}
+        @pilotId={{pilotId}}
+        @disabled={{uploadTask.isRunning}}
+        @onChange={{action (mut pilotId)}}
+      />
     </ValidatedBlock>
 
     {{#if showPilotNameInput}}
