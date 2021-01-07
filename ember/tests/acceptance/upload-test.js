@@ -22,8 +22,12 @@ module('Acceptance | flight upload', function (hooks) {
 
     await authenticateAs(user);
 
-    let deferred = defer();
-    this.server.post('/api/flights/upload/', deferred.promise);
+    let deferredRequest = defer();
+    let deferredResponse = defer();
+    this.server.post('/api/flights/upload/', (schema, request) => {
+      deferredRequest.resolve(request);
+      return deferredResponse.promise;
+    });
 
     this.server.post('/api/flights/upload/verify', {});
 
@@ -36,9 +40,7 @@ module('Acceptance | flight upload', function (hooks) {
     assert.dom('[data-test-pilot] .ember-power-select-trigger').doesNotHaveAria('disabled');
     assert.dom('[data-test-submit-button]').isDisabled().hasText(t('upload'));
 
-    let blob = new Blob([IGC], { type: 'text/plain' });
-    let file = new File([blob], '94bf14k1.igc', { type: blob.type });
-
+    let file = new File([IGC], '94bf14k1.igc', { type: 'text/plain' });
     await triggerEvent('[data-test-files]', 'change', { files: [file] });
     assert.dom('[data-test-submit-button]').isEnabled().hasText(t('upload'));
 
@@ -48,7 +50,14 @@ module('Acceptance | flight upload', function (hooks) {
     assert.dom('[data-test-pilot] .ember-power-select-trigger').hasAria('disabled', 'true');
     assert.dom('[data-test-submit-button]').isDisabled().hasText(t('uploading'));
 
-    deferred.resolve({
+    let request = await deferredRequest.promise;
+    let formData = request.requestBody;
+    assert.deepEqual(new Set(formData.keys()), new Set(['files', 'pilotId', 'pilotName']), 'Unexpected FormData keys');
+    assert.ok(formData.get('files') instanceof File);
+    assert.equal(formData.get('pilotId'), user.id);
+    assert.equal(formData.get('pilotName'), '');
+
+    deferredResponse.resolve({
       club_members: [],
       aircraft_models: [],
       results: [
