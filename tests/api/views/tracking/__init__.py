@@ -1,3 +1,6 @@
+from time import mktime
+
+
 def decode_time(encoded_time):
     """Decodes an encoded time string"""
     index = 0
@@ -34,3 +37,7 @@ def get_fixes_times_seconds(fixes):
         seconds.append(int((time - start_time).total_seconds() + start_second_of_day))
 
     return seconds
+
+
+def to_timestamp(dtime):
+    return int(mktime(dtime.timetuple()))

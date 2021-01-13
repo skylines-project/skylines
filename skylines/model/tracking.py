@@ -71,7 +71,7 @@ class TrackingFix(db.Model):
         Returns a filter that makes sure that the fix is not older than a
         certain time.
 
-        The delay parameter can be either a datetime.timedelta or a numeric
+        The max_age parameter can be either a datetime.timedelta or a numeric
         value that will be interpreted as hours.
         """
 
@@ -81,7 +81,22 @@ class TrackingFix(db.Model):
         return cls.time >= datetime.utcnow() - max_age
 
     @classmethod
-    def get_latest(cls, max_age=timedelta(hours=6)):
+    def get_from_time(cls, from_time=0, max_age=timedelta(hours=6)):
+        """
+        Creates a query returning fixes from the timestamp from_time having a
+        maximum age of max_age.
+
+        The max_age parameter can be either a datetime.timedelta or a numeric
+        value that will be interpreted as hours.
+        """
+        if is_int(max_age) or isinstance(max_age, float):
+            max_age = timedelta(hours=max_age)
+
+        # from_time is only taken into account if more recent than max_age.
+        from_datetime_utc = datetime.utcfromtimestamp(from_time)
+        age = datetime.utcnow() - from_datetime_utc
+        age_filter = TrackingFix.max_age_filter(min(age, max_age))
+
         # Add a db.Column to the inner query with
         # numbers ordered by time for each pilot
         row_number = db.over(
@@ -92,7 +107,7 @@ class TrackingFix(db.Model):
         subq = (
             db.session.query(cls.id, row_number.label("row_number"))
             .join(cls.pilot)
-            .filter(cls.max_age_filter(max_age))
+            .filter(age_filter)
             .filter(cls.time_visible <= datetime.utcnow())
             .filter(cls.location_wkt != None)
             .subquery()

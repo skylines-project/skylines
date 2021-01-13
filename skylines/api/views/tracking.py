@@ -43,7 +43,7 @@ def index():
         )
 
     tracks = []
-    for t in TrackingFix.get_latest():
+    for t in TrackingFix.get_from_time():
         nearest_airport = get_nearest_airport(t)
 
         track = fix_schema.dump(t).data
@@ -66,8 +66,17 @@ def index():
 @tracking_blueprint.route("/tracking/latest.json")
 @jsonp
 def latest():
+    """
+    Supported query parameter:
+    - from_time: Returns only the fixes after `from_time` expressed as a UNIX
+                 timestamp. The maximum age of the returned fixes is 6h.
+    """
     fixes = []
-    for fix in TrackingFix.get_latest():
+    from_time = request.values.get("from_time", 0, type=int)
+
+    for fix in TrackingFix.get_from_time(
+        from_time=from_time, max_age=timedelta(hours=6)
+    ):
         json = dict(
             time=fix.time.isoformat() + "Z",
             location=fix.location.to_wkt(),
@@ -95,13 +104,22 @@ def latest():
 @tracking_blueprint.route("/tracking/<user_ids>", strict_slashes=False)
 @tracking_blueprint.route("/live/<user_ids>", strict_slashes=False)
 def read(user_ids):
+    """
+    Supported query parameter:
+    - from_time: Returns only the fixes after `from_time` expressed as a UNIX
+                 timestamp. The maximum age of the fix is 12 hours.
+    """
+    from_time = request.values.get("from_time", 0, type=int)
+
     pilots = get_requested_record_list(User, user_ids, joinedload=[User.club])
 
     color_gen = color.generator()
     for pilot in pilots:
         pilot.color = next(color_gen)
 
-    traces = list(map(_get_flight_path, pilots))
+    traces = list(
+        map(lambda pilot: _get_flight_path(pilot, from_time=from_time), pilots)
+    )
     if not any(traces):
         traces = None
 
@@ -142,10 +160,23 @@ def read(user_ids):
 @tracking_blueprint.route("/tracking/<user_id>/json")
 @tracking_blueprint.route("/live/<user_id>/json")
 def json(user_id):
+    """
+    Supported query parameters:
+    - last_update: Returns only the fixes after the `last_update` expressed in
+                   seconds from the first fix,
+    - from_time: Returns only the fixes after `from_time` expressed as a UNIX
+                 timestamp.
+
+    Specifying both parameters is equivalent to ANDing the conditions.
+    The maximum age of the fixes is 12h.
+    """
     pilot = get_requested_record(User, user_id, joinedload=[User.club])
     last_update = request.values.get("last_update", 0, type=int)
+    from_time = request.values.get("from_time", 0, type=int)
 
-    trace = _get_flight_path(pilot, threshold=0.001, last_update=last_update)
+    trace = _get_flight_path(
+        pilot, threshold=0.001, last_update=last_update, from_time=from_time
+    )
     if not trace:
         abort(404)
 
@@ -160,8 +191,8 @@ def json(user_id):
     )
 
 
-def _get_flight_path(pilot, threshold=0.001, last_update=None):
-    fp = _get_flight_path2(pilot, last_update=last_update)
+def _get_flight_path(pilot, threshold=0.001, last_update=None, from_time=None):
+    fp = _get_flight_path2(pilot, last_update=last_update, from_time=from_time)
     if not fp:
         return None
 
@@ -217,7 +248,7 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
     )
 
 
-def _get_flight_path2(pilot, last_update=None):
+def _get_flight_path2(pilot, last_update=None, from_time=None):
     query = TrackingFix.query().filter(
         and_(
             TrackingFix.pilot == pilot,
@@ -244,6 +275,10 @@ def _get_flight_path2(pilot, last_update=None):
             TrackingFix.time
             >= start_fix.time + timedelta(seconds=(last_update - start_time))
         )
+
+    if from_time:
+        from_datetime_utc = datetime.utcfromtimestamp(from_time)
+        query = query.filter(TrackingFix.time >= from_datetime_utc)
 
     result = []
     for fix in query:

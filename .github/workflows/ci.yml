@@ -94,7 +94,7 @@ jobs:
           python-version: 3.6
 
       - run: pip install black==18.9b0
-      - run: black config migrations skylines tests *.py --check
+      - run: black config migrations skylines tests *.py --check --diff
 
   deploy:
     name: Deploy
