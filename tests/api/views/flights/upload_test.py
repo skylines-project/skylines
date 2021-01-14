@@ -13,7 +13,11 @@ def test_upload(db_session, client):
     db_session.add(john)
     db_session.commit()
 
-    data = dict(files=(igcs.simple_path,))
+    data = dict(
+        pilotId=john.id,
+        pilotName="test",
+        files=(igcs.simple_path,),
+    )
 
     res = client.post("/flights/upload", headers=auth_for(john), data=data)
     assert res.status_code == 200
@@ -27,7 +31,7 @@ def test_upload(db_session, client):
                         u"status": 0,
                         u"cacheKey": IsTrue(),
                         u"flight": {
-                            u"pilotName": None,
+                            u"pilotName": u"test",
                             u"takeoffAirport": None,
                             u"registration": u"LY-KDR",
                             u"speed": 30.63035019455253,
@@ -44,7 +48,10 @@ def test_upload(db_session, client):
                             u"landingTime": u"2011-06-18T09:15:40+00:00",
                             u"rawScore": 9.073321994774085,
                             u"copilotName": None,
-                            u"pilot": None,
+                            u"pilot": {
+                                u"id": john.id,
+                                u"name": john.name,
+                            },
                             u"distance": 7872,
                             u"igcFile": {
                                 u"date": u"2011-06-18",
@@ -80,7 +87,11 @@ def test_upload_zips(db_session, client):
     db_session.add(john)
     db_session.commit()
 
-    data = dict(files=(igcs.zip_path,))
+    data = dict(
+        pilotId="",
+        pilotName="Johnny Dee",
+        files=(igcs.zip_path,),
+    )
 
     res = client.post("/flights/upload", headers=auth_for(john), data=data)
     assert res.status_code == 200
@@ -94,7 +105,7 @@ def test_upload_zips(db_session, client):
                         u"status": 0,
                         u"cacheKey": text_type,
                         u"flight": {
-                            u"pilotName": None,
+                            u"pilotName": "Johnny Dee",
                             u"takeoffAirport": None,
                             u"registration": u"D-9041",
                             u"speed": 16.25958982149639,
@@ -148,7 +159,7 @@ def test_upload_zips(db_session, client):
                         u"status": 0,
                         u"cacheKey": text_type,
                         u"flight": {
-                            u"pilotName": None,
+                            u"pilotName": "Johnny Dee",
                             u"takeoffAirport": None,
                             u"registration": u"F-CAEN",
                             u"speed": 21.54423947862587,
@@ -210,6 +221,7 @@ def test_upload_multiple(db_session, client):
     db_session.commit()
 
     data = MultiDict()
+    data.add("pilotName", "JD   ")
     data.add("files", (igcs.simple_path,))
     data.add("files", (igcs.hornet_path,))
 
@@ -225,7 +237,7 @@ def test_upload_multiple(db_session, client):
                         u"status": 0,
                         u"cacheKey": text_type,
                         u"flight": {
-                            u"pilotName": None,
+                            u"pilotName": "JD",
                             u"takeoffAirport": None,
                             u"registration": u"LY-KDR",
                             u"speed": 30.63035019455253,
@@ -271,7 +283,7 @@ def test_upload_multiple(db_session, client):
                         u"status": 0,
                         u"cacheKey": text_type,
                         u"flight": {
-                            u"pilotName": None,
+                            u"pilotName": "JD",
                             u"takeoffAirport": None,
                             u"registration": u"D-9041",
                             u"speed": 16.25958982149639,
