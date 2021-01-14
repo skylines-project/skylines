@@ -93,7 +93,7 @@ jobs:
         with:
           python-version: 3.6
 
-      - run: pip install black==18.9b0
+      - run: pip install black==20.8b1
       - run: black config migrations skylines tests *.py --check
 
   deploy:

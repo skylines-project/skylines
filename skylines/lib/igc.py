@@ -17,8 +17,8 @@ afil_re = re.compile(br"AFIL(\d*)FLIGHT", re.IGNORECASE)
 
 
 def read_igc_headers(f):
-    """ Read IGC file headers from a file-like object, a list of strings or a
-    file if the parameter is a path. """
+    """Read IGC file headers from a file-like object, a list of strings or a
+    file if the parameter is a path."""
 
     if is_string(f):
         try:

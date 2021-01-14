@@ -119,7 +119,7 @@ class CustomRequestValidator(OAuth2RequestValidator):
 
     @staticmethod
     def tokensetter(token, request, *args, **kwargs):
-        """ Save a new token to the database.
+        """Save a new token to the database.
 
         :param token: Token dictionary containing access and refresh tokens, plus token type.
         :param request: Request dictionary containing information about the client and user.
