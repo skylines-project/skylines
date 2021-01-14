@@ -5,6 +5,7 @@ from datetime import datetime
 
 from sqlalchemy.sql.expression import and_
 from sqlalchemy.types import Integer, DateTime, String, Unicode, Date
+from sqlalchemy.dialects.postgresql import JSONB
 
 from skylines.database import db
 from skylines.lib import files
@@ -32,6 +33,15 @@ class IGCFile(db.Model):
     model = db.Column(Unicode(64))
 
     date_utc = db.Column(Date, nullable=False)
+
+    # WeGlide API response HTTP status code,
+    # or None (no upload requested)
+    # or 1 (upload in progress),
+    # or 2 (generic error),
+    weglide_status = db.Column(Integer)
+
+    # WeGlide API response JSON payload, or `null`
+    weglide_data = db.Column(JSONB)
 
     def __repr__(self):
         return unicode_to_str(
