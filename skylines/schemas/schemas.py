@@ -1,4 +1,4 @@
-from marshmallow import Schema as _Schema, pre_load, post_load
+from marshmallow import Schema as _Schema, pre_load, post_load, ValidationError
 
 from . import fields, validate
 
@@ -265,12 +265,16 @@ class FlightUploadSchema(Schema):
     )
 
     @pre_load
-    def remove_empty_fields(self, in_data, **kwargs):
+    def pre_load(self, in_data, **kwargs):
         data = in_data.copy()
         if data.get("pilotId") == "":
             del data["pilotId"]
         if data.get("pilotName") == "":
             del data["pilotName"]
+
+        if not data.get("pilotId") and not data.get("pilotName"):
+            raise ValidationError("Either pilotName or pilotId must be set")
+
         return data
 
     @post_load

@@ -73,7 +73,7 @@ def test_basic_flight_json(db_session, client):
     db_session.commit()
 
     # upload flight
-    data = dict(files=(igcs.simple_path,))
+    data = dict(pilotId=john.id, files=(igcs.simple_path,))
     res = client.post("/flights/upload", headers=auth_for(john), data=data)
     assert res.status_code == 200
     flight_id = res.json["results"][0]["flight"]["id"]

@@ -242,33 +242,8 @@ def test_missing_pilot_fields(db_session, client):
     data = dict(files=(igcs.simple_path,))
 
     res = client.post("/flights/upload", headers=auth_for(john), data=data)
-    # TODO this should return an error
-    assert res.status_code == 200
-    assert res.json == S(
-        {
-            u"club_members": [],
-            u"aircraft_models": [],
-            u"results": ExactSequence(
-                [
-                    {
-                        u"status": 0,
-                        u"cacheKey": text_type,
-                        u"flight": Partial(
-                            {
-                                u"club": None,
-                                u"copilot": None,
-                                u"copilotName": None,
-                                u"distance": 7872,
-                                u"igcFile": dict,
-                                u"pilot": None,
-                                u"pilotName": None,
-                            }
-                        ),
-                        u"name": Match(r".*simple\.igc"),
-                        u"trace": dict,
-                        u"airspaces": [],
-                    },
-                ]
-            ),
-        }
-    )
+    assert res.status_code == 422
+    assert res.json == {
+        u"error": u"validation-failed",
+        u"fields": {u"_schema": [u"Either pilotName or pilotId must be set"]},
+    }

@@ -10,8 +10,8 @@ def schema():
 
 def test_empty_dict(schema):
     data, errors = schema.load({})
-    assert data == {}
-    assert errors == {}
+    assert data == None
+    assert errors == {u"_schema": ["Either pilotName or pilotId must be set"]}
 
 
 def test_pilot_id(schema):
@@ -38,10 +38,16 @@ def test_pilot_name_with_empty_id(schema):
     assert errors == {}
 
 
+def test_invalid_pilot_id(schema):
+    data, errors = schema.load({"pilotId": "foo"})
+    assert data == {}
+    assert errors == {"pilotId": [u"Not a valid integer."]}
+
+
 def test_empty_pilot_name(schema):
     data, errors = schema.load({"pilotName": ""})
-    assert data == {}
-    assert errors == {}
+    assert data == None
+    assert errors == {u"_schema": ["Either pilotName or pilotId must be set"]}
 
 
 def test_pilot_id_and_name(schema):
