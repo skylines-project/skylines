@@ -255,6 +255,16 @@ class FlightSchema(Schema):
         )
 
 
+class FlightUploadSchema(Schema):
+    pilotId = fields.Integer(attribute="pilot_id", allow_none=True)
+    pilotName = fields.String(
+        attribute="pilot_name",
+        strip=True,
+        allow_none=True,
+        validate=validate.Length(max=255),
+    )
+
+
 class FlightCommentSchema(Schema):
     user = fields.Nested(UserSchema, only=("id", "name"))
     text = fields.String(required=True)

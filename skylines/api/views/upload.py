@@ -30,6 +30,7 @@ from skylines.schemas import (
     AirspaceSchema,
     AircraftModelSchema,
     FlightSchema,
+    FlightUploadSchema,
     UserSchema,
     Schema,
     ValidationError,
@@ -197,7 +198,7 @@ def index_post():
         form.pop("pilotId")
 
     try:
-        data = FlightSchema(only=("pilotId", "pilotName")).load(form).data
+        data = FlightUploadSchema().load(form).data
     except ValidationError as e:
         return jsonify(error="validation-failed", fields=e.messages), 422
 
