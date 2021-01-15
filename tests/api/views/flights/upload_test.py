@@ -217,3 +217,18 @@ def test_upload_multiple(db_session, client):
             ),
         }
     )
+
+
+def test_invalid_pilot_id(db_session, client):
+    john = users.john()
+    db_session.add(john)
+    db_session.commit()
+
+    data = dict(pilotId="abc", files=(igcs.simple_path,))
+
+    res = client.post("/flights/upload", headers=auth_for(john), data=data)
+    assert res.status_code == 422
+    assert res.json == {
+        u"error": u"validation-failed",
+        u"fields": {u"pilotId": [u"Not a valid integer."]},
+    }
