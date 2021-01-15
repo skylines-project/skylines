@@ -1,4 +1,4 @@
-from marshmallow import Schema as _Schema
+from marshmallow import Schema as _Schema, pre_load
 
 from . import fields, validate
 
@@ -263,6 +263,15 @@ class FlightUploadSchema(Schema):
         allow_none=True,
         validate=validate.Length(max=255),
     )
+
+    @pre_load
+    def remove_empty_fields(self, in_data, **kwargs):
+        data = in_data.copy()
+        if data.get("pilotId") == "":
+            del data["pilotId"]
+        if data.get("pilotName") == "":
+            del data["pilotName"]
+        return data
 
 
 class FlightCommentSchema(Schema):

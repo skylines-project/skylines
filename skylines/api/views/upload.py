@@ -191,14 +191,8 @@ def _encode_flight_path(fp, qnh):
 def index_post():
     current_user = User.get(request.user_id)
 
-    form = request.form
-
-    if form.get("pilotId") == u"":
-        form = form.copy()
-        form.pop("pilotId")
-
     try:
-        data = FlightUploadSchema().load(form).data
+        data = FlightUploadSchema().load(request.form).data
     except ValidationError as e:
         return jsonify(error="validation-failed", fields=e.messages), 422
 

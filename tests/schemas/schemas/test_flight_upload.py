@@ -35,12 +35,12 @@ def test_pilot_name(schema):
 def test_pilot_name_with_empty_id(schema):
     data, errors = schema.load({"pilotId": "", "pilotName": "Johnny Dee"})
     assert data == {"pilot_name": "Johnny Dee"}
-    assert errors == {"pilotId": [u"Not a valid integer."]}
+    assert errors == {}
 
 
 def test_empty_pilot_name(schema):
     data, errors = schema.load({"pilotName": ""})
-    assert data == {"pilot_name": ""}
+    assert data == {}
     assert errors == {}
 
 
