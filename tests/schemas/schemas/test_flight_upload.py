@@ -46,5 +46,5 @@ def test_empty_pilot_name(schema):
 
 def test_pilot_id_and_name(schema):
     data, errors = schema.load({"pilotId": 123, "pilotName": "JD"})
-    assert data == {"pilot_id": 123, "pilot_name": "JD"}
+    assert data == {"pilot_id": 123}
     assert errors == {}

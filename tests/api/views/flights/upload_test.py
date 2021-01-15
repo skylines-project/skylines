@@ -31,7 +31,7 @@ def test_upload(db_session, client):
                         u"status": 0,
                         u"cacheKey": IsTrue(),
                         u"flight": {
-                            u"pilotName": u"test",
+                            u"pilotName": None,
                             u"takeoffAirport": None,
                             u"registration": u"LY-KDR",
                             u"speed": 30.63035019455253,

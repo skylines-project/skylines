@@ -1,4 +1,4 @@
-from marshmallow import Schema as _Schema, pre_load
+from marshmallow import Schema as _Schema, pre_load, post_load
 
 from . import fields, validate
 
@@ -271,6 +271,13 @@ class FlightUploadSchema(Schema):
             del data["pilotId"]
         if data.get("pilotName") == "":
             del data["pilotName"]
+        return data
+
+    @post_load
+    def remove_name_if_id_is_set(self, data, **kwargs):
+        if data.get("pilot_id") and data.get("pilot_name"):
+            del data["pilot_name"]
+
         return data
 
 
