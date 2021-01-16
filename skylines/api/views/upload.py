@@ -197,8 +197,12 @@ def index_post():
         return jsonify(error="validation-failed", fields=e.messages), 422
 
     pilot_id = data.get("pilot_id")
-    pilot = pilot_id and User.get(pilot_id)
-    pilot_id = pilot and pilot.id
+    if pilot_id:
+        pilot = User.get(pilot_id)
+        if not pilot:
+            return jsonify(error="unknown-pilot"), 422
+    else:
+        pilot = None
 
     club_id = (pilot and pilot.club_id) or current_user.club_id
 
