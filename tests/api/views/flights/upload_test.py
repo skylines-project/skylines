@@ -1,4 +1,4 @@
-from pytest_voluptuous import S
+from pytest_voluptuous import S, Partial
 from voluptuous.validators import ExactSequence, Datetime, Match, IsTrue
 from werkzeug.datastructures import MultiDict
 
@@ -13,7 +13,11 @@ def test_upload(db_session, client):
     db_session.add(john)
     db_session.commit()
 
-    data = dict(files=(igcs.simple_path,))
+    data = dict(
+        pilotId=john.id,
+        pilotName="test",
+        files=(igcs.simple_path,),
+    )
 
     res = client.post("/flights/upload", headers=auth_for(john), data=data)
     assert res.status_code == 200
@@ -44,7 +48,10 @@ def test_upload(db_session, client):
                             u"landingTime": u"2011-06-18T09:15:40+00:00",
                             u"rawScore": 9.073321994774085,
                             u"copilotName": None,
-                            u"pilot": None,
+                            u"pilot": {
+                                u"id": john.id,
+                                u"name": john.name,
+                            },
                             u"distance": 7872,
                             u"igcFile": {
                                 u"date": u"2011-06-18",
@@ -80,7 +87,11 @@ def test_upload_zips(db_session, client):
     db_session.add(john)
     db_session.commit()
 
-    data = dict(files=(igcs.zip_path,))
+    data = dict(
+        pilotId="",
+        pilotName="Johnny Dee",
+        files=(igcs.zip_path,),
+    )
 
     res = client.post("/flights/upload", headers=auth_for(john), data=data)
     assert res.status_code == 200
@@ -93,47 +104,19 @@ def test_upload_zips(db_session, client):
                     {
                         u"status": 0,
                         u"cacheKey": text_type,
-                        u"flight": {
-                            u"pilotName": None,
-                            u"takeoffAirport": None,
-                            u"registration": u"D-9041",
-                            u"speed": 16.25958982149639,
-                            u"id": int,
-                            u"privacyLevel": 2,
-                            u"takeoffTime": u"2018-04-14T10:13:55+00:00",
-                            u"score": 191.94581098298332,
-                            u"scoreEndTime": u"2018-04-14T13:19:19+00:00",
-                            u"copilot": None,
-                            u"timeCreated": Datetime("%Y-%m-%dT%H:%M:%S.%f+00:00"),
-                            u"scoreStartTime": u"2018-04-14T10:16:51+00:00",
-                            u"club": None,
-                            u"scoreDate": u"2018-04-14T10:13:55",
-                            u"landingTime": u"2018-04-14T13:19:19+00:00",
-                            u"rawScore": 191.94581098298332,
-                            u"copilotName": None,
-                            u"pilot": None,
-                            u"distance": 171246,
-                            u"igcFile": {
-                                u"date": u"2018-04-14",
-                                u"model": u"Duo Discus (PAS)",
-                                u"registration": u"D-9041",
-                                u"competitionId": u"TH",
-                                u"filename": Match(r"2018-04-14-fla-6ng-01.*\.igc"),
-                            },
-                            u"landingAirport": None,
-                            u"triangleDistance": 68997,
-                            u"model": None,
-                            u"competitionId": u"TH",
-                        },
+                        u"flight": Partial(
+                            {
+                                u"club": None,
+                                u"copilot": None,
+                                u"copilotName": None,
+                                u"distance": 171246,
+                                u"igcFile": dict,
+                                u"pilot": None,
+                                u"pilotName": "Johnny Dee",
+                            }
+                        ),
                         u"name": u"foo/2018-04-14-fla-6ng-01.igc",
-                        u"trace": {
-                            u"barogram_h": text_type,
-                            u"igc_end_time": u"2018-04-14T13:20:31+00:00",
-                            u"enl": text_type,
-                            u"elevations_h": text_type,
-                            u"igc_start_time": u"2018-04-14T10:12:31+00:00",
-                            u"barogram_t": text_type,
-                        },
+                        u"trace": dict,
                         u"airspaces": [],
                     },
                     {
@@ -147,47 +130,19 @@ def test_upload_zips(db_session, client):
                     {
                         u"status": 0,
                         u"cacheKey": text_type,
-                        u"flight": {
-                            u"pilotName": None,
-                            u"takeoffAirport": None,
-                            u"registration": u"F-CAEN",
-                            u"speed": 21.54423947862587,
-                            u"id": int,
-                            u"privacyLevel": 2,
-                            u"takeoffTime": u"2017-09-02T10:43:02+00:00",
-                            u"score": 196.1458728865586,
-                            u"scoreEndTime": u"2017-09-02T13:18:11+00:00",
-                            u"copilot": None,
-                            u"timeCreated": Datetime("%Y-%m-%dT%H:%M:%S.%f+00:00"),
-                            u"scoreStartTime": u"2017-09-02T10:45:48+00:00",
-                            u"club": None,
-                            u"scoreDate": u"2017-09-02T10:43:02",
-                            u"landingTime": u"2017-09-02T13:18:11+00:00",
-                            u"rawScore": 196.1458728865586,
-                            u"copilotName": None,
-                            u"pilot": None,
-                            u"distance": 195040,
-                            u"igcFile": {
-                                u"date": u"2017-09-02",
-                                u"model": None,
-                                u"registration": u"F-CAEN",
-                                u"competitionId": u"5L",
-                                u"filename": Match(r"792xaaa1.*\.igc"),
-                            },
-                            u"landingAirport": None,
-                            u"triangleDistance": 3685,
-                            u"model": None,
-                            u"competitionId": u"5L",
-                        },
+                        u"flight": Partial(
+                            {
+                                u"club": None,
+                                u"copilot": None,
+                                u"copilotName": None,
+                                u"distance": 195040,
+                                u"igcFile": dict,
+                                u"pilot": None,
+                                u"pilotName": "Johnny Dee",
+                            }
+                        ),
                         u"name": u"792xaaa1.igc",
-                        u"trace": {
-                            u"barogram_h": text_type,
-                            u"igc_end_time": u"2017-09-02T13:18:46+00:00",
-                            u"enl": text_type,
-                            u"elevations_h": text_type,
-                            u"igc_start_time": u"2017-09-02T10:38:17+00:00",
-                            u"barogram_t": text_type,
-                        },
+                        u"trace": dict,
                         u"airspaces": [],
                     },
                     {
@@ -210,6 +165,7 @@ def test_upload_multiple(db_session, client):
     db_session.commit()
 
     data = MultiDict()
+    data.add("pilotName", "JD   ")
     data.add("files", (igcs.simple_path,))
     data.add("files", (igcs.hornet_path,))
 
@@ -224,96 +180,70 @@ def test_upload_multiple(db_session, client):
                     {
                         u"status": 0,
                         u"cacheKey": text_type,
-                        u"flight": {
-                            u"pilotName": None,
-                            u"takeoffAirport": None,
-                            u"registration": u"LY-KDR",
-                            u"speed": 30.63035019455253,
-                            u"id": int,
-                            u"privacyLevel": 2,
-                            u"takeoffTime": u"2011-06-18T09:11:23+00:00",
-                            u"score": 9.073321994774085,
-                            u"scoreEndTime": u"2011-06-18T09:15:40+00:00",
-                            u"copilot": None,
-                            u"timeCreated": Datetime("%Y-%m-%dT%H:%M:%S.%f+00:00"),
-                            u"scoreStartTime": u"2011-06-18T09:11:23+00:00",
-                            u"club": None,
-                            u"scoreDate": u"2011-06-18T09:11:23",
-                            u"landingTime": u"2011-06-18T09:15:40+00:00",
-                            u"rawScore": 9.073321994774085,
-                            u"copilotName": None,
-                            u"pilot": None,
-                            u"distance": 7872,
-                            u"igcFile": {
-                                u"date": u"2011-06-18",
-                                u"model": u"ASK13",
-                                u"registration": u"LY-KDR",
-                                u"competitionId": None,
-                                u"filename": Match(r"simple.*\.igc"),
-                            },
-                            u"landingAirport": None,
-                            u"triangleDistance": 4003,
-                            u"model": None,
-                            u"competitionId": None,
-                        },
+                        u"flight": Partial(
+                            {
+                                u"club": None,
+                                u"copilot": None,
+                                u"copilotName": None,
+                                u"distance": 7872,
+                                u"igcFile": dict,
+                                u"pilot": None,
+                                u"pilotName": "JD",
+                            }
+                        ),
                         u"name": Match(r".*simple\.igc"),
-                        u"trace": {
-                            u"barogram_h": text_type,
-                            u"igc_end_time": u"2011-06-18T09:15:40+00:00",
-                            u"enl": text_type,
-                            u"elevations_h": text_type,
-                            u"igc_start_time": u"2011-06-18T09:07:49+00:00",
-                            u"barogram_t": text_type,
-                        },
+                        u"trace": dict,
                         u"airspaces": [],
                     },
                     {
                         u"status": 0,
                         u"cacheKey": text_type,
-                        u"flight": {
-                            u"pilotName": None,
-                            u"takeoffAirport": None,
-                            u"registration": u"D-9041",
-                            u"speed": 16.25958982149639,
-                            u"id": int,
-                            u"privacyLevel": 2,
-                            u"takeoffTime": u"2018-04-14T10:13:55+00:00",
-                            u"score": 191.94581098298332,
-                            u"scoreEndTime": u"2018-04-14T13:19:19+00:00",
-                            u"copilot": None,
-                            u"timeCreated": Datetime("%Y-%m-%dT%H:%M:%S.%f+00:00"),
-                            u"scoreStartTime": u"2018-04-14T10:16:51+00:00",
-                            u"club": None,
-                            u"scoreDate": u"2018-04-14T10:13:55",
-                            u"landingTime": u"2018-04-14T13:19:19+00:00",
-                            u"rawScore": 191.94581098298332,
-                            u"copilotName": None,
-                            u"pilot": None,
-                            u"distance": 171246,
-                            u"igcFile": {
-                                u"date": u"2018-04-14",
-                                u"model": u"Duo Discus (PAS)",
-                                u"registration": u"D-9041",
-                                u"competitionId": u"TH",
-                                u"filename": Match(r"2018-04-14-fla-6ng-01.*\.igc"),
-                            },
-                            u"landingAirport": None,
-                            u"triangleDistance": 68997,
-                            u"model": None,
-                            u"competitionId": u"TH",
-                        },
+                        u"flight": Partial(
+                            {
+                                u"club": None,
+                                u"copilot": None,
+                                u"copilotName": None,
+                                u"distance": 171246,
+                                u"igcFile": dict,
+                                u"pilot": None,
+                                u"pilotName": "JD",
+                            }
+                        ),
                         u"name": Match(r".*2018-04-14-fla-6ng-01\.igc"),
-                        u"trace": {
-                            u"barogram_h": text_type,
-                            u"igc_end_time": u"2018-04-14T13:20:31+00:00",
-                            u"enl": text_type,
-                            u"elevations_h": text_type,
-                            u"igc_start_time": u"2018-04-14T10:12:31+00:00",
-                            u"barogram_t": text_type,
-                        },
+                        u"trace": dict,
                         u"airspaces": [],
                     },
                 ]
             ),
         }
     )
+
+
+def test_invalid_pilot_id(db_session, client):
+    john = users.john()
+    db_session.add(john)
+    db_session.commit()
+
+    data = dict(pilotId="abc", files=(igcs.simple_path,))
+
+    res = client.post("/flights/upload", headers=auth_for(john), data=data)
+    assert res.status_code == 422
+    assert res.json == {
+        u"error": u"validation-failed",
+        u"fields": {u"pilotId": [u"Not a valid integer."]},
+    }
+
+
+def test_missing_pilot_fields(db_session, client):
+    john = users.john()
+    db_session.add(john)
+    db_session.commit()
+
+    data = dict(files=(igcs.simple_path,))
+
+    res = client.post("/flights/upload", headers=auth_for(john), data=data)
+    assert res.status_code == 422
+    assert res.json == {
+        u"error": u"validation-failed",
+        u"fields": {u"_schema": [u"Either pilotName or pilotId must be set"]},
+    }
