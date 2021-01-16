@@ -34,6 +34,7 @@ requests-oauthlib = ">=0.6.2,<1.2.0"  # see https://github.com/lepture/flask-oau
 sentry-sdk = {extras = ["flask"],version = "==0.12.3"}
 mapproxy = "*"
 gunicorn = "*"
+requests = "==2.22.0"
 
 [dev-packages]
 fabric = "==1.14.0"

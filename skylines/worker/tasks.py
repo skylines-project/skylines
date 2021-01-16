@@ -56,3 +56,10 @@ def find_meetings(flight_id):
             )
 
     db.session.commit()
+
+
+@celery.task
+def upload_to_weglide(igc_file_id, weglide_user_id, weglide_birthday):
+    from skylines import weglide
+
+    weglide.upload(igc_file_id, weglide_user_id, weglide_birthday)

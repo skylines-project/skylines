@@ -290,6 +290,18 @@ def index_post():
         # flush data to make sure we don't get duplicate files from ZIP files
         db.session.flush()
 
+        # Queue WeGlide upload if requested
+        weglide_user_id = data.get("weglideUserId")
+        weglide_birthday = data.get("weglideBirthday")
+        if weglide_user_id and weglide_birthday:
+            tasks.upload_to_weglide.delay(
+                igc_file.id, weglide_user_id, weglide_birthday.isoformat()
+            )
+
+            # Update `weglide_status` in the database
+            igc_file.weglide_status = 1
+            db.session.flush()
+
         # Store data in cache for image creation
         cache_key = hashlib.sha1(
             (to_unicode(flight.id) + u"_" + to_unicode(current_user.id)).encode("utf-8")

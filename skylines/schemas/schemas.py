@@ -263,6 +263,8 @@ class FlightUploadSchema(Schema):
         allow_none=True,
         validate=validate.Length(max=255),
     )
+    weglideBirthday = fields.Date()
+    weglideUserId = fields.Integer()
 
     @pre_load
     def pre_load(self, in_data, **kwargs):
@@ -271,6 +273,10 @@ class FlightUploadSchema(Schema):
             del data["pilotId"]
         if data.get("pilotName") == "":
             del data["pilotName"]
+        if data.get("weglideBirthday") == "":
+            del data["weglideBirthday"]
+        if data.get("weglideUserId") == "":
+            del data["weglideUserId"]
 
         if not data.get("pilotId") and not data.get("pilotName"):
             raise ValidationError("Either pilotName or pilotId must be set")

@@ -1,8 +1,10 @@
+from mock import patch
 from pytest_voluptuous import S, Partial
 from voluptuous.validators import ExactSequence, Datetime, Match, IsTrue
 from werkzeug.datastructures import MultiDict
 
 from skylines.lib.compat import text_type
+from skylines.worker import tasks
 
 from tests.api import auth_for
 from tests.data import users, igcs
@@ -259,3 +261,57 @@ def test_missing_pilot_fields(db_session, client):
         u"error": u"validation-failed",
         u"fields": {u"_schema": [u"Either pilotName or pilotId must be set"]},
     }
+
+
+def test_upload_with_weglide(db_session, client):
+    john = users.john()
+    db_session.add(john)
+    db_session.commit()
+
+    data = dict(
+        pilotId=john.id,
+        weglideUserId="123",
+        weglideBirthday="2020-01-07",
+        files=(igcs.simple_path,),
+    )
+
+    with patch.object(tasks.upload_to_weglide, "delay", return_value=None) as mock:
+        res = client.post("/flights/upload", headers=auth_for(john), data=data)
+
+    mock.assert_called_once()
+    assert len(mock.call_args.args) == 3
+    assert mock.call_args.args[1] == 123
+    assert mock.call_args.args[2] == "2020-01-07"
+
+    assert res.status_code == 200
+    assert res.json == S(
+        {
+            u"club_members": list,
+            u"aircraft_models": list,
+            u"results": ExactSequence(
+                [
+                    {
+                        u"status": 0,
+                        u"cacheKey": IsTrue(),
+                        u"flight": Partial(
+                            {
+                                u"club": None,
+                                u"copilot": None,
+                                u"copilotName": None,
+                                u"distance": 7872,
+                                u"igcFile": dict,
+                                u"pilotName": None,
+                                u"pilot": {
+                                    u"id": john.id,
+                                    u"name": john.name,
+                                },
+                            }
+                        ),
+                        u"name": Match(r".*simple.igc"),
+                        u"trace": dict,
+                        u"airspaces": [],
+                    }
+                ]
+            ),
+        }
+    )
