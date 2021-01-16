@@ -234,6 +234,18 @@ def test_invalid_pilot_id(db_session, client):
     }
 
 
+def test_unknown_pilot_id(db_session, client):
+    john = users.john()
+    db_session.add(john)
+    db_session.commit()
+
+    data = dict(pilotId=42, files=(igcs.simple_path,))
+
+    res = client.post("/flights/upload", headers=auth_for(john), data=data)
+    assert res.status_code == 422
+    assert res.json == {u"error": u"unknown-pilot"}
+
+
 def test_missing_pilot_fields(db_session, client):
     john = users.john()
     db_session.add(john)
