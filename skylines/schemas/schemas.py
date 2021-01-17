@@ -160,6 +160,9 @@ class IGCFileSchema(Schema):
 
     date = fields.Date(attribute="date_utc")
 
+    weglideStatus = fields.Integer(attribute="weglide_status")
+    weglideData = fields.Raw(attribute="weglide_data")
+
     class Meta(Schema.Meta):
         load_only = ("ownerId",)
         dump_only = ("owner",)
@@ -230,7 +233,16 @@ class FlightSchema(Schema):
     igcFile = fields.Nested(
         IGCFileSchema,
         attribute="igc_file",
-        only=("owner", "filename", "registration", "competitionId", "model", "date"),
+        only=(
+            "owner",
+            "filename",
+            "registration",
+            "competitionId",
+            "model",
+            "date",
+            "weglideStatus",
+            "weglideData",
+        ),
     )
 
     class Meta(Schema.Meta):
