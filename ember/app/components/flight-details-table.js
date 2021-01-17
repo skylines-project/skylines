@@ -11,9 +11,9 @@ export default class FlightDetailsTable extends Component {
 
   @service account;
   @service ajax;
+  @service router;
 
   flight = null;
-  transitionTo() {}
 
   @or('flight.pilot.name', 'flight.pilotName')
   pilotName;
@@ -58,7 +58,7 @@ export default class FlightDetailsTable extends Component {
     let id = this.get('flight.id');
     yield this.ajax.request(`/api/flights/${id}/`, { method: 'DELETE' });
     this.set('showDeleteModal', false);
-    this.transitionTo('flights');
+    this.router.transitionTo('flights');
   }).drop())
   deleteTask;
 
