@@ -61,6 +61,8 @@ def test_upload(db_session, client):
                                 u"registration": u"LY-KDR",
                                 u"competitionId": None,
                                 u"filename": Match(r"simple(_\d+)?.igc"),
+                                u"weglideStatus": None,
+                                u"weglideData": None,
                             },
                             u"landingAirport": None,
                             u"triangleDistance": 4003,
@@ -299,7 +301,12 @@ def test_upload_with_weglide(db_session, client):
                                 u"copilot": None,
                                 u"copilotName": None,
                                 u"distance": 7872,
-                                u"igcFile": dict,
+                                u"igcFile": Partial(
+                                    {
+                                        u"weglideStatus": 1,
+                                        u"weglideData": None,
+                                    }
+                                ),
                                 u"pilotName": None,
                                 u"pilot": {
                                     u"id": john.id,
