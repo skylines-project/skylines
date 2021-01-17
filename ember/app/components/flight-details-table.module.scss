@@ -1,0 +1,9 @@
+.weglide-button {
+  composes: btn btn-default from global;
+
+  .logo {
+    height: 1em;
+    transform: translate(0, -2px);
+    margin-right: 3px;
+  }
+}

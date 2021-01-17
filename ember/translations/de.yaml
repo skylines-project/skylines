@@ -318,3 +318,7 @@ errors:
   email: '{description} muss eine valide Email Adresse sein'
   phone: '{description} muss eine gültige Telefonnummer sein'
   url: '{description} muss eine gültige URL sein'
+weglide:
+  upload-failed: Beim Hochladen auf WeGlide ist ein Fehler aufgetreten!
+  upload-in-progress: Hochladen auf WeGlide in Arbeit…
+  weglide: WeGlide
