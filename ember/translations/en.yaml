@@ -326,3 +326,7 @@ errors:
   email: '{description} must be a valid email address'
   phone: '{description} must be a valid phone number'
   url: '{description} must be a valid url'
+weglide:
+  upload-failed: Upload to WeGlide was unsuccessful!
+  upload-in-progress: Upload to WeGlide still in progress…
+  weglide: WeGlide

@@ -4,6 +4,8 @@ import { inject as service } from '@ember/service';
 
 import { task } from 'ember-concurrency';
 
+import config from 'skylines/config/environment';
+
 import safeComputed from '../computed/safe-computed';
 
 export default class FlightDetailsTable extends Component {
@@ -53,6 +55,13 @@ export default class FlightDetailsTable extends Component {
 
   @not('isPublic')
   isPrivate;
+
+  @safeComputed('flight.igcFile.weglideStatus', 'flight.igcFile.weglideData', (status, data) =>
+    status >= 200 && status < 300 ? data?.[0]?.id : null,
+  )
+  weglideFlightId;
+
+  @safeComputed('weglideFlightId', id => `${config.WeGlide.web}/flights/${id}`) weglideLink;
 
   @(task(function* () {
     let id = this.get('flight.id');

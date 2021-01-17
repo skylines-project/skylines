@@ -178,6 +178,30 @@
     </span>
   </p>
 
+  <p>
+    {{#if this.weglideLink}}
+      <a
+        href="{{this.weglideLink}}"
+        title="View this flight on WeGlide"
+        target="_blank"
+        rel="noopener noreferrer"
+        local-class="weglide-button"
+        data-test-weglide-button
+      >
+        <img src="/weglide.svg" alt="" aria-hidden="true" local-class="logo">
+        {{t "weglide.weglide"}}
+      </a>
+    {{else if (eq @flight.igcFile.weglideStatus 1)}}
+      <div class="alert alert-info" role="alert" data-test-weglide-in-progress>
+        {{t "weglide.upload-in-progress"}}
+      </div>
+    {{else if (eq @flight.igcFile.weglideStatus 2)}}
+      <div class="alert alert-warning" role="alert" data-test-weglide-warning>
+        {{t "weglide.upload-failed"}}
+      </div>
+    {{/if}}
+  </p>
+
   <BsModal @open={{showDeleteModal}} @onSubmit={{perform deleteTask}} @onHide={{action (mut showDeleteModal) false}} as |modal|>
     <modal.header>
       <h4 class="modal-title">{{t "delete-flight"}}</h4>
