@@ -207,6 +207,7 @@ def index_post():
     club_id = (pilot and pilot.club_id) or current_user.club_id
 
     results = []
+    weglide_uploads = []
 
     _files = request.files.getlist("files")
 
@@ -294,8 +295,11 @@ def index_post():
         weglide_user_id = data.get("weglideUserId")
         weglide_birthday = data.get("weglideBirthday")
         if weglide_user_id and weglide_birthday:
-            tasks.upload_to_weglide.delay(
-                igc_file.id, weglide_user_id, weglide_birthday.isoformat()
+            # Save `upload_to_weglide` task parameters for later. We can't start
+            # the task directly here, because the DB transaction has not been
+            # committed at this point.
+            weglide_uploads.append(
+                (igc_file.id, weglide_user_id, weglide_birthday.isoformat())
             )
 
             # Update `weglide_status` in the database
@@ -333,6 +337,10 @@ def index_post():
         create_flight_notifications(flight)
 
     db.session.commit()
+
+    # Schedule the deferred WeGlide upload tasks from above
+    for weglide_upload in weglide_uploads:
+        tasks.upload_to_weglide.delay(*weglide_upload)
 
     results = UploadResultSchema().dump(results, many=True).data
 
