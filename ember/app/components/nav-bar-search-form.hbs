@@ -2,8 +2,8 @@
   action="/search"
   local-class="form"
   class="navbar-form navbar-left navbar-search visible-lg"
-  onsubmit={{action @onSearch this.searchTextService.text}}
   ...attributes
+  {{on "submit" (prevent-default (fn @onSearch this.searchTextService.text))}}
 >
   <div class="form-group">
     <Input

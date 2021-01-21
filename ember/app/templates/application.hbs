@@ -6,6 +6,6 @@
 {{#if onFreestyleRoute}}
   {{outlet}}
 {{else}}
-  <NavBar @onSearch={{action "search"}} />
+  <NavBar @onSearch={{this.search}} />
   {{outlet}}
 {{/if}}
