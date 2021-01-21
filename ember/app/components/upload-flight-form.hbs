@@ -45,7 +45,7 @@
     <input type="hidden" name="pilotId" value={{pilotId}}>
     <input type="hidden" name="pilotName" value={{pilotName}}>
 
-    <button class="btn btn-primary btn-block" type="submit" disabled={{or uploadTask.isRunning (not validations.isValid)}} data-test-submit-button>
+    <button class="btn btn-primary btn-block" type="submit" disabled={{this.submitDisabled}} data-test-submit-button>
       {{t (if uploadTask.isRunning "uploading" "upload")}}
     </button>
   </form>

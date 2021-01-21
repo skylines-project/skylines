@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { oneWay, equal } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
@@ -37,6 +38,10 @@ export default Component.extend(Validations, {
   pilotId: oneWay('account.user.id'),
 
   showPilotNameInput: equal('pilotId', null),
+
+  submitDisabled: computed('uploadTask.isRunning', 'validations.isValid', function () {
+    return this.uploadTask.isRunning || !this.validations.isValid;
+  }),
 
   actions: {
     setFilesFromEvent(event) {
