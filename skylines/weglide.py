@@ -35,7 +35,7 @@ def upload(igc_file_id, weglide_user_id, weglide_birthday):
                 igc_file_id,
             )
             sentry_sdk.capture_message(
-                "IGC file can not be found in the database", "warn"
+                "IGC file can not be found in the database", "warning"
             )
             return False
 
