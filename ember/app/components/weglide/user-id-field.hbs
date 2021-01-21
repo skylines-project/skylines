@@ -20,7 +20,7 @@
   />
 
   <p class="help-block">
-    {{t "weglide.user-id-help"}}
+    {{t "weglide.user-id-help" htmlSafe=true weglideUrl=this.config.WeGlide.web}}
   </p>
 
   <p class="help-block" data-test-dynamic-help={{if this.loadUserTask.isRunning "loading" "settled"}}>

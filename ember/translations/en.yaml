@@ -333,5 +333,5 @@ weglide:
   upload-failed: Upload to WeGlide was unsuccessful!
   upload-in-progress: Upload to WeGlide still in progress…
   user-id: WeGlide User ID
-  user-id-help: Open your "Profile" page on WeGlide and enter the numeric ID from the URL here.
+  user-id-help: 'Open your "Profile" page on <a href="{weglideUrl}" target="_blank" rel="noopener noreferrer">WeGlide</a> and enter the numeric ID from the URL here.'
   weglide: WeGlide

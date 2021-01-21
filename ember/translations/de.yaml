@@ -325,5 +325,5 @@ weglide:
   upload-failed: Beim Hochladen auf WeGlide ist ein Fehler aufgetreten!
   upload-in-progress: Hochladen auf WeGlide in Arbeit…
   user-id: WeGlide Benutzer ID
-  user-id-help: Öffne die "Profil" Seite auf WeGlide und gib dann die ID Nummer aus der URL hier ein.
+  user-id-help: 'Öffne die "Profil" Seite auf <a href="{weglideUrl}" target="_blank" rel="noopener noreferrer">WeGlide</a> und gib dann die ID Nummer aus der URL hier ein.'
   weglide: WeGlide
