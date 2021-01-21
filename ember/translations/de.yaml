@@ -319,6 +319,11 @@ errors:
   phone: '{description} muss eine gültige Telefonnummer sein'
   url: '{description} muss eine gültige URL sein'
 weglide:
+  birthday: Geburtstag
+  checkbox-label: Auf WeGlide hochladen
+  example-prefix: 'Beispiel:'
   upload-failed: Beim Hochladen auf WeGlide ist ein Fehler aufgetreten!
   upload-in-progress: Hochladen auf WeGlide in Arbeit…
+  user-id: WeGlide Benutzer ID
+  user-id-help: Öffne die "Profil" Seite auf WeGlide und gib dann die ID Nummer aus der URL hier ein.
   weglide: WeGlide

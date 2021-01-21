@@ -1,0 +1,43 @@
+<div
+  class="form-group {{if (and this.userId (not this.isValid)) "has-error"}}"
+  data-test-form-group
+  ...attributes
+>
+  <label class="control-label" for="{{this.elementId}}-user-id">
+    {{t "weglide.user-id"}}
+  </label>
+
+  <input
+    type="text"
+    value={{this.userId}}
+    disabled={{@disabled}}
+    autocomplete="off"
+    class="form-control"
+    id="{{this.elementId}}-user-id"
+    placeholder="123"
+    data-test-input
+    {{on "input" this.onInput}}
+  />
+
+  <p class="help-block">
+    {{t "weglide.user-id-help"}}
+  </p>
+
+  <p class="help-block" data-test-dynamic-help={{if this.loadUserTask.isRunning "loading" "settled"}}>
+    {{#if (and this.userId this.isValid)}}
+      <a
+        href="{{this.config.WeGlide.web}}/profile/{{this.userId}}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{this.config.WeGlide.web}}/profile/<strong>{{this.userId}}</strong>
+      </a>
+
+      {{#if this.userName}}
+        <span data-test-name>({{this.userName}})</span>
+      {{/if}}
+    {{else}}
+      {{t "weglide.example-prefix"}} {{this.config.WeGlide.web}}/profile/<strong>123</strong>
+    {{/if}}
+  </p>
+</div>
