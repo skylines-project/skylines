@@ -6640,7 +6640,7 @@ ember-element-helper@0.3.2, ember-element-helper@^0.2.0, ember-element-helper@^0
     ember-cli-htmlbars "^5.1.0"
     ember-compatibility-helpers "^1.2.1"
 
-ember-event-helpers@^0.1.1:
+ember-event-helpers@0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ember-event-helpers/-/ember-event-helpers-0.1.1.tgz#8df141306c927b9d1a7bc63d63095e92c0ba90a1"
   integrity sha512-fWcbWd4W4nRv8bbato8JB6oGRpATkR+oGYxMIqnfgTgPWaCS0ww7CuUVNpwg1TulojKMCuTXi8Fem2b1NSF1ZQ==
