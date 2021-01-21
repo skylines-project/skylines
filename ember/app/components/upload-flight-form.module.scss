@@ -1,0 +1,43 @@
+.weglide-box {
+  composes: form-group form-control from global;
+
+  --weglide: #2d55a6;
+
+  height: auto;
+  padding: 6px 12px;
+  color: var(--weglide);
+  border: 1px solid var(--weglide);
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.weglide-label {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  margin: 0;
+  box-shadow: none;
+
+  input {
+    margin: 0 8px 0 0;
+  }
+
+  img {
+    height: 1.3em;
+    margin-left: 8px;
+  }
+}
+
+.weglide-divider {
+  margin: 6px -12px 12px;
+  border-color: var(--weglide);
+}
+
+.weglide-user-id {
+  composes: form-group from global;
+}
+
+.weglide-birthday {
+  composes: form-group from global;
+  margin-bottom: 6px;
+}

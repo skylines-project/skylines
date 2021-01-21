@@ -319,6 +319,8 @@ errors:
   phone: '{description} muss eine gültige Telefonnummer sein'
   url: '{description} muss eine gültige URL sein'
 weglide:
+  birthday: Geburtstag
+  checkbox-label: Auf WeGlide hochladen
   example-prefix: 'Beispiel:'
   upload-failed: Beim Hochladen auf WeGlide ist ein Fehler aufgetreten!
   upload-in-progress: Hochladen auf WeGlide in Arbeit…

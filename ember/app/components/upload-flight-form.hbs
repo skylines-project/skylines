@@ -45,6 +45,50 @@
     <input type="hidden" name="pilotId" value={{pilotId}}>
     <input type="hidden" name="pilotName" value={{pilotName}}>
 
+    <div local-class="weglide-box">
+      <label local-class="weglide-label">
+        <input
+          type="checkbox"
+          checked={{this.uploadToWeGlide}}
+          disabled={{uploadTask.isRunning}}
+          local-class="weglide-label"
+          data-test-upload-to-weglide-checkbox
+          {{on "change" (action "toggleWeGlide")}}
+        />
+        {{t "weglide.checkbox-label"}}
+        <img src="/weglide.svg" aria-hidden="true">
+      </label>
+
+      {{#if this.uploadToWeGlide}}
+        <hr local-class="weglide-divider" />
+
+        <Weglide::UserIdField
+          @disabled={{uploadTask.isRunning}}
+          @onChange={{action "updateWeGlideUserId"}}
+          data-test-weglide-user-id
+        />
+
+        <div
+          local-class="weglide-birthday"
+          class={{if (and this.weglideBirthday (not this.weglideBirthdayIsValid)) "has-error"}}
+        >
+          <label class="control-label" for="weglideBirthday">{{t "weglide.birthday"}}</label>
+          <input
+            type="date"
+            value={{this.weglideBirthday}}
+            disabled={{uploadTask.isRunning}}
+            class="form-control"
+            id="weglideBirthday"
+            data-test-weglide-birthday
+            {{on "input" (action "updateWeGlideBirthday")}}
+          />
+        </div>
+
+        <input type="hidden" name="weglideUserId" value={{this.weglideUserId}}>
+        <input type="hidden" name="weglideBirthday" value={{this.weglideBirthday}}>
+      {{/if}}
+    </div>
+
     <button class="btn btn-primary btn-block" type="submit" disabled={{this.submitDisabled}} data-test-submit-button>
       {{t (if uploadTask.isRunning "uploading" "upload")}}
     </button>
