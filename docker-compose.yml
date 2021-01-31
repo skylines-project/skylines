@@ -14,10 +14,9 @@ x-api: &api
   volumes:
     - .:/home/skylines/code/
   depends_on:
-    db:
-      condition: service_healthy
-    redis:
-      condition: service_healthy
+    - db
+    - redis
+  restart: on-failure
 
 
 services:
