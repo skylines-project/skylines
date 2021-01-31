@@ -16,6 +16,7 @@ x-api: &api
   depends_on:
     - db
     - redis
+  restart: on-failure
 
 
 services:
