@@ -1,5 +1,6 @@
 import os
 import config
+import subprocess
 
 from flask import Flask
 
@@ -66,6 +67,7 @@ class SkyLines(Flask):
 
         sentry_sdk.init(
             dsn=dsn,
+            release=self.get_commit_sha(),
             traces_sample_rate=0.1,
             integrations=[
                 FlaskIntegration(transaction_style="url"),
@@ -84,6 +86,17 @@ class SkyLines(Flask):
         from skylines.lib.geoid import load_geoid
 
         load_geoid()
+
+    def get_commit_sha(self):
+        try:
+            sha = subprocess.check_output(
+                ["git", "rev-parse", "--short", "HEAD"]
+            ).strip()
+            self.logger.info("Running on git revision %s", sha)
+            return sha
+        except Exception:
+            self.logger.warn("Failed to read git revision", exc_info=True)
+            return None
 
 
 def create_app(*args, **kw):
