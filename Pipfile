@@ -37,7 +37,7 @@ werkzeug = "==0.15.3"
 xcsoar = "==0.7.0"
 
 [dev-packages]
-coverage = "==4.5.3"
+coverage = "==4.5.4"
 fabric = "==1.14.0"
 faker = "==2.0.2"
 flake8 = "==3.7.7"
