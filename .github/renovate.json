@@ -7,9 +7,6 @@
     ":automergeLinters",
     ":automergeTesters"
   ],
-  "python": {
-    "enabled": false
-  },
   "postUpdateOptions": ["yarnDedupeFewer"],
   "packageRules": [{
     "packageNames": ["ember-cli", "ember-data", "ember-source"],
