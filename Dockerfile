@@ -4,6 +4,7 @@ ARG PYTHON_VERSION=2.7
 FROM python:${PYTHON_VERSION}
 
 RUN pip install --upgrade pip
+RUN pip install --upgrade virtualenv
 RUN pip install pipenv==v2020.11.15
 
 WORKDIR /home/skylines/code/
