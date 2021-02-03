@@ -12556,12 +12556,12 @@ quickselect@^1.0.1:
   resolved "https://registry.yarnpkg.com/quickselect/-/quickselect-1.1.1.tgz#852e412ce418f237ad5b660d70cffac647ae94c2"
   integrity sha512-qN0Gqdw4c4KGPsBOQafj6yj/PA6c/L63f6CaZ/DCF/xF4Esu3jVmKLUDYxghFx8Kb/O7y9tI7x2RjTSXwdK1iQ==
 
-qunit-console-grouper@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/qunit-console-grouper/-/qunit-console-grouper-0.2.0.tgz#41ff6991b28dd53e1c76d83d75700afa5534d550"
-  integrity sha512-HPoUlD3AKFSuucAt1GsZCcrG+u0c3fw/1/L5QhZZfmwBshXnK8ejlfwMGKFOiNV8pTpNajccKYxmKvHz8JJIIg==
+qunit-console-grouper@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/qunit-console-grouper/-/qunit-console-grouper-0.3.0.tgz#6b13de524fdb080af9519ca30d428d1c1d815f4a"
+  integrity sha512-uHg5kcjyEGX85Rh9mimWoXsqeGmJZxfNLqmVxA5O2xJW+JAlQ0r0JFA07lHqlOQcegs5CAhvioKUXpjicDra6g==
   dependencies:
-    broccoli-funnel "^2.0.2"
+    broccoli-funnel "^3.0.3"
 
 qunit-dom@1.6.0:
   version "1.6.0"
