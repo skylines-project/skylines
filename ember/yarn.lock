@@ -5824,7 +5824,7 @@ ember-assign-polyfill@^2.5.0, ember-assign-polyfill@^2.6.0:
     ember-cli-babel "^7.20.5"
     ember-cli-version-checker "^2.0.0"
 
-ember-auto-import@1.10.1, ember-auto-import@^1.2.19, ember-auto-import@^1.5.2, ember-auto-import@^1.5.3, ember-auto-import@^1.6.0:
+ember-auto-import@1.10.1, ember-auto-import@^1.10.1, ember-auto-import@^1.2.19, ember-auto-import@^1.5.2, ember-auto-import@^1.5.3, ember-auto-import@^1.6.0:
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.10.1.tgz#6c93a875e494aa0a58b759867d3f20adfd514ae3"
   integrity sha512-7bOWzPELlVwdWDOkB+phDIjg8BNW+/2RiLLQ+Xa/eIvCLT4ABYhHV5wqW5gs5BnXTDVLfE4ddKZdllnGuPGGDQ==
@@ -6697,17 +6697,22 @@ ember-focus-trap@^0.4.0:
     ember-modifier-manager-polyfill "^1.2.0"
     focus-trap "^5.1.0"
 
-ember-freestyle@0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/ember-freestyle/-/ember-freestyle-0.12.1.tgz#3c6b26bd26abba3be6f969df41c1d3301e583e28"
-  integrity sha512-FLdKd9wo4zfWjrsnaYQaRz2E+nSDyqy3VZIF/kuW5BB8eotjrk7Gtlm+iCgHb9/g0d22caxIlzS7UqB8qNWhcg==
+ember-freestyle@0.12.3:
+  version "0.12.3"
+  resolved "https://registry.yarnpkg.com/ember-freestyle/-/ember-freestyle-0.12.3.tgz#1bfe2c54b2062cc4304ba931a3c7450d93283b7b"
+  integrity sha512-aRVsyho+0C05PjiFdZ1k+NqsrIxiE8tJnGf/CwngpgEzRpJA90ddCbli2DkcaXu35i75VGkROmFJ0u7ikMEYkw==
   dependencies:
-    ember-cli-babel "^7.13.0"
-    ember-cli-htmlbars "^4.2.0"
+    ember-auto-import "^1.10.1"
+    ember-cli-babel "^7.23.0"
+    ember-cli-htmlbars "^5.3.1"
     ember-cli-sass "^10.0.0"
+    ember-json-viewer "^0.5.0"
     ember-modifier "^2.1.0"
+    ember-named-blocks-polyfill "^0.2.4"
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
+    ember-truth-helpers "^3.0.0"
     glob "^7.1.3"
+    macro-decorators "^0.1.2"
     sass "^1.17.0"
     strip-indent "^3.0.0"
 
@@ -6784,6 +6789,15 @@ ember-intl@4.4.1:
     silent-error "^1.1.1"
     walk-sync "^2.0.1"
 
+ember-json-viewer@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/ember-json-viewer/-/ember-json-viewer-0.5.0.tgz#87b27b38db6d0e829e4fafda6e52fb66b03e26f7"
+  integrity sha512-26eXJj8qxRsvdU7rpwQyMkEz67ArbQY/VUeMH5NRqr56AgQQlhQg4oUhp77FLaUJIKd7HB8xVofUIY+/jR1eXg==
+  dependencies:
+    ember-cli-babel "^7.22.1"
+    ember-cli-htmlbars "^5.3.1"
+    ember-test-selectors "^5.0.0"
+
 ember-load-initializers@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ember-load-initializers/-/ember-load-initializers-2.1.2.tgz#8a47a656c1f64f9b10cecdb4e22a9d52ad9c7efa"
@@ -6832,6 +6846,14 @@ ember-modifier@2.1.1, ember-modifier@^2.1.0, ember-modifier@^2.1.1:
     ember-cli-typescript "^3.1.3"
     ember-destroyable-polyfill "^2.0.2"
     ember-modifier-manager-polyfill "^1.2.0"
+
+ember-named-blocks-polyfill@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/ember-named-blocks-polyfill/-/ember-named-blocks-polyfill-0.2.4.tgz#f5f30711ee89244927b55aae7fa9630edaadc974"
+  integrity sha512-PsohC7ejjS7V++6i/JSy0pl1hXLV3IS3Qs+O7SrjIPYcg1UEmUwqgPiDmXqNgy0p2dc5TK5bIJTtX8wofCI63Q==
+  dependencies:
+    ember-cli-babel "^7.19.0"
+    ember-cli-version-checker "^5.1.1"
 
 ember-on-helper@^0.1.0:
   version "0.1.0"
@@ -7076,7 +7098,7 @@ ember-template-recast@^5.0.1:
     tmp "^0.2.1"
     workerpool "^6.0.3"
 
-ember-test-selectors@5.0.0:
+ember-test-selectors@5.0.0, ember-test-selectors@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-5.0.0.tgz#36c30f64498039cb88797cdda682275a460ee624"
   integrity sha512-hqAPqyJLEGBYcQ9phOKvHhSCyvcSbUL8Yj2si8OASsQWxwRqbxrtk5YlkN2aZiZdp9PAd2wErS8uClG0U7tNpA==
@@ -7101,7 +7123,7 @@ ember-text-measurer@^0.6.0:
     ember-cli-babel "^7.19.0"
     ember-cli-htmlbars "^4.3.1"
 
-ember-truth-helpers@3.0.0, "ember-truth-helpers@^2.1.0 || ^3.0.0":
+ember-truth-helpers@3.0.0, "ember-truth-helpers@^2.1.0 || ^3.0.0", ember-truth-helpers@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ember-truth-helpers/-/ember-truth-helpers-3.0.0.tgz#86766bdca4ac9b86bce3d262dff2aabc4a0ea384"
   integrity sha512-hPKG9QqruAELh0li5xaiLZtr88ioWYxWCXisAWHWE0qCP4a2hgtuMzKUPpiTCkltvKjuqpzTZCU4VhQ+IlRmew==
