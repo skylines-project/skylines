@@ -7,13 +7,12 @@ import Ember from 'ember';
 import RSVP from 'rsvp';
 
 import * as Sentry from '@sentry/browser';
-import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 
 import _availableLocales from '../utils/locales';
 
 const FALLBACK_LOCALE = 'en';
 
-export default class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
+export default class ApplicationRoute extends Route {
   @service account;
   @service ajax;
   @service cookies;
@@ -77,18 +76,6 @@ export default class ApplicationRoute extends Route.extend(ApplicationRouteMixin
       return (await this.ajax.request('/api/locale', { data })).locale || FALLBACK_LOCALE;
     } catch (error) {
       return FALLBACK_LOCALE;
-    }
-  }
-
-  sessionAuthenticated() {
-    const attemptedTransition = this.get('session.attemptedTransition');
-    const inLoginRoute = this.controllerFor('application').get('inLoginRoute');
-
-    if (attemptedTransition) {
-      attemptedTransition.retry();
-      this.set('session.attemptedTransition', null);
-    } else if (inLoginRoute) {
-      this.transitionTo('index');
     }
   }
 
