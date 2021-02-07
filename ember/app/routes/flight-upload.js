@@ -1,11 +1,14 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-
-export default class FlightUploadRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class FlightUploadRoute extends Route {
   @service ajax;
   @service account;
+  @service session;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   async model() {
     let ajax = this.ajax;

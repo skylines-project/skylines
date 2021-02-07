@@ -1,17 +1,20 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-
 const PER_PAGE = 20;
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend({
   ajax: service(),
+  session: service(),
 
   queryParams: {
     page: { refreshModel: true },
     user: { refreshModel: true },
     type: { refreshModel: true },
+  },
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
   },
 
   model(params) {
