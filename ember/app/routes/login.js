@@ -1,8 +1,13 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
-import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
+export default class LoginRoute extends Route {
+  @service session;
 
-export default class LoginRoute extends Route.extend(UnauthenticatedRouteMixin) {
+  beforeModel() {
+    this.session.prohibitAuthentication('index');
+  }
+
   setupController() {
     super.setupController(...arguments);
     this.controllerFor('application').set('inLoginRoute', true);
