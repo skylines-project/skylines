@@ -34,7 +34,7 @@ module.exports = function (environment) {
 
     WeGlide: {
       api: 'https://api.weglide.org',
-      web: 'https://beta.weglide.org',
+      web: 'https://weglide.org',
     },
 
     'ember-cli-notifications': {

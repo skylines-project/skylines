@@ -27,7 +27,7 @@ module('Component | Weglide::UserIdField', function (hooks) {
     assert.dom('[data-test-input]').hasValue('');
     assert
       .dom('[data-test-dynamic-help="settled"]')
-      .hasText(`${t('weglide.example-prefix')} https://beta.weglide.org/profile/123`);
+      .hasText(`${t('weglide.example-prefix')} https://weglide.org/profile/123`);
     assert.dom('[data-test-name]').doesNotExist();
     assert.verifySteps([]);
 
@@ -35,7 +35,7 @@ module('Component | Weglide::UserIdField', function (hooks) {
     await waitFor('[data-test-dynamic-help="loading"]');
     assert.dom('[data-test-form-group]').doesNotHaveClass('has-error');
     assert.dom('[data-test-input]').hasValue('42');
-    assert.dom('[data-test-dynamic-help="loading"]').hasText('https://beta.weglide.org/profile/42');
+    assert.dom('[data-test-dynamic-help="loading"]').hasText('https://weglide.org/profile/42');
     assert.dom('[data-test-name]').doesNotExist();
     assert.verifySteps(['change(42)']);
 
@@ -43,7 +43,7 @@ module('Component | Weglide::UserIdField', function (hooks) {
     await settled();
     assert.dom('[data-test-form-group]').doesNotHaveClass('has-error');
     assert.dom('[data-test-input]').hasValue('42');
-    assert.dom('[data-test-dynamic-help="settled"]').hasText('https://beta.weglide.org/profile/42 (John Doe)');
+    assert.dom('[data-test-dynamic-help="settled"]').hasText('https://weglide.org/profile/42 (John Doe)');
     assert.dom('[data-test-name]').hasText('(John Doe)');
     assert.verifySteps([]);
   });
@@ -54,7 +54,7 @@ module('Component | Weglide::UserIdField', function (hooks) {
     await render(hbs`<Weglide::UserIdField @initialValue="42" @onChange={{this.onChange}} />`);
     assert.dom('[data-test-form-group]').doesNotHaveClass('has-error');
     assert.dom('[data-test-input]').hasValue('42');
-    assert.dom('[data-test-dynamic-help="settled"]').hasText('https://beta.weglide.org/profile/42 (John Doe)');
+    assert.dom('[data-test-dynamic-help="settled"]').hasText('https://weglide.org/profile/42 (John Doe)');
     assert.dom('[data-test-name]').hasText('(John Doe)');
     assert.verifySteps([]);
   });
@@ -66,7 +66,7 @@ module('Component | Weglide::UserIdField', function (hooks) {
     await fillIn('[data-test-input]', '42');
     assert.dom('[data-test-form-group]').doesNotHaveClass('has-error');
     assert.dom('[data-test-input]').hasValue('42');
-    assert.dom('[data-test-dynamic-help="settled"]').hasText('https://beta.weglide.org/profile/42');
+    assert.dom('[data-test-dynamic-help="settled"]').hasText('https://weglide.org/profile/42');
     assert.dom('[data-test-name]').doesNotExist();
     assert.verifySteps(['change(42)']);
   });
@@ -78,7 +78,7 @@ module('Component | Weglide::UserIdField', function (hooks) {
     assert.dom('[data-test-input]').hasValue('a42');
     assert
       .dom('[data-test-dynamic-help="settled"]')
-      .hasText(`${t('weglide.example-prefix')} https://beta.weglide.org/profile/123`);
+      .hasText(`${t('weglide.example-prefix')} https://weglide.org/profile/123`);
     assert.dom('[data-test-name]').doesNotExist();
     assert.verifySteps(['change(null)']);
   });
