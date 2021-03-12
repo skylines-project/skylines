@@ -6220,10 +6220,10 @@ ember-cli-htmlbars-inline-precompile@^2.1.0:
     heimdalljs-logger "^0.1.9"
     silent-error "^1.1.0"
 
-ember-cli-htmlbars@5.4.0, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-5.4.0.tgz#1eabd0a2a6b9e8877c2e79d3ab3a0627fde90ddc"
-  integrity sha512-AOThrNG+G6SejHvvfYja72PgpQ5lKJHVEhXyFpuwUPGGeXxqTDzpfh/UYnok/esVBIuM/eJW6qpTHMuZQcPNQg==
+ember-cli-htmlbars@5.6.4, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1:
+  version "5.6.4"
+  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-5.6.4.tgz#97c1ce813dfe79961c575b4516fbb30cbb782b43"
+  integrity sha512-I4zSc6PJpWiDuhru7jozQsodo4tAsNENJP/Ry0LTL0DtlZASEa5cwahPsxBjzEmAnr30oI2AExZhrDcZBryTjQ==
   dependencies:
     "@ember/edition-utils" "^1.2.0"
     babel-plugin-htmlbars-inline-precompile "^4.4.1"
