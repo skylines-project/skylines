@@ -92,7 +92,7 @@
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-config-simplabs": "0.4.0",
-    "eslint-plugin-ember": "10.2.0",
+    "eslint-plugin-ember": "10.3.0",
     "eslint-plugin-import-helpers": "1.1.0",
     "eslint-plugin-prettier": "3.3.1",
     "git-repo-info": "2.1.1",
