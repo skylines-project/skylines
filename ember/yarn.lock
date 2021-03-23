@@ -6742,10 +6742,10 @@ ember-destroyable-polyfill@^2.0.2:
     ember-cli-version-checker "^5.1.1"
     ember-compatibility-helpers "^1.2.1"
 
-ember-element-helper@0.3.2, ember-element-helper@^0.2.0, ember-element-helper@^0.3.1:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.3.2.tgz#a0e384c266c6fb0e39803708d6f5e83ce6dba659"
-  integrity sha512-t4lrekoRb/jVQeg/N1V0kzehV6cw0YAH1hG1H2+Ykl35YxpYdX7/8hKtaGzVPxceemUVFO7fUorEQ6Y//wpWdA==
+ember-element-helper@0.4.0, ember-element-helper@^0.2.0, ember-element-helper@^0.3.1:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.4.0.tgz#e85671c4b04be4ed247024d62d47378b980f5c90"
+  integrity sha512-CYNhdqT094qXbQYqQ9IrH0Fg/Eq8HC3X8L2ULChyC2qqm8D2o7E+q3H3G5k0owcyWx21LJdziLGPlJYG++FeVg==
   dependencies:
     ember-cli-babel "^7.17.2"
     ember-cli-htmlbars "^5.1.0"
