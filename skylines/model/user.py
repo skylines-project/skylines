@@ -278,12 +278,17 @@ class User(db.Model):
     ##############################
 
     def delete(self):
+        from skylines.model.follower import Follower
         from skylines.model.igcfile import IGCFile
 
         for row in db.session.query(IGCFile).filter_by(owner_id=self.id):
             files.delete_file(row.filename)
 
         db.session.query(IGCFile).filter_by(owner_id=self.id).delete()
+
+        db.session.query(Follower).filter_by(source_id=self.id).delete()
+        db.session.query(Follower).filter_by(destination_id=self.id).delete()
+
         db.session.delete(self)
 
 
