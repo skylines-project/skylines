@@ -1523,7 +1523,7 @@
     "@handlebars/parser" "^1.1.0"
     simple-html-tokenizer "^0.5.10"
 
-"@glimmer/tracking@1.0.4", "@glimmer/tracking@^1.0.0", "@glimmer/tracking@^1.0.2", "@glimmer/tracking@^1.0.4":
+"@glimmer/tracking@1.0.4", "@glimmer/tracking@^1.0.0", "@glimmer/tracking@^1.0.2", "@glimmer/tracking@^1.0.3", "@glimmer/tracking@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@glimmer/tracking/-/tracking-1.0.4.tgz#f1bc1412fe5e2236d0f8d502994a8f88af1bbb21"
   integrity sha512-F+oT8I55ba2puSGIzInmVrv/8QA2PcK1VD+GWgFMhF6WC97D+uZX7BFg+a3s/2N4FVBq5KHE+QxZzgazM151Yw==
@@ -6867,16 +6867,18 @@ ember-focus-trap@^0.4.0:
     ember-modifier-manager-polyfill "^1.2.0"
     focus-trap "^5.1.0"
 
-ember-freestyle@0.12.3:
-  version "0.12.3"
-  resolved "https://registry.yarnpkg.com/ember-freestyle/-/ember-freestyle-0.12.3.tgz#1bfe2c54b2062cc4304ba931a3c7450d93283b7b"
-  integrity sha512-aRVsyho+0C05PjiFdZ1k+NqsrIxiE8tJnGf/CwngpgEzRpJA90ddCbli2DkcaXu35i75VGkROmFJ0u7ikMEYkw==
+ember-freestyle@0.12.11:
+  version "0.12.11"
+  resolved "https://registry.yarnpkg.com/ember-freestyle/-/ember-freestyle-0.12.11.tgz#2927a341fb375c935f86c091a46574865bd32472"
+  integrity sha512-8l/nrYsfm6LiR11jrwQ2IEkZrH8MhSDUUBe1ux3trYX9kwqev97nlo2HNHXjoIaHH9qQmYS0ruvhEsLDXGHMgw==
   dependencies:
+    "@ember/render-modifiers" "^1.0.2"
+    "@glimmer/tracking" "^1.0.3"
     ember-auto-import "^1.10.1"
     ember-cli-babel "^7.23.0"
     ember-cli-htmlbars "^5.3.1"
     ember-cli-sass "^10.0.0"
-    ember-json-viewer "^0.5.0"
+    ember-json-viewer "^0.6.0"
     ember-modifier "^2.1.0"
     ember-named-blocks-polyfill "^0.2.4"
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
@@ -6959,10 +6961,10 @@ ember-intl@4.4.1:
     silent-error "^1.1.1"
     walk-sync "^2.0.1"
 
-ember-json-viewer@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/ember-json-viewer/-/ember-json-viewer-0.5.0.tgz#87b27b38db6d0e829e4fafda6e52fb66b03e26f7"
-  integrity sha512-26eXJj8qxRsvdU7rpwQyMkEz67ArbQY/VUeMH5NRqr56AgQQlhQg4oUhp77FLaUJIKd7HB8xVofUIY+/jR1eXg==
+ember-json-viewer@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ember-json-viewer/-/ember-json-viewer-0.6.0.tgz#26d89f8cedf9ae6aedd77c86449a39aec30ab8e6"
+  integrity sha512-b3epmYEvu92BTRZAuC0uD0tJSoXCuG9eVkgco7CBCgA1hGyvcmYwE39/jlQuUVUmx4za2ferqAZn8dZZ8Cbaww==
   dependencies:
     ember-cli-babel "^7.22.1"
     ember-cli-htmlbars "^5.3.1"
