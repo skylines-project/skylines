@@ -521,10 +521,10 @@ class FlightPathChunks(db.Model):
         if len(path_detailed) < 2:
             return False
 
-        # Number of points in each chunck.
+        # Number of points in each chunk.
         num_points = 100
 
-        # Interval of the current chunck: [i, j] (-> path_detailed[i:j + 1])
+        # Interval of the current chunk: [i, j] (-> path_detailed[i:j + 1])
         i = 0
         j = min(num_points - 1, len(path_detailed) - 1)
 
