@@ -23,7 +23,7 @@ es openair http://soaringweb.org/Airspace/ES/SUASpain201712.txt
 pl openair http://soaringweb.org/Airspace/PL/2017_05_08_Poland_Airspaces.txt
 no openair http://soaringweb.org/Airspace/NO/NorwayAirspace20140413.txt
 dk openair http://soaringweb.org/Airspace/DK/DK-OpenAir-AllinOne-20170508.txt
-us openair http://soaringweb.org/Airspace/NA/allusa.v20.02-27.2.txt
+us openair https://soaringweb.org/Airspace/NA/allusa.v23.02-23.2.txt
 za openair http://soaringweb.org/Airspace/ZA/RSA_Airspace_17AUG2017.txt
 au openair http://soaringweb.org/Airspace/AU/australia_class_all_NO_fia_and_e_class_freq.bnd_20_05_21.txt
 ca openair http://soaringweb.org/Airspace/NA/canadian_airspace_noE_below12500_265.air
