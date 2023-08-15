@@ -208,7 +208,7 @@ def track():
     """
     LiveTrack24 tracking API
 
-    see: http://www.livetrack24.com/wiki/LiveTracking%20API
+    see: https://www.livetrack24.com/docs/api
     """
 
     # Read and check the request type
@@ -235,7 +235,7 @@ def client():
     """
     LiveTrack24 tracking API
 
-    see: http://www.livetrack24.com/wiki/LiveTracking%20API
+    see: https://www.livetrack24.com/docs/api
     """
 
     # Read and check the request type
