@@ -292,7 +292,7 @@ def _reanalyse_if_needed(flight):
             tasks.analyse_flight.delay(flight.id)
         except ConnectionError:
             current_app.logger.info("Cannot connect to Redis server")
-            # analyse syncronously...
+            # analyse synchronously...
             analyse_flight(flight)
             db.session.commit()
 

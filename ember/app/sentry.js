@@ -17,7 +17,7 @@ export function startSentry() {
       let error = hint.originalException;
 
       if (error) {
-        // ignore cancelation errors from the Ember router of ember-concurrency
+        // ignore cancellation errors from the Ember router of ember-concurrency
         if (error.name === 'TaskCancelation' || error.name === 'TransitionAborted') {
           return null;
         }
