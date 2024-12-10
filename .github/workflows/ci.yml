@@ -22,7 +22,7 @@ jobs:
       PERCY_TOKEN: 81bf0245987c87eb4924eae0b085cb60596f2f0f4d4ffe27e171828535aa6812
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: volta-cli/action@v1
 
       - run: yarn install --frozen-lockfile
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: volta-cli/action@v1
 
       - run: yarn install --frozen-lockfile
@@ -75,7 +75,7 @@ jobs:
         python-version: [2.7, 3.6]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # Build Docker images
       - run: docker-compose build --build-arg PYTHON_VERSION=${{ matrix.python-version }}
@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v2
         with:
           python-version: 3.6
@@ -111,7 +111,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           env: production
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: volta-cli/action@v1
 
       - run: yarn install --frozen-lockfile
