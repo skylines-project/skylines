@@ -80,7 +80,7 @@
     "ember-page-title": "6.2.1",
     "ember-power-select": "4.1.4",
     "ember-qunit": "4.6.0",
-    "ember-render-helpers": "0.2.0",
+    "ember-render-helpers": "1.0.4",
     "ember-resolver": "8.0.2",
     "ember-simple-auth": "3.1.0",
     "ember-source": "3.24.3",
