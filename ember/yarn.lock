@@ -1134,6 +1134,16 @@
     ember-cli-htmlbars-inline-precompile "^2.1.0"
     ember-test-waiters "^1.1.1"
 
+"@embroider/addon-shim@^1.8.3":
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/@embroider/addon-shim/-/addon-shim-1.10.2.tgz#5164c65de0fd242422594c2f94b3c5eab4ab8e36"
+  integrity sha512-EfI9cJ5/3QSUJtwm7x1MXrx3TEa2p7RNgSHefy7fvGm8/DP1xUFL25nST1NaHbHcqR1UhMlrTtv5iUIDoVzeQQ==
+  dependencies:
+    "@embroider/shared-internals" "^3.0.1"
+    broccoli-funnel "^3.0.8"
+    common-ancestor-path "^1.0.1"
+    semver "^7.3.8"
+
 "@embroider/babel-loader-7@0.39.1":
   version "0.39.1"
   resolved "https://registry.yarnpkg.com/@embroider/babel-loader-7/-/babel-loader-7-0.39.1.tgz#7ea700d105ae3c26b5e20b1a0be90df323905a5e"
@@ -1369,7 +1379,7 @@
     semver "^7.3.5"
     typescript-memoize "^1.0.1"
 
-"@embroider/shared-internals@3.0.2":
+"@embroider/shared-internals@3.0.2", "@embroider/shared-internals@^3.0.1":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@embroider/shared-internals/-/shared-internals-3.0.2.tgz#0e10926956f682e3dd5621b911e4c3eb36df3816"
   integrity sha512-/SusdG+zgosc3t+9sPFVKSFOYyiSgLfXOT6lYNWoG1YtnhWDxlK4S8leZ0jhcVjemdaHln5rTyxCnq8oFLxqpQ==
@@ -5509,6 +5519,11 @@ commander@^6.2.1:
   resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
   integrity sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==
 
+common-ancestor-path@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/common-ancestor-path/-/common-ancestor-path-1.0.1.tgz#4f7d2d1394d91b7abdf51871c62f71eadb0182a7"
+  integrity sha512-L3sHRo1pXXEqX8VU28kfgUY+YGsk09hPqZiZmLacNib6XNTCM8ubYeT7ryXQw8asB1sKgcU5lkB7ONug08aB8w==
+
 common-tags@^1.4.0, common-tags@^1.8.0:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.2.tgz#94ebb3c076d26032745fd54face7f688ef5ac9c6"
@@ -6555,7 +6570,7 @@ ember-cli-babel-plugin-helpers@^1.0.0, ember-cli-babel-plugin-helpers@^1.1.0, em
   resolved "https://registry.yarnpkg.com/ember-cli-babel-plugin-helpers/-/ember-cli-babel-plugin-helpers-1.1.1.tgz#5016b80cdef37036c4282eef2d863e1d73576879"
   integrity sha512-sKvOiPNHr5F/60NLd7SFzMpYPte/nnGkq/tMIfXejfKHIhaiIkYFqX8Z9UFTKWLLn+V7NOaby6niNPZUdvKCRw==
 
-ember-cli-babel@7.26.11, "ember-cli-babel@>= 6.17.2", ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.1.3, ember-cli-babel@^7.10.0, ember-cli-babel@^7.11.0, ember-cli-babel@^7.11.1, ember-cli-babel@^7.12.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.13.2, ember-cli-babel@^7.17.2, ember-cli-babel@^7.18.0, ember-cli-babel@^7.19.0, ember-cli-babel@^7.20.5, ember-cli-babel@^7.21.0, ember-cli-babel@^7.22.1, ember-cli-babel@^7.23.0, ember-cli-babel@^7.23.1, ember-cli-babel@^7.26.11, ember-cli-babel@^7.26.2, ember-cli-babel@^7.26.4, ember-cli-babel@^7.26.6, "ember-cli-babel@^7.26.6 || ^8.3.1", ember-cli-babel@^7.5.0, ember-cli-babel@^7.7.3:
+ember-cli-babel@7.26.11, "ember-cli-babel@>= 6.17.2", ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.1.3, ember-cli-babel@^7.10.0, ember-cli-babel@^7.11.0, ember-cli-babel@^7.11.1, ember-cli-babel@^7.12.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.13.2, ember-cli-babel@^7.18.0, ember-cli-babel@^7.19.0, ember-cli-babel@^7.20.5, ember-cli-babel@^7.21.0, ember-cli-babel@^7.22.1, ember-cli-babel@^7.23.0, ember-cli-babel@^7.23.1, ember-cli-babel@^7.26.11, ember-cli-babel@^7.26.2, ember-cli-babel@^7.26.4, ember-cli-babel@^7.26.6, "ember-cli-babel@^7.26.6 || ^8.3.1", ember-cli-babel@^7.5.0, ember-cli-babel@^7.7.3:
   version "7.26.11"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.26.11.tgz#50da0fe4dcd99aada499843940fec75076249a9f"
   integrity sha512-JJYeYjiz/JTn34q7F5DSOjkkZqy8qwFOOxXfE6pe9yEJqWGu4qErKxlz8I22JoVEQ/aBUO+OcKTpmctvykM9YA==
@@ -6782,7 +6797,7 @@ ember-cli-htmlbars-inline-precompile@^2.1.0:
     heimdalljs-logger "^0.1.9"
     silent-error "^1.1.0"
 
-ember-cli-htmlbars@5.7.2, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1:
+ember-cli-htmlbars@5.7.2, ember-cli-htmlbars@^5.1.2, ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-5.7.2.tgz#e0cd2fb3c20d85fe4c3e228e6f0590ee1c645ba8"
   integrity sha512-Uj6R+3TtBV5RZoJY14oZn/sNPnc+UgmC8nb5rI4P3fR/gYoyTFIZSXiIM7zl++IpMoIrocxOrgt+mhonKphgGg==
@@ -7293,14 +7308,12 @@ ember-destroyable-polyfill@^2.0.2, ember-destroyable-polyfill@^2.0.3:
     ember-cli-version-checker "^5.1.1"
     ember-compatibility-helpers "^1.2.1"
 
-ember-element-helper@0.4.0, ember-element-helper@^0.3.1, ember-element-helper@^0.5.5:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.4.0.tgz#e85671c4b04be4ed247024d62d47378b980f5c90"
-  integrity sha512-CYNhdqT094qXbQYqQ9IrH0Fg/Eq8HC3X8L2ULChyC2qqm8D2o7E+q3H3G5k0owcyWx21LJdziLGPlJYG++FeVg==
+ember-element-helper@0.8.8, ember-element-helper@^0.3.1, ember-element-helper@^0.5.5:
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.8.8.tgz#b7cb5a6450ec00ae6bc4974a5f6d7224aced8f35"
+  integrity sha512-3slTltQV5ke53t3YVP2GYoswsQ6y+lhuVzKmt09tbEx91DapG8I/xa8W5OA0StvcQlavL3/vHrz/vCQEFs8bBA==
   dependencies:
-    ember-cli-babel "^7.17.2"
-    ember-cli-htmlbars "^5.1.0"
-    ember-compatibility-helpers "^1.2.1"
+    "@embroider/addon-shim" "^1.8.3"
 
 ember-event-helpers@0.1.1:
   version "0.1.1"
@@ -14559,7 +14572,7 @@ semver@^6.0.0, semver@^6.1.1, semver@^6.3.0, semver@^6.3.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
-semver@^7.2.1, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5, semver@^7.5.3:
+semver@^7.2.1, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5, semver@^7.3.8, semver@^7.5.3:
   version "7.7.4"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.4.tgz#28464e36060e991fa7a11d0279d2d3f3b57a7e8a"
   integrity sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==
