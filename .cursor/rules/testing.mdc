@@ -1,0 +1,74 @@
+---
+description: Testing conventions — pytest backend tests and ember-qunit frontend tests
+globs: tests/**/*.py, ember/tests/**/*.js, ember/mirage/**/*.js
+alwaysApply: false
+---
+
+# Testing Conventions
+
+## Backend (pytest)
+
+### Configuration
+- `pytest.ini` sets `testpaths = tests`
+- Tests run against `postgresql:///skylines_test` (configured in `config/testing.py`)
+- Uploads go to a temp directory (`mkdtemp`)
+
+### Fixture Architecture
+
+**Session-scoped** (once per test run):
+- `app` — Flask app with testing config
+- `db` — creates full schema via `create_all()`; drops on teardown
+
+**Function-scoped** (per test):
+- `db_session` — truncates all tables via `clean_db()` (faster than drop/recreate), rolls back on teardown
+- `test_admin`, `test_user`, `test_users` — pre-built user records
+- `files_folder` — clean upload directory
+
+### Test Data Factories
+
+Factory functions in `tests/data/` (not factory_boy):
+- `users.py` — `john()`, `jane()`, `max()`, `test_admin()`, `test_user()`, `test_users(n=50)` (Faker with fixed seed)
+- `flights.py` — `one()`, `filled()` with real WKB geometry
+- `igcs.py` — references actual `.igc` and `.zip` files on disk
+- `live_fix.py` — `create(pilot, time, lat, lon)` for tracking tests
+- `add_fixtures(db_session, *fixtures)` helper in `tests/data/__init__.py`
+
+### API Test Patterns
+
+- Custom `ApiClient(FlaskClient)` auto-injects `User-Agent: py.test` header
+- `auth_for(user)` helper generates Basic Auth headers from `user.email_address` + `user.original_password`
+- `autouse_db_session` in `tests/api/views/conftest.py` ensures clean DB for every view test
+- Response validation via **pytest-voluptuous** (`S()`, `Partial()`, `Match()`, `ExactSequence()`)
+
+### OAuth Test Setup
+
+- `tests/api/oauth/conftest.py` creates a mini Flask app with `/secrets` and `/user` endpoints
+- Session-scoped `test_user` + function-scoped `tokens`, `access_token`, `refresh_token` fixtures
+
+### Other Tools
+
+- **mock** — patching Celery tasks, datetime, DB commits
+- **immobilus** — time freezing (imported at collection time)
+- **Faker** — German-locale user data with deterministic seeds
+- **flake8** — runs as a pytest test in `tests/test_flake8.py`
+
+## Frontend (ember-qunit)
+
+### Configuration
+- **Testem** runner (`ember/testem.js`): Chrome (headless in CI with `--no-sandbox`)
+- API proxy: `/api` proxied to `https://skylines.aero` in dev
+
+### Test Types
+- **Acceptance tests** (`ember/tests/acceptance/`) — full-page flows (login, upload, settings, flight page)
+- **Component tests** (`ember/tests/components/`) — rendering tests for UI components
+- **Helper/service/util tests** — unit tests for formatters, units service, query string parsing
+
+### Mirage (API Mocking)
+- `ember/mirage/config.js` registers mock route handlers for clubs, notifications, settings, users
+- Models + factories for `user`, `club`, `mirage-session`
+- VCR recordings in `ember/mirage/vcr/` for flight data
+- Passthroughs: `/translations/**`, `/write-coverage`
+
+### Auth in Tests
+- `authenticateAs(user)` helper creates a Mirage session and loads account settings
+- Uses `authenticateSession()` from ember-simple-auth test support

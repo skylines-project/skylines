@@ -1,0 +1,42 @@
+---
+description: Lessons learned from containerizing and modernizing the SkyLines project
+alwaysApply: true
+---
+
+# Lessons Learned
+
+## Debian Buster (Python 2.7 host)
+
+- Buster is archived. Always rewrite `/etc/apt/sources.list` to use `archive.debian.org` before `apt-get update`.
+- `python-pip` ships an old pip; `pipenv==2020.11.15` is the last version supporting Python 2.7.
+- `xcsoar==0.7.0` is a C++ extension that needs `zlib1g-dev`, `cmake`, and `libboost-python-dev`. Install it separately so a build failure doesn't block other packages.
+- Export deps via `pipenv lock -r` and pip-install from the requirements file; `pipenv install --system` is fragile on Buster.
+
+## Docker / Docker Compose
+
+- GitHub Actions runners no longer ship the standalone `docker-compose` v1 binary. Always use `docker compose` (v2 plugin).
+- The Ember build depends on `git-repo-info`. Since `.git` is excluded by `.dockerignore`, create a stub repo (`git init && git commit --allow-empty`) in the frontend build stage.
+- `config/docker.py` reads connection strings from env vars. The `PGHOST` env var also drives libpq when a URI has no explicit host (`postgresql:///dbname`), which is how the test config works inside containers.
+
+## GitHub Actions CI
+
+- Python 2.7 and 3.6 are no longer available via `actions/setup-python`. Use the `container:` directive with a Buster-based image instead.
+- For backend tests, use `services:` to run PostGIS and Redis sidecars. Set `POSTGRES_DB` to the test database name so PostGIS auto-enables its extensions on it.
+- Set `REDIS_URL=redis://redis:6379/0` in the backend job env so Celery can queue tasks. Without this, `_reanalyse_if_needed` falls back to synchronous `analyse_flight` which reads IGC files that don't exist in tests → IOError.
+- `black==20.8b1` requires Python 3.6. Run it in a `python:3.6-buster` container. Both the Python and Buster images need the `archive.debian.org` apt fix for `ca-certificates`.
+- All new Python files (e.g. `config/docker.py`) must be formatted with `black` before pushing, or the lint job will fail.
+- Frontend jobs need Python <= 3.10 for `node-gyp` — the `iltorb` native module uses `open(path, 'rU')` which was removed in Python 3.11. Use `actions/setup-python@v5` with `python-version: '3.10'` before `volta-cli/action`.
+- Update action versions (`actions/checkout@v4`, `volta-cli/action@v4`) — old `@v2` still works but will eventually be deprecated.
+
+## Database & Migrations
+
+- Alembic migrations live under `manage.py migrate` (Flask-Migrate). The custom `manage.py db create` bootstraps a fresh schema and stamps the head revision.
+- The Docker `migrate` service tries `migrate upgrade` first, falling back to `db create` for first-run.
+- PostgreSQL major-version upgrades are infrastructure concerns (`pg_dump`/`pg_restore`), not Alembic migrations.
+- PostGIS and `fuzzystrmatch` extensions must exist before tables are created.
+
+## MapProxy / MapServer
+
+- MapServer connects to PostGIS via `CONNECTION "host=db dbname=skylines"`. The host must match the Docker service name.
+- MapProxy WSGI binds to port 9109 and is reverse-proxied by Caddy under `/mapproxy`.
+- GIS tables (airspace, airports, mountain wave project) start empty. Import data via `manage.py import airspace|welt2000|mwp`.

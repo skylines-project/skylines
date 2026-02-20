@@ -1,10 +1,43 @@
-.cache/
+.git
+.gitignore
+.cursor
+.vagrant
+
+# Python artifacts
+__pycache__
+*.py[cod]
+*.egg-info
+*.egg
+.eggs
+.tox
+.cache
+.pytest_cache
 .coverage
-.envrc
-.git/
-.github/
-.idea/
-.local/
-.vagrant/
-ember/node_modules/
-htdocs/
+.coverage.*
+htmlcov
+coverage.xml
+
+# Node / frontend build artifacts
+ember/node_modules
+ember/bower_components
+ember/tmp
+ember/dist
+skylines/frontend/static
+
+# Generated data
+htdocs
+mapproxy/cache_data
+postgres_data
+
+# Docs and meta
+*.md
+!ember/README.md
+LICENSE
+PRIVACY.md
+
+# Logs
+*.log
+
+# IDE
+.vscode
+.idea

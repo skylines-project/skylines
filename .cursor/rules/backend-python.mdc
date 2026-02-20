@@ -1,0 +1,42 @@
+---
+description: Python backend conventions — Flask app structure, patterns, and dependencies
+globs: skylines/**/*.py, config/**/*.py, manage.py, wsgi_*.py, Pipfile
+alwaysApply: false
+---
+
+# Backend Python Conventions
+
+## Runtime
+
+- Python **2.7** (EOL — the codebase uses `from __future__` imports, `u""` string prefixes, and Python 2 idioms throughout)
+- Dependencies managed via **Pipfile** (pipenv); CLI via `manage.py` (Flask-Script)
+
+## Flask App Structure
+
+- `skylines/app.py` — `SkyLines(Flask)` subclass + layered factory functions
+- Config loaded from `config/default.py`, then `SKYLINES_CONFIG` env var, then optional file argument
+- Extensions initialized via `app.add_*()` methods (SQLAlchemy, cache, Celery, Sentry, logging)
+
+## Key Patterns
+
+- **Blueprints** for API resources — each in `skylines/api/views/<resource>.py`, registered in `skylines/api/views/__init__.py`
+- **Models** in `skylines/model/` — one file per model, all re-exported from `skylines/model/__init__.py`
+- **`apply_kwargs()`** on models — custom method on `db.Model` for fluent keyword overrides
+- **Request validation** via `webargs` (5.3) and schemas in `skylines/schemas/`
+- **Auth decorator** — `@oauth.required()` / `@oauth.optional()` from `skylines/api/oauth`
+- **Celery tasks** in `skylines/worker/tasks.py` — `analyse_flight`, `find_meetings`, `upload_to_weglide`
+- **User-Agent required** — the API rejects requests without a User-Agent header
+
+## Utility Libraries
+
+- `skylines/lib/geo.py` — geographic calculations
+- `skylines/lib/igc/` — IGC flight log parsing
+- `skylines/lib/xcsoar_/` — XCSoar-based flight analysis
+- `skylines/lib/sql.py` — custom PostGIS SQL functions (`_ST_Intersects`, `_ST_Contains`)
+- `skylines/lib/string.py`, `skylines/lib/formatter.py` — text/unit formatting
+
+## Style
+
+- Linting: **flake8** (run as a pytest test via `tests/test_flake8.py`)
+- No type hints (Python 2.7)
+- UTF-8 coding headers on files with non-ASCII content

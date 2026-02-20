@@ -1,0 +1,54 @@
+---
+description: Ember.js frontend conventions — components, services, routing, and styling
+globs: ember/**/*.js, ember/**/*.hbs, ember/**/*.scss
+alwaysApply: false
+---
+
+# Frontend Ember Conventions
+
+## Stack
+
+- **Ember 3.24** (ember-cli 3.26) with Glimmer components
+- **Node 14** / **Yarn 1.22** (pinned via Volta in `ember/package.json`)
+- Build output goes to `../skylines/frontend/static` (served by Flask)
+- Optional Embroider/Webpack build when `USE_EMBROIDER` is set
+
+## Component Patterns
+
+- Components live in `ember/app/components/` as paired `.js` + `.hbs` files
+- JS files extend `@glimmer/component` (Octane pattern)
+- Scoped styles via CSS Modules: `*.module.scss` files, referenced in templates with `local-class="className"`
+- Modifiers in `ember/app/modifiers/`
+
+## State Management
+
+- **No Ember Data** — the `ajax` service (extends ember-ajax) makes direct API calls
+- Auth via **ember-simple-auth** with a custom OAuth2 password-grant authenticator (`ember/app/authenticators/oauth2.js`)
+- Shared state lives in **services**: `account`, `session`, `ajax`, `units`, `pinned-flights`, `map-settings`, `cesium-loader`, `notification-counter`
+- Async patterns use **ember-concurrency** tasks
+
+## Routing
+
+- Router defined in `ember/app/router.js` (`locationType: 'auto'`)
+- Auth enforced in route `beforeModel` hooks via `session.requireAuthentication(transition, 'login')`
+- Data loaded in route `model()` hooks via `this.ajax.request()`
+
+## Styling
+
+- **Sass** (node-sass) as preprocessor
+- **Bootstrap 3** via ember-bootstrap (bootstrap-sass 3.4.1) with custom overrides in `ember/app/styles/bootstrap/`
+- **CSS Modules** (ember-css-modules + ember-css-modules-sass) for component-scoped styles
+- Global styles in `ember/app/styles/app.scss`
+- Icons: Font Awesome + ember-svg-jar (inline SVGs from `public/svg`)
+
+## Maps
+
+- **OpenLayers 5.3** for 2D maps
+- **Cesium 1.74** for 3D globe (lazy-loaded via `cesium-loader` service)
+- **olcs 2.12** for OL/Cesium integration
+
+## Code Style
+
+- **Prettier** (printWidth: 120, singleQuote, trailingComma: all)
+- **ESLint** (eslint-config-simplabs + eslint-plugin-ember)
+- **ember-template-lint** for Handlebars templates

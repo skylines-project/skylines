@@ -1,0 +1,27 @@
+{
+	auto_https off
+}
+
+:80 {
+	log {
+		output stdout
+	}
+
+	header Strict-Transport-Security "max-age=31536000;"
+
+	# MapProxy tile server (strip /mapproxy prefix)
+	handle_path /mapproxy/* {
+		reverse_proxy mapproxy:9109
+	}
+
+	# Static asset cache headers
+	@assets path /assets/*.css /assets/*.js
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
+	@fonts path /fonts/*
+	header @fonts Cache-Control "public, max-age=31536000"
+
+	# Everything else goes to the Flask combined app,
+	# which serves both the API (/api/*) and frontend static/SPA
+	reverse_proxy api:5000
+}

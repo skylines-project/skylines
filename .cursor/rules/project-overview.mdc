@@ -1,0 +1,84 @@
+---
+description: SkyLines project overview — architecture, tech stack, and codebase map
+alwaysApply: true
+---
+
+# SkyLines Project Overview
+
+SkyLines is an open-source web platform for soaring/gliding pilots to share flights, view rankings, and use live GPS tracking. Production: https://skylines.aero
+
+## Tech Stack
+
+- **Backend:** Python 2.7, Flask 1.1.2, Gunicorn
+- **Database:** PostgreSQL 10 + PostGIS 2.5, SQLAlchemy + GeoAlchemy2, Alembic migrations
+- **Task queue:** Celery 3.x + Redis
+- **Live tracking:** gevent UDP server (XCSoar binary protocol)
+- **Frontend:** Ember.js 3.24 (Glimmer components), Bootstrap 3, OpenLayers 5, Cesium
+- **Auth:** OAuth 2 via flask-oauthlib (JWT-style access tokens)
+
+## Codebase Map
+
+```
+skylines/                  # Main Python package
+├── app.py                 # Flask app factory (create_app, create_api_app, create_combined_app, etc.)
+├── database.py            # Flask-SQLAlchemy db instance
+├── model/                 # ORM models (User, Flight, Club, Airport, Airspace, TrackingFix, etc.)
+├── api/                   # REST API
+│   ├── views/             # Flask Blueprints — 17 resource modules
+│   ├── oauth.py           # OAuth 2 provider (access/refresh tokens)
+│   ├── cors.py            # CORS handling
+│   └── cache.py           # Flask-Caching
+├── frontend/views/        # Serves built Ember SPA + static files
+├── lib/                   # Utilities (geo, igc parsing, xcsoar analysis, SQL helpers)
+├── schemas/               # Request validation (voluptuous/webargs)
+├── worker/                # Celery tasks (analyse_flight, find_meetings, upload_to_weglide)
+├── tracking/              # UDP tracking server (gevent DatagramServer)
+└── commands/              # CLI subcommands for manage.py
+
+ember/                     # Ember.js frontend SPA
+├── app/
+│   ├── components/        # Glimmer + classic components (.js + .hbs + .module.scss)
+│   ├── routes/            # Ember routes (data loading)
+│   ├── services/          # Shared state (account, session, ajax, units, map-settings)
+│   └── styles/            # Sass + CSS Modules + Bootstrap 3
+├── mirage/                # ember-cli-mirage (test API mocks)
+└── tests/                 # ember-qunit + Testem
+
+config/                    # Python app config (default.py, testing.py, docker.py)
+migrations/                # Alembic migration versions
+tests/                     # pytest backend test suite
+mapproxy/                  # MapProxy config (mapproxy.yaml)
+mapserver/                 # MapServer map files (airspace, airports, MWP)
+docker/                    # Docker support files (Caddyfile, DB init SQL)
+Dockerfile                 # Multi-stage: node:14-buster (frontend) + debian:buster-slim (backend)
+docker-compose.yml         # Full stack: db, redis, api, worker, tracking, mapproxy, caddy, migrate
+docker-compose.override.yml # Dev overrides: volume mounts, debug ports, dev server
+manage.py                  # CLI entry point (Flask-Script)
+Pipfile                    # Python dependencies (pipenv)
+```
+
+## App Factory Hierarchy
+
+`skylines/app.py` composes the app in layers:
+
+1. `create_app()` — SQLAlchemy + Sentry
+2. `create_http_app()` — adds logging + Celery
+3. `create_frontend_app()` — adds Ember SPA serving
+4. `create_api_app()` — adds EGM96, cache, OAuth, API blueprints
+5. `create_combined_app()` — frontend + API at `/api` via DispatcherMiddleware
+
+## Running Services
+
+Production requires four processes: web app (Gunicorn), Celery worker, tracking server (UDP 5597), and MapProxy. Docker Compose orchestrates all of them.
+
+## Docker Setup
+
+The entire stack runs in containers via `docker compose up`:
+
+- **Dockerfile** — multi-stage build: `node:14-buster` builds the Ember frontend, `debian:buster-slim` provides Python 2.7 + MapServer for the backend
+- **docker-compose.yml** — 7 services: `db` (PostGIS 10), `redis`, `api` (Flask + Gunicorn), `worker` (Celery), `tracking` (gevent UDP), `mapproxy` (tile server), `caddy` (reverse proxy on :80), plus a `migrate` init container
+- **docker-compose.override.yml** — dev overrides: source volume mounts, Flask dev server, exposed DB/Redis ports
+- **config/docker.py** — env-var-driven config (`DATABASE_URL`, `REDIS_URL`, paths) for container deployment
+- **docker/Caddyfile** — Caddy v2 config: proxies everything to the Flask app, strips `/mapproxy` prefix for the tile server
+
+MapServer connects to PostGIS via libpq env vars (`PGHOST`, `PGUSER`, `PGPASSWORD`) set in compose, so the `.map` files work unchanged.

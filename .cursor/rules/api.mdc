@@ -1,0 +1,50 @@
+---
+description: REST API conventions — Flask blueprints, auth, endpoints, and response format
+globs: skylines/api/**/*.py, skylines/schemas/**/*.py
+alwaysApply: false
+---
+
+# REST API Conventions
+
+## Structure
+
+- API app created by `create_api_app()` in `skylines/app.py`
+- Mounted at `/api` in the combined app via `DispatcherMiddleware`
+- Each resource is a Flask Blueprint in `skylines/api/views/<resource>.py`
+- All blueprints registered in `skylines/api/views/__init__.py`
+
+## Blueprints
+
+`about`, `account`, `airports`, `aircraft_models`, `clubs`, `flights`, `i18n`, `mapitems`, `notifications`, `ranking`, `search`, `settings`, `statistics`, `timeline`, `tracking`, `upload`, `users`
+
+## Authentication
+
+- **OAuth 2** via `skylines/api/oauth.py` (flask-oauthlib)
+- Access tokens are JWT-style (user id + expiry, signed with `SECRET_KEY`)
+- Token endpoint: `POST /oauth/token` (password grant) and `POST /oauth/revoke`
+- `@oauth.required()` — endpoint requires valid Bearer token or Basic auth
+- `@oauth.optional()` — auth optional, `request.user_id` set if present
+
+## Request Handling
+
+- **User-Agent header required** on all API requests (enforced in `before_request`)
+- Request parsing via **webargs** 5.3 (`use_args`, `use_kwargs`)
+- Validation schemas in `skylines/schemas/` (voluptuous-style)
+- CORS handled by `skylines/api/cors.py`
+- Caching via Flask-Caching (`skylines/api/cache.py`)
+
+## Response Format
+
+- JSON responses with `Content-Type: application/json`
+- Error responses: `{"error": "error-slug"}` or `{"error": "validation-failed", "fields": {...}}`
+- List endpoints return objects with resource arrays (e.g. `{"flights": [...]}`)
+- `JSON_SORT_KEYS` is `False` in the API app
+
+## Key Endpoints (flights as example)
+
+- `GET /flights` — list with filters (all, date, latest, pilot, club, airport, unassigned)
+- `GET /flights/<id>` — single flight detail
+- `GET /flights/<id>/json` — flight trace data
+- `GET /flights/<id>/near` — nearby flights
+- `POST /flights/<id>/comments` — add comment (auth required)
+- `POST /flights/upload` — upload IGC files (auth required, triggers Celery analysis)
