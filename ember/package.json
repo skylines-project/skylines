@@ -36,7 +36,7 @@
     "@glimmer/tracking": "1.0.4",
     "@percy/ember": "2.1.4",
     "@sentry/browser": "6.2.5",
-    "@sentry/integrations": "6.2.5",
+    "@sentry/integrations": "6.19.7",
     "babel-eslint": "10.1.0",
     "bootstrap-sass": "3.4.3",
     "broccoli-asset-rev": "3.0.0",
