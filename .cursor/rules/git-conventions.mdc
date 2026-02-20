@@ -1,0 +1,49 @@
+---
+description: Git commit message conventions for the SkyLines project
+alwaysApply: true
+---
+
+# Git Commit Conventions
+
+## Message Format
+
+Single-line summary, imperative mood, no trailing period. Optionally followed by a blank line and body paragraph(s).
+
+## Patterns Used in This Project
+
+### Scoped changes — `scope: Summary`
+
+Prefix with the affected area when the change is localised:
+
+- `api/oauth: Add user_id to Sentry events`
+- `simple-auth: Fix AuthenticatedRouteMixin deprecation warnings`
+- `model/user: Explicitly delete follower connections before deleting a user`
+- `Pipfile: Explicitly specify more_itertools dependency`
+- `Docker: Restart backend containers if they fail`
+- `Sentry: Enable performance sampling`
+
+### Unscoped changes — `Summary`
+
+No prefix when the change is project-wide or self-evident:
+
+- `Update flask to v1.1.2`
+- `Containerize full stack with multi-stage Docker build`
+- `Pin top-level dependencies and update transitive dependencies`
+
+### Dependency updates (Renovate Bot)
+
+- `Update dependency ember-cli to v3.26.0 (#2457)`
+- `Update sentry monorepo to v6.2.5 (#2441)`
+- `Lock file maintenance (#2384)`
+
+### Reverts
+
+- `Revert "Update bobheadxi/deployments action to v0.5.0 (#2413)"`
+
+## Rules
+
+- First word is a capitalised verb: Add, Fix, Update, Remove, Implement, Extract, Convert, Replace, Simplify, Revert
+- Keep the summary under ~72 characters
+- Use backticks around code identifiers: `` `ApplicationRouteMixin` ``
+- Reference PR numbers in parentheses when applicable: `(#2457)`
+- Multi-commit branches use a consistent scope prefix: `simple-auth: ...`, `weglide: ...`
