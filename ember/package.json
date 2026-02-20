@@ -18,7 +18,7 @@
     "test": "ember test"
   },
   "dependencies": {
-    "cesium": "1.74.0",
+    "cesium": "1.138.0",
     "ol": "5.3.3",
     "olcs": "2.22.1",
     "remarkable": "2.0.1",
