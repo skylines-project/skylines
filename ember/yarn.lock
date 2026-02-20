@@ -7164,10 +7164,10 @@ ember-ref-bucket@^1.0.1:
     ember-destroyable-polyfill "^2.0.2"
     ember-modifier "^2.1.1"
 
-ember-render-helpers@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ember-render-helpers/-/ember-render-helpers-0.2.0.tgz#5f7af8ee74ae29f85e0d156b2775edff23f6de21"
-  integrity sha512-MnqGS8BnY3GJ+n5RZVVRqCwKjfXXMr5quKyqNu1vxft8oslOJuZ1f1dOesQouD+6LwD4Y9tWRVKNw+LOqM9ocw==
+ember-render-helpers@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ember-render-helpers/-/ember-render-helpers-0.2.1.tgz#630f24c0db8413f658fa718142377c1713a2c876"
+  integrity sha512-LbsUQRGcR4z9zQPdZsP5+ODU76xzbC9O97+1/ceDJPd5y0FqL9aFOWfSiqL3nEgcf93WW3im8MEVRzFWxz0Hzg==
   dependencies:
     ember-cli-babel "^7.23.0"
     ember-cli-typescript "^4.0.0"
