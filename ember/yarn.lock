@@ -11644,10 +11644,10 @@ markdown-it@^8.3.1:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-match-json@1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/match-json/-/match-json-1.3.2.tgz#cf9d966325ae249e4416b3a7f3ed8f25a07d0876"
-  integrity sha512-q1WXeX9ekrg/LGy1DZk+3ysKzbW6Y0nlCpoAZ2w8nffjROdm/Kitb74+Hn4u+iJJlEZIojTZYXkfgs+F8wQvcA==
+match-json@1.3.7:
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/match-json/-/match-json-1.3.7.tgz#3cdc4d4d4d8987b6723df0c5582be228c42a6bfb"
+  integrity sha512-2/GIaio/oVWVHGdKOIbqfgqT5vH91K3c91l6EAsVydMAjB0iGy5PVABicKzNT1VAgHskZHbaZK9q96AmgTEqkw==
 
 matcher-collection@^1.0.0, matcher-collection@^1.1.1:
   version "1.1.2"
