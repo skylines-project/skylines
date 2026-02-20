@@ -76,7 +76,7 @@
     "ember-intl": "4.4.1",
     "ember-load-initializers": "2.1.2",
     "ember-maybe-import-regenerator": "0.1.6",
-    "ember-modifier": "2.1.1",
+    "ember-modifier": "2.1.2",
     "ember-page-title": "6.2.2",
     "ember-power-select": "4.1.4",
     "ember-qunit": "4.6.0",
@@ -107,7 +107,7 @@
     "@percy/agent": "0.24.3",
     "ember-element-helper": "0.4.0",
     "ember-maybe-in-element": "2.0.2",
-    "ember-modifier": "2.1.1"
+    "ember-modifier": "2.1.2"
   },
   "ember-addon": {
     "paths": [
