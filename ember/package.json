@@ -38,7 +38,7 @@
     "@sentry/browser": "6.2.5",
     "@sentry/integrations": "6.2.5",
     "babel-eslint": "10.1.0",
-    "bootstrap-sass": "3.4.1",
+    "bootstrap-sass": "3.4.3",
     "broccoli-asset-rev": "3.0.0",
     "ember-ajax": "5.0.0",
     "ember-auto-import": "1.11.2",
