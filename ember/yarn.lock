@@ -6782,7 +6782,7 @@ ember-cli-htmlbars-inline-precompile@^2.1.0:
     heimdalljs-logger "^0.1.9"
     silent-error "^1.1.0"
 
-ember-cli-htmlbars@5.7.2, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, ember-cli-htmlbars@^5.2.0, ember-cli-htmlbars@^5.3.1:
+ember-cli-htmlbars@5.7.2, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, ember-cli-htmlbars@^5.3.1:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-5.7.2.tgz#e0cd2fb3c20d85fe4c3e228e6f0590ee1c645ba8"
   integrity sha512-Uj6R+3TtBV5RZoJY14oZn/sNPnc+UgmC8nb5rI4P3fR/gYoyTFIZSXiIM7zl++IpMoIrocxOrgt+mhonKphgGg==
@@ -6804,7 +6804,7 @@ ember-cli-htmlbars@5.7.2, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, 
     strip-bom "^4.0.0"
     walk-sync "^2.2.0"
 
-"ember-cli-htmlbars@^3.0.0 || ^6.0.0", ember-cli-htmlbars@^6.0.0, ember-cli-htmlbars@^6.0.1:
+"ember-cli-htmlbars@^3.0.0 || ^6.0.0", ember-cli-htmlbars@^6.0.0, ember-cli-htmlbars@^6.0.1, ember-cli-htmlbars@^6.1.1:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-6.3.0.tgz#ac85f2bbd09788992ab7f9ca832cd044fb8e5798"
   integrity sha512-N9Y80oZfcfWLsqickMfRd9YByVcTGyhYRnYQ2XVPVrp6jyUyOeRWmEAPh7ERSXpp8Ws4hr/JB9QVQrn/yZa+Ag==
@@ -7406,7 +7406,7 @@ ember-href-to@4.1.0:
   dependencies:
     ember-cli-babel "^7.13.2"
 
-ember-in-element-polyfill@^1.0.0, ember-in-element-polyfill@^1.0.1:
+ember-in-element-polyfill@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ember-in-element-polyfill/-/ember-in-element-polyfill-1.0.1.tgz#143504445bb4301656a2eaad42644d684f5164dd"
   integrity sha512-eHs+7D7PuQr8a1DPqsJTsEyo3FZ1XuH6WEZaEBPDa9s0xLlwByCNKl8hi1EbXOgvgEZNHHi9Rh0vjxyfakrlgg==
@@ -7483,15 +7483,14 @@ ember-maybe-import-regenerator@0.1.6, ember-maybe-import-regenerator@^0.1.6:
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
 
-ember-maybe-in-element@2.0.2, ember-maybe-in-element@^2.0.3:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/ember-maybe-in-element/-/ember-maybe-in-element-2.0.2.tgz#93e503fb0655b65cc822e4040e51e13814b5f648"
-  integrity sha512-NyZNEGsdUHKUbpeZV0U6fbs0KaRKaa6O6E3RP3TMoqUA/NI3Fhha28kZ38aPe21KMgN4I1NHicgSHf4ijuHFsA==
+ember-maybe-in-element@2.1.0, ember-maybe-in-element@^2.0.3:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/ember-maybe-in-element/-/ember-maybe-in-element-2.1.0.tgz#f7bd8e41ca90a4f8038d919a9c135cbe7a7f271b"
+  integrity sha512-6WAzPbf4BNQIQzkur2+zRJJJ/PKQoujIYgFjrpj3fOPy8iRlxVUm0/B41qbFyg1LE6bVbg0cWbuESWEvJ9Rswg==
   dependencies:
-    ember-cli-babel "^7.21.0"
-    ember-cli-htmlbars "^5.2.0"
-    ember-cli-version-checker "^5.1.1"
-    ember-in-element-polyfill "^1.0.1"
+    ember-cli-babel "^7.26.11"
+    ember-cli-htmlbars "^6.1.1"
+    ember-cli-version-checker "^5.1.2"
 
 ember-modifier-manager-polyfill@^1.1.0, ember-modifier-manager-polyfill@^1.2.0:
   version "1.2.0"
