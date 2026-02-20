@@ -1,0 +1,52 @@
+# Development overrides.
+# This file is automatically loaded by docker compose alongside docker-compose.yml.
+# It mounts source code for live reloading and exposes service ports for debugging.
+#
+# To run WITHOUT dev overrides (production-like):
+#   docker compose -f docker-compose.yml up
+
+services:
+  db:
+    ports:
+      - "5432:5432"
+
+  redis:
+    ports:
+      - "6379:6379"
+
+  api:
+    volumes:
+      - ./skylines:/home/skylines/code/skylines
+      - ./config:/home/skylines/code/config
+      - ./manage.py:/home/skylines/code/manage.py
+      - ./wsgi_skylines.py:/home/skylines/code/wsgi_skylines.py
+      - files_data:/home/skylines/code/htdocs/files
+    command: python manage.py runserver
+    environment:
+      SKYLINES_DEBUG: "true"
+      SKYLINES_CONFIG: /home/skylines/code/config/docker.py
+      DATABASE_URL: postgresql://postgres:postgres@db/skylines
+      REDIS_URL: redis://redis:6379/0
+      C_FORCE_ROOT: "1"
+
+  worker:
+    volumes:
+      - ./skylines:/home/skylines/code/skylines
+      - ./config:/home/skylines/code/config
+      - ./manage.py:/home/skylines/code/manage.py
+      - files_data:/home/skylines/code/htdocs/files
+
+  tracking:
+    volumes:
+      - ./skylines:/home/skylines/code/skylines
+      - ./config:/home/skylines/code/config
+      - ./manage.py:/home/skylines/code/manage.py
+
+  mapproxy:
+    volumes:
+      - ./mapproxy:/home/skylines/code/mapproxy
+      - ./mapserver:/home/skylines/code/mapserver
+      - ./wsgi_mapproxy.py:/home/skylines/code/wsgi_mapproxy.py
+
+volumes:
+  files_data:

@@ -1,0 +1,52 @@
+---
+description: Database conventions — PostgreSQL, PostGIS, SQLAlchemy models, and migrations
+globs: skylines/model/**/*.py, skylines/database.py, migrations/**/*.py
+alwaysApply: false
+---
+
+# Database Conventions
+
+## Stack
+
+- **PostgreSQL 10** with **PostGIS 2.5** and **fuzzystrmatch** extension
+- **Flask-SQLAlchemy** (`skylines/database.py`) — single `db` instance with custom model helpers
+- **GeoAlchemy2** for spatial columns (`Geometry("POINT", srid=4326)`, etc.)
+- **Shapely** for geometry manipulation in Python
+- **Flask-Migrate** (Alembic) for schema migrations in `migrations/`
+
+## Model Structure
+
+- One model per file in `skylines/model/`
+- All models re-exported from `skylines/model/__init__.py`
+- Custom methods on `db.Model`: `query()`, `get()`, `exists()`, `apply_kwargs()`
+
+## Key Models
+
+| Model | Purpose |
+|-------|---------|
+| `User` | Auth, profile, tracking key, club membership |
+| `Flight` | Uploaded flight with PostGIS track geometry, scores |
+| `FlightPathChunks` | Chunked flight path for meeting detection |
+| `FlightPhase`, `ContestLeg` | Analyzed flight segments |
+| `FlightComment`, `FlightMeetings` | Social features |
+| `IGCFile` | Uploaded IGC log file metadata |
+| `Club`, `Follower` | Social grouping |
+| `Airport`, `Airspace` | Geographic reference data |
+| `TrackingFix`, `TrackingSession` | Live tracking data |
+| `Notification`, `Event` | Activity feed |
+| `Trace` | Simplified flight trace for rendering |
+| `Elevation`, `TimeZone` | Lookup tables |
+| `AccessToken`, `RefreshToken`, `Client` | OAuth entities |
+
+## Spatial Patterns
+
+- Flight tracks stored as WKB-encoded `Geometry` columns
+- Custom SQL functions in `skylines/lib/sql.py` wrap PostGIS functions (`_ST_Intersects`, `_ST_Contains`)
+- `Location` and `Bounds` value objects in `skylines/model/geo.py`
+- `pyproj` for coordinate projections, `shapely` for geometry ops
+
+## Migrations
+
+- Alembic migrations live in `migrations/versions/`
+- Generated via `./manage.py db migrate`, applied via `./manage.py db upgrade`
+- DB bootstrap: `./manage.py db create` creates schema; `tests/data/bootstrap.py` seeds admin/test users

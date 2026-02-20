@@ -1,23 +1,26 @@
-version: '3.9'
-
 volumes:
   postgres_data:
+  files_data:
 
-x-api: &api
+x-app-env: &app-env
+  DATABASE_URL: postgresql://postgres:postgres@db/skylines
+  REDIS_URL: redis://redis:6379/0
+  SKYLINES_CONFIG: /home/skylines/code/config/docker.py
+  PGHOST: db
+  PGUSER: postgres
+  PGPASSWORD: postgres
+
+x-app: &app
   build: .
   environment:
+    <<: *app-env
     C_FORCE_ROOT: "1"
-    PGHOST: db
-    PGUSER: postgres
-    PGPASSWORD: postgres
-    REDIS_URL: redis://redis:6379/0
-  volumes:
-    - .:/home/skylines/code/
   depends_on:
-    - db
-    - redis
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
   restart: on-failure
-
 
 services:
   db:
@@ -28,31 +31,92 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - 5432:5432
     healthcheck:
       test: pg_isready -U postgres
       interval: 5s
+      timeout: 5s
+      retries: 10
 
   redis:
-    image: redis
-    ports:
-      - 6379:6379
+    image: redis:7-alpine
     healthcheck:
       test: redis-cli ping
       interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    <<: *app
+    command: >
+      sh -c "python manage.py migrate upgrade 2>/dev/null || python manage.py db create"
+    restart: "no"
 
   api:
-    <<: *api
+    <<: *app
     ports:
-      - 5000:5000
+      - "5000:5000"
+    volumes:
+      - files_data:/home/skylines/code/htdocs/files
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "-A", "healthcheck", "http://localhost:5000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
   worker:
-    <<: *api
-    command: pipenv run ./manage.py celery runworker
+    <<: *app
+    command: python manage.py celery runworker
+    volumes:
+      - files_data:/home/skylines/code/htdocs/files
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
 
   tracking:
-    <<: *api
-    command: pipenv run ./manage.py tracking runserver
+    <<: *app
+    command: python manage.py tracking runserver
     ports:
-      - 5597:5597/udp
+      - "5597:5597/udp"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  mapproxy:
+    <<: *app
+    command: >
+      gunicorn
+        --bind 0.0.0.0:9109
+        --workers 4
+        --timeout 120
+        wsgi_mapproxy:application
+    expose:
+      - "9109"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      api:
+        condition: service_healthy
