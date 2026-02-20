@@ -6083,7 +6083,7 @@ debug@2.6.9, debug@^2.1.0, debug@^2.1.3, debug@^2.2.0, debug@^2.3.3, debug@^2.6.
   dependencies:
     ms "2.0.0"
 
-debug@4, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.2.0, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4, debug@^4.3.6, debug@^4.4.3, debug@~4.4.1:
+debug@4, debug@^4.0.0, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4, debug@^4.3.6, debug@^4.4.3, debug@~4.4.1:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.4.3.tgz#c6ae432d9bd9662582fce08709b038c58e9e3d6a"
   integrity sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==
@@ -6683,16 +6683,14 @@ ember-cli-build-config-editor@0.5.1:
   dependencies:
     recast "^0.12.0"
 
-ember-cli-bundle-analyzer@0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-bundle-analyzer/-/ember-cli-bundle-analyzer-0.2.2.tgz#09b33585147b684fe675c554bd83d45fbc164526"
-  integrity sha512-NsFZZmEObzTkXIrRrSjOi8UytaaPqKWc/m9jjHt1/yB49EXaGy0w4dAjE2cretAgxzXr8xsV8V3ZU9qaHJ85/Q==
+ember-cli-bundle-analyzer@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-bundle-analyzer/-/ember-cli-bundle-analyzer-0.3.0.tgz#451a79078549bc76ebd6e88e973231b6cd48eb24"
+  integrity sha512-D5Z4uKDSmpgcorQrX91NmFWPG7G4icshbCVwUBxqPnt4CzJR1Lb5XASC0y0vxQHhZA7sy1+dK6bUIqorWmU4Wg==
   dependencies:
     broccoli-concat-analyser "^5.0.0"
-    debug "^4.2.0"
-    ember-cli-babel "^7.23.0"
-    ember-cli-htmlbars "^5.3.1"
-    ember-cli-version-checker "^5.1.1"
+    debug "^4.3.2"
+    ember-cli-version-checker "^5.1.2"
     hash-files "^1.1.1"
     intercept-stdout "^0.1.2"
     node-html-light "^1.4.0"
