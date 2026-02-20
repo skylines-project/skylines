@@ -12496,10 +12496,10 @@ ol@5.3.3:
     pixelworks "1.1.0"
     rbush "2.0.2"
 
-olcs@2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/olcs/-/olcs-2.12.0.tgz#481031d9a47b8473aa7a36194f3c166cded79862"
-  integrity sha512-1aED3kk33OeGQh3uvTEAHdRBWXrGLb8kFT+UdmHEkHYttPLsvHpVvz/GSndj32e2MtNcCM/IjGus4fVxpNOczA==
+olcs@2.22.1:
+  version "2.22.1"
+  resolved "https://registry.yarnpkg.com/olcs/-/olcs-2.22.1.tgz#12a06ea88ea3fc805940b732de4e7fd0ff5e97f3"
+  integrity sha512-QWpFA84km7bOZFh0PDrKa35HkvI+mud9fcRZ4NHbRMFtBIQnY8l9oba+WocimIhXer4hIybc4nx0q60sEngLKg==
 
 on-finished@~2.3.0:
   version "2.3.0"

@@ -20,7 +20,7 @@
   "dependencies": {
     "cesium": "1.74.0",
     "ol": "5.3.3",
-    "olcs": "2.12.0",
+    "olcs": "2.22.1",
     "remarkable": "2.0.1",
     "screenfull": "5.2.0"
   },
