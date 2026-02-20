@@ -2098,7 +2098,7 @@
     "@sentry/utils" "6.2.5"
     tslib "^1.9.3"
 
-"@sentry/cli@^1.66.0":
+"@sentry/cli@^1.70.1":
   version "1.77.3"
   resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.77.3.tgz#c40b4d09b0878d6565d42a915855add99db4fec3"
   integrity sha512-c3eDqcDRmy4TFz2bFU5Y6QatlpoBPPa8cxBooaS4aMQpnIdLYPF1xhyyiW0LQlDUNc3rRjNF7oN5qKoaRoMTQQ==
@@ -6815,12 +6815,12 @@ ember-cli-deploy-revision-data@1.0.0, ember-cli-deploy-revision-data@^1.0.0:
     rsvp "^3.5.0"
     simple-git "^1.57.0"
 
-ember-cli-deploy-sentry-cli@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-sentry-cli/-/ember-cli-deploy-sentry-cli-2.4.0.tgz#b04e06997b0a885d9163c81acfc53438b87304bf"
-  integrity sha512-+6djf/PLAYN59S/4EUEevoiMWVfcyLPZ4ifOPOifEhQAMsUtvDgmn2ev77RSRto/91ocuG3anxob0S7xJAxgYw==
+ember-cli-deploy-sentry-cli@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-sentry-cli/-/ember-cli-deploy-sentry-cli-3.1.0.tgz#3fe9a51478b720f7d33378516cafe709ef6d3d5c"
+  integrity sha512-u03sYtQJLx3j9HtSuMADSXNCOB112U3lhGSP1ckfCaUId8suXA2vWYioS3GE6LeWd19ZHrECS+jGN/9yj1gCAw==
   dependencies:
-    "@sentry/cli" "^1.66.0"
+    "@sentry/cli" "^1.70.1"
     ember-cli-deploy-plugin "^0.2.9"
     ember-cli-deploy-revision-data "^1.0.0"
 
