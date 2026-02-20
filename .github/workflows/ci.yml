@@ -16,14 +16,12 @@ jobs:
       COVERAGE: true
       JOBS: 1 # See https://git.io/vdao3 for details.
 
-      # Percy secrets are included here to enable Percy's GitHub integration
-      # on community-submitted PRs
       PERCY_PROJECT: skylines/skylines
       PERCY_TOKEN: 81bf0245987c87eb4924eae0b085cb60596f2f0f4d4ffe27e171828535aa6812
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
+      - uses: actions/checkout@v4
+      - uses: volta-cli/action@v4
 
       - run: yarn install --frozen-lockfile
         working-directory: ./ember
@@ -50,8 +48,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
+      - uses: actions/checkout@v4
+      - uses: volta-cli/action@v4
 
       - run: yarn install --frozen-lockfile
         working-directory: ./ember
@@ -69,32 +67,90 @@ jobs:
     name: Backend
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [2.7, 3.6]
+    container:
+      image: debian:buster-slim
+
+    services:
+      db:
+        image: postgis/postgis:10-2.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: skylines_test
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: postgres
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Install system dependencies
+        run: |
+          echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list
+          echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            git ca-certificates \
+            python2.7 python-pip python-setuptools python-wheel python-dev \
+            build-essential libpq-dev libgeos-dev libproj-dev libffi-dev libssl-dev \
+            libboost-python-dev zlib1g-dev cmake \
+            postgresql-client
 
-      # Build Docker images
-      - run: docker-compose build --build-arg PYTHON_VERSION=${{ matrix.python-version }}
+      - uses: actions/checkout@v4
 
-      # Run the test suite
-      - run: docker-compose run api pipenv run py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
+      - name: Install Python dependencies
+        run: |
+          pip install pipenv==2020.11.15
+          pipenv lock -r --dev > /tmp/requirements-all.txt
+          grep -v xcsoar /tmp/requirements-all.txt > /tmp/requirements.txt
+          pip install -r /tmp/requirements.txt
+          pip install xcsoar==0.7.0
+
+      - name: Setup test database extensions
+        run: |
+          psql -h db -U postgres -d skylines_test -c "CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;"
+
+      - name: Run tests
+        run: py.test -vv --color=yes --cov=skylines --cov-report term-missing:skip-covered
 
   backend-lint:
     name: Backend (Lint)
     runs-on: ubuntu-latest
 
+    container:
+      image: python:3.6-buster
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.6
+      - name: Update certificates
+        run: |
+          echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list
+          echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list
+          apt-get update && apt-get install -y --no-install-recommends ca-certificates
+
+      - uses: actions/checkout@v4
 
       - run: pip install black==20.8b1
       - run: black config migrations skylines tests *.py --check
+
+  docker-build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose -f docker-compose.yml build
 
   deploy:
     name: Deploy
@@ -111,8 +167,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           env: production
 
-      - uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
+      - uses: actions/checkout@v4
+      - uses: volta-cli/action@v4
 
       - run: yarn install --frozen-lockfile
         working-directory: ./ember
