@@ -37,9 +37,7 @@ SKYLINES_MAPSERVER_PATH = os.path.join(_base, "mapserver")
 SKYLINES_TEMPORARY_DIR = "/tmp"
 SKYLINES_LISTS_DISPLAY_LENGTH = 50
 
-SKYLINES_MAP_TILE_URL = os.getenv(
-    "SKYLINES_MAP_TILE_URL", "http://caddy/mapproxy"
-)
+SKYLINES_MAP_TILE_URL = os.getenv("SKYLINES_MAP_TILE_URL", "http://caddy/mapproxy")
 
 SKYLINES_ANALYSIS_ITER = 10e6
 SKYLINES_ANALYSIS_MEMORY = 256
