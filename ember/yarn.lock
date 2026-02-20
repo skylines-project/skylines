@@ -7456,10 +7456,10 @@ ember-get-config@^0.2.4, "ember-get-config@^0.2.4 || ^0.3.0":
     ember-cli-version-checker "^2.1.0"
     ember-factory-for-polyfill "^1.3.1"
 
-ember-href-to@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-4.1.0.tgz#daa8b398bc5a51ba3ba5ff736e099f0a0d010b7b"
-  integrity sha512-h8xSzt9lQAUzk4JvXNnZjRj29hOWKo92VIHzH68io13UurDBaMmJ4WtXa0iy/awlSFs6h8BwpEWQeaCYIZDRuQ==
+ember-href-to@5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-5.0.6.tgz#a6dde5a57781eec2cdba7bff7861049442423410"
+  integrity sha512-oq3iCbOZzLpasjQ3aWRleaFGQxyFx5zWMCfL+D/7kEmlN7S6Ixfnul+aUu1AZZ1bMztOMsy8qA74wVj4+Vu26g==
   dependencies:
     ember-cli-babel "^7.13.2"
 
