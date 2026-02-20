@@ -1113,7 +1113,7 @@
     ember-cli-babel "^7.10.0"
     ember-modifier-manager-polyfill "^1.1.0"
 
-"@ember/render-modifiers@^2.0.0":
+"@ember/render-modifiers@^2.0.0", "@ember/render-modifiers@^2.0.3":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@ember/render-modifiers/-/render-modifiers-2.1.0.tgz#f4fff95a8b5cfbe947ec46644732d511711c5bf9"
   integrity sha512-LruhfoDv2itpk0fA0IC76Sxjcnq/7BC6txpQo40hOko8Dn6OxwQfxkPIbZGV0Cz7df+iX+VJrcYzNIvlc3w2EQ==
@@ -6804,7 +6804,7 @@ ember-cli-htmlbars@5.7.2, ember-cli-htmlbars@^5.1.0, ember-cli-htmlbars@^5.1.2, 
     strip-bom "^4.0.0"
     walk-sync "^2.2.0"
 
-"ember-cli-htmlbars@^3.0.0 || ^6.0.0", ember-cli-htmlbars@^6.0.0:
+"ember-cli-htmlbars@^3.0.0 || ^6.0.0", ember-cli-htmlbars@^6.0.0, ember-cli-htmlbars@^6.0.1:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-6.3.0.tgz#ac85f2bbd09788992ab7f9ca832cd044fb8e5798"
   integrity sha512-N9Y80oZfcfWLsqickMfRd9YByVcTGyhYRnYQ2XVPVrp6jyUyOeRWmEAPh7ERSXpp8Ws4hr/JB9QVQrn/yZa+Ag==
@@ -7010,6 +7010,22 @@ ember-cli-typescript@^4.0.0, ember-cli-typescript@^4.1.0, ember-cli-typescript@^
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-4.2.1.tgz#54d08fc90318cc986f3ea562f93ce58a6cc4c24d"
   integrity sha512-0iKTZ+/wH6UB/VTWKvGuXlmwiE8HSIGcxHamwNhEC5x1mN3z8RfvsFZdQWYUzIWFN2Tek0gmepGRPTwWdBYl/A==
+  dependencies:
+    ansi-to-html "^0.6.15"
+    broccoli-stew "^3.0.0"
+    debug "^4.0.0"
+    execa "^4.0.0"
+    fs-extra "^9.0.1"
+    resolve "^1.5.0"
+    rsvp "^4.8.1"
+    semver "^7.3.2"
+    stagehand "^1.0.0"
+    walk-sync "^2.2.0"
+
+ember-cli-typescript@^5.0.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-5.3.0.tgz#c0f726c61e4309aa9ff49b388219c6729ea986cd"
+  integrity sha512-gFA+ZwmsvvFwo2Jz/B9GMduEn+fPoGb69qWGP0Tp3+Tu5xypDtIKVSZ5086I3Cr19cLXD4HkrOR3YQvdUKzAkQ==
   dependencies:
     ansi-to-html "^0.6.15"
     broccoli-stew "^3.0.0"
@@ -7320,18 +7336,21 @@ ember-fetch@8.1.2:
     node-fetch "^2.6.1"
     whatwg-fetch "^3.6.2"
 
-ember-flatpickr@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/ember-flatpickr/-/ember-flatpickr-3.0.1.tgz#e8a56dea1230984220cb0a13cd5e7f8dea064300"
-  integrity sha512-16aUvlV7nkm/GA+0aXHJmvcRzJYY+A2V9rtsCqrPHEch00x1udJicrNonSV4YQ/JmnjScuC/nY/61T2jYfVqgg==
+ember-flatpickr@3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/ember-flatpickr/-/ember-flatpickr-3.2.3.tgz#4ec405d03853d67316fb1813e4e39bca487f1b83"
+  integrity sha512-ON6FNh3gFSxDTam2UOyPOSeYki5qNqPqPEB+SS/Q+L+kPEvxmDMPeG/lWLLvdDsPR0X55W9q7uSjzZZAD/UxqA==
   dependencies:
-    "@ember/render-modifiers" "^1.0.2"
+    "@ember/render-modifiers" "^2.0.3"
+    "@glimmer/component" "^1.0.4"
+    "@glimmer/tracking" "^1.0.4"
     broccoli-funnel "^3.0.3"
     broccoli-merge-trees "^4.2.0"
     broccoli-stew "^3.0.0"
-    ember-cli-babel "^7.21.0"
-    ember-cli-htmlbars "^5.2.0"
-    flatpickr "^4.6.6"
+    ember-cli-babel "^7.26.11"
+    ember-cli-htmlbars "^6.0.1"
+    ember-cli-typescript "^5.0.0"
+    flatpickr "^4.6.9"
 
 ember-focus-trap@^0.4.0:
   version "0.4.0"
@@ -8899,7 +8918,7 @@ flat-cache@^3.0.4:
     keyv "^4.5.3"
     rimraf "^3.0.2"
 
-flatpickr@^4.6.6:
+flatpickr@^4.6.9:
   version "4.6.13"
   resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.6.13.tgz#8a029548187fd6e0d670908471e43abe9ad18d94"
   integrity sha512-97PMG/aywoYpB4IvbvUJi0RQi8vearvU0oov1WW3k0WZPBMrTQVqekSX5CjSG/M4Q3i6A/0FKXC7RyAoAUUSPw==
