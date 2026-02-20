@@ -7,12 +7,23 @@
     ":automergeLinters",
     ":automergeTesters"
   ],
-  "python": {
-    "enabled": false
-  },
-  "postUpdateOptions": ["yarnDedupeFewer"],
-  "packageRules": [{
-    "packageNames": ["ember-cli", "ember-data", "ember-source"],
-    "separateMinorPatch": true
-  }]
+  "postUpdateOptions": [
+    "yarnDedupeFewer"
+  ],
+  "packageRules": [
+    {
+      "matchCategories": [
+        "python"
+      ],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": [
+        "ember-cli",
+        "ember-data",
+        "ember-source"
+      ],
+      "separateMinorPatch": true
+    }
+  ]
 }
