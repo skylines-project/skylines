@@ -128,6 +128,8 @@ def read(user_ids):
                         "elevations_t": trace["barogram_t"],
                         "elevations_h": trace["elevations"],
                         "geoid": trace["geoid"],
+                        # Timestamp of the first fix in seconds since epoch.
+                        "first_timestamp": trace["first_timestamp"],
                         "additional": {
                             "competition_id": pilot.tracking_callsign
                             or pilot.initials(),
@@ -157,6 +159,8 @@ def json(user_id):
         enl=trace["enl"],
         geoid=trace["geoid"],
         sfid=pilot.id,
+        # Timestamp of the first fix in seconds since epoch.
+        first_timestamp=trace["first_timestamp"],
     )
 
 
@@ -214,6 +218,8 @@ def _get_flight_path(pilot, threshold=0.001, last_update=None):
         enl=enl,
         elevations=elevations,
         geoid=geoid_height,
+        # Timestamp of the first fix in seconds since epoch.
+        first_timestamp=round(fp[0].datetime.timestamp()),
     )
 
 
