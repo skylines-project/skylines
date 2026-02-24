@@ -15,7 +15,7 @@ at openair https://www.austrocontrol.at/jart/prj3/austro_control/data/dokumente/
 
 fr openair http://s289271336.onlinehome.fr/dossiers_ffvv/files/180330__AIRSPACE_France_2018-04.txt
 nl openair http://soaringweb.org/Airspace/NL/EHv17_3.txt
-hu openair http://soaringweb.org/Airspace/HU/HungarySUA2017_openair.txt
+hu openair http://soaringweb.org/Airspace/HU/HungarySUA2020_v7.txt
 sk openair http://soaringweb.org/Airspace/SK/SK2012.txt
 uk openair http://www.nvgc.org.uk/UK2016.txt
 ch openair http://soaringweb.org/Airspace/CH/170507_CH.txt
