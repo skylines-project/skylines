@@ -32,7 +32,7 @@
     "@embroider/compat": "0.39.1",
     "@embroider/core": "0.39.1",
     "@embroider/webpack": "0.39.1",
-    "@glimmer/component": "1.1.2",
+    "@glimmer/component": "2.0.0",
     "@glimmer/tracking": "1.1.2",
     "@percy/ember": "2.1.4",
     "@sentry/browser": "6.2.5",
