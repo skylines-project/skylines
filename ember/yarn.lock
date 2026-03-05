@@ -5283,7 +5283,7 @@ cli-spinners@^2.0.0, cli-spinners@^2.5.0:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.9.2.tgz#1773a8f4b9c4d6ac31563df53b3fc1d79462fe41"
   integrity sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==
 
-cli-table3@^0.6.0:
+cli-table3@^0.6.3:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/cli-table3/-/cli-table3-0.6.5.tgz#013b91351762739c16a9567c21a04632e449bf2f"
   integrity sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==
@@ -6691,18 +6691,18 @@ ember-cli-deploy-compress@0.3.2:
     minimatch "^3.0.3"
     rsvp "^3.5.0"
 
-ember-cli-deploy-display-revisions@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-display-revisions/-/ember-cli-deploy-display-revisions-2.1.2.tgz#8168a92684a48484e70a88370014be689bf4fe97"
-  integrity sha512-b5aqlF8WzxOBd7v0A5enV3ef/jEoScEKxhjC8llFSCs5aUqRW/azgco/FzPgwF0Il+4uey3clzHboKjk7ix14A==
+ember-cli-deploy-display-revisions@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-display-revisions/-/ember-cli-deploy-display-revisions-3.0.0.tgz#5642867d409f9bea6cc5cdc2a967089b8256427b"
+  integrity sha512-4saEjD8XlKOeY5Whx8189RiDIFBUJXUZ5DdQZovE+/gyuptHi+kBYZFVlmvDWPNujEEKWBBjpFbdmFudF2wMjw==
   dependencies:
-    cli-table3 "^0.6.0"
+    cli-table3 "^0.6.3"
     core-object "^3.1.5"
-    ember-cli-deploy-plugin "^0.2.3"
-    luxon "^1.25.0"
+    ember-cli-deploy-plugin "^0.2.9"
+    luxon "^3.3.0"
     rsvp "^4.8.5"
 
-ember-cli-deploy-plugin@^0.2.1, ember-cli-deploy-plugin@^0.2.3, ember-cli-deploy-plugin@^0.2.6, ember-cli-deploy-plugin@^0.2.9:
+ember-cli-deploy-plugin@^0.2.1, ember-cli-deploy-plugin@^0.2.6, ember-cli-deploy-plugin@^0.2.9:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/ember-cli-deploy-plugin/-/ember-cli-deploy-plugin-0.2.9.tgz#a3d395b8adad7ef68d8bacdd0b0f4a61bcf9e651"
   integrity sha512-6Cq3XbjZLi4vFYcyF0xfVr5tJdcnNY8kXZFY76qeN3VoKpwTfwiYMc45I8N9DsH8zog8xzHO8YL5RU58qKiqUQ==
@@ -11466,10 +11466,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-luxon@^1.25.0:
-  version "1.28.1"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.28.1.tgz#528cdf3624a54506d710290a2341aa8e6e6c61b0"
-  integrity sha512-gYHAa180mKrNIUJCbwpmD0aTu9kV0dREDrwNnuyFAsO1Wt0EVYSZelPnJlbj9HplzXX/YWXHFTL45kvZ53M0pw==
+luxon@^3.3.0:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.7.2.tgz#d697e48f478553cca187a0f8436aff468e3ba0ba"
+  integrity sha512-vtEhXh/gNjI9Yg1u4jX/0YVPMvxzHuGgCm6tC5kZyb08yjGWGnqAjGJvcXbqQR2P3MyMEFnRbpcdFS6PBcLqew==
 
 macro-decorators@^0.1.2:
   version "0.1.2"
