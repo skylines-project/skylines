@@ -83,7 +83,7 @@
     "ember-render-helpers": "0.2.1",
     "ember-resolver": "8.1.0",
     "ember-simple-auth": "3.1.0",
-    "ember-source": "3.24.7",
+    "ember-source": "6.11.0",
     "ember-svg-jar": "2.3.3",
     "ember-template-lint": "2.21.0",
     "ember-test-selectors": "5.5.0",
