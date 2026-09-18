@@ -8,13 +8,66 @@ The environment configuration is described in the
 
 The same setup is also used on GitHub to run the tests.
 
-## docker-compose
+## Quick start (recommended)
 
-[docker-compose](https://docs.docker.com/compose/) can be used to run and
-coordinate multiple containers in parallel. Once you have it
-[installed](https://docs.docker.com/compose/install/), you should be able to
-run `docker-compose up` to automatically build the necessary container images
-and run them.
+The simplest way to run SkyLines is with the multi-stage Dockerfile, which
+builds the Ember frontend inside the image — no host Node/yarn required:
+
+```bash
+docker compose -f docker-compose.yml up --build
+```
+
+This runs only `docker-compose.yml` (ignoring the dev override file) so the
+baked frontend assets from the Dockerfile's Ember build stage are used.
+
+Open <http://localhost/> to see the app.
+
+## Development with docker-compose.override.yml
+
+The repo includes a `docker-compose.override.yml` that exposes debug ports
+and bind-mounts source directories for live backend reloading. Docker Compose
+automatically merges it when you run:
+
+```bash
+docker compose up --build
+```
+
+**Important caveat:** the override bind-mounts `./skylines` over the image's
+`/home/skylines/code/skylines` directory. This hides the baked frontend assets
+at `skylines/frontend/static/` (including `index.html`), so the app will return
+HTTP 500 if that directory doesn't exist on the host.
+
+### Option A — Copy frontend assets from a one-off build (no host yarn)
+
+Build a temporary frontend image and copy the assets out:
+
+```bash
+docker build --target frontend -t skylines-frontend .
+docker run --rm skylines-frontend tar -C /build -cf - skylines/frontend/static | tar -xf -
+```
+
+Now `./skylines/frontend/static/` exists on the host and the bind-mount works.
+Re-run these commands whenever you update `ember/` and need a fresh frontend.
+
+### Option B — Build on the host (if you have Node/yarn)
+
+If you already have Node 20+ and yarn installed:
+
+```bash
+cd ember
+yarn install --frozen-lockfile
+yarn build          # outputs to ../skylines/frontend/static/
+cd ..
+docker compose up --build
+```
+
+### Option C — Skip the override entirely
+
+If you only need to run the app (not edit backend code with live reload):
+
+```bash
+docker compose -f docker-compose.yml up --build
+```
 
 ## Usage with VSCode
 
@@ -36,31 +89,15 @@ re-opened from inside the container.
 
 If you want to run the testsuite, launch:
 
-```
-docker-compose run api pipenv run pytest -vv
+```bash
+docker compose run api pipenv run pytest -vv
 ```
 
 You can restrict the unit tests to run by passing a file or a folder:
 
-```
-docker-compose run api pipenv run pytest -vv tests/api/views/clubs/
+```bash
+docker compose run api pipenv run pytest -vv tests/api/views/clubs/
 ```
 
 See the [pytest documentation](https://docs.pytest.org/en/stable/contents.html)
 for more details.
-
-## Frontend installation
-
-The frontend is based on Ember.js. It is recommended to build the frontend on
-the host machine directly for improved performance.
-
-* Install [Node.js](https://nodejs.org/) and [bower](https://bower.io/)
-
-Now you can start and build the frontend:
-
-```
-cd ember
-npm install
-bower install
-node_modules/.bin/ember build
-```
