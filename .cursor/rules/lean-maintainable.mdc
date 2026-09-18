@@ -1,0 +1,28 @@
+---
+description: Lean and human-maintainable code bar for all changes
+alwaysApply: true
+---
+
+# Lean & Maintainable Code Bar
+
+## Minimal Changes
+
+- Make the smallest change that solves the problem
+- One concern per PR; no drive-by refactors
+- No extra abstractions, layers, or indirection unless they pay for themselves
+
+## Human-Readable
+
+- Clear names over short names
+- Obvious control flow over clever patterns
+- Readable beats clever; future-you is the audience
+
+## Comments
+
+- Only where intent isn't obvious from the code itself
+- Explain *why*, not *what*
+
+## Dependencies
+
+- Prefer fixing or pinning over large upgrades
+- Upgrade dependencies only when the task explicitly calls for modernization
