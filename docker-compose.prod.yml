@@ -1,0 +1,168 @@
+# =============================================================================
+# Production Docker Compose for SkyLines
+# =============================================================================
+#
+# This file is intended for production deployments. It expects environment
+# variables (or a .env file) for secrets and configuration.
+#
+# Quick start:
+#   1. Copy .env.example to .env and fill in your secrets
+#   2. docker compose -f docker-compose.prod.yml up -d
+#
+# See docs/DEPLOY.docker.md for full deployment instructions.
+# =============================================================================
+
+volumes:
+  postgres_data:
+  files_data:
+  caddy_data:
+  caddy_config:
+
+x-app-env: &app-env
+  DATABASE_URL: postgresql://${POSTGRES_USER:-skylines}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@db/${POSTGRES_DB:-skylines}
+  REDIS_URL: redis://redis:6379/0
+  SKYLINES_CONFIG: /home/skylines/code/config/docker.py
+  SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
+  PGHOST: db
+  PGUSER: ${POSTGRES_USER:-skylines}
+  PGPASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+  SMTP_SERVER: ${SMTP_SERVER:-localhost}
+  EMAIL_FROM: ${EMAIL_FROM:-SkyLines <no-reply@skylines.aero>}
+  SKYLINES_MAP_TILE_URL: ${SKYLINES_MAP_TILE_URL:-/mapproxy}
+
+x-app: &app
+  image: ${SKYLINES_IMAGE:-ghcr.io/skylines-project/skylines:latest}
+  build:
+    context: .
+    dockerfile: Dockerfile
+  environment:
+    <<: *app-env
+    C_FORCE_ROOT: "1"
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+  db:
+    image: postgis/postgis:12-2.5
+    volumes:
+      - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-skylines}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:-skylines}
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER:-skylines} -d ${POSTGRES_DB:-skylines}
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  redis:
+    image: redis:8-alpine
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  migrate:
+    <<: *app
+    command: >
+      sh -c "python manage.py migrate upgrade 2>/dev/null || python manage.py db create"
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  api:
+    <<: *app
+    command: >
+      gunicorn
+        --bind 0.0.0.0:5000
+        --workers ${GUNICORN_WORKERS:-4}
+        --timeout 120
+        --access-logfile -
+        --error-logfile -
+        wsgi_skylines:application
+    volumes:
+      - files_data:/home/skylines/code/htdocs/files
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "-A", "healthcheck", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  worker:
+    <<: *app
+    command: python manage.py celery runworker
+    volumes:
+      - files_data:/home/skylines/code/htdocs/files
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  tracking:
+    <<: *app
+    command: python manage.py tracking runserver
+    ports:
+      - "${TRACKING_PORT:-5597}:5597/udp"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  mapproxy:
+    <<: *app
+    command: >
+      gunicorn
+        --bind 0.0.0.0:9109
+        --workers ${MAPPROXY_WORKERS:-4}
+        --timeout 120
+        wsgi_mapproxy:application
+    expose:
+      - "9109"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+      - "${HTTPS_PORT:-443}:443/udp"
+    volumes:
+      - ./docker/Caddyfile.prod:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+      TLS_EMAIL: ${TLS_EMAIL:-}
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped

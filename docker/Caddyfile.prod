@@ -1,0 +1,83 @@
+# =============================================================================
+# Production Caddyfile for SkyLines
+# =============================================================================
+#
+# Default mode: external TLS termination (DOMAIN=localhost, TLS_EMAIL empty).
+# An external reverse proxy (nginx, AWS ALB, Cloudflare, etc.) handles TLS and
+# forwards plain HTTP to this Caddy instance on port 80.
+#
+# Optional modes:
+#
+# 1. Automatic TLS via Caddy:
+#    Set DOMAIN to your domain and TLS_EMAIL to your email.
+#    Caddy will obtain and renew Let's Encrypt certificates automatically.
+#
+# 2. Custom certificates:
+#    Mount your certificates and modify the tls directive below.
+#
+# Environment variables (set in .env or docker-compose):
+#   DOMAIN    - The domain name to serve (default: localhost for external proxy)
+#   TLS_EMAIL - Email for Let's Encrypt (empty = no auto TLS, external proxy)
+# =============================================================================
+
+# Global options
+{
+	# Enable automatic HTTPS only if TLS_EMAIL is set
+	email {$TLS_EMAIL:}
+
+	# If no TLS_EMAIL, disable auto HTTPS
+	auto_https {$TLS_EMAIL:off}
+}
+
+# Main site block
+{$DOMAIN:localhost} {
+	log {
+		output stdout
+		format json
+		level INFO
+	}
+
+	# Security headers
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	# MapProxy tile server (strip /mapproxy prefix)
+	handle_path /mapproxy/* {
+		reverse_proxy mapproxy:9109
+	}
+
+	# Static asset cache headers (fingerprinted assets)
+	@assets path /assets/*.css /assets/*.js
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
+	@fonts path /fonts/*
+	header @fonts Cache-Control "public, max-age=31536000"
+
+	# Health check endpoint for load balancers
+	handle /health {
+		respond "OK" 200
+	}
+
+	# Everything else goes to the Flask combined app
+	reverse_proxy api:5000 {
+		# Health checks to upstream
+		health_uri /
+		health_interval 30s
+		health_timeout 5s
+
+		# Headers for proper client IP forwarding
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}
+
+# Redirect www to non-www (optional, only if DOMAIN is set)
+www.{$DOMAIN:localhost} {
+	redir https://{$DOMAIN:localhost}{uri} permanent
+}
