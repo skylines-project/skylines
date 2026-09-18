@@ -95,6 +95,10 @@ COPY --from=frontend /build/skylines/frontend/static/ /home/skylines/code/skylin
 RUN mkdir -p /home/skylines/code/htdocs/files \
              /home/skylines/code/htdocs/srtm
 
+# Provide commit SHA at build time to avoid git rev-parse in containers
+ARG GIT_SHA=unknown
+ENV GIT_SHA=$GIT_SHA
+
 EXPOSE 5000
 
 ENV SKYLINES_CONFIG=/home/skylines/code/config/docker.py
