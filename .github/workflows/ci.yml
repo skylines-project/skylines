@@ -40,7 +40,6 @@ jobs:
 
       - run: yarn test
         working-directory: ./ember
-        continue-on-error: true  # Pre-existing Babel helper issue - see PR #2602
 
   embroider:
     name: Frontend (embroider)
