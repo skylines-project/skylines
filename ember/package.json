@@ -28,7 +28,7 @@
     "@ember-intl/cp-validations": "4.0.1",
     "@ember/jquery": "1.1.0",
     "@ember/optional-features": "2.3.0",
-    "@ember/render-modifiers": "1.0.2",
+    "@ember/render-modifiers": "2.1.0",
     "@embroider/compat": "0.39.1",
     "@embroider/core": "0.39.1",
     "@embroider/webpack": "0.39.1",
@@ -105,9 +105,11 @@
   },
   "resolutions": {
     "@percy/agent": "0.24.3",
+    "@ember/render-modifiers": "2.1.0",
     "ember-element-helper": "0.4.0",
     "ember-maybe-in-element": "2.0.2",
-    "ember-modifier": "2.1.2"
+    "ember-modifier": "2.1.2",
+    "postcss": "8.4.38"
   },
   "ember-addon": {
     "paths": [
