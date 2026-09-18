@@ -111,7 +111,8 @@
     "ember-element-helper": "0.4.0",
     "ember-maybe-in-element": "2.0.2",
     "ember-modifier": "2.1.1",
-    "olcs": "2.12.0"
+    "olcs": "2.12.0",
+    "workerpool": "6.5.1"
   },
   "ember-addon": {
     "paths": [
