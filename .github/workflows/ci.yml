@@ -154,6 +154,22 @@ jobs:
       - uses: actions/checkout@v4
       - run: docker compose -f docker-compose.yml build
 
+  docker-compose-validate:
+    name: Docker Compose Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate development compose
+        run: docker compose -f docker-compose.yml config --quiet
+
+      - name: Validate production compose (with dummy env)
+        run: |
+          export POSTGRES_PASSWORD=dummy
+          export SECRET_KEY=dummy
+          docker compose -f docker-compose.prod.yml config --quiet
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
