@@ -109,7 +109,7 @@
     "ember-element-helper": "0.4.0",
     "ember-maybe-in-element": "2.0.2",
     "ember-modifier": "2.1.2",
-    "postcss": "8.4.38"
+    "ember-style-modifier": "0.7.0"
   },
   "ember-addon": {
     "paths": [
