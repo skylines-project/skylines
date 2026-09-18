@@ -1,4 +1,4 @@
-import { visit, click, currentURL, fillIn, waitFor } from '@ember/test-helpers';
+import { visit, click, currentURL, fillIn, waitFor, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
 import percySnapshot from '@percy/ember';
@@ -75,6 +75,7 @@ module('Acceptance | Settings | Delete Account', function (hooks) {
 
     // click "Delete Account" confirmation button
     await click('[data-test-delete-account-modal] [data-test-submit-button]');
+    await settled();
     assert.verifySteps(['account-deleted']);
     assert.notOk(isAuthenticated());
   });
