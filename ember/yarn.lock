@@ -6768,7 +6768,7 @@ ember-cli-babel@7.26.11, ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-c
     resolve-package-path "^4.0.3"
     semver "^7.3.8"
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.1, ember-cli-babel@^6.8.1, ember-cli-babel@^6.9.0, ember-cli-babel@^6.9.2:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.1, ember-cli-babel@^6.8.1, ember-cli-babel@^6.9.0, ember-cli-babel@^6.9.2:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
   integrity sha512-7ceC8joNYxY2wES16iIBlbPSxwKDBhYwC8drU3ZEvuPDMwVv1KzxCNu1fvxyFEBWhwaRNTUxSCsEVoTd9nosGA==
@@ -7400,7 +7400,7 @@ ember-concurrency@1.3.0:
     ember-compatibility-helpers "^1.2.0"
     ember-maybe-import-regenerator "^0.1.6"
 
-"ember-concurrency@>=1.0.0 <3", "ember-concurrency@>=1.3.0 <3":
+ember-concurrency@2.3.7, "ember-concurrency@>=1.0.0 <3", "ember-concurrency@>=1.3.0 <3":
   version "2.3.7"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-2.3.7.tgz#52d786e37704b9054da1952638797e23714ec0e1"
   integrity sha512-sz6sTIXN/CuLb5wdpauFa+rWXuvXXSnSHS4kuNzU5GSMDX1pLBWSuovoUk61FUe6CYRqBmT1/UushObwBGickQ==
@@ -7574,7 +7574,7 @@ ember-freestyle@0.12.11:
     sass "^1.17.0"
     strip-indent "^3.0.0"
 
-"ember-get-config@0.2.4 - 0.5.0":
+"ember-get-config@0.2.4 - 0.5.0", ember-get-config@0.5.0, ember-get-config@^0.2.4:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/ember-get-config/-/ember-get-config-0.5.0.tgz#8195f3e4c0ff0742182c81ae54aad78d07a24bcf"
   integrity sha512-y1osD6g8wV/BlDjuaN6OG5MT0iHY2X/yE38gUj/05uUIMIRfpcwOdWnFQHBiXIhDojvAJQTEF1VOYFIETQMkeQ==
@@ -7582,14 +7582,6 @@ ember-freestyle@0.12.11:
     broccoli-file-creator "^1.1.1"
     ember-cli-babel "^7.26.6"
     ember-cli-htmlbars "^5.7.1"
-
-ember-get-config@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/ember-get-config/-/ember-get-config-0.2.4.tgz#118492a2a03d73e46004ed777928942021fe1ecd"
-  integrity sha512-CgkR97y80Dm+hbVTW1O5ZC5cEUIfTsGsR6UPOyuaRdv3B5SRlBSxysnHrYKjRMb68l8AUa5DRkVW6yBh/u7Icw==
-  dependencies:
-    broccoli-file-creator "^1.1.1"
-    ember-cli-babel "^6.3.0"
 
 "ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.0.1, ember-getowner-polyfill@^2.2.0:
   version "2.2.0"

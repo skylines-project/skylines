@@ -106,7 +106,9 @@
   "resolutions": {
     "@ember/render-modifiers": "2.1.0",
     "@percy/agent": "0.24.3",
+    "ember-concurrency": "2.3.7",
     "ember-element-helper": "0.4.0",
+    "ember-get-config": "0.5.0",
     "ember-maybe-in-element": "2.0.2",
     "ember-modifier": "2.1.2",
     "ember-style-modifier": "0.7.0",
