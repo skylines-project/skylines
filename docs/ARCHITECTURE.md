@@ -172,5 +172,12 @@ Production requires four long-running processes plus a migration step:
 | `mapproxy` | Gunicorn `wsgi_mapproxy:application` | HTTP 9109 | Tiles/WMS in front of MapServer |
 | `migrate` | `manage.py migrate upgrade` | — | One-shot before the others start |
 
-Docker Compose (`docker-compose.yml`) orchestrates all of them together with
-PostGIS, Redis, and Caddy as the reverse proxy.
+Docker Compose orchestrates all of them together with PostGIS, Redis, and Caddy
+as the reverse proxy:
+
+- **Development:** `docker-compose.yml` with `docker-compose.override.yml` for
+  source mounts and debug ports
+- **Production:** `docker-compose.prod.yml` with secrets via environment
+  variables and TLS via Caddy
+
+See [DEPLOY.docker.md](DEPLOY.docker.md) for production deployment instructions.
