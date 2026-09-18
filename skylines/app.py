@@ -88,6 +88,11 @@ class SkyLines(Flask):
         load_geoid()
 
     def get_commit_sha(self):
+        sha = os.environ.get("GIT_SHA")
+        if sha:
+            self.logger.info("Running on git revision %s (from env)", sha)
+            return sha
+
         try:
             sha = subprocess.check_output(
                 ["git", "rev-parse", "--short", "HEAD"]
@@ -95,7 +100,7 @@ class SkyLines(Flask):
             self.logger.info("Running on git revision %s", sha)
             return sha
         except Exception:
-            self.logger.warn("Failed to read git revision", exc_info=True)
+            self.logger.warn("Failed to read git revision (no .git directory?)")
             return None
 
 
