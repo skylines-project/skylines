@@ -104,6 +104,8 @@
     "qunit-dom": "1.6.0"
   },
   "resolutions": {
+    "@ember/render-modifiers": "1.0.2",
+    "@embroider/macros": "0.39.1",
     "@embroider/shared-internals": "0.39.1",
     "@percy/agent": "0.24.3",
     "ember-element-helper": "0.4.0",
