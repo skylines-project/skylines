@@ -67,6 +67,11 @@ TLS_EMAIL=
 docker compose -f docker-compose.prod.yml up -d
 ```
 
+**Local smoke-test tip:** If `SKYLINES_IMAGE` is referenced in your compose file,
+leave it unset or commented out for local testing. When unset, compose builds
+from the local Dockerfile (including the Ember frontend stage) instead of
+pulling a registry image that may not include the frontend assets.
+
 ### 4. Verify deployment
 
 ```bash
