@@ -1,7 +1,7 @@
 # =============================================================================
 # Stage 1: Build the Ember.js frontend
 # =============================================================================
-FROM node:14-buster AS frontend
+FROM node:20-bookworm AS frontend
 
 RUN npm install -g bower
 

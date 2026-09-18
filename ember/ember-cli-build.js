@@ -44,7 +44,7 @@ module.exports = function (defaults) {
       extensions: ['css', 'js'],
     },
 
-    sassOptions: { implementation: require('node-sass') },
+    sassOptions: { implementation: require('sass') },
 
     svgJar: {
       sourceDirs: ['public/svg'],
