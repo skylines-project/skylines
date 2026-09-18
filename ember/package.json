@@ -14,13 +14,14 @@
     "build": "ember build",
     "lint:js": "eslint . --cache",
     "lint:hbs": "ember-template-lint .",
+    "postinstall": "node scripts/patch-ember-babel.js",
     "start": "ember serve",
     "test": "ember test"
   },
   "dependencies": {
     "cesium": "1.74.0",
     "ol": "5.3.3",
-    "olcs": "2.22.1",
+    "olcs": "2.12.0",
     "remarkable": "2.0.1",
     "screenfull": "5.2.0"
   },
@@ -28,7 +29,7 @@
     "@ember-intl/cp-validations": "4.0.1",
     "@ember/jquery": "1.1.0",
     "@ember/optional-features": "2.3.0",
-    "@ember/render-modifiers": "1.0.2",
+    "@ember/render-modifiers": "2.1.0",
     "@embroider/compat": "0.39.1",
     "@embroider/core": "0.39.1",
     "@embroider/webpack": "0.39.1",
@@ -63,7 +64,7 @@
     "ember-cli-sass": "10.0.1",
     "ember-cli-uglify": "3.0.0",
     "ember-click-outside": "2.0.0",
-    "ember-concurrency": "1.3.0",
+    "ember-concurrency": "2.3.7",
     "ember-cookies": "0.5.2",
     "ember-cp-validations": "3.5.6",
     "ember-css-modules": "1.6.2",
@@ -98,16 +99,21 @@
     "git-repo-info": "2.1.1",
     "loader.js": "4.7.0",
     "match-json": "1.3.7",
-    "node-sass": "7.0.0",
+    "sass": "1.77.8",
     "prettier": "2.8.8",
     "qunit-console-grouper": "0.3.0",
     "qunit-dom": "1.6.0"
   },
   "resolutions": {
+    "@ember/render-modifiers": "2.1.0",
     "@percy/agent": "0.24.3",
+    "ember-concurrency": "2.3.7",
     "ember-element-helper": "0.4.0",
+    "ember-get-config": "0.5.0",
     "ember-maybe-in-element": "2.0.2",
-    "ember-modifier": "2.1.2"
+    "ember-modifier": "2.1.2",
+    "ember-style-modifier": "0.7.0",
+    "olcs": "2.12.0"
   },
   "ember-addon": {
     "paths": [
@@ -123,7 +129,7 @@
     "trailingComma": "all"
   },
   "volta": {
-    "node": "14.16.1",
+    "node": "20.20.0",
     "yarn": "1.22.22"
   }
 }

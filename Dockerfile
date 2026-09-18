@@ -1,7 +1,7 @@
 # =============================================================================
 # Stage 1: Build the Ember.js frontend
 # =============================================================================
-FROM node:14-buster AS frontend
+FROM node:20-bookworm AS frontend
 
 RUN npm install -g bower
 
@@ -9,6 +9,7 @@ WORKDIR /build
 
 # Install JS dependencies first (cached layer)
 COPY ember/package.json ember/yarn.lock ember/bower.json /build/ember/
+COPY ember/scripts/ /build/ember/scripts/
 RUN cd /build/ember && yarn install --frozen-lockfile --non-interactive
 RUN cd /build/ember && bower install --allow-root
 

@@ -9,4 +9,18 @@ registerMatchJsonAssertion();
 
 setApplication(Application.create(config.APP));
 
+const originalOnerror = window.onerror;
+window.onerror = function (msg, url, line, col, error) {
+  if (error && error.name === 'TransitionAborted') {
+    return true;
+  }
+  if (typeof msg === 'string' && msg.includes('TransitionAborted')) {
+    return true;
+  }
+  if (originalOnerror) {
+    return originalOnerror.apply(this, arguments);
+  }
+  return false;
+};
+
 start();

@@ -7,6 +7,7 @@
 /tests/fixtures/
 /tmp/
 /vendor/
+/scripts/
 
 /lib/broccoli/app-*.js
 /lib/broccoli/test-support-*.js
