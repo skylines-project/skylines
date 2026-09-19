@@ -7,7 +7,7 @@
 import os
 
 DEBUG = os.getenv("SKYLINES_DEBUG", "").lower() in ("1", "true", "yes")
-SECRET_KEY = os.getenv("SECRET_KEY", "skylines-docker")
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 SQLALCHEMY_DATABASE_URI = os.getenv(
     "DATABASE_URL", "postgresql://postgres:postgres@db/skylines"
