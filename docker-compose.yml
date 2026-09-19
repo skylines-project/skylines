@@ -6,6 +6,7 @@ x-app-env: &app-env
   DATABASE_URL: postgresql://postgres:postgres@db/skylines
   REDIS_URL: redis://redis:6379/0
   SKYLINES_CONFIG: /home/skylines/code/config/docker.py
+  SECRET_KEY: dev-only-not-for-production
   PGHOST: db
   PGUSER: postgres
   PGPASSWORD: postgres
