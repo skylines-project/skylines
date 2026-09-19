@@ -57,7 +57,9 @@ def test_cors_with_methods(client):
 
 
 def test_cors_env_override(app, monkeypatch):
-    monkeypatch.setenv("CORS_ORIGINS", "https://custom.example.com,https://other.example.com")
+    monkeypatch.setenv(
+        "CORS_ORIGINS", "https://custom.example.com,https://other.example.com"
+    )
     custom_origin = "https://custom.example.com"
 
     with app.test_client() as client:
@@ -92,5 +94,8 @@ def test_cors_localhost_allowed_in_debug(app):
         headers.set("User-Agent", "py.test")
 
         response = client.get("/", headers=headers)
-        assert response.headers.get("Access-Control-Allow-Origin") == "http://localhost:5000"
+        assert (
+            response.headers.get("Access-Control-Allow-Origin")
+            == "http://localhost:5000"
+        )
         assert response.headers.get("Access-Control-Allow-Credentials") == "true"
